@@ -34,7 +34,21 @@
     }
   ],
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": ">=2.3.0",
+    "@nestjs/common": ">=8.0.0",
+    "@nestjs-mod/common": ">=1.1.0",
+    "nestjs-pino": ">=4.0.0",
+    "pino-http": ">=9.0.0",
+    "pino": ">=7.11.0",
+    "@nestjs/core": ">=8.0.0"
+  },
+  "peerDependencies": {
+    "rxjs": ">=7.8.0"
+  },
+  "peerDependenciesMeta": {
+    "rxjs": {
+      "optional": true
+    }
   },
   "type": "commonjs",
   "main": "./src/index.js",
