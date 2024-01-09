@@ -1,5 +1,6 @@
 {
   "name": "@nestjs-mod/contrib",
+  "description": "A collection of modules unified for NestJS-mod.",
   "version": "0.0.0",
   "license": "MIT",
   "author": "EndyKaufman <admin@site15.ru>",

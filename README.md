@@ -2,7 +2,7 @@
   <a href="https://github.com/nestjs-mod/" target="blank"><img src="https://avatars.githubusercontent.com/u/155752954?s=200&v=4" width="120" alt="NestJS-mod Logo" /></a>
 </p>
 
-  <p align="center">A collection of utilities for unifying <a href="https://nestjs.com/" target="_blank">NestJS</a> applications and modules.</p>
+  <p align="center">A collection of modules unified for <a href="https://github.com/nestjs-mod" target="_blank">NestJS-mod</a>.</p>
     <p align="center">
 <a href="https://www.npmjs.com/org/nestjs-mod" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs-mod/common.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/org/nestjs-mod" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs-mod/common.svg" alt="Package License" /></a>
@@ -13,20 +13,17 @@
 
 ## Description
 
-NestJS is a great framework and you can do great things with it, but often when developing a large number of applications within the same organization, we end up with different application architectures, file structures, and a lot of duplicate code.
+This repository contains modules prepared for the application launched via [NestJS-mod](https://github.com/nestjs-mod).
 
-The NestJS-mod collection of utilities are designed to unify applications and modules, and also introduce new logical options for dividing responsibilities between modules (Core, Feature, Integration, System, Infrastructure).
+Some modules are written from scratch, and some are a wrapped version of existing [NestJS](https://nestjs.com/) modules.
 
-Since all parts of the application are unified, you can create a report on the entire project infrastructure.
+Types of modules (list in order of processing):
 
-## Getting started
-
-```
-git clone https://github.com/nestjs-mod/typescript-starter.git project
-cd project
-npm install
-npm run start
-```
+- [`Core modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/core) - Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.).
+- [`Feature modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/feature) - Feature modules with business logic of the application.
+- [`Integration modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/integration) - Integration modules are necessary to organize communication between feature or core modules (example: after creating a user in the UsersModule feature module, you need to send him a letter from the NotificationsModule core module).
+- [`System modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/system) - System modules necessary for the operation of the entire application (examples: launching a NestJS application, launching microservices, etc.).
+- [`Infrastructure modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure) - Infrastructure modules are needed to create configurations that launch various external services (examples: docker-compose file for raising a database, gitlab configuration for deploying an application).
 
 ## Questions
 
