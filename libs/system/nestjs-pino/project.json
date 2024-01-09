@@ -34,7 +34,7 @@
       "executor": "@theunderscorer/nx-semantic-release:semantic-release",
       "options": {
         "buildTarget": "${PROJECT_NAME}:build",
-        "outputPath": "dist/libs/${PROJECT_NAME}"
+        "outputPath": "dist/libs/system/nestjs-pino"
       }
     }
   },
