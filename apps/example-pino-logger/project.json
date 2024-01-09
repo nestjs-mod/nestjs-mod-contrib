@@ -1,0 +1,53 @@
+{
+  "name": "example-pino-logger",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-pino-logger/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-pino-logger",
+        "main": "apps/example-pino-logger/src/main.ts",
+        "tsConfig": "apps/example-pino-logger/tsconfig.app.json",
+        "assets": ["apps/example-pino-logger/src/assets"],
+        "webpackConfig": "apps/example-pino-logger/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "example-pino-logger:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-pino-logger:build:development"
+        },
+        "production": {
+          "buildTarget": "example-pino-logger:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example-pino-logger/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

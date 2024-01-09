@@ -28,6 +28,9 @@
   "scripts": {
     "_____prod infra_____": "_____prod infra_____",
     "build": "npm run tsc:lint && npm run nx -- run-many --target=build --all",
+    "_____dev infra_____": "_____dev infra_____",
+    "start:dev:cli": "npm run nx -- serve cli",
+    "start:dev:example-pino-logger": "npm run nx -- serve example-pino-logger --host=0.0.0.0",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && npm run nx -- run-many --target=lint --all",
     "lint:fix": "npm run tsc:lint && nx run-many --target=lint --all --fix",
@@ -85,6 +88,9 @@
     "verdaccio": "^5.0.4"
   },
   "dependencies": {
+    "@nestjs-mod/common": "^1.1.0",
+    "@nestjs-mod/reports": "^1.1.0",
+    "@nestjs-mod/testing": "^1.1.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
@@ -92,6 +98,9 @@
     "case-anything": "^2.1.13",
     "class-validator": "^0.14.0",
     "markdown-it": "^14.0.0",
+    "nestjs-pino": "^4.0.0",
+    "pino-http": "^9.0.0",
+    "pino-pretty": "^10.3.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0"
