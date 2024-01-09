@@ -2,7 +2,7 @@
   "changelog": true,
   "npm": true,
   "github": true,
-  "repositoryUrl": "https://github.com/nestjs-mod/nestjs-mod",
+  "repositoryUrl": "https://github.com/nestjs-mod/nestjs-mod-contrib",
   "branches": [
     "master"
   ]
