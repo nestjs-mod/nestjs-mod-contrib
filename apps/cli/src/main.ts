@@ -11,8 +11,7 @@ import { join } from 'path';
 bootstrapNestApplication({
   project: {
     name: 'nestjs-mod',
-    description:
-      'A command line interface (CLI) for create and manipulation with NestJS-mod application',
+    description: 'A command line interface (CLI) for create and manipulation with NestJS-mod application',
   },
   modules: {
     system: [
@@ -24,26 +23,12 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
-        name: 'nestjs-pino',
-        configuration: {
+        contextName: 'nestjs-pino',
+        staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            'libs/system/nestjs-pino/package.json'
-          ),
-          markdownFile: join(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            'libs/system/nestjs-pino/README.md'
-          ),
-          utilsFolders: [
-            join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/src/lib'),
-          ],
+          packageFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/package.json'),
+          markdownFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/README.md'),
+          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/src/lib')],
           modules: [import('@nestjs-mod/pino')],
         },
       }),

@@ -8,7 +8,7 @@ System modules necessary for the operation of the entire application (examples: 
 Default NestJS application initializer, no third party utilities required.
 
 #### Static configuration
-Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers), values can be obtained from various sources, such as: process.env or the value of the consul key.
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Value |
 | ------ | ----------- | ----------- | ----- |
@@ -23,7 +23,7 @@ Static variables of primitive and complex types that are used in the module and 
 Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)
 
 #### Static configuration
-Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers), values can be obtained from various sources, such as: process.env or the value of the consul key.
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Value |
 | ------ | ----------- | ----------- | ----- |
@@ -40,17 +40,17 @@ Default NestJS application listener, no third party utilities required.
 #### Static environments
 Static variables with primitive types used in the module and can be used at the time of generating module metadata (import, controllers), the values of which can be obtained from various sources, such as: process.env or consul key value.
 
-| Key    | Description | Source | Constraints | Value |
+| Key    | Description | Sources | Constraints | Value |
 | ------ | ----------- | ------ | ----------- | ----- |
 |`port`|The port on which to run the server.|`obj['port']`, `process.env['PORT']`|**isNotEmpty** (port should not be empty)|```3000```|
 |`hostname`|Hostname on which to listen for incoming packets.|`obj['hostname']`, `process.env['HOSTNAME']`|**optional**|-|
 
 #### Static configuration
-Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers), values can be obtained from various sources, such as: process.env or the value of the consul key.
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Value |
 | ------ | ----------- | ----------- | ----- |
-|`mode`|Mode of start application: init - for run NestJS life cycle, listen -  for full start NestJS application|**optional**|-|
+|`mode`|Mode of start application: init - for run NestJS life cycle, listen -  for full start NestJS application|**optional**|```listen```|
 |`preListen`|Method for additional actions before listening|**optional**|Function|
 |`postListen`|Method for additional actions after listening|**optional**|Function|
 
@@ -74,7 +74,7 @@ Infrastructure markdown report generator.
 `DynamicNestModuleMetadataMarkdownReportGenerator`
 
 #### Static configuration
-Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers), values can be obtained from various sources, such as: process.env or the value of the consul key.
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Value |
 | ------ | ----------- | ----------- | ----- |

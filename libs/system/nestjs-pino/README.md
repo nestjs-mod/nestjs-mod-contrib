@@ -20,6 +20,9 @@ npm i --save @nestjs-mod/pino
 | [NestjsPinoLogger](#nestjspinologger) | system | Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino) |
 
 
+
+## Modules descriptions
+
 ### NestjsPinoLogger
 Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)
 
