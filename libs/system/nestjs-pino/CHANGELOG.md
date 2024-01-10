@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.0.0...pino-v1.0.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* update [@nestjs-mod](https://github.com/nestjs-mod) deps ([4c28452](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4c28452792a17d311ae825f5d100be537f682e07))
+
 # 1.0.0 (2024-01-09)
 
 
