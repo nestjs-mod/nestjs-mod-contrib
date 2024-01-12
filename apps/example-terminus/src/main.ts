@@ -71,7 +71,7 @@ bootstrapNestApplication({
           infrastructure: [
             InfrastructureMarkdownReportGenerator.forRoot({
               staticConfiguration: {
-                markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-pino-logger', 'INFRASTRUCTURE.MD'),
+                markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-terminus', 'INFRASTRUCTURE.MD'),
               },
             }),
             RestInfrastructureHtmlReport.forRoot(),

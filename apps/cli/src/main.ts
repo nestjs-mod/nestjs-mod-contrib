@@ -32,6 +32,16 @@ bootstrapNestApplication({
           modules: [import('@nestjs-mod/pino')],
         },
       }),
+      NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'terminus',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/package.json'),
+          markdownFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/README.md'),
+          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/terminus/src/lib')],
+          modules: [import('@nestjs-mod/terminus')],
+        },
+      }),
     ],
   },
 });
