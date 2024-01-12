@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.0.0...terminus-v1.0.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* **terminus:** rename InjectFeatures to InjectTerminusHealthCheckFeatures ([fc45ae4](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/fc45ae48cc2ac905579136d5c00e07ce96cd3928))
+
 # 1.0.0 (2024-01-12)
 
 
