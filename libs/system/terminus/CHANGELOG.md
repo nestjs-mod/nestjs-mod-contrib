@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.0.1...terminus-v1.0.2) (2024-01-12)
+
+
+### Bug Fixes
+
+* update [@nestjs-mod](https://github.com/nestjs-mod) deps ([6a4c714](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/6a4c714ca98be0b871e2f5ab5dabf3339337fee5))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.0.0...terminus-v1.0.1) (2024-01-12)
 
 
