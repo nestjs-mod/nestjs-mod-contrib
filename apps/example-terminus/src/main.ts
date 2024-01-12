@@ -12,11 +12,13 @@ import {
   createNestModule,
   isProductionMode,
 } from '@nestjs-mod/common';
+import { NestjsPinoLogger } from '@nestjs-mod/pino';
 import { RestInfrastructureHtmlReport } from '@nestjs-mod/reports';
+import { TerminusHealthCheck } from '@nestjs-mod/terminus';
 import { Logger } from '@nestjs/common';
+import { MemoryHealthIndicator } from '@nestjs/terminus';
 import { join } from 'path';
 import { AppModule } from './app/app.module';
-import { NestjsPinoLogger } from '@nestjs-mod/pino';
 
 const globalPrefix = 'api';
 
@@ -29,6 +31,14 @@ bootstrapNestApplication({
     system: [
       DefaultNestApplicationInitializer.forRoot(),
       NestjsPinoLogger.forRoot(),
+      TerminusHealthCheck.forRootAsync({
+        configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
+          standardHealthIndicator: [
+            { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
+          ],
+        }),
+        inject: [MemoryHealthIndicator],
+      }),
       DefaultNestApplicationListener.forRoot({
         staticEnvironments: { port: 3000 },
         staticConfiguration: {

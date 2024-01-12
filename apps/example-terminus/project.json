@@ -1,0 +1,53 @@
+{
+  "name": "example-terminus",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-terminus/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-terminus",
+        "main": "apps/example-terminus/src/main.ts",
+        "tsConfig": "apps/example-terminus/tsconfig.app.json",
+        "assets": ["apps/example-terminus/src/assets"],
+        "webpackConfig": "apps/example-terminus/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "example-terminus:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-terminus:build:development"
+        },
+        "production": {
+          "buildTarget": "example-terminus:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example-terminus/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

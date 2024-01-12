@@ -26,7 +26,8 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
-      "@nestjs-mod/pino": ["libs/system/nestjs-pino/src/index.ts"]
+      "@nestjs-mod/pino": ["libs/system/nestjs-pino/src/index.ts"],
+      "@nestjs-mod/terminus": ["libs/system/terminus/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
