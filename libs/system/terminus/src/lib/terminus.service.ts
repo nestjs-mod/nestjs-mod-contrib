@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { HealthCheckService } from '@nestjs/terminus';
 import { TerminusHealthCheckFeatureConfiguration } from './terminus-feature.configuration';
 import { TerminusHealthCheckConfiguration } from './terminus.configuration';
-import { InjectFeatures } from './terminus.decorators';
+import { InjectTerminusHealthCheckFeatures } from './terminus.decorators';
 
 @Injectable()
 export class TerminusHealthCheckService {
   constructor(
-    @InjectFeatures()
+    @InjectTerminusHealthCheckFeatures()
     private readonly terminusHealthCheckFeatureConfigurations: TerminusHealthCheckFeatureConfiguration[],
     private readonly terminusHealthCheckConfiguration: TerminusHealthCheckConfiguration,
     private readonly healthCheckService: HealthCheckService
