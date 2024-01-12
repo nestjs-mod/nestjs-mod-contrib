@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.0.1...pino-v1.1.0) (2024-01-12)
+
+
+### Features
+
+* update deps and add TerminusHealthCheck module ([2d1a334](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/2d1a334291246adf3e7e3ccd83346eda113ad31a))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.0.0...pino-v1.0.1) (2024-01-10)
 
 
