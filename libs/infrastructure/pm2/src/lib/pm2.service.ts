@@ -39,10 +39,7 @@ export class Pm2Service implements OnModuleInit {
       if (packageJson.scripts) {
         packageJson.scripts[pm2ProdInfraCategoryName] = {
           ...packageJson.scripts[pm2ProdInfraCategoryName],
-          'pm2:start': `set -a && . .${(this.dotEnvService.getEnvFilePath() ?? '.env').replace(
-            dirname(packageJsonFilePath),
-            ''
-          )} && set +a && ./node_modules/.bin/pm2 start .${this.pm2Configuration.ecosystemConfigFile.replace(
+          'pm2:start': `./node_modules/.bin/pm2 start .${this.pm2Configuration.ecosystemConfigFile.replace(
             dirname(packageJsonFilePath),
             ''
           )}`,

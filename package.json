@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "_____pm2 prod infra_____": "_____pm2 prod infra_____",
-    "pm2:start": "set -a && . ./.env && set +a && ./node_modules/.bin/pm2 start ./ecosystem.config.json",
+    "pm2:start": "./node_modules/.bin/pm2 start ./ecosystem.config.json",
     "pm2:stop": "./node_modules/.bin/pm2 delete all",
     "_____prod infra_____": "_____prod infra_____",
     "start": "npm run nx -- run-many --target=start --all",
