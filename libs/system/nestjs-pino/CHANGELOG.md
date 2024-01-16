@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.1.1...pino-v1.2.0) (2024-01-16)
+
+
+### Features
+
+* add @nestjs-mod/pm2 ([a0b3f39](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/a0b3f392976d9380f2f7efb3c1ed5825e741e87e))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.1.0...pino-v1.1.1) (2024-01-12)
 
 
