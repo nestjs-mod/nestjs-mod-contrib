@@ -1,0 +1,42 @@
+{
+  "name": "pm2",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/infrastructure/pm2/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/infrastructure/pm2",
+        "tsConfig": "libs/infrastructure/pm2/tsconfig.lib.json",
+        "packageJson": "libs/infrastructure/pm2/package.json",
+        "main": "libs/infrastructure/pm2/src/index.ts",
+        "assets": ["libs/infrastructure/pm2/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs pm2 {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/infrastructure/pm2/jest.config.ts"
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/libs/infrastructure/pm2"
+      }
+    }
+  },
+  "tags": []
+}

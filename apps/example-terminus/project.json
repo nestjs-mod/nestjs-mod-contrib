@@ -47,6 +47,15 @@
       "options": {
         "jestConfig": "apps/example-terminus/jest.config.ts"
       }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-terminus/main.js"
+        ],
+        "parallel": false
+      }
     }
   },
   "tags": []

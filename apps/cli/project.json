@@ -47,6 +47,15 @@
       "options": {
         "jestConfig": "apps/cli/jest.config.ts"
       }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/cli/main.js"
+        ],
+        "parallel": false
+      }
     }
   },
   "tags": []

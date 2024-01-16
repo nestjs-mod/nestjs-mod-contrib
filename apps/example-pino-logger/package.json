@@ -1,0 +1,8 @@
+{
+  "name": "pino-logger",
+  "scripts": {},
+  "dependencies": {
+    "pm2": ">=5.3.0",
+    "dotenv": ">=16.3.1"
+  }
+}

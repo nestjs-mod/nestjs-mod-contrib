@@ -26,13 +26,17 @@
     }
   ],
   "scripts": {
+    "_____pm2 prod infra_____": "_____pm2 prod infra_____",
+    "pm2:start": "set -a && . ./.env && set +a && ./node_modules/.bin/pm2 start ./ecosystem.config.json",
+    "pm2:stop": "./node_modules/.bin/pm2 delete all",
     "_____prod infra_____": "_____prod infra_____",
+    "start": "npm run nx -- run-many --target=start --all",
     "build": "npm run tsc:lint && npm run nx -- run-many --target=build --all",
-    "start:prod:cli": "node ./dist/apps/cli/main.js ",
+    "start:infrastructure": "export NODE_ENV=infrastructure && npm run nx -- run-many --target=start --all --parallel=1",
     "_____dev infra_____": "_____dev infra_____",
-    "start:dev:cli": "npm run nx -- serve cli",
-    "start:dev:example-pino-logger": "npm run nx -- serve example-pino-logger --host=0.0.0.0",
-    "start:dev:example-terminus": "npm run nx -- serve example-terminus --host=0.0.0.0",
+    "serve:dev:cli": "npm run nx -- serve cli",
+    "serve:dev:example-pino-logger": "npm run nx -- serve example-pino-logger --host=0.0.0.0",
+    "serve:dev:example-terminus": "npm run nx -- serve example-terminus --host=0.0.0.0",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && npm run nx -- run-many --target=lint --all",
     "lint:fix": "npm run tsc:lint && nx run-many --target=lint --all --fix",
@@ -43,7 +47,8 @@
     "generate": "npm run nx -- run-many -t generate --skip-nx-cache=true && npm run make-ts-list && npm run lint:fix",
     "nx": "nx",
     "make-ts-list": "./node_modules/.bin/rucken make-ts-list",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "manual:prepare": "npm run generate && npm run nx -- build cli && npm run nx -- start cli && npm run build && npm run start:infrastructure && npm run test"
   },
   "private": true,
   "devDependencies": {
@@ -90,9 +95,9 @@
     "verdaccio": "^5.0.4"
   },
   "dependencies": {
-    "@nestjs-mod/common": "^1.5.4",
-    "@nestjs-mod/reports": "^1.5.4",
-    "@nestjs-mod/testing": "^1.5.4",
+    "@nestjs-mod/common": "1.7.0",
+    "@nestjs-mod/reports": "1.7.0",
+    "@nestjs-mod/testing": "1.7.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
@@ -104,9 +109,11 @@
     "nestjs-pino": "^4.0.0",
     "pino-http": "^9.0.0",
     "pino-pretty": "^10.3.1",
+    "pm2": "^5.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "dotenv": ">=16.3.1"
   },
   "nx": {
     "includedScripts": []

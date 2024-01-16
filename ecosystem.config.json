@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "pino-logger",
+      "script": "node ./dist/apps/example-pino-logger/main.js",
+      "node_args": "-r dotenv/config"
+    },
+    {
+      "name": "terminus",
+      "script": "node ./dist/apps/example-terminus/main.js",
+      "node_args": "-r dotenv/config"
+    }
+  ]
+}

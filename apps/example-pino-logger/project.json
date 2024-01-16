@@ -47,6 +47,15 @@
       "options": {
         "jestConfig": "apps/example-pino-logger/jest.config.ts"
       }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-pino-logger/main.js"
+        ],
+        "parallel": false
+      }
     }
   },
   "tags": []

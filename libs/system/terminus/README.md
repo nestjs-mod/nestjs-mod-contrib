@@ -32,6 +32,13 @@ Terminus integration provides readiness/liveness health checks for NestJS-mod (W
 #### Shared imports
 `TerminusModule`
 
+#### Configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`standardHealthIndicator`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|-|
+
 #### Static configuration
 
 
