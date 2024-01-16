@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.0.2...terminus-v1.1.0) (2024-01-16)
+
+
+### Features
+
+* add @nestjs-mod/pm2 ([a0b3f39](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/a0b3f392976d9380f2f7efb3c1ed5825e741e87e))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.0.1...terminus-v1.0.2) (2024-01-12)
 
 
