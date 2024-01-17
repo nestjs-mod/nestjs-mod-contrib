@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.2.0...pino-v1.2.1) (2024-01-17)
+
+
+### Bug Fixes
+
+* update [@nestjs-mod](https://github.com/nestjs-mod) versions ([2fd4938](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/2fd4938860367bffb40cff131a1b248a9add062e))
+
 # [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.1.1...pino-v1.2.0) (2024-01-16)
 
 
