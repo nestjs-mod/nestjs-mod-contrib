@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.0.1...pm2-v1.0.2) (2024-01-17)
+
+
+### Bug Fixes
+
+* update [@nestjs-mod](https://github.com/nestjs-mod) versions ([2fd4938](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/2fd4938860367bffb40cff131a1b248a9add062e))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.0.0...pm2-v1.0.1) (2024-01-16)
 
 
