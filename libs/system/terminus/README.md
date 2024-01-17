@@ -12,13 +12,11 @@ npm i --save @nestjs-mod/terminus
 ```
 
 
-
 ## Modules
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
 | [TerminusHealthCheck](#terminushealthcheck) | system | Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus) |
-
 
 
 ## Modules descriptions
@@ -58,6 +56,13 @@ Terminus integration provides readiness/liveness health checks for NestJS-mod (W
 |`isHealthy`|Logic for health check|**isNotEmpty** (isHealthy should not be empty)|-|-|
 
 [Back to Top](#modules)
+
+## Links
+
+* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+
 
 ## License
 

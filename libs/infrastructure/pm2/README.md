@@ -12,13 +12,11 @@ npm i --save @nestjs-mod/pm2
 ```
 
 
-
 ## Modules
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
 | [Pm2](#pm2) | infrastructure | Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Wrapper for https://www.npmjs.com/package/pm2) |
-
 
 
 ## Modules descriptions
@@ -66,6 +64,13 @@ Production process manager for Node.JS applications with a built-in load balance
 |`env`|The environment variables to pass on to the process.|**optional**|-|-|
 
 [Back to Top](#modules)
+
+## Links
+
+* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+
 
 ## License
 

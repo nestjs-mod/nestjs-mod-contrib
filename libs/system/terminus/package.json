@@ -1,48 +1,48 @@
 {
-  "name": "@nestjs-mod/terminus",
-  "description": "Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus)",
-  "version": "1.1.0",
-  "keywords": [
-    "nestjs",
-    "nestjs-mod",
-    "modules",
-    "mod",
-    "terminus",
-    "health",
-    "readiness",
-    "liveness"
-  ],
-  "license": "MIT",
-  "author": "EndyKaufman <admin@site15.ru>",
-  "engines": {
-    "node": ">=14",
-    "npm": ">=6"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "bugs": {
-    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
-  },
-  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
-  },
-  "maintainers": [
-    {
-      "name": "EndyKaufman",
-      "email": "admin@site15.ru"
-    }
-  ],
-  "dependencies": {
-    "tslib": "^2.3.0",
-    "@nestjs-mod/common": "^1.5.3",
-    "@nestjs/terminus": "^10.2.0",
-    "class-validator": "^0.14.0",
-    "@nestjs/common": "^10.0.2"
-  },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+    "name": "@nestjs-mod/terminus",
+    "description": "Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus)",
+    "version": "1.1.0",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "modules",
+        "mod",
+        "terminus",
+        "health",
+        "readiness",
+        "liveness"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+    },
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+    },
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "dependencies": {
+        "tslib": "^2.3.0",
+        "@nestjs-mod/common": ">=1.7.2",
+        "@nestjs/terminus": "^10.2.0",
+        "class-validator": "^0.14.0",
+        "@nestjs/common": "^10.0.2"
+    },
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts"
 }

@@ -3,12 +3,11 @@
 import {
   DefaultNestApplicationInitializer,
   DefaultNestApplicationListener,
-  InfrastructureMarkdownReportGenerator,
   PACKAGE_JSON_FILE,
   ProjectUtils,
   bootstrapNestApplication,
 } from '@nestjs-mod/common';
-import { NestjsModAllReadmeGenerator } from '@nestjs-mod/reports';
+import { NESTJS_MOD_ALL_README_GENERATOR_FOOTER, NestjsModAllReadmeGenerator } from '@nestjs-mod/reports';
 import { join } from 'path';
 
 bootstrapNestApplication({
@@ -39,13 +38,6 @@ bootstrapNestApplication({
       }),
     ],
     infrastructure: [
-      InfrastructureMarkdownReportGenerator.forRoot({
-        contextName: 'cli',
-        staticConfiguration: {
-          markdownFile: join(__dirname, '..', '..', '..', 'apps', 'cli', 'INFRASTRUCTURE.MD'),
-          skipEmptySettings: false,
-        },
-      }),
       NestjsModAllReadmeGenerator.forRoot({
         contextName: 'nestjs-pino',
         staticConfiguration: {
@@ -54,6 +46,7 @@ bootstrapNestApplication({
           markdownFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/README.md'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/src/lib')],
           modules: [import('@nestjs-mod/pino')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
       NestjsModAllReadmeGenerator.forRoot({
@@ -64,6 +57,7 @@ bootstrapNestApplication({
           markdownFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/README.md'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/terminus/src/lib')],
           modules: [import('@nestjs-mod/terminus')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
       NestjsModAllReadmeGenerator.forRoot({
@@ -74,6 +68,7 @@ bootstrapNestApplication({
           markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/README.md'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/src/lib')],
           modules: [import('@nestjs-mod/pm2')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
     ],

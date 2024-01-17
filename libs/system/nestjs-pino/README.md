@@ -12,13 +12,11 @@ npm i --save @nestjs-mod/pino
 ```
 
 
-
 ## Modules
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
 | [NestjsPinoLogger](#nestjspinologger) | system | Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino) |
-
 
 
 ## Modules descriptions
@@ -39,6 +37,13 @@ Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pin
 |`useExisting`|Optional parameter to skip pino configuration in case you are using FastifyAdapter, and already configure logger in adapter's config. The Pros and cons of this approach are described in the FAQ section of the documentation: @see https://github.com/iamolegga/nestjs-pino#faq.|**optional**|-|-|
 
 [Back to Top](#modules)
+
+## Links
+
+* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+
 
 ## License
 
