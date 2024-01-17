@@ -36,7 +36,7 @@
     "dependencies": {
         "tslib": "^2.3.0",
         "@nestjs/common": "^10.0.2",
-        "@nestjs-mod/common": ">=1.7.2",
+        "@nestjs-mod/common": "1.7.2",
         "nestjs-pino": "^4.0.0",
         "pino-http": "^9.0.0",
         "pino": ">=7.11.0",
