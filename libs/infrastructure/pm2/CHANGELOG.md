@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.1.0...pm2-v1.1.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* move part of deps to peerDependencies ([5891862](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/58918621da29ede968c04f9e00c5b6dfa0bd80de))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.0.2...pm2-v1.1.0) (2024-01-17)
 
 
