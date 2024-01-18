@@ -66,7 +66,7 @@
         },
         "rxjs": {
             "optional": true
-        },
+        }
     },
     "type": "commonjs",
     "main": "./src/index.js",
