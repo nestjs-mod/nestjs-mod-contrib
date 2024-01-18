@@ -39,10 +39,24 @@
         "tslib": "^2.3.0"
     },
     "peerDependencies": {
-        "class-validator": ">=0.14.0",
-        "@nestjs/terminus": ">=8.0.0",
-        "@nestjs/common": ">=8.0.0",
-        "@nestjs-mod/common": ">=1.9.0"
+        "class-validator": "*",
+        "@nestjs/terminus": "*",
+        "@nestjs/common": "*",
+        "@nestjs-mod/common": "*"
+    },
+    "peerDependenciesMeta": {
+        "class-validator": {
+            "optional": true
+        },
+        "@nestjs/terminus": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        },
+        "@nestjs-mod/common": {
+            "optional": true
+        }
     },
     "type": "commonjs",
     "main": "./src/index.js",

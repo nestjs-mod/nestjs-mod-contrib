@@ -37,18 +37,36 @@
         "tslib": "^2.3.0"
     },
     "peerDependencies": {
-        "nestjs-pino": ">=4.0.0",
-        "pino-http": ">=9.0.0",
-        "pino": ">=7.11.0",
-        "@nestjs/core": ">=8.0.0",
-        "@nestjs/common": ">=8.0.0",
-        "@nestjs-mod/common": ">=1.9.0",
-        "rxjs": "^7.8.0"
+        "nestjs-pino": "*",
+        "pino-http": "*",
+        "pino": "*",
+        "@nestjs/core": "*",
+        "@nestjs/common": "*",
+        "@nestjs-mod/common": "*",
+        "rxjs": "*"
     },
     "peerDependenciesMeta": {
+        "nestjs-pino": {
+            "optional": true
+        },
+        "pino-http": {
+            "optional": true
+        },
+        "pino": {
+            "optional": true
+        },
+        "@nestjs/core": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        },
+        "@nestjs-mod/common": {
+            "optional": true
+        },
         "rxjs": {
             "optional": true
-        }
+        },
     },
     "type": "commonjs",
     "main": "./src/index.js",
