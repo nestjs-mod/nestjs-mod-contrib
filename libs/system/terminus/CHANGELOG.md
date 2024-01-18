@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.2.0...terminus-v1.2.1) (2024-01-18)
+
+
+### Bug Fixes
+
+* move part of deps to peerDependencies ([5891862](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/58918621da29ede968c04f9e00c5b6dfa0bd80de))
+
 # [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.1.1...terminus-v1.2.0) (2024-01-17)
 
 
