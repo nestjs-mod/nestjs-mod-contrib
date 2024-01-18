@@ -1,3 +1,11 @@
+## [1.3.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.3.1...pino-v1.3.2) (2024-01-18)
+
+
+### Bug Fixes
+
+* add all decorators to terminus ([9d85ae1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9d85ae133950104a9cd686aa8a4c12784f615fc1))
+* add peerDependenciesMeta ([872378b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/872378be9bba0a20e581ad662745ee9b155afff1))
+
 ## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.3.0...pino-v1.3.1) (2024-01-18)
 
 
