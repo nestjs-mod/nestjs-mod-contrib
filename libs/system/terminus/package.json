@@ -36,11 +36,13 @@
         }
     ],
     "dependencies": {
-        "tslib": "^2.3.0",
-        "@nestjs-mod/common": "1.9.0",
-        "@nestjs/terminus": "^10.2.0",
-        "class-validator": "^0.14.0",
-        "@nestjs/common": "^10.0.2"
+        "tslib": "^2.3.0"
+    },
+    "peerDependencies": {
+        "class-validator": ">=0.14.0",
+        "@nestjs/terminus": ">=8.0.0",
+        "@nestjs/common": ">=8.0.0",
+        "@nestjs-mod/common": ">=1.9.0"
     },
     "type": "commonjs",
     "main": "./src/index.js",
