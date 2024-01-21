@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.4.0...pino-v1.5.0) (2024-01-21)
+
+
+### Features
+
+* add @nestjs-mod/docker-compose ([b5ddd56](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b5ddd569e4374939e5760b13bbd1246dd59673d3))
+
 # [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.3.2...pino-v1.4.0) (2024-01-19)
 
 
