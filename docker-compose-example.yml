@@ -1,0 +1,31 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  terminus-postgre-sql:
+    image: bitnami/postgresql:15.5.0
+    container_name: terminus-postgre-sql
+    volumes:
+      - terminus-postgre-sql-volume:/bitnami/postgresql
+    ports:
+      - 2222:5432
+    networks:
+      - terminus-network
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    tty: true
+    restart: always
+    environment:
+      POSTGRESQL_USERNAME: some_user
+      POSTGRESQL_PASSWORD: some_password
+      POSTGRESQL_DATABASE: some_database
+networks:
+  terminus-network:
+    driver: bridge
+volumes:
+  terminus-postgre-sql-volume:
+    name: terminus-postgre-sql-volume

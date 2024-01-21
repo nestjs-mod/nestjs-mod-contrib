@@ -4,3 +4,4 @@ export const ECOSYSTEM_CONFIG_FILE = 'ecosystem.config.json';
 export const PACKAGE_JSON_FILE = 'package.json';
 export const SCRIPTS_KEY_NAME = 'scripts';
 export const DEFAULT_CATEGORY_NAME = 'default';
+export const PM2_PROD_INFRA_CATEGORY_NAME = 'pm2 prod infra';

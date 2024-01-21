@@ -7,14 +7,15 @@ import {
   DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
   NestModuleCategory,
+  PACKAGE_JSON_FILE,
   ProjectUtils,
   bootstrapNestApplication,
   createNestModule,
   isInfrastructureMode,
-  isProductionMode,
 } from '@nestjs-mod/common';
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
 import { NestjsPinoLogger } from '@nestjs-mod/pino';
-import { ECOSYSTEM_CONFIG_FILE, PACKAGE_JSON_FILE, Pm2 } from '@nestjs-mod/pm2';
+import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
 import { RestInfrastructureHtmlReport } from '@nestjs-mod/reports';
 import { TerminusHealthCheck } from '@nestjs-mod/terminus';
 import { Logger } from '@nestjs/common';
@@ -25,19 +26,21 @@ import { AppModule } from './app/app.module';
 const globalPrefix = 'api';
 
 bootstrapNestApplication({
-  globalConfigurationOptions: {
-    name: 'TerminusConfiguration',
-    skipValidation: isInfrastructureMode(),
-  },
-  globalEnvironmentsOptions: {
-    name: 'TerminusEnvironments',
-    skipValidation: isInfrastructureMode(),
-  },
-  project: {
-    name: 'Example',
-    description: 'Example',
-  },
+  globalEnvironmentsOptions: { debug: true },
+  globalConfigurationOptions: { debug: true },
   modules: {
+    core: [
+      createNestModule({
+        moduleName: 'CORE1',
+        moduleCategory: NestModuleCategory.core,
+      }).CORE1.forRoot(),
+    ],
+    integrations: [
+      createNestModule({
+        moduleName: 'INTEGRATIONS1',
+        moduleCategory: NestModuleCategory.core,
+      }).INTEGRATIONS1.forRoot(),
+    ],
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
@@ -82,25 +85,34 @@ bootstrapNestApplication({
         imports: [AppModule],
       }).AppModule.forRootAsync(),
     ],
-    // Disable infrastructure modules in production
-    ...(!isProductionMode() || isInfrastructureMode()
-      ? {
-          infrastructure: [
-            InfrastructureMarkdownReportGenerator.forRoot({
-              staticConfiguration: {
-                markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-terminus', 'INFRASTRUCTURE.MD'),
-                skipEmptySettings: true,
-              },
-            }),
-            RestInfrastructureHtmlReport.forRoot(),
-            Pm2.forRoot({
-              configuration: {
-                ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
-                applicationScriptFile: join('dist/apps/example-terminus/main.js'),
-              },
-            }),
-          ],
-        }
-      : {}),
+    infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-terminus', 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+        },
+      }),
+      RestInfrastructureHtmlReport.forRoot(),
+      Pm2.forRoot({
+        configuration: {
+          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          applicationScriptFile: join('dist/apps/example-terminus/main.js'),
+        },
+      }),
+      DockerCompose.forRoot({
+        configuration: {
+          dockerComposeFileVersion: '3',
+          dockerComposeFile: join(__dirname, '..', '..', '..', DOCKER_COMPOSE_FILE),
+        },
+      }),
+      DockerComposePostgreSQL.forRoot({
+        staticConfiguration: { externalPort: 2222 },
+        // staticEnvironments: { rootDatabaseUrl: 'root connection' },
+      }),
+      DockerComposePostgreSQL.forFeature({
+        featureModuleName: 'feat',
+        // featureEnvironments: { databaseUrl: 'feature connection' },
+      }),
+    ],
   },
 });

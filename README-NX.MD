@@ -3,7 +3,7 @@
 ## Create library
 
 ```
-npm run nx -- g @nx/nest:library common --buildable --publishable --directory=libs/common --simpleName=true
+./node_modules/.bin/nx g @nestjs-mod/schematics:library docker-compose --buildable --publishable --directory=libs/infrastructure/docker-compose --simpleName=true --projectNameAndRootFormat=as-provided --strict=true
 ```
 
 ## Create application

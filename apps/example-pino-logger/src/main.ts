@@ -12,7 +12,6 @@ import {
   bootstrapNestApplication,
   createNestModule,
   isInfrastructureMode,
-  isProductionMode,
 } from '@nestjs-mod/common';
 import { NestjsPinoLogger } from '@nestjs-mod/pino';
 import { ECOSYSTEM_CONFIG_FILE, PACKAGE_JSON_FILE, Pm2 } from '@nestjs-mod/pm2';
@@ -24,18 +23,6 @@ import { AppModule } from './app/app.module';
 const globalPrefix = 'api';
 
 bootstrapNestApplication({
-  globalConfigurationOptions: {
-    name: 'PinoLoggerConfiguration',
-    skipValidation: isInfrastructureMode(),
-  },
-  globalEnvironmentsOptions: {
-    name: 'PinoLoggerEnvironments',
-    skipValidation: isInfrastructureMode(),
-  },
-  project: {
-    name: 'Example',
-    description: 'Example',
-  },
   modules: {
     system: [
       ProjectUtils.forRoot({
@@ -81,25 +68,20 @@ bootstrapNestApplication({
         imports: [AppModule],
       }).AppModule.forRootAsync(),
     ],
-    // Disable infrastructure modules in production
-    ...(!isProductionMode() || isInfrastructureMode()
-      ? {
-          infrastructure: [
-            InfrastructureMarkdownReportGenerator.forRoot({
-              staticConfiguration: {
-                markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-pino-logger', 'INFRASTRUCTURE.MD'),
-                skipEmptySettings: true,
-              },
-            }),
-            RestInfrastructureHtmlReport.forRoot(),
-            Pm2.forRoot({
-              configuration: {
-                ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
-                applicationScriptFile: join('dist/apps/example-pino-logger/main.js'),
-              },
-            }),
-          ],
-        }
-      : {}),
+    infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-pino-logger', 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+        },
+      }),
+      RestInfrastructureHtmlReport.forRoot(),
+      Pm2.forRoot({
+        configuration: {
+          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          applicationScriptFile: join('dist/apps/example-pino-logger/main.js'),
+        },
+      }),
+    ],
   },
 });

@@ -1,33 +1,23 @@
-import {
-  ApplicationPackageJsonService,
-  DotEnvService,
-  PackageJsonService,
-  WrapApplicationOptionsService,
-} from '@nestjs-mod/common';
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { ApplicationPackageJsonService, PackageJsonService, WrapApplicationOptionsService } from '@nestjs-mod/common';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { dirname } from 'path';
 import { StartOptions } from 'pm2';
 import { Pm2EcosystemConfigFileService } from './pm2-ecosystem-config-file.service';
 import { Pm2Configuration } from './pm2.configuration';
-import { DOTENV_VERSION, PM2_VERSION } from './pm2.constants';
-import { Pm2Errors } from './pm2.errors';
-
-const pm2ProdInfraCategoryName = 'pm2 prod infra';
+import { DOTENV_VERSION, PM2_PROD_INFRA_CATEGORY_NAME, PM2_VERSION } from './pm2.constants';
 
 @Injectable()
-export class Pm2Service implements OnModuleInit {
+export class Pm2Service implements OnApplicationBootstrap {
   constructor(
     private readonly pm2Configuration: Pm2Configuration,
-    private readonly dotEnvService: DotEnvService,
     private readonly pm2EcosystemConfigFileService: Pm2EcosystemConfigFileService,
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly packageJsonService: PackageJsonService,
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
   ) {}
 
-  async onModuleInit() {
+  async onApplicationBootstrap() {
     await this.updatePm2EcosystemConfigFile();
-    await this.updateEnvFile();
     await this.updatePackageJson();
     await this.updateApplicationPackageJson();
   }
@@ -36,13 +26,14 @@ export class Pm2Service implements OnModuleInit {
     const packageJson = await this.packageJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (packageJson && packageJsonFilePath) {
+      const ecosystemConfigFilePath = this.pm2Configuration.ecosystemConfigFile.replace(
+        dirname(packageJsonFilePath),
+        ''
+      );
       if (packageJson.scripts) {
-        packageJson.scripts[pm2ProdInfraCategoryName] = {
-          ...packageJson.scripts[pm2ProdInfraCategoryName],
-          'pm2:start': `./node_modules/.bin/pm2 start .${this.pm2Configuration.ecosystemConfigFile.replace(
-            dirname(packageJsonFilePath),
-            ''
-          )}`,
+        packageJson.scripts[PM2_PROD_INFRA_CATEGORY_NAME] = {
+          ...packageJson.scripts[PM2_PROD_INFRA_CATEGORY_NAME],
+          'pm2:start': `./node_modules/.bin/pm2 start .${ecosystemConfigFilePath}`,
           'pm2:stop': `./node_modules/.bin/pm2 delete all`,
         };
       }
@@ -79,7 +70,7 @@ export class Pm2Service implements OnModuleInit {
     const currentConfig = await this.pm2EcosystemConfigFileService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (!packageJsonFilePath) {
-      throw new Pm2Errors('packageJsonFilePath not set');
+      return;
     }
     const appName =
       this.wrapApplicationOptionsService?.project?.name ?? (await this.applicationPackageJsonService.read())?.name;
@@ -101,18 +92,5 @@ export class Pm2Service implements OnModuleInit {
     }
 
     await this.pm2EcosystemConfigFileService.write(currentConfig);
-  }
-
-  private async updateEnvFile() {
-    const keys = this.dotEnvService.keys();
-    const existsEnvJson = await this.dotEnvService.read();
-    if (existsEnvJson) {
-      const newEnvJson = keys.reduce(
-        (all, key) => ({ ...all, [String(key)]: existsEnvJson[key!] ? existsEnvJson[key!] : '' }),
-        existsEnvJson
-      );
-
-      await this.dotEnvService.write(newEnvJson);
-    }
   }
 }

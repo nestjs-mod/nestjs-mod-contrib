@@ -7,9 +7,9 @@ import { Pm2Service } from './pm2.service';
 export const { Pm2 } = createNestModule({
   moduleName: 'Pm2',
   moduleDescription:
-    'Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Wrapper for https://www.npmjs.com/package/pm2)',
+    'Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2)',
   moduleCategory: NestModuleCategory.infrastructure,
   configurationModel: Pm2Configuration,
-  imports: [ProjectUtils.forFeature()],
+  imports: [ProjectUtils.forFeature({ featureModuleName: 'Pm2' })],
   providers: [Pm2EcosystemConfigFileService, Pm2Service],
 });

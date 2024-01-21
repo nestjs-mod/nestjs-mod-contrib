@@ -44,9 +44,17 @@ export const { NestjsPinoLogger } = createNestModule({
     }),
   ],
   providers: [{ provide: APP_INTERCEPTOR, useClass: LoggerRequestIdInterceptor }],
+  // set custom options to application
   wrapApplication: async (options) => {
     if (options.app) {
-      options.app.useLogger(options.app.get(Logger));
+      const logger = options.app.get(Logger);
+      options.app.useLogger(logger);
+      if (options.logger) {
+        Object.setPrototypeOf(options.logger, logger);
+        Object.assign(options.logger, logger);
+      } else {
+        options.logger = logger;
+      }
       options.app.useGlobalInterceptors(new LoggerErrorInterceptor());
     }
   },

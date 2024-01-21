@@ -1,0 +1,42 @@
+{
+  "name": "docker-compose",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/infrastructure/docker-compose/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/infrastructure/docker-compose",
+        "tsConfig": "libs/infrastructure/docker-compose/tsconfig.lib.json",
+        "packageJson": "libs/infrastructure/docker-compose/package.json",
+        "main": "libs/infrastructure/docker-compose/src/index.ts",
+        "assets": ["libs/infrastructure/docker-compose/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs docker-compose {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/infrastructure/docker-compose/jest.config.ts"
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/libs/infrastructure/docker-compose"
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,7 +1,7 @@
 
 # @nestjs-mod/pm2
 
-Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Wrapper for https://www.npmjs.com/package/pm2)
+Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2)
 
 [![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram bot][telegram-image]][telegram-url]
 
@@ -16,13 +16,13 @@ npm i --save @nestjs-mod/pm2
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [Pm2](#pm2) | infrastructure | Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Wrapper for https://www.npmjs.com/package/pm2) |
+| [Pm2](#pm2) | infrastructure | Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2) |
 
 
 ## Modules descriptions
 
 ### Pm2
-Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Wrapper for https://www.npmjs.com/package/pm2)
+Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2)
 
 #### Configuration
 
