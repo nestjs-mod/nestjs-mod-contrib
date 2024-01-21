@@ -1,38 +1,38 @@
 {
   "name": "@nestjs-mod/docker-compose",
   "description": "Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose)",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": [
-      "nestjs",
-      "nestjs-mod",
-      "modules",
-      "mod",
-      "docker-compose",
-      "docker",
-      "infrastructure"
+    "nestjs",
+    "nestjs-mod",
+    "modules",
+    "mod",
+    "docker-compose",
+    "docker",
+    "infrastructure"
   ],
   "license": "MIT",
   "author": "EndyKaufman <admin@site15.ru>",
   "engines": {
-      "node": ">=14",
-      "npm": ">=6"
+    "node": ">=14",
+    "npm": ">=6"
   },
   "publishConfig": {
-      "access": "public"
+    "access": "public"
   },
   "bugs": {
-      "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
   },
   "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+    "type": "git",
+    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
   },
   "maintainers": [
-      {
-          "name": "EndyKaufman",
-          "email": "admin@site15.ru"
-      }
+    {
+      "name": "EndyKaufman",
+      "email": "admin@site15.ru"
+    }
   ],
   "dependencies": {
     "tslib": "^2.3.0",
@@ -42,24 +42,24 @@
     "connection-string": "^4.3.5"
   },
   "peerDependencies": {
-      "class-validator": "*",
-      "@nestjs/common": "*",
-      "@nestjs-mod/common": "*",
-      "rxjs": "*"
+    "class-validator": "*",
+    "@nestjs/common": "*",
+    "@nestjs-mod/common": "*",
+    "rxjs": "*"
   },
   "peerDependenciesMeta": {
-      "class-validator": {
-          "optional": true
-      },
-      "@nestjs/common": {
-          "optional": true
-      },
-      "@nestjs-mod/common": {
-          "optional": true
-      },
-      "rxjs": {
-          "optional": true
-      }
+    "class-validator": {
+      "optional": true
+    },
+    "@nestjs/common": {
+      "optional": true
+    },
+    "@nestjs-mod/common": {
+      "optional": true
+    },
+    "rxjs": {
+      "optional": true
+    }
   },
   "type": "commonjs",
   "main": "./src/index.js",
