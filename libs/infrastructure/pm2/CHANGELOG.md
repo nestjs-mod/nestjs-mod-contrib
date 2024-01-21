@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.2.0...pm2-v1.3.0) (2024-01-21)
+
+
+### Features
+
+* add @nestjs-mod/docker-compose ([b5ddd56](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b5ddd569e4374939e5760b13bbd1246dd59673d3))
+
 # [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.1.2...pm2-v1.2.0) (2024-01-19)
 
 
