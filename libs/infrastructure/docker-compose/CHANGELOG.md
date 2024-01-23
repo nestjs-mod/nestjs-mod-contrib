@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.1.0...docker-compose-v1.1.1) (2024-01-23)
+
+
+### Bug Fixes
+
+* add description of prisma mopdule to report and update sample with application, for correct generate report ([46100d7](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/46100d7ce06d3481e4cef79b47de3dd73af83961))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.0.0...docker-compose-v1.1.0) (2024-01-23)
 
 
