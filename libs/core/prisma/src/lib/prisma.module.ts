@@ -8,8 +8,6 @@ import { PRISMA_MODULE_NAME } from './prisma.constants';
 import { getPrismaFeatureToken } from './prisma.decorators';
 import { PrismaEnvironments } from './prisma.environments';
 
-export class FakePrismaClient {}
-
 export const { PrismaModule } = createNestModule({
   moduleName: PRISMA_MODULE_NAME,
   moduleCategory: NestModuleCategory.core,

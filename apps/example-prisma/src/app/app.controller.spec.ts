@@ -25,7 +25,7 @@ describe('AppController', () => {
               `${prismaUserFeatureName}-${PRISMA_SCHEMA_FILE}`
             ),
             prismaFeatureName: prismaUserFeatureName,
-            prismaModule: { PrismaClient: FakePrismaClient, on: () => null },
+            prismaModule: { PrismaClient: FakePrismaClient },
           },
         }),
         PrismaModule.forFeature({

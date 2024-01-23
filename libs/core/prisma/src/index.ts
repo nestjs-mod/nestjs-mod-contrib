@@ -1,3 +1,4 @@
+export * from './lib/fake-prisma-client';
 export * from './lib/prisma-client-factory.service';
 export * from './lib/prisma-errors';
 export * from './lib/prisma.configuration';

@@ -9,7 +9,7 @@ import {
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
 import { NestjsPinoLogger } from '@nestjs-mod/pino';
 import { ECOSYSTEM_CONFIG_FILE, PACKAGE_JSON_FILE, Pm2 } from '@nestjs-mod/pm2';
-import { PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
+import { FakePrismaClient, PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
 import { TerminusHealthCheck } from '@nestjs-mod/terminus';
 import { Logger } from '@nestjs/common';
 import { MemoryHealthIndicator } from '@nestjs/terminus';
@@ -71,7 +71,9 @@ bootstrapNestApplication({
             `${prismaUserFeatureName}-${PRISMA_SCHEMA_FILE}`
           ),
           prismaFeatureName: prismaUserFeatureName,
-          prismaModule: import(`@prisma/prisma-user-client`),
+          prismaModule: isInfrastructureMode()
+            ? { PrismaClient: FakePrismaClient }
+            : import(`@prisma/prisma-user-client`),
         },
       }),
     ],
