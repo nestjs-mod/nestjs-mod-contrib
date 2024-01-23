@@ -7,7 +7,7 @@ System modules necessary for the operation of the entire application (examples: 
 Utilities for setting global application parameters, such as project name, description, and settings validation parameters.
 
 #### Shared providers
-`WrapApplicationOptionsService`, `DotEnvService`, `PackageJsonService`, `ApplicationPackageJsonService`, `GitignoreService`, `ProjectUtilsPatcherService`
+`WrapApplicationOptionsService`, `DotEnvService`, `PackageJsonService`, `ApplicationPackageJsonService`, `GitignoreService`, `NxProjectJsonService`, `ProjectUtilsPatcherService`
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
@@ -15,8 +15,8 @@ Static variables of primitive and complex types that are used in the module and 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`applicationPackageJsonFile`|Application package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-terminus/package.json```|
-|`packageJsonFile`|Root package.json-file.|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/package.json```|
-|`envFile`|Dot-env file with environment variables.|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/.env```|
+|`packageJsonFile`|Root package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/package.json```|
+|`envFile`|Dot-env file with environment variables|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/.env```|
 
 ### DefaultNestApplicationInitializer
 Default NestJS application initializer, no third party utilities required.
@@ -62,7 +62,7 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`port`|The port on which to run the server.|`obj['port']`, `process.env['TERMINUS_PORT']`|**isNotEmpty** (port should not be empty)|-|```3001```|
+|`port`|The port on which to run the server.|`obj['port']`, `process.env['TERMINUS_PORT']`|**isNotEmpty** (port should not be empty)|-|```3002```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
@@ -109,7 +109,7 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"terminus-postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"terminus-postgre-sql","volumes":["terminus-postgre-sql-volume:/bitnami/postgresql"],"ports":["2222:5432"],"networks":["terminus-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"terminus-postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"terminus-postgre-sql","volumes":["terminus-postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["terminus-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
 |`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"terminus-network":{"driver":"bridge"}}|
 |`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"terminus-postgre-sql-volume":{"name":"terminus-postgre-sql-volume"}}|
 
@@ -135,14 +135,7 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`rootDatabaseUrl`|Connection string for PostgreSQL with root credentials|`obj['rootDatabaseUrl']`, `process.env['TERMINUS_ROOT_DATABASE_URL']`|**isNotEmpty** (rootDatabaseUrl should not be empty)|-|```postgres://root:root_password@localhost:5432/postgres?schema=public```|
-
-#### Static configuration
-Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
-
-| Key    | Description | Constraints | Default | Value |
-| ------ | ----------- | ----------- | ------- | ----- |
-|`externalPort`|External port for sharing container.|**optional**|```5432```|```2222```|
+|`rootDatabaseUrl`|Connection string for PostgreSQL with root credentials (example: postgres://postgres:postgres_password@localhost:5432/postgres?schema=public, username must be "postgres")|`obj['rootDatabaseUrl']`, `process.env['TERMINUS_ROOT_DATABASE_URL']`|**isNotEmpty** (rootDatabaseUrl should not be empty)|-|```postgres://postgres:postgres_password@localhost:5432/postgres?schema=public```|
 
 #### Modules that use feature environments
 ##### Feature module name: feat
@@ -150,4 +143,4 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`databaseUrl`|Connection string for PostgreSQL with module credentials|`obj['databaseUrl']`, `process.env['TERMINUS_FEAT_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|```postgres://feat:feat_password@localhost:5432/feat?schema=public```|
+|`databaseUrl`|Connection string for PostgreSQL with module credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['TERMINUS_FEAT_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|```postgres://feat:feat_password@localhost:5432/feat?schema=public```|

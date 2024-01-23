@@ -1,4 +1,10 @@
-import { GitignoreService, PackageJsonService, merge } from '@nestjs-mod/common';
+import {
+  ApplicationPackageJsonService,
+  GitignoreService,
+  InjectableFeatureConfigurationType,
+  PackageJsonService,
+  merge,
+} from '@nestjs-mod/common';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { snakeCase } from 'case-anything';
 import { basename, dirname } from 'path';
@@ -13,11 +19,15 @@ import { ManualDockerComposeFeatures } from './manual-docker-compose.service';
 export class DockerComposeBootstrapService implements OnApplicationBootstrap {
   constructor(
     @InjectAllDockerComposeFeatures()
-    private readonly dockerComposeFeatureConfigurations: Record<string, DockerComposeFeatureConfiguration[]>,
+    private readonly dockerComposeFeatureConfigurations: Record<
+      string,
+      InjectableFeatureConfigurationType<DockerComposeFeatureConfiguration>[]
+    >,
     private readonly dockerComposeConfiguration: DockerComposeConfiguration,
     private readonly manualDockerComposeFeatures: ManualDockerComposeFeatures,
     private readonly dockerComposeFileService: DockerComposeFileService,
     private readonly packageJsonService: PackageJsonService,
+    private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly gitignoreService: GitignoreService
   ) {}
 
@@ -30,7 +40,10 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
   private async createDockerComposeFile() {
     const featureServices = Object.entries(this.dockerComposeFeatureConfigurations)
       .map(([, services]) => services)
-      .reduce((all, cur) => ({ ...all, ...cur.reduce((curAll, curCur) => merge(curAll, curCur), {}) }), {});
+      .reduce(
+        (all, cur) => ({ ...all, ...cur.reduce((curAll, curCur) => merge(curAll, curCur.featureConfiguration), {}) }),
+        {}
+      );
     const manualServices = this.manualDockerComposeFeatures
       .getManualDockerComposeFeatureConfigurations()
       .reduce((all, cur) => merge(all, cur), {});
@@ -38,7 +51,15 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       { version: this.dockerComposeConfiguration.dockerComposeFileVersion },
       merge(featureServices, manualServices)
     );
-    await this.dockerComposeFileService.write(bothServices);
+
+    const bothServicesWithEnvs = { ...bothServices };
+    for (const key of Object.keys(bothServicesWithEnvs.services)) {
+      for (const envKey of Object.keys(bothServicesWithEnvs.services[key].environment)) {
+        bothServicesWithEnvs.services[key].environment[envKey] =
+          bothServicesWithEnvs?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
+      }
+    }
+    await this.dockerComposeFileService.write(bothServicesWithEnvs);
 
     // example
 
@@ -54,7 +75,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     for (const key of Object.keys(sampleBothServices.services)) {
       for (const envKey of Object.keys(sampleBothServices.services[key].environment)) {
         sampleBothServices.services[key].environment[envKey] =
-          existsServices?.services?.[key]?.environment?.[envKey] ?? snakeCase(`value_for_${key}`);
+          existsServices?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }
     }
     await this.dockerComposeFileService.writeFile(
@@ -66,6 +87,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
   private async updatePackageJson() {
     const packageJson = await this.packageJsonService.read();
+    const applicationPpackageJson = await this.applicationPackageJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (packageJson && packageJsonFilePath) {
       const dockerComposeFilePath = this.dockerComposeConfiguration.dockerComposeFile.replace(
@@ -73,11 +95,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         ''
       );
       if (packageJson.scripts) {
-        packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME] = {
-          ...packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME],
-          'docker-compose:start': `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
-          'docker-compose:stop': `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`,
-        };
+        if (dirname(packageJsonFilePath.replace(dirname(packageJsonFilePath), '')) === dirname(dockerComposeFilePath)) {
+          packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME] = {
+            ...packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME],
+            [`docker-compose:start`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
+            [`docker-compose:stop`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`,
+          };
+        } else {
+          packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME] = {
+            ...packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME],
+            [`docker-compose:start:${applicationPpackageJson?.name}`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
+            [`docker-compose:stop:${applicationPpackageJson?.name}`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`,
+          };
+        }
       }
       this.packageJsonService.write(packageJson);
     }

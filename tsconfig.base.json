@@ -16,7 +16,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "strictNullChecks": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -29,6 +29,7 @@
       "@nestjs-mod/docker-compose": ["libs/infrastructure/docker-compose/src/index.ts"],
       "@nestjs-mod/pino": ["libs/system/nestjs-pino/src/index.ts"],
       "@nestjs-mod/pm2": ["libs/infrastructure/pm2/src/index.ts"],
+      "@nestjs-mod/prisma": ["libs/core/prisma/src/index.ts"],
       "@nestjs-mod/terminus": ["libs/system/terminus/src/index.ts"]
     }
   },

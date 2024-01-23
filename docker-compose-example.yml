@@ -7,7 +7,7 @@ services:
     volumes:
       - terminus-postgre-sql-volume:/bitnami/postgresql
     ports:
-      - 2222:5432
+      - 5432:5432
     networks:
       - terminus-network
     healthcheck:
@@ -20,9 +20,9 @@ services:
     tty: true
     restart: always
     environment:
-      POSTGRESQL_USERNAME: some_user
-      POSTGRESQL_PASSWORD: some_password
-      POSTGRESQL_DATABASE: some_database
+      POSTGRESQL_USERNAME: value_for_terminus_postgre_sql
+      POSTGRESQL_PASSWORD: value_for_terminus_postgre_sql
+      POSTGRESQL_DATABASE: value_for_terminus_postgre_sql
 networks:
   terminus-network:
     driver: bridge

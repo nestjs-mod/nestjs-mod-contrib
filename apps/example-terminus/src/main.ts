@@ -105,10 +105,7 @@ bootstrapNestApplication({
           dockerComposeFile: join(__dirname, '..', '..', '..', DOCKER_COMPOSE_FILE),
         },
       }),
-      DockerComposePostgreSQL.forRoot({
-        staticConfiguration: { externalPort: 2222 },
-        // staticEnvironments: { rootDatabaseUrl: 'root connection' },
-      }),
+      DockerComposePostgreSQL.forRoot(),
       DockerComposePostgreSQL.forFeature({
         featureModuleName: 'feat',
         // featureEnvironments: { databaseUrl: 'feature connection' },

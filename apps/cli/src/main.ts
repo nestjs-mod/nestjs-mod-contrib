@@ -26,6 +26,17 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'prisma',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(__dirname, '..', '..', '..', 'libs/core/prisma/package.json'),
+          markdownFile: join(__dirname, '..', '..', '..', 'libs/core/prisma/README.md'),
+          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/core/prisma/src/lib')],
+          modules: [import('@nestjs-mod/prisma')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'nestjs-pino',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',

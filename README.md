@@ -2,7 +2,7 @@
   <a href="https://github.com/nestjs-mod/" target="blank"><img src="https://avatars.githubusercontent.com/u/155752954?s=200&v=4" width="120" alt="NestJS-mod Logo" /></a>
 </p>
 
-  <p align="center">A collection of modules unified for <a href="https://github.com/nestjs-mod" target="_blank">NestJS-mod</a>.</p>
+  <p align="center">A collection of utilities for unifying <a href="https://nestjs.com/" target="_blank">NestJS</a> applications and modules.</p>
     <p align="center">
 <a href="https://www.npmjs.com/org/nestjs-mod" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs-mod/common.svg" alt="NPM Version" /></a>
 <a href="https://www.npmjs.com/org/nestjs-mod" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs-mod/common.svg" alt="Package License" /></a>
@@ -13,17 +13,11 @@
 
 ## Description
 
-This repository contains modules prepared for the application launched via [NestJS-mod](https://github.com/nestjs-mod).
+NestJS is a great framework and you can do great things with it, but often when developing a large number of applications within the same organization, we end up with different application architectures, file structures, and a lot of duplicate code.
 
-Some modules are written from scratch, and some are a wrapped version of existing [NestJS](https://nestjs.com/) modules.
+The NestJS-mod collection of utilities are designed to unify applications and modules, and also introduce new logical options for dividing responsibilities between modules (Core, Feature, Integration, System, Infrastructure).
 
-Types of modules (list in order of processing):
-
-- [`System modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/system) - System modules necessary for the operation of the entire application (examples: launching a NestJS application, launching microservices, etc.). Only NestJS-mod compatible modules.
-- [`Core modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/core) - Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
-- [`Feature modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/feature) - Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.
-- [`Integration modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/integration) - Integration modules are necessary to organize communication between feature or core modules (example: after creating a user in the UsersModule feature module, you need to send him a letter from the NotificationsModule core module). NestJS and NestJS-mod compatible modules.
-- [`Infrastructure modules`](https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure) - Infrastructure modules are needed to create configurations that launch various external services (examples: docker-compose file for raising a database, gitlab configuration for deploying an application). Only NestJS-mod compatible modules.
+Since all parts of the application are unified, you can create a report on the entire project infrastructure.
 
 ## Getting started
 
@@ -122,9 +116,9 @@ After which the file `INFRASTRUCTURE.MD` appear in the application folder `apps/
 
 ## Links
 
-* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
-* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
-* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+- https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+- https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+- https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
 
 ## Questions
 

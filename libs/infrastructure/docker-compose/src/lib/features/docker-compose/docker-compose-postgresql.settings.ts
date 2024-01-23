@@ -24,16 +24,16 @@ export class DockerComposePostgresConfiguration {
 @EnvModel()
 export class DockerComposePostgresEnvironments {
   @EnvModelProperty({
-    description: 'Connection string for PostgreSQL with root credentials',
+    description: 'Connection string for PostgreSQL with root credentials (example: postgres://postgres:postgres_password@localhost:5432/postgres?schema=public, username must be "postgres")',
   })
   @IsNotEmpty()
   rootDatabaseUrl!: string;
 }
 
 @EnvModel()
-export class DockerComposePostgresDatabaseEnvironments {
+export class DockerComposePostgresFeatureEnvironments {
   @EnvModelProperty({
-    description: 'Connection string for PostgreSQL with module credentials',
+    description: 'Connection string for PostgreSQL with module credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)',
   })
   @IsNotEmpty()
   databaseUrl!: string;

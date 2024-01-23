@@ -9,7 +9,7 @@
 ## Create application
 
 ```
-npm run nx -- g @nx/nest:application --directory=apps/example-basic --name=example-basic
+./node_modules/.bin/nx g @nestjs-mod/schematics:application --directory=apps/example-prisma --name=example-prisma --projectNameAndRootFormat=as-provided --strict=true
 ```
 
 ## Remove library

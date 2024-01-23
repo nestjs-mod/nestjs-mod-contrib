@@ -7,6 +7,8 @@ export const {
   InjectAllFeatureEnvironments: InjectTerminusAllHealthCheckFeatureEnvironments,
   InjectFeatureEnvironments: InjectTerminusHealthCheckFeatureEnvironments,
   InjectService: InjectTerminusHealthCheckService,
+  InjectAllModuleSettings: InjectAllTerminusHealthCheckModuleSettings,
+  InjectModuleSettings: InjectTerminusHealthCheckModuleSettings,
 } = getNestModuleDecorators({
   moduleName: TERMINUS_MODULE_NAME,
 });

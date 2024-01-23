@@ -1,0 +1,136 @@
+{
+  "name": "example-prisma",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-prisma/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-prisma",
+        "main": "apps/example-prisma/src/main.ts",
+        "tsConfig": "apps/example-prisma/tsconfig.app.json",
+        "assets": [
+          "apps/example-prisma/src/assets"
+        ],
+        "webpackConfig": "apps/example-prisma/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "example-prisma:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-prisma:build:development"
+        },
+        "production": {
+          "buildTarget": "example-prisma:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/example-prisma/jest.config.ts"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-prisma/main.js"
+        ],
+        "parallel": false
+      }
+    },
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "./node_modules/.bin/prisma generate --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma"
+        ],
+        "parallel": false,
+        "envFile": "./.env",
+        "color": true
+      }
+    },
+    "prisma-generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "./node_modules/.bin/prisma generate --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma"
+        ],
+        "parallel": false,
+        "envFile": "./.env",
+        "color": true
+      }
+    },
+    "prisma-pull": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "./node_modules/.bin/prisma db pull --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma"
+        ],
+        "parallel": false,
+        "envFile": "./.env",
+        "color": true
+      }
+    },
+    "prisma-migrate-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "./node_modules/.bin/prisma migrate dev --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma"
+        ],
+        "parallel": false,
+        "envFile": "./.env",
+        "color": true
+      }
+    },
+    "prisma-migrate-deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "./node_modules/.bin/prisma migrate deploy --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma"
+        ],
+        "parallel": false,
+        "envFile": "./.env",
+        "color": true
+      }
+    },
+    "db-create": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=${PRISMA_ROOT_DATABASE_URL} --app-database-url=${PRISMA_PRISMA_USER_DATABASE_URL}"
+        ],
+        "parallel": false,
+        "envFile": "./.env",
+        "color": true
+      }
+    }
+  },
+  "tags": []
+}

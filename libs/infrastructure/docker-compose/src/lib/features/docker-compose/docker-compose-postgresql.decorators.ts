@@ -9,6 +9,8 @@ export const {
   InjectAllFeatures: InjectAllDockerComposePostgresFeatures,
   InjectFeatureEnvironments: InjectDockerComposePostgresFeatureEnvironments,
   InjectAllFeatureEnvironments: InjectAllDockerComposePostgresFeatureEnvironments,
+  InjectAllModuleSettings: InjectAllDockerComposePostgresModuleSettings,
+  InjectModuleSettings: InjectDockerComposePostgresModuleSettings,
 } = getNestModuleDecorators({
   moduleName: DOCKER_COMPOSE_POSTGRES_MODULE_NAME,
 });
@@ -18,6 +20,8 @@ export const {
   InjectAllFeatures: InjectAllDockerComposePostgresInternalFeatures,
   InjectFeatureEnvironments: InjectDockerComposePostgresInternalFeatureEnvironments,
   InjectAllFeatureEnvironments: InjectAllDockerComposePostgresInternalFeatureEnvironments,
+  InjectAllModuleSettings: InjectAllDockerComposePostgresInternaModuleSettings,
+  InjectModuleSettings: InjectDockerComposePostgresInternaModuleSettings,
 } = getNestModuleDecorators({
   moduleName: DOCKER_COMPOSE_POSTGRES_INTERNAL_MODULE_NAME,
 });
