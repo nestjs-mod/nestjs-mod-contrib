@@ -45,6 +45,7 @@ export const { PrismaModule } = createNestModule({
       createNestModule({
         project,
         moduleName: PRISMA_MODULE_NAME,
+        moduleDescription: 'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)',
         staticConfigurationModel: PrismaConfiguration,
         environmentsModel: PrismaEnvironments,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
