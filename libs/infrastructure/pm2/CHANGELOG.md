@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.3.0...pm2-v1.4.0) (2024-01-23)
+
+
+### Features
+
+* add @nestjs-mod/prisma, update docker-compose for correct work with envs ([750f302](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/750f3022e42dd7af3aca2344d92bb1406b9009cc))
+
 # [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.2.0...pm2-v1.3.0) (2024-01-21)
 
 
