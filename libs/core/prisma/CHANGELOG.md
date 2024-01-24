@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.0.2...prisma-v1.0.3) (2024-01-24)
+
+
+### Bug Fixes
+
+* update [@nestjs-mod](https://github.com/nestjs-mod) versions from 2.5.2 to 2.5.3 ([ba4d80c](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/ba4d80c6fb0c0fcd2dc608efa5abf581bb01bc43))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.0.1...prisma-v1.0.2) (2024-01-24)
 
 
