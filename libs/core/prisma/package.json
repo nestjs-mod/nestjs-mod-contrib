@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/prisma",
   "description": "Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "nestjs",
     "nestjs-mod",
@@ -39,7 +39,7 @@
     "tslib": "^2.3.0",
     "case-anything": "^2.1.13",
     "connection-string": "^4.3.5",
-    "@nestjs-mod/common": "2.5.0"
+    "@nestjs-mod/common": "2.5.2"
   },
   "peerDependencies": {
     "@nestjs/common": "*",
