@@ -97,6 +97,7 @@ PostgreSQL (Postgres) is an open source object-relational database known for rel
 * https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
 * https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
 * https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+* https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
 
 
 ## License
