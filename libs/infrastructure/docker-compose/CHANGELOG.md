@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.2.0...docker-compose-v1.2.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* update logic for generate package json scripts, add order for categories ([66e0753](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/66e07536875d5574fefb6e307e6dfd17c1596ca8))
+
 # [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.1.3...docker-compose-v1.2.0) (2024-01-30)
 
 
