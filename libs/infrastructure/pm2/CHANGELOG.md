@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.4.2...pm2-v1.5.0) (2024-01-30)
+
+
+### Features
+
+* the files and commands added to the infrastructure have been expanded, and examples of working with libraries have been added ([7f6c852](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/7f6c8522f51397ef78a36d6bae09a62f19418518))
+
 ## [1.4.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.4.1...pm2-v1.4.2) (2024-01-24)
 
 
