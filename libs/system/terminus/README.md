@@ -8,7 +8,7 @@ Terminus integration provides readiness/liveness health checks for NestJS-mod (W
 ## Installation
 
 ```bash
-npm i --save @nestjs-mod/terminus
+npm i --save @nestjs/terminus @nestjs-mod/terminus
 ```
 
 
@@ -24,6 +24,115 @@ npm i --save @nestjs-mod/terminus
 ### TerminusHealthCheck
 Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus)
 
+#### Use in NestJS
+Example of use feature configurations and use standardHealthIndicators.
+
+```typescript
+import { TerminusHealthCheck, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
+import { NestFactory } from '@nestjs/core';
+
+import { Module } from '@nestjs/common';
+import { HealthIndicatorStatus, MemoryHealthIndicator } from '@nestjs/terminus';
+
+export class FeatureTerminusHealthCheckFeatureConfiguration implements TerminusHealthCheckFeatureConfiguration {
+  name = 'Feature';
+  async isHealthy() {
+    return {
+      feature: {
+        status: 'up' as HealthIndicatorStatus,
+      },
+    };
+  }
+}
+
+@Module({
+  imports: [
+    TerminusHealthCheck.forFeature({
+      featureModuleName: 'feature',
+      featureConfiguration: new FeatureTerminusHealthCheckFeatureConfiguration(),
+    }),
+  ],
+})
+export class FeatureModule {}
+
+@Module({
+  imports: [
+    TerminusHealthCheck.forRootAsync({
+      configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
+        standardHealthIndicators: [
+          { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
+        ],
+      }),
+      inject: [MemoryHealthIndicator],
+    }),
+    FeatureModule,
+  ],
+})
+export class AppModule {}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+
+bootstrap();
+```
+
+
+#### Use in NestJS-mod
+An example of using forRoot with parameters and use feature configurations with use standardHealthIndicators, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-terminus.
+
+```typescript
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  bootstrapNestApplication,
+  createNestModule,
+} from '@nestjs-mod/common';
+import { TerminusHealthCheck, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
+import { HealthIndicatorStatus, MemoryHealthIndicator } from '@nestjs/terminus';
+
+export class FeatureTerminusHealthCheckFeatureConfiguration implements TerminusHealthCheckFeatureConfiguration {
+  name = 'Feature';
+  async isHealthy() {
+    return {
+      feature: {
+        status: 'up' as HealthIndicatorStatus,
+      },
+    };
+  }
+}
+
+export const { FeatureModule } = createNestModule({
+  moduleName: 'FeatureModule',
+  imports: [
+    TerminusHealthCheck.forFeature({
+      featureModuleName: 'feature',
+      featureConfiguration: new FeatureTerminusHealthCheckFeatureConfiguration(),
+    }),
+  ],
+});
+
+bootstrapNestApplication({
+  modules: {
+    system: [
+      DefaultNestApplicationInitializer.forRoot(),
+      TerminusHealthCheck.forRootAsync({
+        configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
+          standardHealthIndicators: [
+            { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
+          ],
+        }),
+        inject: [MemoryHealthIndicator],
+      }),
+      DefaultNestApplicationListener.forRoot({ staticEnvironments: { port: 3000 } }),
+    ],
+    feature: [FeatureModule.forRoot()],
+  },
+});
+```
+
+
 #### Shared providers
 `TerminusHealthCheckService`
 
@@ -35,7 +144,7 @@ Terminus integration provides readiness/liveness health checks for NestJS-mod (W
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`standardHealthIndicator`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|-|
+|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|-|
 
 #### Static configuration
 
@@ -62,6 +171,8 @@ Terminus integration provides readiness/liveness health checks for NestJS-mod (W
 * https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
 * https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
 * https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+* https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/INFRASTRUCTURE.MD - A simple example of infrastructure documentation.
+* https://github.com/nestjs-mod/nestjs-mod-contrib/blob/master/apps/example-prisma/INFRASTRUCTURE.MD - An extended example of infrastructure documentation with a docker-compose file and a data base.
 * https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
 
 

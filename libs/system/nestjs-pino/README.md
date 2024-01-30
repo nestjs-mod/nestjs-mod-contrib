@@ -8,7 +8,7 @@ Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pin
 ## Installation
 
 ```bash
-npm i --save @nestjs-mod/pino
+npm i --save pino-http pino nestjs-pino @nestjs-mod/pino
 ```
 
 
@@ -23,6 +23,33 @@ npm i --save @nestjs-mod/pino
 
 ### NestjsPinoLogger
 Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)
+
+#### Use in NestJS-mod
+An example of using forRoot with parameters, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-pino-logger.
+
+Passing requestId from the frontend is supported.
+
+```typescript
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  bootstrapNestApplication,
+} from '@nestjs-mod/common';
+import { NestjsPinoLogger } from '@nestjs-mod/pino';
+
+bootstrapNestApplication({
+  modules: {
+    system: [
+      DefaultNestApplicationInitializer.forRoot(),
+      NestjsPinoLogger.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticEnvironments: { port: 3000 },
+      }),
+    ],
+  },
+});
+```
+
 
 #### Configuration
 
@@ -43,6 +70,8 @@ Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pin
 * https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
 * https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
 * https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+* https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/INFRASTRUCTURE.MD - A simple example of infrastructure documentation.
+* https://github.com/nestjs-mod/nestjs-mod-contrib/blob/master/apps/example-prisma/INFRASTRUCTURE.MD - An extended example of infrastructure documentation with a docker-compose file and a data base.
 * https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
 
 

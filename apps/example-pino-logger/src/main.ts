@@ -8,14 +8,14 @@ import {
   DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
   NestModuleCategory,
+  PACKAGE_JSON_FILE,
   ProjectUtils,
   bootstrapNestApplication,
   createNestModule,
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { NestjsPinoLogger } from '@nestjs-mod/pino';
-import { ECOSYSTEM_CONFIG_FILE, PACKAGE_JSON_FILE, Pm2 } from '@nestjs-mod/pm2';
-import { RestInfrastructureHtmlReport } from '@nestjs-mod/reports';
+import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
 import { AppModule } from './app/app.module';
@@ -75,7 +75,6 @@ bootstrapNestApplication({
           skipEmptySettings: true,
         },
       }),
-      RestInfrastructureHtmlReport.forRoot(),
       Pm2.forRoot({
         configuration: {
           ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),

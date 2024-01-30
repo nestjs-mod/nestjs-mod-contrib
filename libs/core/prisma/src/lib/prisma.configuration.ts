@@ -17,19 +17,7 @@ export class PrismaConfiguration {
   prismaModule: any;
 
   @ConfigModelProperty({
-    description: 'Prisma feature name for generate prefix to environments keys',
-  })
-  @IsNotEmpty()
-  prismaFeatureName!: string;
-
-  @ConfigModelProperty({
-    description: 'Schema file for prisma',
-  })
-  @IsNotEmpty()
-  prismaSchemaFile!: string;
-
-  @ConfigModelProperty({
-    description: 'Logging types (all_queries|long_queries)',
+    description: 'Logging types (all_queries or long_queries)',
     default: 'long_queries',
   })
   logging?: 'all_queries' | 'long_queries';
@@ -40,15 +28,27 @@ export class PrismaConfiguration {
   })
   maxQueryExecutionTime?: number;
 
+  // infrastructure
+
+  @ConfigModelProperty({
+    description: 'Prisma feature name for generate prefix to environments keys (infrastructure)',
+  })
+  prismaFeatureName?: string;
+
+  @ConfigModelProperty({
+    description: 'Schema file for prisma (infrastructure)',
+  })
+  prismaSchemaFile?: string;
+
   @ConfigModelProperty({
     description:
-      'The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (example: https://flywaydb.org, https://www.npmjs.com/package/ db-migrate)',
+      'The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)',
     default: true,
   })
   addMigrationScripts?: boolean;
 
   @ConfigModelProperty({
-    description: 'Unsafe string custom content for add to end of prisma schema file',
+    description: 'Unsafe string custom content for add to end of prisma schema file (infrastructure)',
   })
   customSchemaContent?: string;
 }

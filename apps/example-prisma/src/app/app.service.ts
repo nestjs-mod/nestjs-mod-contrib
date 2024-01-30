@@ -13,7 +13,7 @@ export class AppService implements OnApplicationBootstrap {
   onApplicationBootstrap() {
     // need for prisma integration
     if (isInfrastructureMode()) {
-      setTimeout(() => process.exit(0), 30);
+      setTimeout(() => process.exit(0), 60);
     }
   }
 

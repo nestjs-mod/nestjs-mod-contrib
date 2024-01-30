@@ -33,7 +33,9 @@
     "start": "npm run nx:many -- -t=start",
     "build": "npm run generate && npm run tsc:lint && npm run nx:many -- -t=build --skip-nx-cache=true",
     "start:prod:cli": "npm run nx -- start cli --host=0.0.0.0",
-    "start:prod:example-prisma": "npm run nx -- start example-prisma --host=0.0.0.0",
+    "start:prod:example-pino-logger": "npm run nx -- start example-pino-logger",
+    "start:prod:example-terminus": "npm run nx -- start example-terminus",
+    "start:prod:example-prisma": "npm run nx -- start example-prisma",
     "build:prod:example-prisma": "npm run nx -- build example-prisma",
     "_____docs_____": "_____docs_____",
     "docs:infrastructure": "export NODE_ENV=infrastructure && npm run nx:many -- -t=start --parallel=1",
@@ -50,9 +52,13 @@
     "tsc:lint": "tsc --noEmit -p tsconfig.base.json",
     "_____tests_____": "_____tests_____",
     "test": "npm run nx:many -- -t=test --passWithNoTests --skip-nx-cache=true --output-style=stream-without-prefixes",
+    "test:example-pino-logger": "npm run nx -- test example-pino-logger --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-terminus": "npm run nx -- test example-terminus --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-prisma": "npm run nx -- test example-prisma --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "_____utils_____": "_____utils_____",
     "generate": "npm run nx:many -- -t=generate --skip-nx-cache=true && npm run make-ts-list && npm run lint:fix",
     "nx": "nx",
+    "rucken": "rucken",
     "dep-graph": "npm run nx -- dep-graph",
     "nx:many": "npm run nx -- run-many --exclude=@nestjs-mod/contrib",
     "make-ts-list": "./node_modules/.bin/rucken make-ts-list",
@@ -66,17 +72,18 @@
     "docker-compose:start": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose.yml --compatibility up -d",
     "docker-compose:stop": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose.yml down",
     "_____prisma_____": "_____prisma_____",
+    "prisma:migrate-dev-new:example-prisma": "npm run nx -- run example-prisma:prisma-migrate-dev --create-only --name=new",
+    "prisma:migrate-dev:example-prisma": "npm run nx -- run example-prisma:prisma-migrate-dev --create-only",
+    "prisma:migrate-deploy:example-prisma": "npm run nx -- run example-prisma:prisma-migrate-deploy",
+    "prisma:migrate-deploy": "npm run nx:many -- -t=prisma-migrate-deploy",
     "prisma:pull": "npm run nx:many -- -t=prisma-pull",
-    "prisma:generate": "npm run nx:many -- -t=prisma-generate",
-    "prisma:migrate-dev-new": "npm run nx -- prisma-migrate-dev --name=new",
-    "prisma:migrate-dev": "npm run nx -- prisma-migrate-dev",
-    "prisma:migrate-deploy": "npm run nx:many -- -t=prisma-migrate-deploy"
+    "prisma:generate": "npm run nx:many -- -t=prisma-generate"
   },
   "private": true,
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.1.7",
+    "@nestjs-mod/schematics": "2.2.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "17.2.8",
@@ -119,9 +126,9 @@
     "verdaccio": "^5.0.4"
   },
   "dependencies": {
-    "@nestjs-mod/common": "2.5.3",
-    "@nestjs-mod/reports": "2.5.3",
-    "@nestjs-mod/testing": "2.5.3",
+    "@nestjs-mod/common": "2.6.0",
+    "@nestjs-mod/reports": "2.6.0",
+    "@nestjs-mod/testing": "2.6.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
@@ -148,5 +155,141 @@
   },
   "lint-staged": {
     "*.{js,ts}": "eslint --fix"
+  },
+  "scriptsComments": {
+    "pm2:start": [
+      "Launch all applications in PM2 mode"
+    ],
+    "pm2:stop": [
+      "Stop all applications in PM2 mode"
+    ],
+    "start": [
+      "Launching a built NestJS application (you must first build it using the build command)"
+    ],
+    "build": [
+      "Building a NestJS application"
+    ],
+    "start:prod:cli": [
+      "Launching cli application (you must first build it using the build command)"
+    ],
+    "start:prod:example-prisma": [
+      "Launching example-prisma application (you must first build it using the build command)"
+    ],
+    "build:prod:example-prisma": [
+      "Building example-prisma application"
+    ],
+    "docs:infrastructure": [
+      "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure"
+    ],
+    "docs:infrastructure:example-prisma": [
+      "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma"
+    ],
+    "docs:infrastructure:example-terminus": [
+      "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus"
+    ],
+    "serve:dev:cli": [
+      "Running cli application source code in watch mode"
+    ],
+    "serve:dev:example-pino-logger": [
+      "Running example-pino-logger application source code in watch mode"
+    ],
+    "serve:dev:example-terminus": [
+      "Running example-terminus application source code in watch mode"
+    ],
+    "serve:dev:example-prisma": [
+      "Running example-prisma application source code in watch mode"
+    ],
+    "lint": [
+      "Checking the typescript code for the entire project"
+    ],
+    "lint:fix": [
+      "Checking the typescript code throughout the project and trying to fix everything possible"
+    ],
+    "tsc:lint": [
+      "Checking typescript code in libraries"
+    ],
+    "test": [
+      "Running tests across the entire project"
+    ],
+    "generate": [
+      "Running the \"generate\" nx command in applications and libraries which can be customized at your discretion",
+      "automatically generating an index.ts file for each library",
+      "checking the code and trying to fix it"
+    ],
+    "nx": [
+      "Alias for running the nx version locally, which is in the project (example: `npm run nx -- dep-graph`),",
+      "in order not to install nx globally in the operating system"
+    ],
+    "dep-graph": [
+      "Generating dependency diagrams for nx applications and libraries"
+    ],
+    "nx:many": [
+      "Alias for running many nx commands (example: `npm run nx:many -- -t=lint`),",
+      "an exception has been added for the root project,",
+      "since sometimes an attempt to run an nx command on it can lead to the command freezing"
+    ],
+    "make-ts-list": [
+      "Automatically generating an index.ts file for each library,",
+      "works only for nx applications created using the `--projectNameAndRootFormat=as-provided` flag"
+    ],
+    "manual:prepare": [
+      "Preparing code, building code, creating infrastructure documentation",
+      "and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)"
+    ],
+    "rucken": [
+      "Alias for console tools and scripts for nx and not only use to automate the workflow and",
+      "speed up the development process (example: `npm run rucken -- make-ts-list`, site: https://www.npmjs.com/package/rucken)"
+    ],
+    "update:nestjs-mod-versions": [
+      "Updating NestJS-mod libraries"
+    ],
+    "db:create": [
+      "Creation all databases of applications and modules"
+    ],
+    "docker-compose:start:prisma": [
+      "Running the docker-compose infrastructure for prisma"
+    ],
+    "docker-compose:stop:prisma": [
+      "Stopping the docker-compose infrastructure for prisma"
+    ],
+    "docker-compose:start": [
+      "Running the main docker-compose infrastructure"
+    ],
+    "docker-compose:stop": [
+      "Stopping the main docker-compose infrastructure"
+    ],
+    "prisma:pull": [
+      "Generating a prisma schema based on a database"
+    ],
+    "prisma:generate": [
+      "Generation of client prisma schema of all applications and modules"
+    ],
+    "prisma:migrate-dev:example-prisma": [
+      "Alias for create new migration for example-prisma (example: `npm run prisma:migrate-dev:example-prisma --name=new)`"
+    ],
+    "prisma:migrate-deploy": [
+      "Applying migrations of all applications and modules"
+    ],
+    "prisma:migrate-dev-new:example-prisma": [
+      "Command to create new empty migration for example-prisma"
+    ],
+    "prisma:migrate-deploy:example-prisma": [
+      "Applying migrations for example-prisma"
+    ],
+    "start:prod:example-pino-logger": [
+      "Launching a built example-pino-logger (you must first build it using the build command)"
+    ],
+    "start:prod:example-terminus": [
+      "Launching a built example-terminus (you must first build it using the build command)"
+    ],
+    "test:example-pino-logger": [
+      "Running tests for example-pino-logger"
+    ],
+    "test:example-terminus": [
+      "Running tests for example-terminus"
+    ],
+    "test:example-prisma": [
+      "Running tests for example-prisma"
+    ]
   }
 }

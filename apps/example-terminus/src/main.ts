@@ -16,7 +16,6 @@ import {
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
 import { NestjsPinoLogger } from '@nestjs-mod/pino';
 import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
-import { RestInfrastructureHtmlReport } from '@nestjs-mod/reports';
 import { TerminusHealthCheck } from '@nestjs-mod/terminus';
 import { Logger } from '@nestjs/common';
 import { MemoryHealthIndicator } from '@nestjs/terminus';
@@ -53,7 +52,7 @@ bootstrapNestApplication({
       NestjsPinoLogger.forRoot(),
       TerminusHealthCheck.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
-          standardHealthIndicator: [
+          standardHealthIndicators: [
             { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
           ],
         }),
@@ -92,13 +91,6 @@ bootstrapNestApplication({
           skipEmptySettings: true,
         },
       }),
-      RestInfrastructureHtmlReport.forRoot(),
-      Pm2.forRoot({
-        configuration: {
-          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
-          applicationScriptFile: join('dist/apps/example-terminus/main.js'),
-        },
-      }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
@@ -109,6 +101,12 @@ bootstrapNestApplication({
       DockerComposePostgreSQL.forFeature({
         featureModuleName: 'feat',
         // featureEnvironments: { databaseUrl: 'feature connection' },
+      }),
+      Pm2.forRoot({
+        configuration: {
+          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          applicationScriptFile: join('dist/apps/example-terminus/main.js'),
+        },
       }),
     ],
   },

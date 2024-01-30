@@ -11,11 +11,6 @@
       "node_args": "-r dotenv/config"
     },
     {
-      "name": "example-prisma",
-      "script": "node ./dist/apps/example-prisma/main.js",
-      "node_args": "-r dotenv/config"
-    },
-    {
       "name": "prisma",
       "script": "node ./dist/apps/example-prisma/main.js",
       "node_args": "-r dotenv/config"

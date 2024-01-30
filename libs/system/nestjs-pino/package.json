@@ -36,6 +36,17 @@
     "dependencies": {
         "tslib": "^2.3.0"
     },
+    "dependenciesInfo": {
+        "pino-http": {
+            "docs": true
+        },
+        "pino": {
+            "docs": true
+        },
+        "nestjs-pino": {
+            "docs": true
+        }
+    },
     "peerDependencies": {
         "nestjs-pino": "*",
         "pino-http": "*",

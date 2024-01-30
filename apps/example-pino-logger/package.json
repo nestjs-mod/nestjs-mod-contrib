@@ -1,6 +1,17 @@
 {
   "name": "pino-logger",
-  "scripts": {},
+  "description": "Example application with PM2 and Pino-logger",
+  "devScripts": [
+    "generate",
+    "serve:dev:example-pino-logger"
+  ],
+  "prodScripts": [
+    "manual:prepare",
+    "start:prod:example-pino-logger"
+  ],
+  "testsScripts": [
+    "test:example-pino-logger"
+  ],
   "dependencies": {
     "pm2": ">=5.3.0",
     "dotenv": ">=16.3.1"

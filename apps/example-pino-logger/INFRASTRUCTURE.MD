@@ -1,5 +1,89 @@
 # pino-logger
+> Version: 0.0.0
 
+Example application with PM2 and Pino-logger
+## Installation
+```bash
+git clone https://github.com/nestjs-mod/nestjs-mod-contrib.git
+cd nestjs-mod-contrib
+npm install
+```
+## Running the app in watch mode
+```bash
+# running the "generate" nx command in applications and libraries which can be customized at your discretion automatically generating an index.ts file for each library checking the code and trying to fix it
+npm run generate
+
+# running example-pino-logger application source code in watch mode
+npm run serve:dev:example-pino-logger
+```
+## Running the app in production mode
+```bash
+# preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
+npm run manual:prepare
+
+# launching a built example-pino-logger (you must first build it using the build command)
+npm run start:prod:example-pino-logger
+```
+## Test
+```bash
+# running tests for example-pino-logger
+npm run test:example-pino-logger
+```
+## All scripts
+|Script|Description|
+|---|---|
+|**pm2 prod infra**|
+|`npm run pm2:start`|Launch all applications in PM2 mode|
+|`npm run pm2:stop`|Stop all applications in PM2 mode|
+|**prod infra**|
+|`npm run start`|Launching a built NestJS application (you must first build it using the build command)|
+|`npm run build`|Building a NestJS application|
+|`npm run start:prod:cli`|Launching cli application (you must first build it using the build command)|
+|`npm run start:prod:example-pino-logger`|Launching a built example-pino-logger (you must first build it using the build command)|
+|`npm run start:prod:example-terminus`|Launching a built example-terminus (you must first build it using the build command)|
+|`npm run start:prod:example-prisma`|Launching example-prisma application (you must first build it using the build command)|
+|`npm run build:prod:example-prisma`|Building example-prisma application|
+|**docs**|
+|`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
+|`npm run docs:infrastructure:example-prisma`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma|
+|`npm run docs:infrastructure:example-terminus`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus|
+|**dev infra**|
+|`npm run serve:dev:cli`|Running cli application source code in watch mode|
+|`npm run serve:dev:example-pino-logger`|Running example-pino-logger application source code in watch mode|
+|`npm run serve:dev:example-terminus`|Running example-terminus application source code in watch mode|
+|`npm run serve:dev:example-prisma`|Running example-prisma application source code in watch mode|
+|**lint**|
+|`npm run lint`|Checking the typescript code for the entire project|
+|`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
+|`npm run tsc:lint`|Checking typescript code in libraries|
+|**tests**|
+|`npm run test`|Running tests across the entire project|
+|`npm run test:example-pino-logger`|Running tests for example-pino-logger|
+|`npm run test:example-terminus`|Running tests for example-terminus|
+|`npm run test:example-prisma`|Running tests for example-prisma|
+|**utils**|
+|`npm run generate`|Running the "generate" nx command in applications and libraries which can be customized at your discretion automatically generating an index.ts file for each library checking the code and trying to fix it|
+|`npm run nx`|Alias for running the nx version locally, which is in the project (example: `npm run nx -- dep-graph`), in order not to install nx globally in the operating system|
+|`npm run rucken`|Alias for console tools and scripts for nx and not only use to automate the workflow and speed up the development process (example: `npm run rucken -- make-ts-list`, site: https://www.npmjs.com/package/rucken)|
+|`npm run dep-graph`|Generating dependency diagrams for nx applications and libraries|
+|`npm run nx:many`|Alias for running many nx commands (example: `npm run nx:many -- -t=lint`), an exception has been added for the root project, since sometimes an attempt to run an nx command on it can lead to the command freezing|
+|`npm run make-ts-list`|Automatically generating an index.ts file for each library, works only for nx applications created using the `--projectNameAndRootFormat=as-provided` flag|
+|`npm run manual:prepare`|Preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)|
+|`npm run update:nestjs-mod-versions`|Updating NestJS-mod libraries|
+|**db**|
+|`npm run db:create`|Creation all databases of applications and modules|
+|**docker-compose infra**|
+|`npm run docker-compose:start:prisma`|Running the docker-compose infrastructure for prisma|
+|`npm run docker-compose:stop:prisma`|Stopping the docker-compose infrastructure for prisma|
+|`npm run docker-compose:start`|Running the main docker-compose infrastructure|
+|`npm run docker-compose:stop`|Stopping the main docker-compose infrastructure|
+|**prisma**|
+|`npm run prisma:migrate-dev-new:example-prisma`|Command to create new empty migration for example-prisma|
+|`npm run prisma:migrate-dev:example-prisma`|Alias for create new migration for example-prisma (example: `npm run prisma:migrate-dev:example-prisma --name=new)`|
+|`npm run prisma:migrate-deploy:example-prisma`|Applying migrations for example-prisma|
+|`npm run prisma:migrate-deploy`|Applying migrations of all applications and modules|
+|`npm run prisma:pull`|Generating a prisma schema based on a database|
+|`npm run prisma:generate`|Generation of client prisma schema of all applications and modules|
 ## System modules
 System modules necessary for the operation of the entire application (examples: launching a NestJS application, launching microservices, etc.). Only NestJS-mod compatible modules.
 
@@ -55,9 +139,6 @@ Static variables of primitive and complex types that are used in the module and 
 ## Infrastructure modules
 Infrastructure modules are needed to create configurations that launch various external services (examples: docker-compose file for raising a database, gitlab configuration for deploying an application). Only NestJS-mod compatible modules.
 
-### RestInfrastructureHtmlReport
-Rest infrastructure HTML-report
-
 ### Pm2
 Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2)
 
@@ -82,3 +163,10 @@ Static variables of primitive and complex types that are used in the module and 
 | ------ | ----------- | ----------- | ------- | ----- |
 |`markdownFile`|Name of the markdown-file in which to save the infrastructure report|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-pino-logger/INFRASTRUCTURE.MD```|
 |`skipEmptySettings`|Skip empty values of env and config models|**optional**|-|```true```|
+
+
+## Maintainers
+- [EndyKaufman](admin@site15.ru)
+
+## License
+[MIT](LICENSE)

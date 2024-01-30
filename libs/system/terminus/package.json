@@ -44,6 +44,11 @@
         "@nestjs/common": "*",
         "@nestjs-mod/common": "*"
     },
+    "dependenciesInfo": {
+        "@nestjs/terminus": {
+            "docs": true
+        }
+    },
     "peerDependenciesMeta": {
         "class-validator": {
             "optional": true

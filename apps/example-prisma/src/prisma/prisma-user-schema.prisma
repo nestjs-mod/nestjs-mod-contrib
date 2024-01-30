@@ -6,16 +6,13 @@ generator client {
 datasource db {
   provider          = "postgres"
   url               = env("PRISMA_PRISMA_USER_DATABASE_URL")
-  shadowDatabaseUrl = env("PRISMA_PRISMA_USER_DATABASE_URL_SHADOW_DATABASE_URL")
+  shadowDatabaseUrl = env("PRISMA_PRISMA_USER_SHADOW_DATABASE_URL")
 }
 
 
 model PrismaUser {
-  /// @TypeGraphQL.omit(input: ["create", "orderBy"])
   id             String   @id(map: "PK_PRISMA_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   externalUserId String   @unique(map: "UQ_PRISMA_USER") @db.Uuid
-  /// @TypeGraphQL.omit(input: ["create", "update"])
   createdAt      DateTime @default(now()) @db.Timestamp(6)
-  /// @TypeGraphQL.omit(input: ["create", "update"])
   updatedAt      DateTime @default(now()) @db.Timestamp(6)
 }

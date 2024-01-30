@@ -1,7 +1,14 @@
-import { NxProjectJsonService, PackageJsonService, WrapApplicationOptionsService } from '@nestjs-mod/common';
+import {
+  DotEnvService,
+  NxProjectJsonService,
+  PackageJsonService,
+  WrapApplicationOptionsService,
+} from '@nestjs-mod/common';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { constantCase, kebabCase } from 'case-anything';
 import { ConnectionString } from 'connection-string';
+import { dirname } from 'path';
+import { PrismaError } from '../prisma-errors';
 import { PrismaConfiguration } from '../prisma.configuration';
 import { PrismaEnvironments } from '../prisma.environments';
 import { PRISMA_SCRIPTS_CATEGORY_NAME } from './prisma-infrastructure.constants';
@@ -16,7 +23,8 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     private readonly prismaConfiguration: PrismaConfiguration,
     private readonly prismaEnvironments: PrismaEnvironments,
     private readonly prismaSchemaFileService: PrismaSchemaFileService,
-    private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
+    private readonly wrapApplicationOptionsService: WrapApplicationOptionsService,
+    private readonly dotEnvService: DotEnvService
   ) {}
 
   async onModuleInit() {
@@ -27,81 +35,142 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     await this.updatePackageJsonFile();
     await this.updateProjectJsonFile();
     await this.updatePrismaSchemaFile();
+    await this.updateDotEnvFile();
   }
 
   private async updatePackageJsonFile() {
-    const data = (await this.packageJsonService.read()) ?? {};
-    if (!data.scripts) {
-      data.scripts = {};
-    }
-    if (!data.scripts[PRISMA_SCRIPTS_CATEGORY_NAME]) {
-      data.scripts[PRISMA_SCRIPTS_CATEGORY_NAME] = {};
-    }
-    if (this.prismaConfiguration.addMigrationScripts) {
-      data.scripts[PRISMA_SCRIPTS_CATEGORY_NAME] = {
-        'prisma:migrate-dev-new': 'npm run nx -- prisma-migrate-dev --name=new',
-        'prisma:migrate-dev': 'npm run nx -- prisma-migrate-dev',
-        'prisma:migrate-deploy': 'npm run nx:many -- -t=prisma-migrate-deploy',
-        ...data.scripts[PRISMA_SCRIPTS_CATEGORY_NAME],
-      };
-    }
-    data.scripts[PRISMA_SCRIPTS_CATEGORY_NAME] = {
-      'prisma:pull': 'npm run nx:many -- -t=prisma-pull',
-      'prisma:generate': 'npm run nx:many -- -t=prisma-generate',
-      ...data.scripts[PRISMA_SCRIPTS_CATEGORY_NAME],
-    };
+    const projectJson = await this.nxProjectJsonService.read();
+    if (projectJson) {
+      const projectName = projectJson.name;
+      const packageJson = await this.packageJsonService.read();
+      if (packageJson) {
+        this.packageJsonService.addScripts(
+          PRISMA_SCRIPTS_CATEGORY_NAME,
+          {
+            [`prisma:migrate-dev-new:${projectName}`]: {
+              commands: [`npm run nx -- run ${projectName}:prisma-migrate-dev --create-only --name=new`],
+              comments: [`Command to create new empty migration for ${projectName}`],
+            },
+            [`prisma:migrate-dev:${projectName}`]: {
+              commands: [`npm run nx -- run ${projectName}:prisma-migrate-dev --create-only`],
+              comments: [
+                `Alias for create new migration for ${projectName} (example: \`npm run prisma:migrate-dev:${projectName} --name=new)\``,
+              ],
+            },
+            [`prisma:migrate-deploy:${projectName}`]: {
+              commands: [`npm run nx -- run ${projectName}:prisma-migrate-deploy`],
+              comments: [`Applying migrations for ${projectName}`],
+            },
+            'prisma:migrate-deploy': {
+              commands: ['npm run nx:many -- -t=prisma-migrate-deploy'],
+              comments: ['Applying migrations of all applications and modules'],
+            },
+            'prisma:pull': {
+              commands: ['npm run nx:many -- -t=prisma-pull'],
+              comments: ['Generating a prisma schema based on a database'],
+            },
+            'prisma:generate': {
+              commands: ['npm run nx:many -- -t=prisma-generate'],
+              comments: ['Generation of client prisma schema of all applications and modules'],
+            },
+          },
+          packageJson
+        );
 
-    if (!data.dependencies) {
-      data.dependencies = {};
-    }
-    if (!data.dependencies['@prisma/client']) {
-      data.dependencies['@prisma/client'] = prismaJsVersion;
-    }
+        if (!packageJson.dependencies) {
+          packageJson.dependencies = {};
+        }
+        if (!packageJson.dependencies['@prisma/client']) {
+          packageJson.dependencies['@prisma/client'] = prismaJsVersion;
+        }
 
-    if (!data.devDependencies) {
-      data.devDependencies = {};
-    }
-    if (!data.dependencies['@prisma/client']) {
-      data.dependencies['prisma'] = prismaJsVersion;
-    }
+        if (!packageJson.devDependencies) {
+          packageJson.devDependencies = {};
+        }
+        if (!packageJson.dependencies['@prisma/client']) {
+          packageJson.dependencies['prisma'] = prismaJsVersion;
+        }
 
-    await this.packageJsonService.write(data);
+        await this.packageJsonService.write(packageJson);
+      }
+    }
   }
 
   private async updateProjectJsonFile() {
-    // generate
-    await this.nxProjectJsonService.addRunCommands([
-      './node_modules/.bin/prisma generate --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma',
-    ]);
-    await this.nxProjectJsonService.addRunCommands(
-      ['./node_modules/.bin/prisma generate --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma'],
-      'prisma-generate'
-    );
+    if (!this.prismaConfiguration.prismaSchemaFile) {
+      throw new PrismaError('prismaSchemaFile nop set');
+    }
+    const projectJson = await this.nxProjectJsonService.read();
+    const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
+    if (projectJson && packageJsonFilePath) {
+      const prismaSchemaFilePath = this.prismaConfiguration.prismaSchemaFile.replace(dirname(packageJsonFilePath), '');
+      // generate
+      await this.nxProjectJsonService.addRunCommands([
+        `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`,
+      ]);
+      await this.nxProjectJsonService.addRunCommands(
+        [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
+        'prisma-generate'
+      );
 
-    // pull
-    await this.nxProjectJsonService.addRunCommands(
-      ['./node_modules/.bin/prisma db pull --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma'],
-      'prisma-pull'
-    );
+      // pull
+      await this.nxProjectJsonService.addRunCommands(
+        [`./node_modules/.bin/prisma db pull --schema=.${prismaSchemaFilePath}`],
+        'prisma-pull'
+      );
 
+      if (this.prismaConfiguration.addMigrationScripts) {
+        // add
+
+        const commands = (projectJson.targets?.['db-create']?.options?.['commands'] || []) as string[];
+        for (const command of commands) {
+          // "./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=${PRISMA_ROOT_DATABASE_URL} --app-database-url=${PRISMA_PRISMA_USER_DATABASE_URL}"
+          const rootDatabaseName = command.split('--root-database-url=${')[1].split('}')[0];
+          const appDatabaseName = command.split('--app-database-url=${')[1].split('}')[0];
+
+          if (!appDatabaseName.includes('SHADOW_DATABASE_URL')) {
+            // update db-create command
+            const SHADOW_DATABASE_URL = appDatabaseName.replace('_DATABASE_URL', '_SHADOW_DATABASE_URL');
+            await this.nxProjectJsonService.addRunCommands(
+              [
+                `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseName}} --app-database-url=\${${SHADOW_DATABASE_URL}}`,
+              ],
+              'db-create'
+            );
+          }
+        }
+        // migrate-dev
+        await this.nxProjectJsonService.addRunCommands(
+          [`./node_modules/.bin/prisma migrate dev --schema=.${prismaSchemaFilePath}`],
+          'prisma-migrate-dev'
+        );
+
+        // migrate-deploy
+        await this.nxProjectJsonService.addRunCommands(
+          [`./node_modules/.bin/prisma migrate deploy --schema=.${prismaSchemaFilePath}`],
+          'prisma-migrate-deploy'
+        );
+      }
+    }
+  }
+
+  private async updateDotEnvFile() {
     if (this.prismaConfiguration.addMigrationScripts) {
-      // migrate-dev
-      await this.nxProjectJsonService.addRunCommands(
-        ['./node_modules/.bin/prisma migrate dev --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma'],
-        'prisma-migrate-dev'
-      );
-
-      // migrate-deploy
-      await this.nxProjectJsonService.addRunCommands(
-        [
-          './node_modules/.bin/prisma migrate deploy --schema=./apps/example-prisma/src/prisma/prisma-user-schema.prisma',
-        ],
-        'prisma-migrate-deploy'
-      );
+      const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
+      // update env file
+      const envs = await this.dotEnvService.read(false, true);
+      if (envs?.[databaseName] && !envs[shadowDatabaseName]) {
+        const parsed = this.parseDatabaseUrl(envs[databaseName] || '');
+        envs[shadowDatabaseName] = envs[databaseName]?.replace(`/${parsed.DATABASE}?`, `/shadow_${parsed.DATABASE}?`);
+        await this.dotEnvService.write(envs, true);
+      }
     }
   }
 
   private async updatePrismaSchemaFile() {
+    if (!this.prismaConfiguration.prismaFeatureName) {
+      throw new PrismaError('prismaFeatureName nop set');
+    }
     let prismaSchema = await this.prismaSchemaFileService.read();
     if (!prismaSchema) {
       prismaSchema = `generator client {
@@ -117,12 +186,9 @@ datasource db {
 }
 
 model PrismaUser {
-  /// @TypeGraphQL.omit(input: ["create", "orderBy"])
   id             String   @id(map: "PK_PRISMA_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   externalUserId String   @unique(map: "UQ_PRISMA_USER") @db.Uuid
-  /// @TypeGraphQL.omit(input: ["create", "update"])
   createdAt      DateTime @default(now()) @db.Timestamp(6)
-  /// @TypeGraphQL.omit(input: ["create", "update"])
   updatedAt      DateTime @default(now()) @db.Timestamp(6)
 }
 `;
@@ -154,17 +220,7 @@ model PrismaUser {
   output   = "../../../../node_modules/${clientNodeJSModuleName}"
 }`;
 
-    const concatedDatabaseName = [
-      this.wrapApplicationOptionsService.project?.name,
-      this.prismaConfiguration.prismaFeatureName,
-      'DATABASE_URL',
-    ].join('_');
-    const databaseName = this.prismaConfiguration.prismaFeatureName
-      ? `${constantCase(concatedDatabaseName)}`
-      : `DATABASE_URL`;
-    const shadowDatabaseName = this.prismaConfiguration.prismaFeatureName
-      ? `${constantCase(concatedDatabaseName)}_SHADOW_DATABASE_URL`
-      : `SHADOW_DATABASE_URL`;
+    const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
 
     const connectionString = this.parseDatabaseUrl(this.prismaEnvironments.databaseUrl);
 
@@ -181,6 +237,30 @@ model PrismaUser {
     await this.prismaSchemaFileService.write(
       [newGenerator, newDatasource, afterRemoveDatasource].join('\n').split('\n\n\n').join('\n')
     );
+  }
+
+  private getDbConnectionEnvKeys() {
+    if (!this.prismaConfiguration.prismaFeatureName) {
+      throw new PrismaError('prismaFeatureName nop set');
+    }
+    const concatedDatabaseName = [
+      this.wrapApplicationOptionsService.project?.name,
+      this.prismaConfiguration.prismaFeatureName,
+      'DATABASE_URL',
+    ].join('_');
+    const concatedShadowDatabaseName = [
+      this.wrapApplicationOptionsService.project?.name,
+      this.prismaConfiguration.prismaFeatureName,
+      'SHADOW_DATABASE_URL',
+    ].join('_');
+
+    const databaseName = this.prismaConfiguration.prismaFeatureName
+      ? `${constantCase(concatedDatabaseName)}`
+      : `DATABASE_URL`;
+    const shadowDatabaseName = this.prismaConfiguration.prismaFeatureName
+      ? `${constantCase(concatedShadowDatabaseName)}`
+      : `SHADOW_DATABASE_URL`;
+    return { databaseName, shadowDatabaseName };
   }
 
   parseDatabaseUrl(databaseUrl: string): {

@@ -16,7 +16,9 @@ bootstrapNestApplication({
   },
   modules: {
     system: [
-      ProjectUtils.forRoot(),
+      ProjectUtils.forRoot({
+        staticConfiguration: { updateProjectOptions: false },
+      }),
       DefaultNestApplicationInitializer.forRoot(),
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
@@ -31,6 +33,7 @@ bootstrapNestApplication({
           telegramGroup: 'https://t.me/nestjs_mod',
           packageFile: join(__dirname, '..', '..', '..', 'libs/core/prisma/package.json'),
           markdownFile: join(__dirname, '..', '..', '..', 'libs/core/prisma/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/core/prisma'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/core/prisma/src/lib')],
           modules: [import('@nestjs-mod/prisma')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
@@ -42,6 +45,7 @@ bootstrapNestApplication({
           telegramGroup: 'https://t.me/nestjs_mod',
           packageFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/package.json'),
           markdownFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/src/lib')],
           modules: [import('@nestjs-mod/pino')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
@@ -53,6 +57,7 @@ bootstrapNestApplication({
           telegramGroup: 'https://t.me/nestjs_mod',
           packageFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/package.json'),
           markdownFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/system/terminus'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/terminus/src/lib')],
           modules: [import('@nestjs-mod/terminus')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
@@ -64,6 +69,7 @@ bootstrapNestApplication({
           telegramGroup: 'https://t.me/nestjs_mod',
           packageFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/package.json'),
           markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/src/lib')],
           modules: [import('@nestjs-mod/pm2')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
@@ -75,6 +81,7 @@ bootstrapNestApplication({
           telegramGroup: 'https://t.me/nestjs_mod',
           packageFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose/package.json'),
           markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose'),
           utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose/src/lib')],
           modules: [import('@nestjs-mod/docker-compose')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,

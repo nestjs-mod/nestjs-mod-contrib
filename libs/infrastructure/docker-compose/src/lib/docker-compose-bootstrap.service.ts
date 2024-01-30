@@ -87,7 +87,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
   private async updatePackageJson() {
     const packageJson = await this.packageJsonService.read();
-    const applicationPpackageJson = await this.applicationPackageJsonService.read();
+    const applicationPackageJson = await this.applicationPackageJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (packageJson && packageJsonFilePath) {
       const dockerComposeFilePath = this.dockerComposeConfiguration.dockerComposeFile.replace(
@@ -96,17 +96,40 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       );
       if (packageJson.scripts) {
         if (dirname(packageJsonFilePath.replace(dirname(packageJsonFilePath), '')) === dirname(dockerComposeFilePath)) {
-          packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME] = {
-            ...packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME],
-            [`docker-compose:start`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
-            [`docker-compose:stop`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`,
-          };
+          this.packageJsonService.addScripts(
+            DOCKER_COMPOSE_INFRA_CATEGORY_NAME,
+            {
+              [`docker-compose:start`]: {
+                commands: [
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
+                ],
+                comments: ['Running the main docker-compose infrastructure'],
+              },
+              [`docker-compose:stop`]: {
+                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`],
+                comments: ['Stopping the main docker-compose infrastructure'],
+              },
+            },
+            packageJson
+          );
         } else {
-          packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME] = {
-            ...packageJson.scripts[DOCKER_COMPOSE_INFRA_CATEGORY_NAME],
-            [`docker-compose:start:${applicationPpackageJson?.name}`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
-            [`docker-compose:stop:${applicationPpackageJson?.name}`]: `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`,
-          };
+          this.packageJsonService.addScripts(
+            DOCKER_COMPOSE_INFRA_CATEGORY_NAME,
+            {
+              [`docker-compose:start:${applicationPackageJson?.name}`]: {
+                commands: [
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1`,
+                  `docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
+                ],
+                comments: [`Running the docker-compose infrastructure for ${applicationPackageJson?.name}`],
+              },
+              [`docker-compose:stop:${applicationPackageJson?.name}`]: {
+                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1`, `docker-compose -f .${dockerComposeFilePath} down`],
+                comments: [`Stopping the docker-compose infrastructure for ${applicationPackageJson?.name}`],
+              },
+            },
+            packageJson
+          );
         }
       }
       this.packageJsonService.write(packageJson);

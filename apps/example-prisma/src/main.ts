@@ -2,13 +2,14 @@ import {
   DefaultNestApplicationInitializer,
   DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
+  PACKAGE_JSON_FILE,
   ProjectUtils,
   bootstrapNestApplication,
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
 import { NestjsPinoLogger } from '@nestjs-mod/pino';
-import { ECOSYSTEM_CONFIG_FILE, PACKAGE_JSON_FILE, Pm2 } from '@nestjs-mod/pm2';
+import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
 import { FakePrismaClient, PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
 import { TerminusHealthCheck } from '@nestjs-mod/terminus';
 import { Logger } from '@nestjs/common';
@@ -33,7 +34,7 @@ bootstrapNestApplication({
       NestjsPinoLogger.forRoot(),
       TerminusHealthCheck.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
-          standardHealthIndicator: [
+          standardHealthIndicators: [
             { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
           ],
         }),
@@ -74,6 +75,7 @@ bootstrapNestApplication({
           prismaModule: isInfrastructureMode()
             ? { PrismaClient: FakePrismaClient }
             : import(`@prisma/prisma-user-client`),
+          addMigrationScripts: true,
         },
       }),
     ],
@@ -85,12 +87,6 @@ bootstrapNestApplication({
           skipEmptySettings: true,
         },
       }),
-      Pm2.forRoot({
-        configuration: {
-          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
-          applicationScriptFile: join('dist/apps/example-prisma/main.js'),
-        },
-      }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
@@ -100,6 +96,12 @@ bootstrapNestApplication({
       DockerComposePostgreSQL.forRoot(),
       DockerComposePostgreSQL.forFeature({
         featureModuleName: prismaUserFeatureName,
+      }),
+      Pm2.forRoot({
+        configuration: {
+          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          applicationScriptFile: join('dist/apps/example-prisma/main.js'),
+        },
       }),
     ],
   },

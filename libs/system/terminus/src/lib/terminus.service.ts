@@ -1,3 +1,4 @@
+import { InjectableFeatureConfigurationType } from '@nestjs-mod/common';
 import { Injectable } from '@nestjs/common';
 import { HealthCheckService } from '@nestjs/terminus';
 import { TerminusHealthCheckFeatureConfiguration } from './terminus-feature.configuration';
@@ -8,7 +9,7 @@ import { InjectTerminusHealthCheckFeatures } from './terminus.decorators';
 export class TerminusHealthCheckService {
   constructor(
     @InjectTerminusHealthCheckFeatures()
-    private readonly terminusHealthCheckFeatureConfigurations: TerminusHealthCheckFeatureConfiguration[],
+    private readonly terminusHealthCheckFeatureConfigurations: InjectableFeatureConfigurationType<TerminusHealthCheckFeatureConfiguration>[],
     private readonly terminusHealthCheckConfiguration: TerminusHealthCheckConfiguration,
     private readonly healthCheckService: HealthCheckService
   ) {}
@@ -16,10 +17,12 @@ export class TerminusHealthCheckService {
   async check() {
     return this.healthCheckService.check(
       [
-        ...(this.terminusHealthCheckConfiguration.standardHealthIndicator ?? []).map(({ check }) => check),
+        ...(this.terminusHealthCheckConfiguration.standardHealthIndicators ?? []).map(({ check }) => check),
         ...this.terminusHealthCheckFeatureConfigurations.map(
           (terminusHealthCheckFeatureConfiguration) => () =>
-            terminusHealthCheckFeatureConfiguration.isHealthy(terminusHealthCheckFeatureConfiguration.name)
+            terminusHealthCheckFeatureConfiguration.featureConfiguration.isHealthy(
+              terminusHealthCheckFeatureConfiguration.featureConfiguration.name
+            )
         ),
       ].filter(Boolean)
     );

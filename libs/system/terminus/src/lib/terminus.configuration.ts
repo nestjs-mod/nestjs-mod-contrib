@@ -32,5 +32,5 @@ export class TerminusHealthCheckConfiguration {
   @ConfigModelProperty({
     description: `Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck`,
   })
-  standardHealthIndicator?: { name: string; check: HealthIndicatorFunction }[];
+  standardHealthIndicators?: { name: string; check: HealthIndicatorFunction }[];
 }

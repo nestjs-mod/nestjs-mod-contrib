@@ -74,17 +74,20 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
   }
 
   private async updatePackageJsonFile() {
-    const packageJson = (await this.packageJsonService.read()) ?? {};
-    if (!packageJson?.scripts) {
-      packageJson.scripts = {};
+    const packageJson = await this.packageJsonService.read();
+    if (packageJson) {
+      this.packageJsonService.addScripts(
+        'db',
+        {
+          'db:create': {
+            commands: ['npm run nx:many -- -t=db-create'],
+            comments: [`Creation all databases of applications and modules`],
+          },
+        },
+        packageJson
+      );
+      this.packageJsonService.write(packageJson);
     }
-    if (!packageJson?.scripts?.['db']) {
-      packageJson.scripts['db'] = {};
-    }
-    if (!packageJson.scripts['db']['db:create']) {
-      packageJson.scripts['db']['db:create'] = 'npm run nx:many -- -t=db-create';
-    }
-    this.packageJsonService.write(packageJson);
   }
 
   private getEnvKeys() {

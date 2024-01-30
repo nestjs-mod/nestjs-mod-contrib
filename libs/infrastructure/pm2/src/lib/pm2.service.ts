@@ -31,11 +31,20 @@ export class Pm2Service implements OnApplicationBootstrap {
         ''
       );
       if (packageJson.scripts) {
-        packageJson.scripts[PM2_PROD_INFRA_CATEGORY_NAME] = {
-          ...packageJson.scripts[PM2_PROD_INFRA_CATEGORY_NAME],
-          'pm2:start': `./node_modules/.bin/pm2 start .${ecosystemConfigFilePath}`,
-          'pm2:stop': `./node_modules/.bin/pm2 delete all`,
-        };
+        this.packageJsonService.addScripts(
+          PM2_PROD_INFRA_CATEGORY_NAME,
+          {
+            'pm2:start': {
+              commands: [`./node_modules/.bin/pm2 start .${ecosystemConfigFilePath}`],
+              comments: ['Launch all applications in PM2 mode'],
+            },
+            'pm2:stop': {
+              commands: [`./node_modules/.bin/pm2 delete all`],
+              comments: ['Stop all applications in PM2 mode'],
+            },
+          },
+          packageJson
+        );
       }
       if (!packageJson.dependencies) {
         packageJson.dependencies = {};
