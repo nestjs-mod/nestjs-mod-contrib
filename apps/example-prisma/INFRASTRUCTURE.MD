@@ -50,6 +50,11 @@ npm run test:example-prisma
 ## All scripts
 |Script|Description|
 |---|---|
+|**dev infra**|
+|`npm run serve:dev:cli`|Running cli application source code in watch mode|
+|`npm run serve:dev:example-pino-logger`|Running example-pino-logger application source code in watch mode|
+|`npm run serve:dev:example-terminus`|Running example-terminus application source code in watch mode|
+|`npm run serve:dev:example-prisma`|Running example-prisma application source code in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -65,20 +70,29 @@ npm run test:example-prisma
 |`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
 |`npm run docs:infrastructure:example-prisma`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma|
 |`npm run docs:infrastructure:example-terminus`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus|
-|**dev infra**|
-|`npm run serve:dev:cli`|Running cli application source code in watch mode|
-|`npm run serve:dev:example-pino-logger`|Running example-pino-logger application source code in watch mode|
-|`npm run serve:dev:example-terminus`|Running example-terminus application source code in watch mode|
-|`npm run serve:dev:example-prisma`|Running example-prisma application source code in watch mode|
-|**lint**|
-|`npm run lint`|Checking the typescript code for the entire project|
-|`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
-|`npm run tsc:lint`|Checking typescript code in libraries|
+|**docker-compose infra**|
+|`npm run docker-compose:start:prisma`|Running the docker-compose infrastructure for prisma|
+|`npm run docker-compose:stop:prisma`|Stopping the docker-compose infrastructure for prisma|
+|`npm run docker-compose:start`|Running the main docker-compose infrastructure|
+|`npm run docker-compose:stop`|Stopping the main docker-compose infrastructure|
 |**tests**|
 |`npm run test`|Running tests across the entire project|
 |`npm run test:example-pino-logger`|Running tests for example-pino-logger|
 |`npm run test:example-terminus`|Running tests for example-terminus|
 |`npm run test:example-prisma`|Running tests for example-prisma|
+|**lint**|
+|`npm run lint`|Checking the typescript code for the entire project|
+|`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
+|`npm run tsc:lint`|Checking typescript code in libraries|
+|**db**|
+|`npm run db:create`|Creation all databases of applications and modules|
+|**prisma**|
+|`npm run prisma:migrate-dev-new:example-prisma`|Command to create new empty migration for example-prisma|
+|`npm run prisma:migrate-dev:example-prisma`|Alias for create new migration for example-prisma (example: `npm run prisma:migrate-dev:example-prisma --name=new)`|
+|`npm run prisma:migrate-deploy:example-prisma`|Applying migrations for example-prisma|
+|`npm run prisma:migrate-deploy`|Applying migrations of all applications and modules|
+|`npm run prisma:pull`|Generating a prisma schema based on a database|
+|`npm run prisma:generate`|Generation of client prisma schema of all applications and modules|
 |**utils**|
 |`npm run generate`|Running the "generate" nx command in applications and libraries which can be customized at your discretion automatically generating an index.ts file for each library checking the code and trying to fix it|
 |`npm run nx`|Alias for running the nx version locally, which is in the project (example: `npm run nx -- dep-graph`), in order not to install nx globally in the operating system|
@@ -88,20 +102,6 @@ npm run test:example-prisma
 |`npm run make-ts-list`|Automatically generating an index.ts file for each library, works only for nx applications created using the `--projectNameAndRootFormat=as-provided` flag|
 |`npm run manual:prepare`|Preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)|
 |`npm run update:nestjs-mod-versions`|Updating NestJS-mod libraries|
-|**db**|
-|`npm run db:create`|Creation all databases of applications and modules|
-|**docker-compose infra**|
-|`npm run docker-compose:start:prisma`|Running the docker-compose infrastructure for prisma|
-|`npm run docker-compose:stop:prisma`|Stopping the docker-compose infrastructure for prisma|
-|`npm run docker-compose:start`|Running the main docker-compose infrastructure|
-|`npm run docker-compose:stop`|Stopping the main docker-compose infrastructure|
-|**prisma**|
-|`npm run prisma:migrate-dev-new:example-prisma`|Command to create new empty migration for example-prisma|
-|`npm run prisma:migrate-dev:example-prisma`|Alias for create new migration for example-prisma (example: `npm run prisma:migrate-dev:example-prisma --name=new)`|
-|`npm run prisma:migrate-deploy:example-prisma`|Applying migrations for example-prisma|
-|`npm run prisma:migrate-deploy`|Applying migrations of all applications and modules|
-|`npm run prisma:pull`|Generating a prisma schema based on a database|
-|`npm run prisma:generate`|Generation of client prisma schema of all applications and modules|
 ## System modules
 System modules necessary for the operation of the entire application (examples: launching a NestJS application, launching microservices, etc.). Only NestJS-mod compatible modules.
 
