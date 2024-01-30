@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.5.0...pm2-v1.5.1) (2024-01-30)
+
+
+### Bug Fixes
+
+* update logic for generate package json scripts, add order for categories ([66e0753](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/66e07536875d5574fefb6e307e6dfd17c1596ca8))
+
 # [1.5.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.4.2...pm2-v1.5.0) (2024-01-30)
 
 
