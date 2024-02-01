@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.3.1...docker-compose-v1.3.2) (2024-02-01)
+
+
+### Bug Fixes
+
+* add create directory when we try create or update some files from infrastructure logic ([90e3ea8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/90e3ea87a136002966e3b973a69caab1421f9423))
+
 ## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.3.0...docker-compose-v1.3.1) (2024-02-01)
 
 

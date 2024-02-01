@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.6.1...pm2-v1.6.2) (2024-02-01)
+
+
+### Bug Fixes
+
+* add create directory when we try create or update some files from infrastructure logic ([90e3ea8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/90e3ea87a136002966e3b973a69caab1421f9423))
+
 ## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.6.0...pm2-v1.6.1) (2024-02-01)
 
 

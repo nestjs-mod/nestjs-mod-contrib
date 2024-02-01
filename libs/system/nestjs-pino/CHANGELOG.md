@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.8.0...pino-v1.8.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* add create directory when we try create or update some files from infrastructure logic ([90e3ea8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/90e3ea87a136002966e3b973a69caab1421f9423))
+
 # [1.8.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.7.1...pino-v1.8.0) (2024-02-01)
 
 
