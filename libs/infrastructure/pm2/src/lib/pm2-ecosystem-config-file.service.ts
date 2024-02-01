@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { readFile, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 import { StartOptions } from 'pm2';
 import { Pm2Configuration } from './pm2.configuration';
+import { dirname } from 'path';
+import { existsSync } from 'fs';
 
 @Injectable()
 export class Pm2EcosystemConfigFileService {
@@ -22,7 +24,14 @@ export class Pm2EcosystemConfigFileService {
   }
 
   async write({ apps }: { apps: StartOptions[] }) {
+    if (!this.getEcosystemConfigFilePath()) {
+      return;
+    }
     const content = JSON.stringify({ apps }, null, 2);
+    const fileDir = dirname(this.getEcosystemConfigFilePath());
+    if (!existsSync(fileDir)) {
+      await mkdir(fileDir, { recursive: true });
+    }
     await writeFile(this.getEcosystemConfigFilePath(), content);
   }
 }

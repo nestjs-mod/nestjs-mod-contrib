@@ -59,7 +59,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
 
   private async updateProjectJsonFile() {
     if (!this.flywayConfiguration.flywayConfigFile) {
-      throw new FlywayError('flywayConfigFile nop set');
+      throw new FlywayError('flywayConfigFile not set');
     }
     const projectJson = await this.nxProjectJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
@@ -117,7 +117,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
 
   private async updateFlywayConfigFile() {
     if (!this.flywayConfiguration.flywayFeatureName) {
-      throw new FlywayError('flywayFeatureName nop set');
+      throw new FlywayError('flywayFeatureName not set');
     }
     let flywayConfig = await this.flywayConfigFileService.read();
     if (!flywayConfig) {
@@ -177,7 +177,7 @@ module.exports = {
 
   private async createFirstMigrations() {
     if (!this.flywayConfiguration.flywayFeatureName) {
-      throw new FlywayError('flywayFeatureName nop set');
+      throw new FlywayError('flywayFeatureName not set');
     }
     const flywayFeatureName = upperCamelCase(this.flywayConfiguration.flywayFeatureName);
     const constantCaseFlywayFeatureName = constantCase(this.flywayConfiguration.flywayFeatureName);
@@ -208,6 +208,13 @@ CREATE TABLE "${flywayFeatureName}User" (
 -- CreateIndex
 CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatureName}User"("externalUserId");
 `;
+        if (!firstMigrationFilePath) {
+          return;
+        }
+        const fileDir = dirname(firstMigrationFilePath);
+        if (!existsSync(fileDir)) {
+          await mkdir(fileDir, { recursive: true });
+        }
         await writeFile(firstMigrationFilePath, firstMigration);
       }
     }
@@ -215,7 +222,7 @@ CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatu
 
   private getDbConnectionEnvKeys() {
     if (!this.flywayConfiguration.flywayFeatureName) {
-      throw new FlywayError('flywayFeatureName nop set');
+      throw new FlywayError('flywayFeatureName not set');
     }
     const concatedDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,

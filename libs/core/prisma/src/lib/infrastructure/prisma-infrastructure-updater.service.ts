@@ -87,7 +87,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
 
   private async updateProjectJsonFile() {
     if (!this.prismaConfiguration.prismaSchemaFile) {
-      throw new PrismaError('prismaSchemaFile nop set');
+      throw new PrismaError('prismaSchemaFile not set');
     }
     const projectJson = await this.nxProjectJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
@@ -158,7 +158,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
 
   private async updatePrismaSchemaFile() {
     if (!this.prismaConfiguration.prismaFeatureName) {
-      throw new PrismaError('prismaFeatureName nop set');
+      throw new PrismaError('prismaFeatureName not set');
     }
     let prismaSchema = await this.prismaSchemaFileService.read();
 
@@ -246,7 +246,7 @@ model ${prismaFeatureName}User {
 
   private getDbConnectionEnvKeys() {
     if (!this.prismaConfiguration.prismaFeatureName) {
-      throw new PrismaError('prismaFeatureName nop set');
+      throw new PrismaError('prismaFeatureName not set');
     }
     const concatedDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,

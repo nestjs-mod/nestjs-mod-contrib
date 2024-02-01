@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Compose } from 'compose-spec-schema';
 import { existsSync } from 'fs';
-import { readFile, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 import { parse, stringify } from 'yaml';
 import { DockerComposeConfiguration } from './docker-compose.configuration';
+import { dirname } from 'path';
 
 @Injectable()
 export class DockerComposeFileService {
@@ -25,7 +26,14 @@ export class DockerComposeFileService {
   }
 
   async writeFile(dockerComposeFile: string, data: Compose, header?: string) {
+    if (!dockerComposeFile){
+      return;
+    }
     try {
+      const fileDir = dirname(dockerComposeFile);
+      if (!existsSync(fileDir)) {
+        await mkdir(fileDir, { recursive: true });
+      }
       await writeFile(dockerComposeFile, [header, stringify(data)].join('\n'));
     } catch (err) {
       //
@@ -46,6 +54,10 @@ export class DockerComposeFileService {
       return;
     }
     try {
+      const fileDir = dirname(dockerComposeFile);
+      if (!existsSync(fileDir)) {
+        await mkdir(fileDir, { recursive: true });
+      }
       await this.writeFile(dockerComposeFile, data, header);
     } catch (err) {
       return;

@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { readFile, writeFile } from 'fs/promises';
+import { mkdir, readFile, writeFile } from 'fs/promises';
 import { PrismaConfiguration } from '../prisma.configuration';
 import { PrismaError } from '../prisma-errors';
+import { dirname } from 'path';
+import { existsSync } from 'fs';
 
 @Injectable()
 export class PrismaSchemaFileService {
@@ -9,7 +11,7 @@ export class PrismaSchemaFileService {
 
   getPrismaSchemaFilePath() {
     if (!this.prismaConfiguration.prismaSchemaFile) {
-      throw new PrismaError('prismaSchemaFile nop set');
+      throw new PrismaError('prismaSchemaFile not set');
     }
     return this.prismaConfiguration.prismaSchemaFile;
   }
@@ -33,6 +35,10 @@ export class PrismaSchemaFileService {
       return;
     }
     try {
+      const fileDir = dirname(prismaSchemaFile);
+      if (!existsSync(fileDir)) {
+        await mkdir(fileDir, { recursive: true });
+      }
       await writeFile(prismaSchemaFile, data);
     } catch (err) {
       //

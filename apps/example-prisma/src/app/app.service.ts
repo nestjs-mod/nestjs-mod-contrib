@@ -1,21 +1,13 @@
-import { isInfrastructureMode } from '@nestjs-mod/common';
 import { InjectPrismaClient } from '@nestjs-mod/prisma';
-import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/prisma-user-client';
 
 @Injectable()
-export class AppService implements OnApplicationBootstrap {
+export class AppService {
   constructor(
     @InjectPrismaClient()
     private readonly prismaService: PrismaClient
   ) {}
-
-  onApplicationBootstrap() {
-    // need for prisma integration
-    if (isInfrastructureMode()) {
-      setTimeout(() => process.exit(0), 60);
-    }
-  }
 
   getData(): { message: string } {
     return { message: 'Hello API' };
