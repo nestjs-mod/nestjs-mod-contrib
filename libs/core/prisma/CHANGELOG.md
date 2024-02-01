@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.1.1...prisma-v1.2.0) (2024-02-01)
+
+
+### Bug Fixes
+
+* move dependencies from code to dependenciesInfo and readme, update generator for ecosystem.config.json ([7aa6ce1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/7aa6ce1bac8c0f5938d939f3d463c490882dc47c))
+
+
+### Features
+
+* add @nestjs-mod/flyway ([ab20eef](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/ab20eef94166f6be10b39d2ef72ac8873ddb691c))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.1.0...prisma-v1.1.1) (2024-01-30)
 
 
