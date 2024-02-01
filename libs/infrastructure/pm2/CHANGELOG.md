@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.6.0...pm2-v1.6.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* add readme to PM2 ([90414fc](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/90414fc9d281ad68225c228a975beafc9aef0e36))
+
 # [1.6.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.5.1...pm2-v1.6.0) (2024-02-01)
 
 
