@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.2.1...docker-compose-v1.3.0) (2024-02-01)
+
+
+### Features
+
+* add @nestjs-mod/flyway ([ab20eef](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/ab20eef94166f6be10b39d2ef72ac8873ddb691c))
+
 ## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.2.0...docker-compose-v1.2.1) (2024-01-30)
 
 
