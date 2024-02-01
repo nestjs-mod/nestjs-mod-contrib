@@ -1,14 +1,15 @@
 
 # @nestjs-mod/prisma
 
-Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)
+Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)
 
 [![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram bot][telegram-image]][telegram-url]
 
 ## Installation
 
 ```bash
-npm i --save @nestjs-mod/prisma
+npm i --save-dev prisma@5.8.1
+npm i --save @prisma/client@5.8.1 @nestjs-mod/prisma
 ```
 
 
@@ -16,13 +17,13 @@ npm i --save @nestjs-mod/prisma
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [PrismaModule](#prismamodule) | core | Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version) |
+| [PrismaModule](#prismamodule) | core | Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres) |
 
 
 ## Modules descriptions
 
 ### PrismaModule
-Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)
+Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)
 
 #### Use in NestJS
 For add support prisma in NestJS please read https://docs.nestjs.com/recipes/prisma#set-up-prisma

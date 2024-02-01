@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import { StartOptions } from 'pm2';
 import { Pm2EcosystemConfigFileService } from './pm2-ecosystem-config-file.service';
 import { Pm2Configuration } from './pm2.configuration';
-import { DOTENV_VERSION, PM2_PROD_INFRA_CATEGORY_NAME, PM2_VERSION } from './pm2.constants';
+import { PM2_PROD_INFRA_CATEGORY_NAME } from './pm2.constants';
 
 @Injectable()
 export class Pm2Service implements OnApplicationBootstrap {
@@ -19,7 +19,6 @@ export class Pm2Service implements OnApplicationBootstrap {
   async onApplicationBootstrap() {
     await this.updatePm2EcosystemConfigFile();
     await this.updatePackageJson();
-    await this.updateApplicationPackageJson();
   }
 
   private async updatePackageJson() {
@@ -46,32 +45,7 @@ export class Pm2Service implements OnApplicationBootstrap {
           packageJson
         );
       }
-      if (!packageJson.dependencies) {
-        packageJson.dependencies = {};
-      }
-      if (!packageJson.dependencies['pm2']) {
-        packageJson.dependencies['pm2'] = `>=${PM2_VERSION}`;
-      }
-      if (!packageJson.dependencies['dotenv']) {
-        packageJson.dependencies['dotenv'] = `>=${DOTENV_VERSION}`;
-      }
       this.packageJsonService.write(packageJson);
-    }
-  }
-
-  private async updateApplicationPackageJson() {
-    const packageJson = await this.applicationPackageJsonService.read();
-    if (packageJson) {
-      if (!packageJson.dependencies) {
-        packageJson.dependencies = {};
-      }
-      if (!packageJson.dependencies['pm2']) {
-        packageJson.dependencies['pm2'] = `>=${PM2_VERSION}`;
-      }
-      if (!packageJson.dependencies['dotenv']) {
-        packageJson.dependencies['dotenv'] = `>=${DOTENV_VERSION}`;
-      }
-      this.applicationPackageJsonService.write(packageJson);
     }
   }
 
@@ -88,7 +62,7 @@ export class Pm2Service implements OnApplicationBootstrap {
         .filter(([key]) => key !== 'ecosystemConfigFile' && key !== 'applicationScriptFile')
         .reduce((all, [key, value]) => ({ ...all, [key]: value }), {}),
       name: appName,
-      script: `node .${__filename.replace(dirname(packageJsonFilePath), '')}`,
+      script: `node ./${this.pm2Configuration.applicationScriptFile.replace(dirname(packageJsonFilePath), '')}`,
     };
     currentConfig.apps = currentConfig.apps.map((app) => {
       if (app.name === appName) {

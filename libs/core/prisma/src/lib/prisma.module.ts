@@ -11,7 +11,7 @@ import { PrismaEnvironments } from './prisma.environments';
 export const { PrismaModule } = createNestModule({
   moduleName: PRISMA_MODULE_NAME,
   moduleCategory: NestModuleCategory.core,
-  moduleDescription: 'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)',
+  moduleDescription: 'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)',
   staticConfigurationModel: PrismaConfiguration,
   environmentsModel: PrismaEnvironments,
   sharedProviders: [
@@ -45,7 +45,8 @@ export const { PrismaModule } = createNestModule({
       createNestModule({
         project,
         moduleName: PRISMA_MODULE_NAME,
-        moduleDescription: 'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)',
+        moduleDescription:
+          'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)',
         staticConfigurationModel: PrismaConfiguration,
         environmentsModel: PrismaEnvironments,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -13,7 +13,6 @@ import { PrismaConfiguration } from '../prisma.configuration';
 import { PrismaEnvironments } from '../prisma.environments';
 import { PRISMA_SCRIPTS_CATEGORY_NAME } from './prisma-infrastructure.constants';
 import { PrismaSchemaFileService } from './prisma-schema-file.service';
-import { prismaJsVersion } from './prisma-versions';
 
 @Injectable()
 export class PrismaInfrastructureUpdaterService implements OnModuleInit {
@@ -76,20 +75,6 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
           },
           packageJson
         );
-
-        if (!packageJson.dependencies) {
-          packageJson.dependencies = {};
-        }
-        if (!packageJson.dependencies['@prisma/client']) {
-          packageJson.dependencies['@prisma/client'] = prismaJsVersion;
-        }
-
-        if (!packageJson.devDependencies) {
-          packageJson.devDependencies = {};
-        }
-        if (!packageJson.dependencies['@prisma/client']) {
-          packageJson.dependencies['prisma'] = prismaJsVersion;
-        }
 
         await this.packageJsonService.write(packageJson);
       }
@@ -173,6 +158,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     }
     let prismaSchema = await this.prismaSchemaFileService.read();
     if (!prismaSchema) {
+      const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
       prismaSchema = `generator client {
   provider = "prisma-client-js"
   engineType = "binary"
@@ -181,8 +167,8 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
 
 datasource db {
   provider          = "postgresql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  url               = env("${databaseName}")
+  shadowDatabaseUrl = env("${shadowDatabaseName}")
 }
 
 model PrismaUser {
@@ -225,7 +211,7 @@ model PrismaUser {
     const connectionString = this.parseDatabaseUrl(this.prismaEnvironments.databaseUrl);
 
     const newDatasource = `datasource db {
-  provider          = "${connectionString.PROTOCOL}"
+  provider          = "${connectionString.PROTOCOL || 'postgresql'}"
   url               = env("${databaseName}")${
       this.prismaConfiguration.addMigrationScripts
         ? `

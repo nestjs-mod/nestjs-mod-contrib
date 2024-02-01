@@ -8,7 +8,7 @@ Production process manager for Node.JS applications with a built-in load balance
 ## Installation
 
 ```bash
-npm i --save @nestjs-mod/pm2
+npm i --save pm2 dotenv @nestjs-mod/pm2
 ```
 
 

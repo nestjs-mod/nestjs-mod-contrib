@@ -1,6 +1,11 @@
 {
   "apps": [
     {
+      "name": "prisma",
+      "script": "node ./dist/apps/example-prisma/main.js",
+      "node_args": "-r dotenv/config"
+    },
+    {
       "name": "pino-logger",
       "script": "node ./dist/apps/example-pino-logger/main.js",
       "node_args": "-r dotenv/config"
@@ -8,11 +13,6 @@
     {
       "name": "terminus",
       "script": "node ./dist/apps/example-terminus/main.js",
-      "node_args": "-r dotenv/config"
-    },
-    {
-      "name": "prisma",
-      "script": "node ./dist/apps/example-prisma/main.js",
       "node_args": "-r dotenv/config"
     }
   ]

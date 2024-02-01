@@ -146,7 +146,7 @@ Variables of primitive and complex types that are used in the module; values for
 Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
 
 ### PrismaModule
-Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)
+Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)
 
 #### Shared providers
 `PrismaClientFactoryService`, `PrismaClient`

@@ -7,12 +7,14 @@ import { Pm2Configuration } from './pm2.configuration';
 export class Pm2EcosystemConfigFileService {
   constructor(private readonly pm2Configuration: Pm2Configuration) {}
 
+  getEcosystemConfigFilePath() {
+    return this.pm2Configuration.ecosystemConfigFile;
+  }
+
   async read(): Promise<{ apps: StartOptions[] }> {
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const ecosystemConfigJsModule = JSON.parse(
-        (await readFile(this.pm2Configuration.ecosystemConfigFile)).toString()
-      );
+      const ecosystemConfigJsModule = JSON.parse((await readFile(this.getEcosystemConfigFilePath())).toString());
       return ecosystemConfigJsModule;
     } catch (err) {
       return { apps: [] };
@@ -21,6 +23,6 @@ export class Pm2EcosystemConfigFileService {
 
   async write({ apps }: { apps: StartOptions[] }) {
     const content = JSON.stringify({ apps }, null, 2);
-    await writeFile(this.pm2Configuration.ecosystemConfigFile, content);
+    await writeFile(this.getEcosystemConfigFilePath(), content);
   }
 }

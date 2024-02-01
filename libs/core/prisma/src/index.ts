@@ -10,4 +10,3 @@ export * from './lib/formatters/dot-env-property-name.formatter';
 export * from './lib/infrastructure/prisma-infrastructure-updater.service';
 export * from './lib/infrastructure/prisma-infrastructure.constants';
 export * from './lib/infrastructure/prisma-schema-file.service';
-export * from './lib/infrastructure/prisma-versions';

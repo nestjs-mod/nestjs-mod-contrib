@@ -1,6 +1,6 @@
 {
   "name": "@nestjs-mod/prisma",
-  "description": "Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version)",
+  "description": "Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)",
   "version": "1.1.1",
   "keywords": [
     "nestjs",
@@ -55,6 +55,16 @@
     "@nestjs-mod/common": {
       "optional": true
     }
+  },
+  "dependenciesInfo": {
+      "@prisma/client@5.8.1": {
+          "docs": true
+      }
+  },
+  "devDependenciesInfo": {
+      "prisma@5.8.1": {
+          "docs": true
+      }
   },
   "type": "commonjs",
   "main": "./src/index.js",
