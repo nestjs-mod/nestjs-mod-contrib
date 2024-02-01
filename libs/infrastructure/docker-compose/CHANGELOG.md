@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.3.0...docker-compose-v1.3.1) (2024-02-01)
+
+
+### Bug Fixes
+
+* add readme to DockerCompose and DockerComposePostgreSQL ([f827544](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/f827544bc3ab87c31ad35bcd537d2fa78c602b6f))
+
 # [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.2.1...docker-compose-v1.3.0) (2024-02-01)
 
 
