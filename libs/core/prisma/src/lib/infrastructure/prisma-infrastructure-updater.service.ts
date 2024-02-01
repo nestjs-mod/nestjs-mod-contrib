@@ -46,27 +46,9 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
         this.packageJsonService.addScripts(
           PRISMA_SCRIPTS_CATEGORY_NAME,
           {
-            [`prisma:migrate-dev-new:${projectName}`]: {
-              commands: [`npm run nx -- run ${projectName}:prisma-migrate-dev --create-only --name=new`],
-              comments: [`Command to create new empty migration for ${projectName}`],
-            },
-            [`prisma:migrate-dev:${projectName}`]: {
-              commands: [`npm run nx -- run ${projectName}:prisma-migrate-dev --create-only`],
-              comments: [
-                `Alias for create new migration for ${projectName} (example: \`npm run prisma:migrate-dev:${projectName} --name=new)\``,
-              ],
-            },
-            [`prisma:migrate-deploy:${projectName}`]: {
-              commands: [`npm run nx -- run ${projectName}:prisma-migrate-deploy`],
-              comments: [`Applying migrations for ${projectName}`],
-            },
             [`prisma:pull:${projectName}`]: {
               commands: [`npm run nx -- run ${projectName}:prisma-pull`],
               comments: [`Generating a prisma schema based on a database for ${projectName}`],
-            },
-            'prisma:migrate-deploy': {
-              commands: ['npm run nx:many -- -t=prisma-migrate-deploy'],
-              comments: ['Applying migrations of all applications and modules'],
             },
             'prisma:pull': {
               commands: ['npm run nx:many -- -t=prisma-pull'],
@@ -79,6 +61,32 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
           },
           packageJson
         );
+        if (this.prismaConfiguration.addMigrationScripts) {
+          this.packageJsonService.addScripts(
+            PRISMA_SCRIPTS_CATEGORY_NAME,
+            {
+              [`prisma:migrate-dev-new:${projectName}`]: {
+                commands: [`npm run nx -- run ${projectName}:prisma-migrate-dev --create-only --name=new`],
+                comments: [`Command to create new empty migration for ${projectName}`],
+              },
+              [`prisma:migrate-dev:${projectName}`]: {
+                commands: [`npm run nx -- run ${projectName}:prisma-migrate-dev --create-only`],
+                comments: [
+                  `Alias for create new migration for ${projectName} (example: \`npm run prisma:migrate-dev:${projectName} --name=new)\``,
+                ],
+              },
+              [`prisma:migrate-deploy:${projectName}`]: {
+                commands: [`npm run nx -- run ${projectName}:prisma-migrate-deploy`],
+                comments: [`Applying migrations for ${projectName}`],
+              },
+              'prisma:migrate-deploy': {
+                commands: ['npm run nx:many -- -t=prisma-migrate-deploy'],
+                comments: ['Applying migrations of all applications and modules'],
+              },
+            },
+            packageJson
+          );
+        }
 
         await this.packageJsonService.write(packageJson);
       }
