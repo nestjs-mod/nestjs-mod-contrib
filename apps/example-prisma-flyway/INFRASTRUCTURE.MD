@@ -1,7 +1,7 @@
-# terminus
+# example-prisma-flyway
 > Version: 0.0.0
 
-Example application with PM2, docker-compose, postgres and terminus
+A collection of modules unified for NestJS-mod
 ## Installation
 ```bash
 git clone https://github.com/nestjs-mod/nestjs-mod-contrib.git
@@ -13,39 +13,45 @@ npm install
 # preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
 npm run manual:prepare
 
-# running the main docker-compose infrastructure
-npm run docker-compose:start
+# running the docker-compose infrastructure for example-prisma-flyway
+npm run docker-compose:start:example-prisma-flyway
 
 # creation all databases of applications and modules
 npm run db:create
 
-# applying migrations of all applications and modules
-npm run prisma:migrate-deploy
+# applying migrations for example-prisma-flyway
+npm run flyway:migrate:example-prisma-flyway
 
-# running example-terminus application source code in watch mode
-npm run serve:dev:example-terminus
+# generating a prisma schema based on a database for example-prisma-flyway
+npm run prisma:pull:example-prisma-flyway
+
+# running example-prisma-flyway source code in watch mode
+npm run serve:dev:example-prisma-flyway
 ```
 ## Running the app in production mode
 ```bash
 # preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
 npm run manual:prepare
 
-# running the main docker-compose infrastructure
-npm run docker-compose:start
+# running the docker-compose infrastructure for example-prisma-flyway
+npm run docker-compose:start:example-prisma-flyway
 
 # creation all databases of applications and modules
 npm run db:create
 
-# applying migrations of all applications and modules
-npm run prisma:migrate-deploy
+# applying migrations for example-prisma-flyway
+npm run flyway:migrate:example-prisma-flyway
 
-# launching a built example-terminus (you must first build it using the build command)
-npm run start:prod:example-terminus
+# generating a prisma schema based on a database for example-prisma-flyway
+npm run prisma:pull:example-prisma-flyway
+
+# launching a built example-prisma-flyway (you must first build it using the build command)
+npm run start:prod:example-prisma-flyway
 ```
 ## Test
 ```bash
-# running tests for example-terminus
-npm run test:example-terminus
+# running tests for example-prisma-flyway
+npm run test:example-prisma-flyway
 ```
 ## All scripts
 |Script|Description|
@@ -131,7 +137,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`applicationPackageJsonFile`|Application package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-terminus/package.json```|
+|`applicationPackageJsonFile`|Application package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/package.json```|
 |`packageJsonFile`|Root package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/package.json```|
 |`envFile`|Dot-env file with environment variables|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/.env```|
 
@@ -160,17 +166,36 @@ Variables of primitive and complex types that are used in the module; values for
 ## Core modules
 Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
 
-### CORE1
+### PrismaModule
+Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)
+
+#### Shared providers
+`PrismaClientFactoryService`, `PrismaClient`
+
+#### Environments
+Variables with primitive types used in the module, the values of which can be obtained from various sources, such as: process.env or consul key value.
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`databaseUrl`|Connection string for database with credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|```postgres://feat_flyway:feat_flyway_password@localhost:5432/feat_flyway?schema=public```|
+
+#### Static configuration
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|{}|
+|`prismaFeatureName`|Prisma feature name for generate prefix to environments keys (infrastructure)|**optional**|-|```flyway-prisma```|
+|`prismaSchemaFile`|Schema file for prisma (infrastructure)|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/src/prisma/flyway-prisma-schema.prisma```|
+|`addMigrationScripts`|The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)|**optional**|```true```|```false```|
+
 ## Feature modules
 Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.
 
 ### AppModule
-Main app module
-
 ## Integration modules
 Integration modules are necessary to organize communication between feature or core modules (example: after creating a user in the UsersModule feature module, you need to send him a letter from the NotificationsModule core module). NestJS and NestJS-mod compatible modules.
 
-### INTEGRATIONS1
 ### DefaultNestApplicationListener
 Default NestJS application listener, no third party utilities required.
 
@@ -179,7 +204,7 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`port`|The port on which to run the server.|`obj['port']`, `process.env['TERMINUS_PORT']`|**isNotEmpty** (port should not be empty)|-|```3002```|
+|`port`|The port on which to run the server.|`obj['port']`, `process.env['EXAMPLE_PRISMA_FLYWAY_PORT']`|**isNotEmpty** (port should not be empty)|-|```3000```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
@@ -204,17 +229,36 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/docker-compose.yml```|
+|`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/docker-compose.yml```|
 
 #### Modules that use feature configuration
-##### Feature module name: TERMINUS_POSTGRE_SQL
+##### Feature module name: EXAMPLE_PRISMA_FLYWAY_POSTGRE_SQL
 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"terminus-postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"terminus-postgre-sql","volumes":["terminus-postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["terminus-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"terminus-network":{"driver":"bridge"}}|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"terminus-postgre-sql-volume":{"name":"terminus-postgre-sql-volume"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"example-prisma-flyway-postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"example-prisma-flyway-postgre-sql","volumes":["example-prisma-flyway-postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["example-prisma-flyway-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"example-prisma-flyway-network":{"driver":"bridge"}}|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"example-prisma-flyway-postgre-sql-volume":{"name":"example-prisma-flyway-postgre-sql-volume"}}|
+
+### FlywayModule
+Flyway - utility for working with database migrations (official site: https://flywaydb.org, preview version only for Postgres)
+
+#### Environments
+Variables with primitive types used in the module, the values of which can be obtained from various sources, such as: process.env or consul key value.
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`databaseUrl`|Connection string for database with credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|```postgres://feat_flyway:feat_flyway_password@localhost:5432/feat_flyway?schema=public```|
+
+#### Static configuration
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`flywayFeatureName`|Flyway feature name for generate prefix to environments keys|**optional**|-|```flyway-prisma```|
+|`flywayMigrationsFolder`|Folder with migrations|**isNotEmpty** (flywayMigrationsFolder should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/src/migrations```|
+|`flywayConfigFile`|Javascript config file for flyway (.flyway.js)|**isNotEmpty** (flywayConfigFile should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/.flyway.js```|
 
 ### Pm2
 Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2)
@@ -225,7 +269,7 @@ Variables of primitive and complex types that are used in the module; values for
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`ecosystemConfigFile`|Configuration file for PM2|**isNotEmpty** (ecosystemConfigFile should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/ecosystem.config.json```|
-|`applicationScriptFile`|Application script file name for run|**isNotEmpty** (applicationScriptFile should not be empty)|-|```dist/apps/example-terminus/main.js```|
+|`applicationScriptFile`|Application script file name for run|**isNotEmpty** (applicationScriptFile should not be empty)|-|```dist/apps/example-prisma-flyway/main.js```|
 
 ### InfrastructureMarkdownReportGenerator
 Infrastructure markdown report generator.
@@ -238,7 +282,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`markdownFile`|Name of the markdown-file in which to save the infrastructure report|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-terminus/INFRASTRUCTURE.MD```|
+|`markdownFile`|Name of the markdown-file in which to save the infrastructure report|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/INFRASTRUCTURE.MD```|
 |`skipEmptySettings`|Skip empty values of env and config models|**optional**|-|```true```|
 
 ### DockerComposePostgreSQL
@@ -249,15 +293,15 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`rootDatabaseUrl`|Connection string for PostgreSQL with root credentials (example: postgres://postgres:postgres_password@localhost:5432/postgres?schema=public, username must be "postgres")|`obj['rootDatabaseUrl']`, `process.env['TERMINUS_ROOT_DATABASE_URL']`|**isNotEmpty** (rootDatabaseUrl should not be empty)|-|```postgres://postgres:postgres_password@localhost:5432/postgres?schema=public```|
+|`rootDatabaseUrl`|Connection string for PostgreSQL with root credentials (example: postgres://postgres:postgres_password@localhost:5432/postgres?schema=public, username must be "postgres")|`obj['rootDatabaseUrl']`, `process.env['EXAMPLE_PRISMA_FLYWAY_ROOT_DATABASE_URL']`|**isNotEmpty** (rootDatabaseUrl should not be empty)|-|```postgres://postgres:postgres_password@localhost:5432/postgres?schema=public```|
 
 #### Modules that use feature environments
-##### Feature module name: feat
+##### Feature module name: flyway-prisma
 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`databaseUrl`|Connection string for PostgreSQL with module credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['TERMINUS_FEAT_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|```postgres://feat:feat_password@localhost:5432/feat?schema=public```|
+|`databaseUrl`|Connection string for PostgreSQL with module credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|```postgres://feat_flyway:feat_flyway_password@localhost:5432/feat_flyway?schema=public```|
 
 
 ## Maintainers

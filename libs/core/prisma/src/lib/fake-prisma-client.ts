@@ -8,4 +8,6 @@ export class FakePrismaClient {
   $disconnect() {
     //null
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [k: string]: any;
 }

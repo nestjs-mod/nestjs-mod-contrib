@@ -1,0 +1,63 @@
+{
+  "name": "@nestjs-mod/flyway",
+  "description": "Flyway - utility for working with database migrations (official site: https://flywaydb.org, preview version only for Postgres)",
+  "version": "0.0.1",
+  "keywords": [
+    "nestjs",
+    "nestjs-mod",
+    "modules",
+    "mod",
+    "flyway",
+    "database",
+    "infrastructure"
+  ],
+  "license": "MIT",
+  "author": "EndyKaufman <admin@site15.ru>",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+  },
+  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+  },
+  "maintainers": [
+    {
+      "name": "EndyKaufman",
+      "email": "admin@site15.ru"
+    }
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "case-anything": "^2.1.13",
+    "connection-string": "^4.3.5",
+    "@nestjs/common": "^10.0.2"
+  },
+  "peerDependencies": {
+    "@nestjs-mod/common": "*",
+    "class-validator": "*"
+  },
+  "peerDependenciesMeta": {
+    "class-validator": {
+      "optional": true
+    },
+    "@nestjs-mod/common": {
+      "optional": true
+    }
+  },
+  "devDependenciesInfo": {
+    "node-flywaydb@3.0.7": {
+      "docs": true
+    }
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}

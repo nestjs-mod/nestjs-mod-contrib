@@ -5,7 +5,7 @@ import {
   WrapApplicationOptionsService,
 } from '@nestjs-mod/common';
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { constantCase, kebabCase } from 'case-anything';
+import { constantCase, kebabCase, upperCamelCase } from 'case-anything';
 import { ConnectionString } from 'connection-string';
 import { dirname } from 'path';
 import { PrismaError } from '../prisma-errors';
@@ -59,6 +59,10 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
             [`prisma:migrate-deploy:${projectName}`]: {
               commands: [`npm run nx -- run ${projectName}:prisma-migrate-deploy`],
               comments: [`Applying migrations for ${projectName}`],
+            },
+            [`prisma:pull:${projectName}`]: {
+              commands: [`npm run nx -- run ${projectName}:prisma-pull`],
+              comments: [`Generating a prisma schema based on a database for ${projectName}`],
             },
             'prisma:migrate-deploy': {
               commands: ['npm run nx:many -- -t=prisma-migrate-deploy'],
@@ -157,12 +161,16 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       throw new PrismaError('prismaFeatureName nop set');
     }
     let prismaSchema = await this.prismaSchemaFileService.read();
+
     if (!prismaSchema) {
       const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
+      const prismaFeatureName = upperCamelCase(this.prismaConfiguration.prismaFeatureName);
+      const constantCasePrismaFeatureName = constantCase(this.prismaConfiguration.prismaFeatureName);
+
       prismaSchema = `generator client {
   provider = "prisma-client-js"
   engineType = "binary"
-  output   = "../../../../node_modules/@prisma/client"
+  output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client"
 }
 
 datasource db {
@@ -171,9 +179,9 @@ datasource db {
   shadowDatabaseUrl = env("${shadowDatabaseName}")
 }
 
-model PrismaUser {
-  id             String   @id(map: "PK_PRISMA_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  externalUserId String   @unique(map: "UQ_PRISMA_USER") @db.Uuid
+model ${prismaFeatureName}User {
+  id             String   @id(map: "PK_${constantCasePrismaFeatureName}_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  externalUserId String   @unique(map: "UQ_${constantCasePrismaFeatureName}_USER") @db.Uuid
   createdAt      DateTime @default(now()) @db.Timestamp(6)
   updatedAt      DateTime @default(now()) @db.Timestamp(6)
 }
@@ -203,7 +211,7 @@ model PrismaUser {
     const newGenerator = `generator client {
   provider = "prisma-client-js"
   engineType = "binary"
-  output   = "../../../../node_modules/${clientNodeJSModuleName}"
+  output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/${clientNodeJSModuleName}"
 }`;
 
     const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
@@ -223,6 +231,17 @@ model PrismaUser {
     await this.prismaSchemaFileService.write(
       [newGenerator, newDatasource, afterRemoveDatasource].join('\n').split('\n\n\n').join('\n')
     );
+  }
+
+  private getPathToRootFromPrismaSchemaFile(): string {
+    const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
+    const prismaSchemaFilePath = this.prismaSchemaFileService.getPrismaSchemaFilePath();
+    return prismaSchemaFilePath
+      .replace(dirname(packageJsonFilePath || ''), '')
+      .split('/')
+      .slice(2)
+      .map(() => '..')
+      .join('/');
   }
 
   private getDbConnectionEnvKeys() {

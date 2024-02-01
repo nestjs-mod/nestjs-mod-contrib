@@ -213,7 +213,10 @@ bootstrapNestApplication({
           prismaFeatureName: prismaUserFeatureName,
           prismaModule: isInfrastructureMode()
             ? { PrismaClient: FakePrismaClient }
-            : import(`@prisma/prisma-user-client`),
+            : // remove after first run docs:infrastructure
+              { PrismaClient: FakePrismaClient },
+          // uncomment after first run docs:infrastructure
+          // import(`@prisma/prisma-user-client`),
           addMigrationScripts: true,
         },
       }),
@@ -241,7 +244,7 @@ bootstrapNestApplication({
 });
 ```
 
-After connecting the module to the application and starting generation of documentation through docs:infrastructure, you will have new files and scripts to run.
+After connecting the module to the application and `npm run build` and starting generation of documentation through `npm run docs:infrastructure`, you will have new files and scripts to run.
 
 New scripts mostly `package.json`
 
@@ -353,6 +356,8 @@ PRISMA_ROOT_DATABASE_URL=postgres://postgres:postgres_password@localhost:5432/po
 PRISMA_PRISMA_USER_DATABASE_URL=postgres://prisma_user:prisma_user_password@localhost:5432/prisma_user?schema=public
 PRISMA_PRISMA_USER_SHADOW_DATABASE_URL=postgres://prisma_user:prisma_user_password@localhost:5432/shadow_prisma_user?schema=public
 ```
+
+For create all needs prisma clients, please run `npm run generate`.
 
 
 #### Shared providers

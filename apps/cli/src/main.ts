@@ -87,6 +87,18 @@ bootstrapNestApplication({
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
+      NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'flyway',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway/package.json'),
+          markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway'),
+          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway/src/lib')],
+          modules: [import('@nestjs-mod/flyway')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
     ],
   },
 });
