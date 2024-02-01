@@ -37,11 +37,11 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "case-anything": "^2.1.13",
-    "connection-string": "^4.3.5",
-    "@nestjs/common": "^10.0.2"
+    "connection-string": "^4.3.5"
   },
   "peerDependencies": {
     "@nestjs-mod/common": "*",
+    "@nestjs/common": "*",
     "class-validator": "*"
   },
   "peerDependenciesMeta": {
@@ -49,6 +49,9 @@
       "optional": true
     },
     "@nestjs-mod/common": {
+      "optional": true
+    },
+    "@nestjs/common": {
       "optional": true
     }
   },
