@@ -1,3 +1,4 @@
+
 # @nestjs-mod/prisma
 
 Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)
@@ -11,20 +12,20 @@ npm i --save-dev prisma@5.8.1
 npm i --save @prisma/client@5.8.1 @nestjs-mod/prisma
 ```
 
+
 ## Modules
 
-| Link                          | Category | Description                                                                                   |
-| ----------------------------- | -------- | --------------------------------------------------------------------------------------------- |
-| [PrismaModule](#prismamodule) | core     | Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres) |
+| Link | Category | Description |
+| ---- | -------- | ----------- |
+| [PrismaModule](#prismamodule) | core | Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres) |
+
 
 ## Modules descriptions
 
 ### PrismaModule
-
 Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)
 
 #### Use in NestJS
-
 For add support prisma in NestJS please read https://docs.nestjs.com/recipes/prisma#set-up-prisma
 
 Use with forRoot options.
@@ -142,8 +143,8 @@ bootstrap();
 
 When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
 
-#### Use in NestJS-mod
 
+#### Use in NestJS-mod
 An example of using forRoot with parameters, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-prisma.
 
 For Prisma to work, you must first connect the Docker Compose module and the Docker Compose module to work with the database.
@@ -365,39 +366,42 @@ PRISMA_PRISMA_USER_SHADOW_DATABASE_URL=postgres://prisma_user:prisma_user_passwo
 
 For create all needs prisma clients, please run `npm run generate`.
 
-#### Shared providers
 
+#### Shared providers
 `PrismaClientFactoryService`, `PrismaClient`
 
 #### Environments
 
-| Key           | Description                                                                                                                | Sources                                             | Constraints                                      | Default | Value |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------ | ------- | ----- |
-| `databaseUrl` | Connection string for database with credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public) | `obj['databaseUrl']`, `process.env['DATABASE_URL']` | **isNotEmpty** (databaseUrl should not be empty) | -       | -     |
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`databaseUrl`|Connection string for database with credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
 
 #### Static configuration
 
-| Key                     | Description                                                                                                                                                                                                                                                                          | Constraints                                       | Default        | Value |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- | -------------- | ----- |
-| `defaultLogger`         | Default logger                                                                                                                                                                                                                                                                       | **optional**                                      | -              | -     |
-| `prismaModule`          | NodeJS module with Prisma modules                                                                                                                                                                                                                                                    | **isNotEmpty** (prismaModule should not be empty) | -              | -     |
-| `logging`               | Logging types (all_queries or long_queries)                                                                                                                                                                                                                                          | **optional**                                      | `long_queries` | -     |
-| `maxQueryExecutionTime` | Max query execution time for detect long queries                                                                                                                                                                                                                                     | **optional**                                      | `5000`         | -     |
-| `prismaFeatureName`     | Prisma feature name for generate prefix to environments keys (infrastructure)                                                                                                                                                                                                        | **optional**                                      | -              | -     |
-| `prismaSchemaFile`      | Schema file for prisma (infrastructure)                                                                                                                                                                                                                                              | **optional**                                      | -              | -     |
-| `addMigrationScripts`   | The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate) | **optional**                                      | `true`         | -     |
-| `customSchemaContent`   | Unsafe string custom content for add to end of prisma schema file (infrastructure)                                                                                                                                                                                                   | **optional**                                      | -              | -     |
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`defaultLogger`|Default logger|**optional**|-|-|
+|`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|-|
+|`logging`|Logging types (all_queries or long_queries)|**optional**|```long_queries```|-|
+|`maxQueryExecutionTime`|Max query execution time for detect long queries|**optional**|```5000```|-|
+|`prismaFeatureName`|Prisma feature name for generate prefix to environments keys (infrastructure)|**optional**|-|-|
+|`prismaSchemaFile`|Schema file for prisma (infrastructure)|**optional**|-|-|
+|`addMigrationScripts`|The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)|**optional**|```true```|-|
+|`customSchemaContent`|Unsafe string custom content for add to end of prisma schema file (infrastructure)|**optional**|-|-|
 
 [Back to Top](#modules)
 
 ## Links
 
-- https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
-- https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
-- https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
-- https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/INFRASTRUCTURE.MD - A simple example of infrastructure documentation.
-- https://github.com/nestjs-mod/nestjs-mod-contrib/blob/master/apps/example-prisma/INFRASTRUCTURE.MD - An extended example of infrastructure documentation with a docker-compose file and a data base.
-- https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+* https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/INFRASTRUCTURE.MD - A simple example of infrastructure documentation.
+* https://github.com/nestjs-mod/nestjs-mod-contrib/blob/master/apps/example-prisma/INFRASTRUCTURE.MD - An extended example of infrastructure documentation with a docker-compose file and a data base.
+* https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
+
 
 ## License
 
