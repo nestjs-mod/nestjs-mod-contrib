@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.2.1...prisma-v1.2.2) (2024-02-01)
+
+
+### Bug Fixes
+
+* update package json file generator, remove add migrations script for prisma, when we disable addMigrationScripts options ([8fea330](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8fea33032be53cdb3f048bd4f1b4a0152719d34f))
+
 ## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.2.0...prisma-v1.2.1) (2024-02-01)
 
 
