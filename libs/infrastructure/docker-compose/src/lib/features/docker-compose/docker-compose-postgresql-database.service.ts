@@ -86,7 +86,7 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
         },
         packageJson
       );
-      this.packageJsonService.write(packageJson);
+      await this.packageJsonService.write(packageJson);
     }
   }
 

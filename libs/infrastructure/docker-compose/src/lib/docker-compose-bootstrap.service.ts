@@ -132,7 +132,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           );
         }
       }
-      this.packageJsonService.write(packageJson);
+      await this.packageJsonService.write(packageJson);
     }
   }
 }
