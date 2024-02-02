@@ -8,8 +8,8 @@ Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only 
 ## Installation
 
 ```bash
-npm i --save-dev prisma@5.8.1
-npm i --save @prisma/client@5.8.1 @nestjs-mod/prisma
+npm i --save-dev prisma
+npm i --save @prisma/client @nestjs-mod/prisma
 ```
 
 

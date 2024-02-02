@@ -113,6 +113,7 @@ npm run test:example-prisma-flyway
 |**flyway**|
 |`npm run flyway:create:example-prisma-flyway`|Command to create new empty migration for example-prisma-flyway|
 |`npm run flyway:migrate:example-prisma-flyway`|Applying migrations for example-prisma-flyway|
+|`npm run flyway:migrate`|Applying migrations of all applications and modules|
 |**utils**|
 |`npm run generate`|Running the "generate" nx command in applications and libraries which can be customized at your discretion automatically generating an index.ts file for each library checking the code and trying to fix it|
 |`npm run nx`|Alias for running the nx version locally, which is in the project (example: `npm run nx -- dep-graph`), in order not to install nx globally in the operating system|

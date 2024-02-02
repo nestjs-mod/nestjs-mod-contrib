@@ -83,6 +83,7 @@
     "_____flyway_____": "_____flyway_____",
     "flyway:create:example-prisma-flyway": "npm run nx -- run example-prisma-flyway:flyway-create-migration",
     "flyway:migrate:example-prisma-flyway": "npm run nx -- run example-prisma-flyway:flyway-migrate",
+    "flyway:migrate": "npm run nx:many -- -t=flyway-migrate",
     "_____utils_____": "_____utils_____",
     "generate": "npm run nx:many -- -t=generate --skip-nx-cache=true && npm run make-ts-list && npm run lint:fix",
     "nx": "nx",
@@ -98,7 +99,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.2.9",
+    "@nestjs-mod/schematics": "2.2.10",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "17.2.8",
@@ -131,7 +132,7 @@
     "node-flywaydb": "^3.0.7",
     "nx": "17.2.8",
     "prettier": "^2.6.2",
-    "prisma": "^5.8.1",
+    "prisma": "^5.9.1",
     "react-refresh": "^0.10.0",
     "rucken": "^4.6.4",
     "supertest": "^6.3.3",
@@ -142,14 +143,14 @@
     "verdaccio": "^5.0.4"
   },
   "dependencies": {
-    "@nestjs-mod/common": "2.6.2",
-    "@nestjs-mod/reports": "2.6.2",
-    "@nestjs-mod/testing": "2.6.2",
+    "@nestjs-mod/common": "2.6.3",
+    "@nestjs-mod/reports": "2.6.3",
+    "@nestjs-mod/testing": "2.6.3",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/terminus": "^10.2.0",
-    "@prisma/client": "^5.8.1",
+    "@prisma/client": "^5.9.1",
     "axios": "^1.0.0",
     "case-anything": "^2.1.13",
     "class-validator": "^0.14.0",
@@ -313,6 +314,9 @@
     ],
     "flyway:migrate:example-prisma-flyway": [
       "Applying migrations for example-prisma-flyway"
+    ],
+    "flyway:migrate": [
+      "Applying migrations of all applications and modules"
     ],
     "generate": [
       "Running the \"generate\" nx command in applications and libraries which can be customized at your discretion",

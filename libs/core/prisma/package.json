@@ -57,12 +57,12 @@
     }
   },
   "dependenciesInfo": {
-    "@prisma/client@5.8.1": {
+    "@prisma/client": {
       "docs": true
     }
   },
   "devDependenciesInfo": {
-    "prisma@5.8.1": {
+    "prisma": {
       "docs": true
     }
   },
