@@ -48,6 +48,10 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
               commands: [`npm run nx -- run ${projectName}:flyway-migrate`],
               comments: [`Applying migrations for ${projectName}`],
             },
+            'flyway:migrate': {
+              commands: ['npm run nx:many -- -t=flyway-migrate'],
+              comments: ['Applying migrations of all applications and modules'],
+            },
           },
           packageJson
         );
