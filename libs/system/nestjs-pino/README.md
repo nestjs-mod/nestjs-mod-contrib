@@ -16,12 +16,12 @@ npm i --save pino-http pino nestjs-pino @nestjs-mod/pino
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [NestjsPinoLogger](#nestjspinologger) | system | Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino) |
+| [NestjsPinoLoggerModule](#nestjspinologgermodule) | system | Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino) |
 
 
 ## Modules descriptions
 
-### NestjsPinoLogger
+### NestjsPinoLoggerModule
 Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)
 
 #### Use in NestJS-mod
@@ -35,13 +35,13 @@ import {
   DefaultNestApplicationListener,
   bootstrapNestApplication,
 } from '@nestjs-mod/common';
-import { NestjsPinoLogger } from '@nestjs-mod/pino';
+import { NestjsPinoLoggerModule } from '@nestjs-mod/pino';
 
 bootstrapNestApplication({
   modules: {
     system: [
       DefaultNestApplicationInitializer.forRoot(),
-      NestjsPinoLogger.forRoot(),
+      NestjsPinoLoggerModule.forRoot(),
       DefaultNestApplicationListener.forRoot({
         staticEnvironments: { port: 3000 },
       }),

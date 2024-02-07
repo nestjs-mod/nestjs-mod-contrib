@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { PrismaConfiguration } from '../prisma.configuration';
-import { PrismaError } from '../prisma-errors';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
-import { existsSync } from 'fs';
+import { PrismaError } from '../prisma-errors';
+import { PrismaConfiguration } from '../prisma.configuration';
 
 @Injectable()
 export class PrismaSchemaFileService {
@@ -16,19 +15,19 @@ export class PrismaSchemaFileService {
     return this.prismaConfiguration.prismaSchemaFile;
   }
 
-  async read(): Promise<string | undefined> {
+  read(): string | undefined {
     const prismaSchemaFile = this.getPrismaSchemaFilePath();
     if (!prismaSchemaFile) {
       return undefined;
     }
     try {
-      return (await readFile(prismaSchemaFile)).toString();
+      return readFileSync(prismaSchemaFile).toString();
     } catch (err) {
       return undefined;
     }
   }
 
-  async write(data: string) {
+  write(data: string) {
     const prismaSchemaFile = this.getPrismaSchemaFilePath();
 
     if (!prismaSchemaFile) {
@@ -37,9 +36,9 @@ export class PrismaSchemaFileService {
     try {
       const fileDir = dirname(prismaSchemaFile);
       if (!existsSync(fileDir)) {
-        await mkdir(fileDir, { recursive: true });
+        mkdirSync(fileDir, { recursive: true });
       }
-      await writeFile(prismaSchemaFile, data);
+      writeFileSync(prismaSchemaFile, data);
     } catch (err) {
       //
     }

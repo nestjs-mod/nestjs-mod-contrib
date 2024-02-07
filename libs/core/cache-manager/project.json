@@ -1,0 +1,42 @@
+{
+  "name": "cache-manager",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/core/cache-manager/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/core/cache-manager",
+        "tsConfig": "libs/core/cache-manager/tsconfig.lib.json",
+        "packageJson": "libs/core/cache-manager/package.json",
+        "main": "libs/core/cache-manager/src/index.ts",
+        "assets": ["libs/core/cache-manager/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs cache-manager {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/core/cache-manager/jest.config.ts"
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/libs/core/cache-manager"
+      }
+    }
+  },
+  "tags": []
+}

@@ -6,7 +6,6 @@ export * from './lib/prisma.constants';
 export * from './lib/prisma.decorators';
 export * from './lib/prisma.environments';
 export * from './lib/prisma.module';
-export * from './lib/formatters/dot-env-property-name.formatter';
 export * from './lib/infrastructure/prisma-infrastructure-updater.service';
 export * from './lib/infrastructure/prisma-infrastructure.constants';
 export * from './lib/infrastructure/prisma-schema-file.service';

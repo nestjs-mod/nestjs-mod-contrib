@@ -28,9 +28,6 @@ describe('AppController', () => {
             prismaModule: { PrismaClient: FakePrismaClient },
           },
         }),
-        PrismaModule.forFeature({
-          featureModuleName: 'AppModule',
-        }),
       ],
       controllers: [AppController],
       providers: [AppService],

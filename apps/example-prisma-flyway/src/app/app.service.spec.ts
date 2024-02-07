@@ -26,9 +26,6 @@ describe('AppService', () => {
             prismaModule: { PrismaClient: FakePrismaClient },
           },
         }),
-        PrismaModule.forFeature({
-          featureModuleName: 'AppModule',
-        }),
       ],
       providers: [AppService],
     }).compile();

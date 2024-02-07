@@ -2,8 +2,7 @@ import { NxProjectJsonService, PackageJsonService, WrapApplicationOptionsService
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { constantCase, upperCamelCase } from 'case-anything';
 import { ConnectionString } from 'connection-string';
-import { existsSync } from 'fs';
-import { mkdir, readFile, writeFile } from 'fs/promises';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { FlywayError } from '../flyway-errors';
 import { FlywayConfiguration } from '../flyway.configuration';
@@ -20,22 +19,22 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
   ) {}
 
-  async onModuleInit() {
-    await this.update();
+  onModuleInit() {
+    this.update();
   }
 
-  async update() {
-    await this.updatePackageJsonFile();
-    await this.updateProjectJsonFile();
-    await this.updateFlywayConfigFile();
-    await this.createFirstMigrations();
+  update() {
+    this.updatePackageJsonFile();
+    this.updateProjectJsonFile();
+    this.updateFlywayConfigFile();
+    this.createFirstMigrations();
   }
 
-  private async updatePackageJsonFile() {
-    const projectJson = await this.nxProjectJsonService.read();
+  private updatePackageJsonFile() {
+    const projectJson = this.nxProjectJsonService.read();
     if (projectJson) {
       const projectName = projectJson.name;
-      const packageJson = await this.packageJsonService.read();
+      const packageJson = this.packageJsonService.read();
       if (packageJson) {
         this.packageJsonService.addScripts(
           FLYWAY_SCRIPTS_CATEGORY_NAME,
@@ -56,16 +55,16 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
           packageJson
         );
 
-        await this.packageJsonService.write(packageJson);
+        this.packageJsonService.write(packageJson);
       }
     }
   }
 
-  private async updateProjectJsonFile() {
+  private updateProjectJsonFile() {
     if (!this.flywayConfiguration.flywayConfigFile) {
       throw new FlywayError('flywayConfigFile not set');
     }
-    const projectJson = await this.nxProjectJsonService.read();
+    const projectJson = this.nxProjectJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     const nxProjectJsonFilePath = this.nxProjectJsonService.getNxProjectJsonFilePath();
     if (projectJson && packageJsonFilePath && nxProjectJsonFilePath) {
@@ -77,40 +76,40 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
 
       const { databaseName } = this.getDbConnectionEnvKeys();
       // new migration
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [`echo 'select 1;' > .${flywayMigrationsPath}/V\`date +%Y%m%d%H%M\`__NewMigration.sql`],
         'flyway-create-migration'
       );
       // migrate
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} migrate`,
         ],
         'flyway-migrate'
       );
       // info
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} info`,
         ],
         'flyway-info'
       );
       // baseline
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} baseline`,
         ],
         'flyway-baseline'
       );
       // validate
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} validate`,
         ],
         'flyway-validate'
       );
       // repair
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} repair`,
         ],
@@ -119,11 +118,11 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
     }
   }
 
-  private async updateFlywayConfigFile() {
+  private updateFlywayConfigFile() {
     if (!this.flywayConfiguration.flywayFeatureName) {
       throw new FlywayError('flywayFeatureName not set');
     }
-    let flywayConfig = await this.flywayConfigFileService.read();
+    let flywayConfig = this.flywayConfigFileService.read();
     if (!flywayConfig) {
       flywayConfig = `
 const { ConnectionString } = require('connection-string');
@@ -175,11 +174,11 @@ module.exports = {
   },
 };
 `;
-      await this.flywayConfigFileService.write(flywayConfig);
+      this.flywayConfigFileService.write(flywayConfig);
     }
   }
 
-  private async createFirstMigrations() {
+  private createFirstMigrations() {
     if (!this.flywayConfiguration.flywayFeatureName) {
       throw new FlywayError('flywayFeatureName not set');
     }
@@ -192,9 +191,9 @@ module.exports = {
       let firstMigration: string = '';
       try {
         if (!existsSync(this.flywayConfiguration.flywayMigrationsFolder)) {
-          await mkdir(this.flywayConfiguration.flywayMigrationsFolder, { recursive: true });
+          mkdirSync(this.flywayConfiguration.flywayMigrationsFolder, { recursive: true });
         }
-        firstMigration = (await readFile(firstMigrationFilePath)).toString();
+        firstMigration = readFileSync(firstMigrationFilePath).toString();
       } catch (err) {
         //
       }
@@ -217,9 +216,9 @@ CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatu
         }
         const fileDir = dirname(firstMigrationFilePath);
         if (!existsSync(fileDir)) {
-          await mkdir(fileDir, { recursive: true });
+          mkdirSync(fileDir, { recursive: true });
         }
-        await writeFile(firstMigrationFilePath, firstMigration);
+        writeFileSync(firstMigrationFilePath, firstMigration);
       }
     }
   }

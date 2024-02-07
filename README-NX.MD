@@ -9,7 +9,7 @@
 ## Create application
 
 ```
-./node_modules/.bin/nx g @nestjs-mod/schematics:application --directory=apps/example-prisma --name=example-prisma --projectNameAndRootFormat=as-provided --strict=true
+./node_modules/.bin/nx g @nestjs-mod/schematics:application --directory=apps/example-cache-manager --name=example-cache-manager --projectNameAndRootFormat=as-provided --strict=true
 ```
 
 ## Remove library

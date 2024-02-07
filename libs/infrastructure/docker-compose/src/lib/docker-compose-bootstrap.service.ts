@@ -31,13 +31,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     private readonly gitignoreService: GitignoreService
   ) {}
 
-  async onApplicationBootstrap() {
-    await this.createDockerComposeFile();
-    await this.updatePackageJson();
-    await this.gitignoreService.addGitIgnoreEntry([basename(this.dockerComposeConfiguration.dockerComposeFile)]);
+  onApplicationBootstrap() {
+    this.createDockerComposeFile();
+    this.updatePackageJson();
+    this.gitignoreService.addGitIgnoreEntry([basename(this.dockerComposeConfiguration.dockerComposeFile)]);
   }
 
-  private async createDockerComposeFile() {
+  private createDockerComposeFile() {
     const featureServices = Object.entries(this.dockerComposeFeatureConfigurations)
       .map(([, services]) => services)
       .reduce(
@@ -59,7 +59,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           bothServicesWithEnvs?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }
     }
-    await this.dockerComposeFileService.write(bothServicesWithEnvs);
+    this.dockerComposeFileService.write(bothServicesWithEnvs);
 
     // example
 
@@ -68,7 +68,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       .replace('.yml', '-example.yml')
       .replace('/-example.yml', '/example.yml');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const existsServices: any = (await this.dockerComposeFileService.readFile(dockerComposeExampleFilePath)) ?? {};
+    const existsServices: any = this.dockerComposeFileService.readFile(dockerComposeExampleFilePath) ?? {};
 
     const sampleBothServices = { ...bothServices };
 
@@ -78,16 +78,16 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           existsServices?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }
     }
-    await this.dockerComposeFileService.writeFile(
+    this.dockerComposeFileService.writeFile(
       dockerComposeExampleFilePath,
       sampleBothServices,
       '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.'
     );
   }
 
-  private async updatePackageJson() {
-    const packageJson = await this.packageJsonService.read();
-    const applicationPackageJson = await this.applicationPackageJsonService.read();
+  private updatePackageJson() {
+    const packageJson = this.packageJsonService.read();
+    const applicationPackageJson = this.applicationPackageJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (packageJson && packageJsonFilePath) {
       const dockerComposeFilePath = this.dockerComposeConfiguration.dockerComposeFile.replace(
@@ -132,7 +132,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           );
         }
       }
-      await this.packageJsonService.write(packageJson);
+      this.packageJsonService.write(packageJson);
     }
   }
 }

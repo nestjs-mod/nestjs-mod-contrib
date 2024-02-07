@@ -40,6 +40,18 @@ bootstrapNestApplication({
         },
       }),
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'cache-manager',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(__dirname, '..', '..', '..', 'libs/core/cache-manager/package.json'),
+          markdownFile: join(__dirname, '..', '..', '..', 'libs/core/cache-manager/README.md'),
+          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/core/cache-manager'),
+          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/core/cache-manager/src/lib')],
+          modules: [import('@nestjs-mod/cache-manager')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'nestjs-pino',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',

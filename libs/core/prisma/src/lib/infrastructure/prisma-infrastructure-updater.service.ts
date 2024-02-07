@@ -26,22 +26,22 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     private readonly dotEnvService: DotEnvService
   ) {}
 
-  async onModuleInit() {
-    await this.update();
+  onModuleInit() {
+    this.update();
   }
 
-  async update() {
-    await this.updatePackageJsonFile();
-    await this.updateProjectJsonFile();
-    await this.updatePrismaSchemaFile();
-    await this.updateDotEnvFile();
+  update() {
+    this.updatePackageJsonFile();
+    this.updateProjectJsonFile();
+    this.updatePrismaSchemaFile();
+    this.updateDotEnvFile();
   }
 
-  private async updatePackageJsonFile() {
-    const projectJson = await this.nxProjectJsonService.read();
+  private updatePackageJsonFile() {
+    const projectJson = this.nxProjectJsonService.read();
     if (projectJson) {
       const projectName = projectJson.name;
-      const packageJson = await this.packageJsonService.read();
+      const packageJson = this.packageJsonService.read();
       if (packageJson) {
         this.packageJsonService.addScripts(
           PRISMA_SCRIPTS_CATEGORY_NAME,
@@ -88,30 +88,30 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
           );
         }
 
-        await this.packageJsonService.write(packageJson);
+        this.packageJsonService.write(packageJson);
       }
     }
   }
 
-  private async updateProjectJsonFile() {
+  private updateProjectJsonFile() {
     if (!this.prismaConfiguration.prismaSchemaFile) {
       throw new PrismaError('prismaSchemaFile not set');
     }
-    const projectJson = await this.nxProjectJsonService.read();
+    const projectJson = this.nxProjectJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (projectJson && packageJsonFilePath) {
       const prismaSchemaFilePath = this.prismaConfiguration.prismaSchemaFile.replace(dirname(packageJsonFilePath), '');
       // generate
-      await this.nxProjectJsonService.addRunCommands([
+      this.nxProjectJsonService.addRunCommands([
         `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`,
       ]);
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
         'prisma-generate'
       );
 
       // pull
-      await this.nxProjectJsonService.addRunCommands(
+      this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma db pull --schema=.${prismaSchemaFilePath}`],
         'prisma-pull'
       );
@@ -128,7 +128,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
           if (!appDatabaseName.includes('SHADOW_DATABASE_URL')) {
             // update db-create command
             const SHADOW_DATABASE_URL = appDatabaseName.replace('_DATABASE_URL', '_SHADOW_DATABASE_URL');
-            await this.nxProjectJsonService.addRunCommands(
+            this.nxProjectJsonService.addRunCommands(
               [
                 `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseName}} --app-database-url=\${${SHADOW_DATABASE_URL}}`,
               ],
@@ -137,13 +137,13 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
           }
         }
         // migrate-dev
-        await this.nxProjectJsonService.addRunCommands(
+        this.nxProjectJsonService.addRunCommands(
           [`./node_modules/.bin/prisma migrate dev --schema=.${prismaSchemaFilePath}`],
           'prisma-migrate-dev'
         );
 
         // migrate-deploy
-        await this.nxProjectJsonService.addRunCommands(
+        this.nxProjectJsonService.addRunCommands(
           [`./node_modules/.bin/prisma migrate deploy --schema=.${prismaSchemaFilePath}`],
           'prisma-migrate-deploy'
         );
@@ -151,24 +151,24 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     }
   }
 
-  private async updateDotEnvFile() {
+  private updateDotEnvFile() {
     if (this.prismaConfiguration.addMigrationScripts) {
       const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
       // update env file
-      const envs = await this.dotEnvService.read(false, true);
+      const envs = this.dotEnvService.read(false, true);
       if (envs?.[databaseName] && !envs[shadowDatabaseName]) {
         const parsed = this.parseDatabaseUrl(envs[databaseName] || '');
         envs[shadowDatabaseName] = envs[databaseName]?.replace(`/${parsed.DATABASE}?`, `/shadow_${parsed.DATABASE}?`);
-        await this.dotEnvService.write(envs, true);
+        this.dotEnvService.write(envs, true);
       }
     }
   }
 
-  private async updatePrismaSchemaFile() {
+  private updatePrismaSchemaFile() {
     if (!this.prismaConfiguration.prismaFeatureName) {
       throw new PrismaError('prismaFeatureName not set');
     }
-    let prismaSchema = await this.prismaSchemaFileService.read();
+    let prismaSchema = this.prismaSchemaFileService.read();
 
     if (!prismaSchema) {
       const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
@@ -236,7 +236,7 @@ model ${prismaFeatureName}User {
     }
 }`;
 
-    await this.prismaSchemaFileService.write(
+    this.prismaSchemaFileService.write(
       [newGenerator, newDatasource, afterRemoveDatasource].join('\n').split('\n\n\n').join('\n')
     );
   }

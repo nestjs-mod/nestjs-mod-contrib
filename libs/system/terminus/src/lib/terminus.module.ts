@@ -7,7 +7,7 @@ import { TERMINUS_MODULE_NAME } from './terminus.constants';
 import { getTerminusHealthCheckController } from './terminus.controller';
 import { TerminusHealthCheckService } from './terminus.service';
 
-export const { TerminusHealthCheck } = createNestModule({
+export const { TerminusHealthCheckModule } = createNestModule({
   moduleName: TERMINUS_MODULE_NAME,
   moduleDescription:
     'Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus)',

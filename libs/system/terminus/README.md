@@ -16,19 +16,19 @@ npm i --save @nestjs/terminus @nestjs-mod/terminus
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [TerminusHealthCheck](#terminushealthcheck) | system | Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus) |
+| [TerminusHealthCheckModule](#terminushealthcheckmodule) | system | Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus) |
 
 
 ## Modules descriptions
 
-### TerminusHealthCheck
+### TerminusHealthCheckModule
 Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus)
 
 #### Use in NestJS
 Example of use feature configurations and use standardHealthIndicators.
 
 ```typescript
-import { TerminusHealthCheck, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
+import { TerminusHealthCheckModule, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
 import { NestFactory } from '@nestjs/core';
 
 import { Module } from '@nestjs/common';
@@ -47,7 +47,7 @@ export class FeatureTerminusHealthCheckFeatureConfiguration implements TerminusH
 
 @Module({
   imports: [
-    TerminusHealthCheck.forFeature({
+    TerminusHealthCheckModule.forFeature({
       featureModuleName: 'feature',
       featureConfiguration: new FeatureTerminusHealthCheckFeatureConfiguration(),
     }),
@@ -57,7 +57,7 @@ export class FeatureModule {}
 
 @Module({
   imports: [
-    TerminusHealthCheck.forRootAsync({
+    TerminusHealthCheckModule.forRootAsync({
       configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
         standardHealthIndicators: [
           { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
@@ -89,7 +89,7 @@ import {
   bootstrapNestApplication,
   createNestModule,
 } from '@nestjs-mod/common';
-import { TerminusHealthCheck, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
+import { TerminusHealthCheckModule, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
 import { HealthIndicatorStatus, MemoryHealthIndicator } from '@nestjs/terminus';
 
 export class FeatureTerminusHealthCheckFeatureConfiguration implements TerminusHealthCheckFeatureConfiguration {
@@ -117,7 +117,7 @@ bootstrapNestApplication({
   modules: {
     system: [
       DefaultNestApplicationInitializer.forRoot(),
-      TerminusHealthCheck.forRootAsync({
+      TerminusHealthCheckModule.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
           standardHealthIndicators: [
             { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },

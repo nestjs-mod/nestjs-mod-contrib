@@ -5,8 +5,8 @@ import { LoggerRequestIdInterceptor } from './logger-request-id.interceptor';
 import { NestjsPinoAsyncLocalStorage } from './nestjs-pino.async-local-storage';
 import { NestjsPinoLoggerConfiguration } from './nestjs-pino.configuration';
 
-export const { NestjsPinoLogger } = createNestModule({
-  moduleName: 'NestjsPinoLogger',
+export const { NestjsPinoLoggerModule } = createNestModule({
+  moduleName: 'NestjsPinoLoggerModule',
   moduleDescription: 'Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)',
   moduleCategory: NestModuleCategory.system,
   configurationModel: NestjsPinoLoggerConfiguration,
@@ -50,7 +50,9 @@ export const { NestjsPinoLogger } = createNestModule({
       const logger = options.app.get(Logger);
       options.app.useLogger(logger);
       if (options.logger) {
-        Object.setPrototypeOf(options.logger, logger);
+        if (logger.constructor !== Object) {
+          Object.setPrototypeOf(options.logger, logger);
+        }
         Object.assign(options.logger, logger);
       } else {
         options.logger = logger;

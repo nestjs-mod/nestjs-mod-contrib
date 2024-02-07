@@ -1,0 +1,20 @@
+{
+  "name": "example-cache-manager",
+  "description": "Example application with cache-manager and redis",
+  "scripts": {},
+  "dependencies": {
+    "pm2": ">=5.3.0",
+    "dotenv": ">=16.3.1"
+  },
+  "devScripts": [
+    "generate",
+    "serve:dev:example-cache-manager"
+  ],
+  "prodScripts": [
+    "manual:prepare",
+    "start:prod:example-cache-manager"
+  ],
+  "testsScripts": [
+    "test:example-cache-manager"
+  ]
+}

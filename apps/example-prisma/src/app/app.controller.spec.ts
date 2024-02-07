@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { FakePrismaClient, PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
-import { prismaUserFeatureName } from './app.constants';
+import { userFeatureName } from './app.constants';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
@@ -22,14 +22,11 @@ describe('AppController', () => {
               '..',
               '..',
               'apps/example-prisma/src/prisma/',
-              `${prismaUserFeatureName}-${PRISMA_SCHEMA_FILE}`
+              `${userFeatureName}-${PRISMA_SCHEMA_FILE}`
             ),
-            prismaFeatureName: prismaUserFeatureName,
+            prismaFeatureName: userFeatureName,
             prismaModule: { PrismaClient: FakePrismaClient },
           },
-        }),
-        PrismaModule.forFeature({
-          featureModuleName: 'AppModule',
         }),
       ],
       controllers: [AppController],

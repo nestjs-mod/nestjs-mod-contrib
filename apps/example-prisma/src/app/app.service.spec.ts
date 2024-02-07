@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
 
-import { AppService } from './app.service';
-import { PrismaModule, PRISMA_SCHEMA_FILE, FakePrismaClient } from '@nestjs-mod/prisma';
+import { FakePrismaClient, PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
 import { join } from 'path';
-import { prismaUserFeatureName } from './app.constants';
+import { userFeatureName } from './app.constants';
+import { AppService } from './app.service';
 
 describe('AppService', () => {
   let service: AppService;
@@ -20,14 +20,11 @@ describe('AppService', () => {
               '..',
               '..',
               'apps/example-prisma/src/prisma/',
-              `${prismaUserFeatureName}-${PRISMA_SCHEMA_FILE}`
+              `${userFeatureName}-${PRISMA_SCHEMA_FILE}`
             ),
-            prismaFeatureName: prismaUserFeatureName,
+            prismaFeatureName: userFeatureName,
             prismaModule: { PrismaClient: FakePrismaClient },
           },
-        }),
-        PrismaModule.forFeature({
-          featureModuleName: 'AppModule',
         }),
       ],
       providers: [AppService],

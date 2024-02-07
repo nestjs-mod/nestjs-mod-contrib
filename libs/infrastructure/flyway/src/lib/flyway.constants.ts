@@ -1,1 +1,1 @@
-export const FLYWAY_MODULE_NAME = `FlywayModule`;
+export const FLYWAY_MODULE_NAME = `Flyway`;

@@ -112,5 +112,3 @@ async function bootstrap() {
 
 bootstrap();
 ```
-
-When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.

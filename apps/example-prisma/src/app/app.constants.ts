@@ -1,1 +1,1 @@
-export const prismaUserFeatureName = 'prisma-user';
+export const userFeatureName = 'prisma-user';

@@ -22,9 +22,9 @@ const globalDockerComposePostgresModuleInitStream = new Subject();
 export const { DockerComposePostgreSQL } = createNestModule({
   moduleName: DOCKER_COMPOSE_POSTGRES_MODULE_NAME,
   moduleDescription:
-    'PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose)',
-  environmentsOptions: { skipValidation: true },
-  configurationOptions: { skipValidation: true },
+    'PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator for databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose)',
+  globalEnvironmentsOptions: { skipValidation: true },
+  globalConfigurationOptions: { skipValidation: true },
   staticConfigurationModel: DockerComposePostgresConfiguration,
   staticEnvironmentsModel: DockerComposePostgresEnvironments,
   featureEnvironmentsModel: DockerComposePostgresFeatureEnvironments,
@@ -61,7 +61,7 @@ export const { DockerComposePostgreSQL } = createNestModule({
       project,
       moduleName: DOCKER_COMPOSE_POSTGRES_MODULE_NAME,
       moduleDescription:
-        'PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose)',
+        'PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator for databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose)',
       moduleCategory: NestModuleCategory.infrastructure,
       staticConfigurationModel: DockerComposePostgresConfiguration,
       staticEnvironmentsModel: DockerComposePostgresEnvironments,

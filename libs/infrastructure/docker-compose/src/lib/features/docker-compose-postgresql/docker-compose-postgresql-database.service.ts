@@ -27,19 +27,19 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
     private readonly packageJsonService: PackageJsonService
   ) {}
 
-  async onModuleInit() {
+  onModuleInit() {
     if (!this.wrapApplicationOptionsService) {
       return;
     }
     this.addManualDockerComposeFeatureConfiguration();
-    await this.updateNxProjectFile();
-    await this.updatePackageJsonFile();
+    this.updateNxProjectFile();
+    this.updatePackageJsonFile();
   }
 
-  private async updateNxProjectFile() {
+  private updateNxProjectFile() {
     const { featureDatabaseUrlEnvKeys, rootDatabaseUrlEnvKey } = this.getEnvKeys();
 
-    await this.nxProjectJsonService.addRunCommands(
+    this.nxProjectJsonService.addRunCommands(
       featureDatabaseUrlEnvKeys
         .map((featureDatabaseUrlEnvKey) =>
           featureDatabaseUrlEnvKey.databaseUrlEnvKeys.map(
@@ -73,8 +73,8 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
     });
   }
 
-  private async updatePackageJsonFile() {
-    const packageJson = await this.packageJsonService.read();
+  private updatePackageJsonFile() {
+    const packageJson = this.packageJsonService.read();
     if (packageJson) {
       this.packageJsonService.addScripts(
         'db',
@@ -86,7 +86,7 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
         },
         packageJson
       );
-      await this.packageJsonService.write(packageJson);
+      this.packageJsonService.write(packageJson);
     }
   }
 

@@ -1,7 +1,7 @@
 Example of use feature configurations and use standardHealthIndicators.
 
 ```typescript
-import { TerminusHealthCheck, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
+import { TerminusHealthCheckModule, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
 import { NestFactory } from '@nestjs/core';
 
 import { Module } from '@nestjs/common';
@@ -20,7 +20,7 @@ export class FeatureTerminusHealthCheckFeatureConfiguration implements TerminusH
 
 @Module({
   imports: [
-    TerminusHealthCheck.forFeature({
+    TerminusHealthCheckModule.forFeature({
       featureModuleName: 'feature',
       featureConfiguration: new FeatureTerminusHealthCheckFeatureConfiguration(),
     }),
@@ -30,7 +30,7 @@ export class FeatureModule {}
 
 @Module({
   imports: [
-    TerminusHealthCheck.forRootAsync({
+    TerminusHealthCheckModule.forRootAsync({
       configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
         standardHealthIndicators: [
           { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },

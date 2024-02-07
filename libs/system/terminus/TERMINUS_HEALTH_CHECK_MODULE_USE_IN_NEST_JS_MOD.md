@@ -7,7 +7,7 @@ import {
   bootstrapNestApplication,
   createNestModule,
 } from '@nestjs-mod/common';
-import { TerminusHealthCheck, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
+import { TerminusHealthCheckModule, TerminusHealthCheckFeatureConfiguration } from '@nestjs-mod/terminus';
 import { HealthIndicatorStatus, MemoryHealthIndicator } from '@nestjs/terminus';
 
 export class FeatureTerminusHealthCheckFeatureConfiguration implements TerminusHealthCheckFeatureConfiguration {
@@ -35,7 +35,7 @@ bootstrapNestApplication({
   modules: {
     system: [
       DefaultNestApplicationInitializer.forRoot(),
-      TerminusHealthCheck.forRootAsync({
+      TerminusHealthCheckModule.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
           standardHealthIndicators: [
             { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },

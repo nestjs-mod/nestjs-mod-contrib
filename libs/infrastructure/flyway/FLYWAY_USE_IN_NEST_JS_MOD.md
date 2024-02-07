@@ -3,7 +3,7 @@ An example you can see the full example here https://github.com/nestjs-mod/nestj
 ```typescript
 import { PACKAGE_JSON_FILE, ProjectUtils, bootstrapNestApplication } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
-import { FLYWAY_JS_CONFIG_FILE, FlywayModule } from '@nestjs-mod/flyway';
+import { FLYWAY_JS_CONFIG_FILE, Flyway } from '@nestjs-mod/flyway';
 import { join } from 'path';
 
 export const flywayPrismaFeatureName = 'flyway-prisma';
@@ -37,7 +37,7 @@ bootstrapNestApplication({
       DockerComposePostgreSQL.forFeature({
         featureModuleName: flywayPrismaFeatureName,
       }),
-      FlywayModule.forRoot({
+      Flyway.forRoot({
         staticConfiguration: {
           flywayFeatureName: flywayPrismaFeatureName,
           flywayMigrationsFolder: join(__dirname, '..', '..', '..', 'apps/example-prisma-flyway/src/migrations'),

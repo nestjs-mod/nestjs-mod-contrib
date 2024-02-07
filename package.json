@@ -33,6 +33,7 @@
     "serve:dev:example-prisma": "npm run nx -- serve example-prisma --host=0.0.0.0",
     "serve:dev": "npm run nx:many -- -t=serve",
     "serve:dev:example-prisma-flyway": "npm run nx -- serve example-prisma-flyway --host=0.0.0.0",
+    "serve:dev:example-cache-manager": "npm run nx -- serve example-cache-manager --host=0.0.0.0",
     "_____pm2 prod infra_____": "_____pm2 prod infra_____",
     "pm2:start": "./node_modules/.bin/pm2 start ./ecosystem.config.json",
     "pm2:stop": "./node_modules/.bin/pm2 delete all",
@@ -45,6 +46,7 @@
     "start:prod:example-prisma": "npm run nx -- start example-prisma",
     "build:prod:example-prisma": "npm run nx -- build example-prisma",
     "start:prod:example-prisma-flyway": "npm run nx -- start example-prisma-flyway",
+    "start:prod:example-cache-manager": "npm run nx -- start example-cache-manager",
     "_____docs_____": "_____docs_____",
     "docs:infrastructure": "export NODE_ENV=infrastructure && npm run nx:many -- -t=start --parallel=1",
     "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && npm run nx -- serve example-prisma --host=0.0.0.0",
@@ -56,12 +58,15 @@
     "docker-compose:stop": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose.yml down",
     "docker-compose:start:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose.yml down",
+    "docker-compose:start:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose.yml down",
     "_____tests_____": "_____tests_____",
     "test": "npm run nx:many -- -t=test --passWithNoTests --skip-nx-cache=true --output-style=stream-without-prefixes",
     "test:example-pino-logger": "npm run nx -- test example-pino-logger --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-terminus": "npm run nx -- test example-terminus --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-prisma": "npm run nx -- test example-prisma --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-prisma-flyway": "npm run nx -- test example-prisma-flyway --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-cache-manager": "npm run nx -- test example-cache-manager --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && npm run nx:many -- -t=lint",
     "lint:fix": "npm run tsc:lint && npm run nx:many -- -t=lint --fix",
@@ -91,7 +96,7 @@
     "dep-graph": "npm run nx -- dep-graph",
     "nx:many": "npm run nx -- run-many --exclude=@nestjs-mod/contrib",
     "make-ts-list": "./node_modules/.bin/rucken make-ts-list",
-    "manual:prepare": "npm run generate && npm run build && npm run docs:infrastructure && npm run test",
+    "manual:prepare": "export NX_SKIP_NX_CACHE=true && npm run generate && npm run build && npm run docs:infrastructure && npm run test",
     "update:nestjs-mod-versions": "npx -y npm-check-updates @nestjs-mod/* nestjs-mod -u && npm i",
     "tsc": "tsc"
   },
@@ -99,7 +104,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.2.10",
+    "@nestjs-mod/schematics": "2.3.1",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "17.2.8",
@@ -143,15 +148,17 @@
     "verdaccio": "^5.0.4"
   },
   "dependencies": {
-    "@nestjs-mod/common": "2.6.3",
-    "@nestjs-mod/reports": "2.6.3",
-    "@nestjs-mod/testing": "2.6.3",
+    "@nestjs-mod/common": "2.7.0",
+    "@nestjs-mod/reports": "2.7.0",
+    "@nestjs-mod/testing": "2.7.0",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/terminus": "^10.2.0",
     "@prisma/client": "^5.9.1",
     "axios": "^1.0.0",
+    "cache-manager": "^5.2.3",
+    "cache-manager-redis-yet": "^4.1.2",
     "case-anything": "^2.1.13",
     "class-validator": "^0.14.0",
     "compose-spec-schema": "^1.0.0",
@@ -162,6 +169,7 @@
     "pino-http": "^9.0.0",
     "pino-pretty": "^10.3.1",
     "pm2": "^5.3.0",
+    "redis": "^4.6.7",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0",
@@ -191,6 +199,9 @@
     ],
     "serve:dev:example-prisma-flyway": [
       "Running example-prisma-flyway source code in watch mode"
+    ],
+    "serve:dev:example-cache-manager": [
+      "Running example-cache-manager source code in watch mode"
     ],
     "pm2:start": [
       "Launch all applications in PM2 mode"
@@ -222,6 +233,9 @@
     "start:prod:example-prisma-flyway": [
       "Launching a built example-prisma-flyway (you must first build it using the build command)"
     ],
+    "start:prod:example-cache-manager": [
+      "Launching a built example-cache-manager (you must first build it using the build command)"
+    ],
     "docs:infrastructure": [
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure"
     ],
@@ -249,6 +263,12 @@
     "docker-compose:stop:example-prisma-flyway": [
       "Stopping the docker-compose infrastructure for example-prisma-flyway"
     ],
+    "docker-compose:start:example-cache-manager": [
+      "Running the docker-compose infrastructure for example-cache-manager"
+    ],
+    "docker-compose:stop:example-cache-manager": [
+      "Stopping the docker-compose infrastructure for example-cache-manager"
+    ],
     "test": [
       "Running tests across the entire project"
     ],
@@ -263,6 +283,9 @@
     ],
     "test:example-prisma-flyway": [
       "Running tests for example-prisma-flyway"
+    ],
+    "test:example-cache-manager": [
+      "Running tests for example-cache-manager"
     ],
     "lint": [
       "Checking the typescript code for the entire project"

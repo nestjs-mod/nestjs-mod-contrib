@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { FlywayConfiguration } from '../flyway.configuration';
-import { FlywayError } from '../flyway-errors';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
-import { existsSync } from 'fs';
+import { FlywayError } from '../flyway-errors';
+import { FlywayConfiguration } from '../flyway.configuration';
 
 @Injectable()
 export class FlywayConfigFileService {
@@ -16,19 +15,19 @@ export class FlywayConfigFileService {
     return this.flywayConfiguration.flywayConfigFile;
   }
 
-  async read(): Promise<string | undefined> {
+  read(): string | undefined {
     const flywayConfigFile = this.getFlywayConfigFilePath();
     if (!flywayConfigFile) {
       return undefined;
     }
     try {
-      return (await readFile(flywayConfigFile)).toString();
+      return readFileSync(flywayConfigFile).toString();
     } catch (err) {
       return undefined;
     }
   }
 
-  async write(data: string) {
+  write(data: string) {
     const flywayConfigFile = this.getFlywayConfigFilePath();
 
     if (!flywayConfigFile) {
@@ -37,9 +36,9 @@ export class FlywayConfigFileService {
     try {
       const fileDir = dirname(flywayConfigFile);
       if (!existsSync(fileDir)) {
-        await mkdir(fileDir, { recursive: true });
+        mkdirSync(fileDir, { recursive: true });
       }
-      await writeFile(flywayConfigFile, data);
+      writeFileSync(flywayConfigFile, data);
     } catch (err) {
       //
     }

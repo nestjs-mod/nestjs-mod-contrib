@@ -16,13 +16,13 @@ export class Pm2Service implements OnApplicationBootstrap {
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
   ) {}
 
-  async onApplicationBootstrap() {
-    await this.updatePm2EcosystemConfigFile();
-    await this.updatePackageJson();
+  onApplicationBootstrap() {
+    this.updatePm2EcosystemConfigFile();
+    this.updatePackageJson();
   }
 
-  private async updatePackageJson() {
-    const packageJson = await this.packageJsonService.read();
+  private updatePackageJson() {
+    const packageJson = this.packageJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (packageJson && packageJsonFilePath) {
       const ecosystemConfigFilePath = this.pm2Configuration.ecosystemConfigFile.replace(
@@ -49,14 +49,14 @@ export class Pm2Service implements OnApplicationBootstrap {
     }
   }
 
-  private async updatePm2EcosystemConfigFile() {
-    const currentConfig = await this.pm2EcosystemConfigFileService.read();
+  private updatePm2EcosystemConfigFile() {
+    const currentConfig = this.pm2EcosystemConfigFileService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (!packageJsonFilePath) {
       return;
     }
     const appName =
-      this.wrapApplicationOptionsService?.project?.name ?? (await this.applicationPackageJsonService.read())?.name;
+      this.wrapApplicationOptionsService?.project?.name ?? this.applicationPackageJsonService.read()?.name;
     const currentApp = {
       ...Object.entries(this.pm2Configuration)
         .filter(([key]) => key !== 'ecosystemConfigFile' && key !== 'applicationScriptFile')
@@ -74,6 +74,6 @@ export class Pm2Service implements OnApplicationBootstrap {
       currentConfig.apps.push(currentApp);
     }
 
-    await this.pm2EcosystemConfigFileService.write(currentConfig);
+    this.pm2EcosystemConfigFileService.write(currentConfig);
   }
 }

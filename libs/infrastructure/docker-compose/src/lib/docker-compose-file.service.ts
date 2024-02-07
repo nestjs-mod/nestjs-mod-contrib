@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Compose } from 'compose-spec-schema';
-import { existsSync } from 'fs';
-import { mkdir, readFile, writeFile } from 'fs/promises';
-import { parse, stringify } from 'yaml';
-import { DockerComposeConfiguration } from './docker-compose.configuration';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
+import { Scalar, parse, stringify } from 'yaml';
+import { DockerComposeConfiguration } from './docker-compose.configuration';
 
 @Injectable()
 export class DockerComposeFileService {
@@ -14,10 +13,10 @@ export class DockerComposeFileService {
     return this.dockerComposeConfiguration.dockerComposeFile;
   }
 
-  async readFile(dockerComposeFile: string): Promise<Compose | undefined> {
+  readFile(dockerComposeFile: string): Compose | undefined {
     if (dockerComposeFile && existsSync(dockerComposeFile)) {
       try {
-        return parse((await readFile(dockerComposeFile)).toString());
+        return parse(readFileSync(dockerComposeFile).toString());
       } catch (err) {
         return undefined;
       }
@@ -25,22 +24,25 @@ export class DockerComposeFileService {
     return undefined;
   }
 
-  async writeFile(dockerComposeFile: string, data: Compose, header?: string) {
-    if (!dockerComposeFile){
+  writeFile(dockerComposeFile: string, data: Compose, header?: string) {
+    if (!dockerComposeFile) {
       return;
     }
     try {
       const fileDir = dirname(dockerComposeFile);
       if (!existsSync(fileDir)) {
-        await mkdir(fileDir, { recursive: true });
+        mkdirSync(fileDir, { recursive: true });
       }
-      await writeFile(dockerComposeFile, [header, stringify(data)].join('\n'));
+      writeFileSync(
+        dockerComposeFile,
+        [header, stringify(data, { defaultStringType: Scalar.QUOTE_DOUBLE })].join('\n')
+      );
     } catch (err) {
       //
     }
   }
 
-  async read(): Promise<Compose | undefined> {
+  read(): Compose | undefined {
     const dockerComposeFile = this.getDockerComposeFilePath();
     if (!dockerComposeFile) {
       return undefined;
@@ -48,7 +50,7 @@ export class DockerComposeFileService {
     return this.readFile(dockerComposeFile);
   }
 
-  async write(data: Compose, header?: string) {
+  write(data: Compose, header?: string) {
     const dockerComposeFile = this.getDockerComposeFilePath();
     if (!dockerComposeFile) {
       return;
@@ -56,9 +58,9 @@ export class DockerComposeFileService {
     try {
       const fileDir = dirname(dockerComposeFile);
       if (!existsSync(fileDir)) {
-        await mkdir(fileDir, { recursive: true });
+        mkdirSync(fileDir, { recursive: true });
       }
-      await this.writeFile(dockerComposeFile, data, header);
+      this.writeFile(dockerComposeFile, data, header);
     } catch (err) {
       return;
     }

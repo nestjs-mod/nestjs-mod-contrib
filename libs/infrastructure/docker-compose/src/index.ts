@@ -13,3 +13,9 @@ export * from './lib/features/docker-compose-postgresql/docker-compose-postgresq
 export * from './lib/features/docker-compose-postgresql/docker-compose-postgresql.module';
 export * from './lib/features/docker-compose-postgresql/docker-compose-postgresql.service';
 export * from './lib/features/docker-compose-postgresql/docker-compose-postgresql.settings';
+export * from './lib/features/docker-compose-redis/docker-compose-redis-errors';
+export * from './lib/features/docker-compose-redis/docker-compose-redis.constants';
+export * from './lib/features/docker-compose-redis/docker-compose-redis.decorators';
+export * from './lib/features/docker-compose-redis/docker-compose-redis.module';
+export * from './lib/features/docker-compose-redis/docker-compose-redis.settings';
+export * from './lib/features/docker-compose-redis/docker-compose-redis.utils';

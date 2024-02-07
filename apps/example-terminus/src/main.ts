@@ -14,15 +14,12 @@ import {
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
-import { NestjsPinoLogger } from '@nestjs-mod/pino';
+import { NestjsPinoLoggerModule } from '@nestjs-mod/pino';
 import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
-import { TerminusHealthCheck } from '@nestjs-mod/terminus';
-import { Logger } from '@nestjs/common';
+import { TerminusHealthCheckModule } from '@nestjs-mod/terminus';
 import { MemoryHealthIndicator } from '@nestjs/terminus';
 import { join } from 'path';
 import { AppModule } from './app/app.module';
-
-const globalPrefix = 'api';
 
 bootstrapNestApplication({
   globalEnvironmentsOptions: { debug: true },
@@ -49,8 +46,8 @@ bootstrapNestApplication({
         },
       }),
       DefaultNestApplicationInitializer.forRoot(),
-      NestjsPinoLogger.forRoot(),
-      TerminusHealthCheck.forRootAsync({
+      NestjsPinoLoggerModule.forRoot(),
+      TerminusHealthCheckModule.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
           standardHealthIndicators: [
             { name: 'memory_heap', check: () => memoryHealthIndicator.checkHeap('memory_heap', 150 * 1024 * 1024) },
@@ -61,25 +58,6 @@ bootstrapNestApplication({
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
           mode: isInfrastructureMode() ? 'init' : 'listen',
-          preListen: async ({ app }) => {
-            if (app) {
-              app.setGlobalPrefix(globalPrefix);
-            }
-          },
-          postListen: async ({ current }) => {
-            if (isInfrastructureMode()) {
-              /**
-               * When you start the application in infrastructure mode, it should automatically close;
-               * if for some reason it does not close, we forcefully close it after 30 seconds.
-               */
-              setTimeout(() => process.exit(0), 30000);
-            }
-            Logger.log(
-              `🚀 Application is running on: http://${current.staticEnvironments?.hostname ?? 'localhost'}:${
-                current.staticEnvironments?.port
-              }/${globalPrefix}`
-            );
-          },
         },
       }),
     ],

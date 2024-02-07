@@ -1,5 +1,9 @@
-import { createNestModule, NestModuleCategory, ProjectUtils } from '@nestjs-mod/common';
-import { getPrismaDotEnvPropertyNameFormatter } from './formatters/dot-env-property-name.formatter';
+import {
+  createNestModule,
+  getFeatureDotEnvPropertyNameFormatter,
+  NestModuleCategory,
+  ProjectUtils,
+} from '@nestjs-mod/common';
 import { PrismaInfrastructureUpdaterService } from './infrastructure/prisma-infrastructure-updater.service';
 import { PrismaSchemaFileService } from './infrastructure/prisma-schema-file.service';
 import { PrismaClientFactoryService } from './prisma-client-factory.service';
@@ -24,19 +28,20 @@ export const { PrismaModule } = createNestModule({
       inject: [PrismaClientFactoryService],
     },
   ],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  wrapForRootAsync: ((asyncModuleOptions: any) => {
-    Object.assign(asyncModuleOptions, {
-      environmentsOptions: {
-        propertyNameFormatters: [
-          getPrismaDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration?.prismaFeatureName),
-        ],
-        name: asyncModuleOptions.staticConfiguration?.prismaFeatureName,
-      },
-    });
+  wrapForRootAsync: (asyncModuleOptions) => {
+    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.prismaFeatureName) {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
+        asyncModuleOptions.staticConfiguration.prismaFeatureName
+      );
+      Object.assign(asyncModuleOptions, {
+        environmentsOptions: {
+          propertyNameFormatters: [new FomatterClass()],
+          name: asyncModuleOptions.staticConfiguration?.prismaFeatureName,
+        },
+      });
+    }
     return { asyncModuleOptions };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  }) as any,
+  },
   preWrapApplication: async ({ project, modules, current }) => {
     if (!modules[NestModuleCategory.infrastructure]) {
       modules[NestModuleCategory.infrastructure] = [];
@@ -49,19 +54,20 @@ export const { PrismaModule } = createNestModule({
           'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)',
         staticConfigurationModel: PrismaConfiguration,
         environmentsModel: PrismaEnvironments,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        wrapForRootAsync: ((asyncModuleOptions: any) => {
-          Object.assign(asyncModuleOptions, {
-            environmentsOptions: {
-              propertyNameFormatters: [
-                getPrismaDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration?.prismaFeatureName),
-              ],
-              name: asyncModuleOptions.staticConfiguration?.prismaFeatureName,
-            },
-          });
+        wrapForRootAsync: (asyncModuleOptions) => {
+          if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.prismaFeatureName) {
+            const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
+              asyncModuleOptions.staticConfiguration.prismaFeatureName
+            );
+            Object.assign(asyncModuleOptions, {
+              environmentsOptions: {
+                propertyNameFormatters: [new FomatterClass()],
+                name: asyncModuleOptions.staticConfiguration?.prismaFeatureName,
+              },
+            });
+          }
           return { asyncModuleOptions };
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        }) as any,
+        },
         imports: [
           ProjectUtils.forFeature({
             featureModuleName: PRISMA_MODULE_NAME,
