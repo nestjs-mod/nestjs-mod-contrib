@@ -1,3 +1,16 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.0.1...flyway-v1.1.0) (2024-02-07)
+
+
+### Bug Fixes
+
+* add common script "flyway:migrate" ([fd44c21](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/fd44c2109d4a833fdfa04ea6bf8c055a10e37075))
+* update [@nestjs-mod](https://github.com/nestjs-mod) versions from 2.6.1 to 2.6.3 ([e8b7f80](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e8b7f8084cdb5ac15bf8ea127139adc1735214a1))
+
+
+### Features
+
+* add DockerComposeRedis in @nestjs-mod/docker-compose, add @nestjs-mod/cache-manager, rename FlywayModule to Flyway, rename NestjsPinoLogger to NestjsPinoLoggerModule, rename TerminusHealthCheck to TerminusHealthCheckModule, remove all async work with fs ([1c5474a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/1c5474afc696d3e23f38fdf3e0865ab75bc71446))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.0.0...flyway-v1.0.1) (2024-02-01)
 
 
