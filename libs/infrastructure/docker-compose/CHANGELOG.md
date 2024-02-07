@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.3.2...docker-compose-v1.4.0) (2024-02-07)
+
+
+### Bug Fixes
+
+* add await when we try save new scripts ([ab19d4a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/ab19d4a9b328b481af917697a5557ec8bd01fb7e))
+* update [@nestjs-mod](https://github.com/nestjs-mod) versions from 2.6.1 to 2.6.3 ([e8b7f80](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e8b7f8084cdb5ac15bf8ea127139adc1735214a1))
+
+
+### Features
+
+* add DockerComposeRedis in @nestjs-mod/docker-compose, add @nestjs-mod/cache-manager, rename FlywayModule to Flyway, rename NestjsPinoLogger to NestjsPinoLoggerModule, rename TerminusHealthCheck to TerminusHealthCheckModule, remove all async work with fs ([1c5474a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/1c5474afc696d3e23f38fdf3e0865ab75bc71446))
+
 ## [1.3.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.3.1...docker-compose-v1.3.2) (2024-02-01)
 
 
