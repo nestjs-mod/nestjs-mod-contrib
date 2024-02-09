@@ -9,6 +9,8 @@ import {
 import { NESTJS_MOD_ALL_README_GENERATOR_FOOTER, NestjsModAllReadmeGenerator } from '@nestjs-mod/reports';
 import { join } from 'path';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+
 bootstrapNestApplication({
   project: {
     name: 'nestjs-mod',
@@ -28,13 +30,25 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'graphql',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(rootFolder, 'libs/system/graphql/package.json'),
+          markdownFile: join(rootFolder, 'libs/system/graphql/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/system/graphql'),
+          utilsFolders: [join(rootFolder, 'libs/system/graphql/src/lib')],
+          modules: [import('@nestjs-mod/graphql')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'prisma',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/core/prisma/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/core/prisma/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/core/prisma'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/core/prisma/src/lib')],
+          packageFile: join(rootFolder, 'libs/core/prisma/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/prisma/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/prisma'),
+          utilsFolders: [join(rootFolder, 'libs/core/prisma/src/lib')],
           modules: [import('@nestjs-mod/prisma')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
@@ -43,10 +57,10 @@ bootstrapNestApplication({
         contextName: 'cache-manager',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/core/cache-manager/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/core/cache-manager/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/core/cache-manager'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/core/cache-manager/src/lib')],
+          packageFile: join(rootFolder, 'libs/core/cache-manager/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/cache-manager/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/cache-manager'),
+          utilsFolders: [join(rootFolder, 'libs/core/cache-manager/src/lib')],
           modules: [import('@nestjs-mod/cache-manager')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
@@ -55,10 +69,10 @@ bootstrapNestApplication({
         contextName: 'nestjs-pino',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/nestjs-pino/src/lib')],
+          packageFile: join(rootFolder, 'libs/system/nestjs-pino/package.json'),
+          markdownFile: join(rootFolder, 'libs/system/nestjs-pino/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/system/nestjs-pino'),
+          utilsFolders: [join(rootFolder, 'libs/system/nestjs-pino/src/lib')],
           modules: [import('@nestjs-mod/pino')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
@@ -67,10 +81,10 @@ bootstrapNestApplication({
         contextName: 'terminus',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/system/terminus/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/system/terminus'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/system/terminus/src/lib')],
+          packageFile: join(rootFolder, 'libs/system/terminus/package.json'),
+          markdownFile: join(rootFolder, 'libs/system/terminus/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/system/terminus'),
+          utilsFolders: [join(rootFolder, 'libs/system/terminus/src/lib')],
           modules: [import('@nestjs-mod/terminus')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
@@ -79,10 +93,10 @@ bootstrapNestApplication({
         contextName: 'pm2',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/pm2/src/lib')],
+          packageFile: join(rootFolder, 'libs/infrastructure/pm2/package.json'),
+          markdownFile: join(rootFolder, 'libs/infrastructure/pm2/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/pm2'),
+          utilsFolders: [join(rootFolder, 'libs/infrastructure/pm2/src/lib')],
           modules: [import('@nestjs-mod/pm2')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
@@ -91,10 +105,10 @@ bootstrapNestApplication({
         contextName: 'docker-compose',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/docker-compose/src/lib')],
+          packageFile: join(rootFolder, 'libs/infrastructure/docker-compose/package.json'),
+          markdownFile: join(rootFolder, 'libs/infrastructure/docker-compose/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/docker-compose'),
+          utilsFolders: [join(rootFolder, 'libs/infrastructure/docker-compose/src/lib')],
           modules: [import('@nestjs-mod/docker-compose')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
@@ -103,10 +117,10 @@ bootstrapNestApplication({
         contextName: 'flyway',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          packageFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway/package.json'),
-          markdownFile: join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway/README.md'),
-          folderWithMarkdownFilesToUse: join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway'),
-          utilsFolders: [join(__dirname, '..', '..', '..', 'libs/infrastructure/flyway/src/lib')],
+          packageFile: join(rootFolder, 'libs/infrastructure/flyway/package.json'),
+          markdownFile: join(rootFolder, 'libs/infrastructure/flyway/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/flyway'),
+          utilsFolders: [join(rootFolder, 'libs/infrastructure/flyway/src/lib')],
           modules: [import('@nestjs-mod/flyway')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },

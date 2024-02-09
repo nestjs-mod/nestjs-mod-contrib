@@ -13,6 +13,9 @@ import { join } from 'path';
 import { userFeatureName } from './app/app.constants';
 import { AppModule } from './app/app.module';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-cache-manager');
+
 bootstrapNestApplication({
   globalConfigurationOptions: { debug: true },
   globalEnvironmentsOptions: { debug: true },
@@ -28,8 +31,8 @@ bootstrapNestApplication({
             'apps/example-cache-manager',
             PACKAGE_JSON_FILE
           ),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
         },
       }),
       DefaultNestApplicationInitializer.forRoot(),
@@ -52,14 +55,14 @@ bootstrapNestApplication({
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
         staticConfiguration: {
-          markdownFile: join(__dirname, '..', '..', '..', 'apps/example-cache-manager', 'INFRASTRUCTURE.MD'),
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
           skipEmptySettings: true,
         },
       }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
-          dockerComposeFile: join(__dirname, '..', '..', '..', 'apps/example-cache-manager', DOCKER_COMPOSE_FILE),
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
       DockerComposeRedis.forRoot({ staticConfiguration: { featureName: userFeatureName } }),

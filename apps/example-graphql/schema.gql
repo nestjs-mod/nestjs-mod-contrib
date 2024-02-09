@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type UserBalanceDto {
+  userId: Float!
+  amount: Float!
+}
+
+type UserDto {
+  id: Float!
+  username: String!
+  custom: JSON!
+  balance: UserBalanceDto!
+  balanceOverDataLoader: UserBalanceDto!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type StatusDto {
+  status: String!
+}
+
+type Query {
+  status: StatusDto!
+  users: [UserDto!]!
+}
+
+type Mutation {
+  createUser(id: String!, username: String!, custom: JSON!): StatusDto!
+}
+
+type Subscription {
+  changeUserBalanceEvent(userId: String!): UserBalanceDto!
+}

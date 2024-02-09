@@ -34,6 +34,8 @@
     "serve:dev": "npm run nx:many -- -t=serve",
     "serve:dev:example-prisma-flyway": "npm run nx -- serve example-prisma-flyway --host=0.0.0.0",
     "serve:dev:example-cache-manager": "npm run nx -- serve example-cache-manager --host=0.0.0.0",
+    "serve:dev:example-graphql": "npm run nx -- serve example-graphql --host=0.0.0.0",
+    "serve:dev:example-graphql:fastify": "export PLATFORM=fastify && npm run nx -- serve example-graphql --host=0.0.0.0",
     "_____pm2 prod infra_____": "_____pm2 prod infra_____",
     "pm2:start": "./node_modules/.bin/pm2 start ./ecosystem.config.json",
     "pm2:stop": "./node_modules/.bin/pm2 delete all",
@@ -47,6 +49,7 @@
     "build:prod:example-prisma": "npm run nx -- build example-prisma",
     "start:prod:example-prisma-flyway": "npm run nx -- start example-prisma-flyway",
     "start:prod:example-cache-manager": "npm run nx -- start example-cache-manager",
+    "start:prod:example-graphql": "npm run nx -- start example-graphql",
     "_____docs_____": "_____docs_____",
     "docs:infrastructure": "export NODE_ENV=infrastructure && npm run nx:many -- -t=start --parallel=1",
     "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && npm run nx -- serve example-prisma --host=0.0.0.0",
@@ -67,6 +70,7 @@
     "test:example-prisma": "npm run nx -- test example-prisma --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-prisma-flyway": "npm run nx -- test example-prisma-flyway --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-cache-manager": "npm run nx -- test example-cache-manager --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-graphql": "npm run nx -- test example-graphql --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && npm run nx:many -- -t=lint",
     "lint:fix": "npm run tsc:lint && npm run nx:many -- -t=lint --fix",
@@ -104,7 +108,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.3.1",
+    "@nestjs-mod/schematics": "2.5.0",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "17.2.8",
@@ -120,6 +124,7 @@
     "@swc-node/register": "~1.6.7",
     "@swc/core": "~1.3.85",
     "@theunderscorer/nx-semantic-release": "^2.10.0",
+    "@types/graphql-fields": "^1.3.9",
     "@types/jest": "^29.4.0",
     "@types/markdown-it": "^13.0.7",
     "@types/node": "18.16.9",
@@ -148,12 +153,17 @@
     "verdaccio": "^5.0.4"
   },
   "dependencies": {
-    "@nestjs-mod/common": "2.7.0",
-    "@nestjs-mod/reports": "2.7.0",
-    "@nestjs-mod/testing": "2.7.0",
+    "@as-integrations/fastify": "^2.1.1",
+    "@nestjs-mod/common": "2.9.0",
+    "@nestjs-mod/fastify": "1.1.0",
+    "@nestjs-mod/reports": "2.9.0",
+    "@nestjs-mod/testing": "2.9.0",
+    "@nestjs/apollo": "^12.0.11",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
+    "@nestjs/graphql": "^12.0.11",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/platform-fastify": "^10.3.2",
     "@nestjs/terminus": "^10.2.0",
     "@prisma/client": "^5.9.1",
     "axios": "^1.0.0",
@@ -163,7 +173,12 @@
     "class-validator": "^0.14.0",
     "compose-spec-schema": "^1.0.0",
     "connection-string": "^4.3.5",
+    "dataloader": "^2.2.2",
     "dotenv": ">=16.3.1",
+    "graphql": "^16.8.1",
+    "graphql-fields": "^2.0.3",
+    "graphql-subscriptions": "2.0.0",
+    "graphql-type-json": "^0.3.2",
     "markdown-it": "^14.0.0",
     "nestjs-pino": "^4.0.0",
     "pino-http": "^9.0.0",
@@ -203,6 +218,10 @@
     "serve:dev:example-cache-manager": [
       "Running example-cache-manager source code in watch mode"
     ],
+    "serve:dev:example-graphql": [
+      "Running example-graphql source code in watch mode"
+    ],
+    "serve:dev:example-graphql:fastify": [],
     "pm2:start": [
       "Launch all applications in PM2 mode"
     ],
@@ -235,6 +254,9 @@
     ],
     "start:prod:example-cache-manager": [
       "Launching a built example-cache-manager (you must first build it using the build command)"
+    ],
+    "start:prod:example-graphql": [
+      "Launching a built example-graphql (you must first build it using the build command)"
     ],
     "docs:infrastructure": [
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure"
@@ -286,6 +308,9 @@
     ],
     "test:example-cache-manager": [
       "Running tests for example-cache-manager"
+    ],
+    "test:example-graphql": [
+      "Running tests for example-graphql"
     ],
     "lint": [
       "Checking the typescript code for the entire project"

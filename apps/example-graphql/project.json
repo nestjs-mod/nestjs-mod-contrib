@@ -1,0 +1,60 @@
+{
+  "name": "example-graphql",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-graphql/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-graphql",
+        "main": "apps/example-graphql/src/main.ts",
+        "tsConfig": "apps/example-graphql/tsconfig.app.json",
+        "assets": ["apps/example-graphql/src/assets"],
+        "webpackConfig": "apps/example-graphql/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "example-graphql:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-graphql:build:development"
+        },
+        "production": {
+          "buildTarget": "example-graphql:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example-graphql/jest.config.ts"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/apps/example-graphql/main.js"],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

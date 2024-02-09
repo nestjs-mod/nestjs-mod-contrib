@@ -2,14 +2,16 @@ import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
 import { Type } from '@nestjs/common';
 import { RouteInfo } from '@nestjs/common/interfaces';
 import { Params } from 'nestjs-pino';
-import { Options } from 'pino-http';
 import { DestinationStream } from 'pino';
+import { Options } from 'pino-http';
+
+export const X_REQUEST_ID = 'x-request-id';
 
 @ConfigModel()
 export class NestjsPinoLoggerConfiguration implements Params {
   @ConfigModelProperty({
     description: `Header name for search requestId`,
-    default: 'request-id',
+    default: X_REQUEST_ID,
   })
   requestIdHeaderName?: string;
 

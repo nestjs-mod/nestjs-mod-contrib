@@ -36,21 +36,20 @@ import { join } from 'path';
 
 export const flywayPrismaFeatureName = 'flyway-prisma';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-prisma-flyway');
+
 bootstrapNestApplication({
   modules: {
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
           applicationPackageJsonFile: join(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            'apps/example-prisma-flyway',
+            appFolder
             PACKAGE_JSON_FILE
           ),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
         },
       }),
     ],
@@ -58,7 +57,7 @@ bootstrapNestApplication({
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
-          dockerComposeFile: join(__dirname, '..', '..', '..', 'apps/example-prisma-flyway', DOCKER_COMPOSE_FILE),
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
     ],
@@ -155,21 +154,17 @@ import { join } from 'path';
 
 export const flywayPrismaFeatureName = 'flyway-prisma';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-prisma-flyway');
+
 bootstrapNestApplication({
   modules: {
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            'apps/example-prisma-flyway',
-            PACKAGE_JSON_FILE
-          ),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
         },
       }),
     ],
@@ -177,7 +172,7 @@ bootstrapNestApplication({
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
-          dockerComposeFile: join(__dirname, '..', '..', '..', 'apps/example-prisma-flyway', DOCKER_COMPOSE_FILE),
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
       DockerComposePostgreSQL.forRoot(),
@@ -340,6 +335,9 @@ import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeRedis } from '@nestjs-
 import { join } from 'path';
 import { userFeatureName } from './app/app.constants';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-cache-manager');
+
 bootstrapNestApplication({
   globalConfigurationOptions: { debug: true },
   globalEnvironmentsOptions: { debug: true },
@@ -355,22 +353,22 @@ bootstrapNestApplication({
             'apps/example-cache-manager',
             PACKAGE_JSON_FILE
           ),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
         },
       }),
     ],
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
         staticConfiguration: {
-          markdownFile: join(__dirname, '..', '..', '..', 'apps/example-cache-manager', 'INFRASTRUCTURE.MD'),
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
           skipEmptySettings: true,
         },
       }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
-          dockerComposeFile: join(__dirname, '..', '..', '..', 'apps/example-cache-manager', DOCKER_COMPOSE_FILE),
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
       DockerComposeRedis.forRoot({ staticConfiguration: { featureName: userFeatureName } }),

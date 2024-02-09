@@ -1,0 +1,19 @@
+{
+  "name": "example-graphql",
+  "scripts": {},
+  "dependencies": {
+    "pm2": ">=5.3.0",
+    "dotenv": ">=16.3.1"
+  },
+  "devScripts": [
+    "generate",
+    "serve:dev:example-graphql"
+  ],
+  "prodScripts": [
+    "manual:prepare",
+    "start:prod:example-graphql"
+  ],
+  "testsScripts": [
+    "test:example-graphql"
+  ]
+}

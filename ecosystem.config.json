@@ -24,6 +24,11 @@
       "name": "example-prisma-flyway",
       "script": "node ./dist/apps/example-prisma-flyway/main.js",
       "node_args": "-r dotenv/config"
+    },
+    {
+      "name": "example-graphql",
+      "script": "node ./dist/apps/example-graphql/main.js",
+      "node_args": "-r dotenv/config"
     }
   ]
 }

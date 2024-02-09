@@ -40,7 +40,7 @@ import { NestjsPinoLoggerModule } from '@nestjs-mod/pino';
 bootstrapNestApplication({
   modules: {
     system: [
-      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationInitializer.forRoot({ staticConfiguration: { bufferLogs: true } }),
       NestjsPinoLoggerModule.forRoot(),
       DefaultNestApplicationListener.forRoot({
         staticEnvironments: { port: 3000 },
@@ -56,7 +56,7 @@ bootstrapNestApplication({
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`requestIdHeaderName`|Header name for search requestId|**optional**|```request-id```|-|
+|`requestIdHeaderName`|Header name for search requestId|**optional**|```x-request-id```|-|
 |`exclude`|Optional parameter for routing. It should implement interface of parameters of NestJS built-in `MiddlewareConfigProxy['forRoutes']`. @see https://docs.nestjs.com/middleware#applying-middleware It can be used for both disabling automatic req/res logs and removing request context from following logs. It works for all requests by default. If you only need to turn off the automatic request/response logging for some specific (or all) routes but keep request context for app logs use `pinoHttp.autoLogging` field.|**optional**|-|-|
 |`forRoutes`|Optional parameter for routing. It should implement interface of parameters of NestJS built-in `MiddlewareConfigProxy['forRoutes']`. @see https://docs.nestjs.com/middleware#applying-middleware It can be used for both disabling automatic req/res logs and removing request context from following logs. It works for all requests by default. If you only need to turn off the automatic request/response logging for some specific (or all) routes but keep request context for app logs use `pinoHttp.autoLogging` field.|**optional**|-|-|
 |`pinoHttp`|Optional parameters for `pino-http` module @see https://github.com/pinojs/pino-http#pinohttpopts-stream|**optional**|-|-|

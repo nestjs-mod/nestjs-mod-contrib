@@ -29,6 +29,7 @@
       "@nestjs-mod/cache-manager": ["libs/core/cache-manager/src/index.ts"],
       "@nestjs-mod/docker-compose": ["libs/infrastructure/docker-compose/src/index.ts"],
       "@nestjs-mod/flyway": ["libs/infrastructure/flyway/src/index.ts"],
+      "@nestjs-mod/graphql": ["libs/system/graphql/src/index.ts"],
       "@nestjs-mod/pino": ["libs/system/nestjs-pino/src/index.ts"],
       "@nestjs-mod/pm2": ["libs/infrastructure/pm2/src/index.ts"],
       "@nestjs-mod/prisma": ["libs/core/prisma/src/index.ts"],

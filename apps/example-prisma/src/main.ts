@@ -1,4 +1,5 @@
 import {
+  DOT_ENV_FILE,
   DefaultNestApplicationInitializer,
   DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
@@ -17,6 +18,9 @@ import { join } from 'path';
 import { userFeatureName } from './app/app.constants';
 import { AppModule } from './app/app.module';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-prisma');
+
 bootstrapNestApplication({
   globalConfigurationOptions: { debug: true },
   globalEnvironmentsOptions: { debug: true },
@@ -24,12 +28,12 @@ bootstrapNestApplication({
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps/example-prisma', PACKAGE_JSON_FILE),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, DOT_ENV_FILE),
         },
       }),
-      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationInitializer.forRoot({ staticConfiguration: { bufferLogs: true } }),
       NestjsPinoLoggerModule.forRoot(),
       TerminusHealthCheckModule.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
@@ -49,14 +53,7 @@ bootstrapNestApplication({
     core: [
       PrismaModule.forRoot({
         staticConfiguration: {
-          prismaSchemaFile: join(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            'apps/example-prisma/src/prisma/',
-            `${userFeatureName}-${PRISMA_SCHEMA_FILE}`
-          ),
+          prismaSchemaFile: join(appFolder, 'src', 'prisma', `${userFeatureName}-${PRISMA_SCHEMA_FILE}`),
           prismaFeatureName: userFeatureName,
           prismaModule: isInfrastructureMode()
             ? { PrismaClient: FakePrismaClient }
@@ -69,14 +66,14 @@ bootstrapNestApplication({
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
         staticConfiguration: {
-          markdownFile: join(__dirname, '..', '..', '..', 'apps/example-prisma', 'INFRASTRUCTURE.MD'),
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
           skipEmptySettings: true,
         },
       }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
-          dockerComposeFile: join(__dirname, '..', '..', '..', 'apps/example-prisma', DOCKER_COMPOSE_FILE),
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
       DockerComposePostgreSQL.forRoot(),
@@ -85,7 +82,7 @@ bootstrapNestApplication({
       }),
       Pm2.forRoot({
         configuration: {
-          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          ecosystemConfigFile: join(rootFolder, ECOSYSTEM_CONFIG_FILE),
           applicationScriptFile: join('dist/apps/example-prisma/main.js'),
         },
       }),

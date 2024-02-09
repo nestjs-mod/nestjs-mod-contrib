@@ -3,6 +3,7 @@
  * This is only a minimal backend to get started.
  */
 import {
+  DOT_ENV_FILE,
   DefaultNestApplicationInitializer,
   DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
@@ -20,6 +21,9 @@ import { TerminusHealthCheckModule } from '@nestjs-mod/terminus';
 import { MemoryHealthIndicator } from '@nestjs/terminus';
 import { join } from 'path';
 import { AppModule } from './app/app.module';
+
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-terminus');
 
 bootstrapNestApplication({
   globalEnvironmentsOptions: { debug: true },
@@ -40,12 +44,12 @@ bootstrapNestApplication({
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps', 'example-terminus', PACKAGE_JSON_FILE),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, DOT_ENV_FILE),
         },
       }),
-      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationInitializer.forRoot({ staticConfiguration: { bufferLogs: true } }),
       NestjsPinoLoggerModule.forRoot(),
       TerminusHealthCheckModule.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
@@ -72,14 +76,14 @@ bootstrapNestApplication({
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
         staticConfiguration: {
-          markdownFile: join(__dirname, '..', '..', '..', 'apps', 'example-terminus', 'INFRASTRUCTURE.MD'),
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
           skipEmptySettings: true,
         },
       }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
-          dockerComposeFile: join(__dirname, '..', '..', '..', DOCKER_COMPOSE_FILE),
+          dockerComposeFile: join(rootFolder, DOCKER_COMPOSE_FILE),
         },
       }),
       DockerComposePostgreSQL.forRoot(),
@@ -89,7 +93,7 @@ bootstrapNestApplication({
       }),
       Pm2.forRoot({
         configuration: {
-          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          ecosystemConfigFile: join(rootFolder, ECOSYSTEM_CONFIG_FILE),
           applicationScriptFile: join('dist/apps/example-terminus/main.js'),
         },
       }),

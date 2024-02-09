@@ -13,7 +13,7 @@ import { NestjsPinoLoggerModule } from '@nestjs-mod/pino';
 bootstrapNestApplication({
   modules: {
     system: [
-      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationInitializer.forRoot({ staticConfiguration: { bufferLogs: true } }),
       NestjsPinoLoggerModule.forRoot(),
       DefaultNestApplicationListener.forRoot({
         staticEnvironments: { port: 3000 },

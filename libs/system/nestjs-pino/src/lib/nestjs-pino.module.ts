@@ -1,9 +1,10 @@
 import { createNestModule, isProductionMode, NestModuleCategory } from '@nestjs-mod/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { Logger, LoggerErrorInterceptor, LoggerModule } from 'nestjs-pino';
+import { randomUUID } from 'crypto';
+import { Logger, LoggerModule } from 'nestjs-pino';
 import { LoggerRequestIdInterceptor } from './logger-request-id.interceptor';
 import { NestjsPinoAsyncLocalStorage } from './nestjs-pino.async-local-storage';
-import { NestjsPinoLoggerConfiguration } from './nestjs-pino.configuration';
+import { NestjsPinoLoggerConfiguration, X_REQUEST_ID } from './nestjs-pino.configuration';
 
 export const { NestjsPinoLoggerModule } = createNestModule({
   moduleName: 'NestjsPinoLoggerModule',
@@ -17,7 +18,7 @@ export const { NestjsPinoLoggerModule } = createNestModule({
       useFactory: (nestjsPinoLoggerConfiguration: NestjsPinoLoggerConfiguration) => ({
         ...nestjsPinoLoggerConfiguration,
         pinoHttp: {
-          level: isProductionMode() ? 'debug' : 'info',
+          level: isProductionMode() ? 'debug' : 'trace',
           hooks: {
             logMethod: function (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,14 +31,26 @@ export const { NestjsPinoLoggerModule } = createNestModule({
                 const arg2 = inputArgs.shift();
 
                 Object.assign(record, NestjsPinoAsyncLocalStorage.getStore());
-
                 return method.apply(this, [record, arg2, ...inputArgs]);
               }
               return method.apply(this, inputArgs);
             },
           },
+
           // install 'pino-pretty' package in order to use the following option
           transport: isProductionMode() ? undefined : { target: 'pino-pretty' },
+          autoLogging: true,
+          // Define a custom request id function
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          genReqId: function (req: any, res: any) {
+            const existingID = req.id ?? req.headers[X_REQUEST_ID];
+            if (existingID) {
+              return existingID;
+            }
+            const id = randomUUID();
+            res.setHeader('X-Request-Id', id);
+            return id;
+          },
           ...nestjsPinoLoggerConfiguration?.pinoHttp,
         },
       }),
@@ -49,6 +62,7 @@ export const { NestjsPinoLoggerModule } = createNestModule({
     if (options.app) {
       const logger = options.app.get(Logger);
       options.app.useLogger(logger);
+      options.app.flushLogs();
       if (options.logger) {
         if (logger.constructor !== Object) {
           Object.setPrototypeOf(options.logger, logger);
@@ -57,7 +71,6 @@ export const { NestjsPinoLoggerModule } = createNestModule({
       } else {
         options.logger = logger;
       }
-      options.app.useGlobalInterceptors(new LoggerErrorInterceptor());
     }
   },
 });

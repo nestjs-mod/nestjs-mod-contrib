@@ -64,6 +64,8 @@ npm run test:example-prisma-flyway
 |`npm run serve:dev`|Running NestJS application source code in watch mode|
 |`npm run serve:dev:example-prisma-flyway`|Running example-prisma-flyway source code in watch mode|
 |`npm run serve:dev:example-cache-manager`|Running example-cache-manager source code in watch mode|
+|`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
+|`npm run serve:dev:example-graphql:fastify`||
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -77,6 +79,7 @@ npm run test:example-prisma-flyway
 |`npm run build:prod:example-prisma`|Building example-prisma application|
 |`npm run start:prod:example-prisma-flyway`|Launching a built example-prisma-flyway (you must first build it using the build command)|
 |`npm run start:prod:example-cache-manager`|Launching a built example-cache-manager (you must first build it using the build command)|
+|`npm run start:prod:example-graphql`|Launching a built example-graphql (you must first build it using the build command)|
 |**docs**|
 |`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
 |`npm run docs:infrastructure:example-prisma`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma|
@@ -97,6 +100,7 @@ npm run test:example-prisma-flyway
 |`npm run test:example-prisma`|Running tests for example-prisma|
 |`npm run test:example-prisma-flyway`|Running tests for example-prisma-flyway|
 |`npm run test:example-cache-manager`|Running tests for example-cache-manager|
+|`npm run test:example-graphql`|Running tests for example-graphql|
 |**lint**|
 |`npm run lint`|Checking the typescript code for the entire project|
 |`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
@@ -149,6 +153,13 @@ Static variables of primitive and complex types that are used in the module and 
 
 ### DefaultNestApplicationInitializer
 Default NestJS application initializer, no third party utilities required.
+
+#### Static configuration
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`bufferLogs`|If enabled, logs will be buffered until the "Logger#flush" method is called. @default false|**optional**|-|```true```|
 
 ### NestjsPinoLoggerModule
 Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)

@@ -32,6 +32,9 @@ import { PACKAGE_JSON_FILE, ProjectUtils, bootstrapNestApplication } from '@nest
 import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
 import { join } from 'path';
 
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-terminus');
+
 bootstrapNestApplication({
   globalEnvironmentsOptions: { debug: true },
   globalConfigurationOptions: { debug: true },
@@ -39,16 +42,16 @@ bootstrapNestApplication({
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps', 'example-terminus', PACKAGE_JSON_FILE),
-          packageJsonFile: join(__dirname, '..', '..', '..', PACKAGE_JSON_FILE),
-          envFile: join(__dirname, '..', '..', '..', '.env'),
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
         },
       }),
     ],
     infrastructure: [
       Pm2.forRoot({
         configuration: {
-          ecosystemConfigFile: join(__dirname, '..', '..', '..', ECOSYSTEM_CONFIG_FILE),
+          ecosystemConfigFile: join(rootFolder, ECOSYSTEM_CONFIG_FILE),
           applicationScriptFile: join('dist/apps/example-terminus/main.js'),
         },
       }),
