@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.9.0...pino-v1.10.0) (2024-02-09)
+
+
+### Features
+
+* add GraphqlModule in @nestjs-mod/graphql, add @nestjs-mod/cache-manager, update code in @nestjs-mod/pino, update readme in all modules, update @nestjs-mod/common version ([c36b138](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c36b13870b6754a80c38a482aa0cb34bddafa2ed))
+
 # [1.9.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.8.1...pino-v1.9.0) (2024-02-07)
 
 
