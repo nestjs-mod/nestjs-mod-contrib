@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/flyway",
   "description": "Flyway - utility for working with database migrations (official site: https://flywaydb.org, preview version only for Postgres)",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "nestjs",
     "nestjs-mod",
