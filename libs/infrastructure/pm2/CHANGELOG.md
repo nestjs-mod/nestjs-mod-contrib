@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.7.0...pm2-v1.8.0) (2024-02-09)
+
+
+### Features
+
+* add GraphqlModule in @nestjs-mod/graphql, add @nestjs-mod/cache-manager, update code in @nestjs-mod/pino, update readme in all modules, update @nestjs-mod/common version ([c36b138](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c36b13870b6754a80c38a482aa0cb34bddafa2ed))
+
 # [1.7.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.6.2...pm2-v1.7.0) (2024-02-07)
 
 
