@@ -1,0 +1,6 @@
+<input type="file" class="file-input" accept="image/jpg, image/jpeg, image/png, image/gif" (change)="onFileSelected($event)" #fileUnput />
+
+{{ (fileName$ | async) || 'No file uploaded yet.' }}
+
+<button (click)="fileUnput.click()">Attach file</button>
+<button (click)="onFileUpload()">Upload file</button>

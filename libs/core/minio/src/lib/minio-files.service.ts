@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { unlink } from 'fs';
 import { readFile } from 'fs/promises';
 import { extname } from 'path';
-import { bindCallback, forkJoin, from, of, throwError } from 'rxjs';
+import { Observable, bindCallback, forkJoin, from, of, throwError } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { MinioConfiguration } from './minio.configuration';
 import { MinioEnvironments } from './minio.environments';
@@ -55,7 +55,7 @@ export class MinioFilesService {
     expiry: number;
     objectId?: string;
     ext: string;
-  }) {
+  }): Observable<PresignedUrls> {
     const { downloadUrl, fullObjectName } = this.getDownloadUrl({
       userId,
       bucketName,
