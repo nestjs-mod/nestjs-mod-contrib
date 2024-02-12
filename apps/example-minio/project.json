@@ -1,0 +1,60 @@
+{
+  "name": "example-minio",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-minio/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-minio",
+        "main": "apps/example-minio/src/main.ts",
+        "tsConfig": "apps/example-minio/tsconfig.app.json",
+        "assets": ["apps/example-minio/src/assets"],
+        "webpackConfig": "apps/example-minio/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "example-minio:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-minio:build:development"
+        },
+        "production": {
+          "buildTarget": "example-minio:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example-minio/jest.config.ts"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/apps/example-minio/main.js"],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

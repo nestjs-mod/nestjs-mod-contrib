@@ -36,6 +36,7 @@
     "serve:dev:example-cache-manager": "npm run nx -- serve example-cache-manager --host=0.0.0.0",
     "serve:dev:example-graphql": "npm run nx -- serve example-graphql --host=0.0.0.0",
     "serve:dev:example-graphql:fastify": "export PLATFORM=fastify && npm run nx -- serve example-graphql --host=0.0.0.0",
+    "serve:dev:example-minio": "npm run nx -- serve example-minio --host=0.0.0.0",
     "_____pm2 prod infra_____": "_____pm2 prod infra_____",
     "pm2:start": "./node_modules/.bin/pm2 start ./ecosystem.config.json",
     "pm2:stop": "./node_modules/.bin/pm2 delete all",
@@ -50,10 +51,13 @@
     "start:prod:example-prisma-flyway": "npm run nx -- start example-prisma-flyway",
     "start:prod:example-cache-manager": "npm run nx -- start example-cache-manager",
     "start:prod:example-graphql": "npm run nx -- start example-graphql",
+    "start:prod:example-minio": "npm run nx -- start example-minio",
+    "build:prod:example-minio": "npm run nx -- build example-minio",
     "_____docs_____": "_____docs_____",
     "docs:infrastructure": "export NODE_ENV=infrastructure && npm run nx:many -- -t=start --parallel=1",
-    "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && npm run nx -- serve example-prisma --host=0.0.0.0",
-    "docs:infrastructure:example-terminus": "export NODE_ENV=infrastructure && npm run nx -- serve example-terminus --host=0.0.0.0",
+    "docs:infrastructure:example-minio": "export NODE_ENV=infrastructure && npm run nx -- start example-minio --host=0.0.0.0",
+    "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && npm run nx -- start example-prisma --host=0.0.0.0",
+    "docs:infrastructure:example-terminus": "export NODE_ENV=infrastructure && npm run nx -- start example-terminus --host=0.0.0.0",
     "_____docker-compose infra_____": "_____docker-compose infra_____",
     "docker-compose:start:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose.yml down",
@@ -63,6 +67,8 @@
     "docker-compose:stop:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose.yml down",
     "docker-compose:start:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose.yml down",
+    "docker-compose:start:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose.yml down",
     "_____tests_____": "_____tests_____",
     "test": "npm run nx:many -- -t=test --passWithNoTests --skip-nx-cache=true --output-style=stream-without-prefixes",
     "test:example-pino-logger": "npm run nx -- test example-pino-logger --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
@@ -71,6 +77,7 @@
     "test:example-prisma-flyway": "npm run nx -- test example-prisma-flyway --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-cache-manager": "npm run nx -- test example-cache-manager --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-graphql": "npm run nx -- test example-graphql --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-minio": "npm run nx -- test example-minio --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && npm run nx:many -- -t=lint",
     "lint:fix": "npm run tsc:lint && npm run nx:many -- -t=lint --fix",
@@ -154,9 +161,14 @@
   },
   "dependencies": {
     "@as-integrations/fastify": "^2.1.1",
+    "@graphql-tools/utils": "^10.0.13",
+    "@nx/angular": "18.0.4",
     "@nestjs-mod/common": "2.9.0",
     "@nestjs-mod/fastify": "1.1.0",
+    "@nestjs-mod/pino": "1.10.0",
+    "@nestjs-mod/pm2": "1.8.0",
     "@nestjs-mod/reports": "2.9.0",
+    "@nestjs-mod/terminus": "1.9.0",
     "@nestjs-mod/testing": "2.9.0",
     "@nestjs/apollo": "^12.0.11",
     "@nestjs/common": "^10.0.2",
@@ -180,6 +192,7 @@
     "graphql-subscriptions": "2.0.0",
     "graphql-type-json": "^0.3.2",
     "markdown-it": "^14.0.0",
+    "nestjs-minio": "^2.5.4",
     "nestjs-pino": "^4.0.0",
     "pino-http": "^9.0.0",
     "pino-pretty": "^10.3.1",
@@ -222,6 +235,9 @@
       "Running example-graphql source code in watch mode"
     ],
     "serve:dev:example-graphql:fastify": [],
+    "serve:dev:example-minio": [
+      "Running example-minio source code in watch mode"
+    ],
     "pm2:start": [
       "Launch all applications in PM2 mode"
     ],
@@ -258,9 +274,14 @@
     "start:prod:example-graphql": [
       "Launching a built example-graphql (you must first build it using the build command)"
     ],
+    "start:prod:example-minio": [
+      "Launching a built example-minio (you must first build it using the build command)"
+    ],
+    "build:prod:example-minio": [],
     "docs:infrastructure": [
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure"
     ],
+    "docs:infrastructure:example-minio": [],
     "docs:infrastructure:example-prisma": [
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma"
     ],
@@ -291,6 +312,12 @@
     "docker-compose:stop:example-cache-manager": [
       "Stopping the docker-compose infrastructure for example-cache-manager"
     ],
+    "docker-compose:start:example-minio": [
+      "Running the docker-compose infrastructure for example-minio"
+    ],
+    "docker-compose:stop:example-minio": [
+      "Stopping the docker-compose infrastructure for example-minio"
+    ],
     "test": [
       "Running tests across the entire project"
     ],
@@ -311,6 +338,9 @@
     ],
     "test:example-graphql": [
       "Running tests for example-graphql"
+    ],
+    "test:example-minio": [
+      "Running tests for example-minio"
     ],
     "lint": [
       "Checking the typescript code for the entire project"

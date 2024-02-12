@@ -1,5 +1,5 @@
 {
-  "name": "example-graphql",
+  "name": "example-minio",
   "scripts": {},
   "dependencies": {
     "pm2": ">=5.3.0",
@@ -7,13 +7,15 @@
   },
   "devScripts": [
     "manual:prepare",
-    "serve:dev:example-graphql"
+    "docker-compose:start:example-minio",
+    "serve:dev:example-minio"
   ],
   "prodScripts": [
     "manual:prepare",
-    "start:prod:example-graphql"
+    "docker-compose:start:example-minio",
+    "start:prod:example-minio"
   ],
   "testsScripts": [
-    "test:example-graphql"
+    "test:example-minio"
   ]
 }

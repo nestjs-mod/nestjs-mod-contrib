@@ -8,19 +8,17 @@ import {
 import { constantCase, kebabCase } from 'case-anything';
 import { DockerCompose } from '../../docker-compose.module';
 import { DockerComposeServiceType, getDockerComposeServiceName } from '../../docker-compose.utils';
-import { DockerComposeRedisError } from './docker-compose-redis-errors';
-import { DOCKER_COMPOSE_REDIS_MODULE_NAME } from './docker-compose-redis.constants';
-import { DockerComposeRedisConfiguration, DockerComposeRedisEnvironments } from './docker-compose-redis.settings';
-import { redisUrlParse } from './docker-compose-redis.utils';
+import { DOCKER_COMPOSE_MINIO_MODULE_NAME } from './docker-compose-minio.constants';
+import { DockerComposeMinioConfiguration, DockerComposeMinioEnvironments } from './docker-compose-minio.settings';
 
-export const { DockerComposeRedis } = createNestModule({
-  moduleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
+export const { DockerComposeMinio } = createNestModule({
+  moduleName: DOCKER_COMPOSE_MINIO_MODULE_NAME,
   moduleDescription:
-    'The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
+    'MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
   globalEnvironmentsOptions: { skipValidation: true },
   globalConfigurationOptions: { skipValidation: true },
-  staticConfigurationModel: DockerComposeRedisConfiguration,
-  staticEnvironmentsModel: DockerComposeRedisEnvironments,
+  staticConfigurationModel: DockerComposeMinioConfiguration,
+  staticEnvironmentsModel: DockerComposeMinioEnvironments,
   wrapForRootAsync: (asyncModuleOptions) => {
     if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.featureName) {
       const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
@@ -37,16 +35,16 @@ export const { DockerComposeRedis } = createNestModule({
     if (!modules[NestModuleCategory.infrastructure]) {
       modules[NestModuleCategory.infrastructure] = [];
     }
-    const dockerComposeRedisModule = createNestModule({
+    const dockerComposeMinioModule = createNestModule({
       project,
-      moduleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
+      moduleName: DOCKER_COMPOSE_MINIO_MODULE_NAME,
       moduleDescription:
-        'The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
+        'MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
       moduleCategory: NestModuleCategory.infrastructure,
       globalEnvironmentsOptions: { name: project?.name, skipValidation: isInfrastructureMode() },
       globalConfigurationOptions: { name: project?.name, skipValidation: isInfrastructureMode() },
-      staticConfigurationModel: DockerComposeRedisConfiguration,
-      staticEnvironmentsModel: DockerComposeRedisEnvironments,
+      staticConfigurationModel: DockerComposeMinioConfiguration,
+      staticEnvironmentsModel: DockerComposeMinioEnvironments,
       wrapForRootAsync: (asyncModuleOptions) => {
         if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.featureName) {
           const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
@@ -74,27 +72,11 @@ export const { DockerComposeRedis } = createNestModule({
           networks.push({ name: 'default-network', driver: 'bridge' });
         }
         const networkNames = networks?.map((n) => n.name);
-        const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.Redis);
-        let redisSettings:
-          | {
-              host: string;
-              port: number;
-              database: string;
-              password: string | null;
-            }
-          | undefined = undefined;
-
-        if (!staticEnvironments?.redisUrl && !isInfrastructureMode()) {
-          throw new DockerComposeRedisError('redisUrl not set');
-        }
-
-        if (staticEnvironments?.redisUrl) {
-          redisSettings = redisUrlParse(staticEnvironments.redisUrl);
-        }
+        const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.Minio);
 
         return [
           ProjectUtils.forFeature({
-            featureModuleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
+            featureModuleName: DOCKER_COMPOSE_MINIO_MODULE_NAME,
             contextName,
           }),
           DockerCompose.forFeature({
@@ -105,26 +87,26 @@ export const { DockerComposeRedis } = createNestModule({
                 [serviceName]: {
                   image: staticConfiguration?.image,
                   container_name: serviceName,
-                  volumes: [`${serviceName}-volume:/bitnami/redis/data`],
-                  ports: [`${staticConfiguration?.externalPort}:6379`],
+                  volumes: [`${serviceName}-volume:/bitnami/minio/data`],
+                  ports: [
+                    `${staticConfiguration?.externalPort}:9000`,
+                    `${staticConfiguration?.externalConsolePort}:9001`,
+                  ],
                   networks: networkNames,
                   environment: {
-                    ...(redisSettings?.database
+                    ...(staticEnvironments?.minioRootUser
                       ? {
-                          REDIS_DATABASE: redisSettings?.database,
+                          MINIO_ROOT_USER: staticEnvironments?.minioRootUser,
                         }
                       : {}),
-                    ...(redisSettings?.password ? { REDIS_PASSWORD: redisSettings?.password } : {}),
-                    ...(staticConfiguration?.disableCommands
-                      ? { REDIS_DISABLE_COMMANDS: staticConfiguration?.disableCommands }
-                      : {}),
-                    ...(staticConfiguration?.ioThreads ? { REDIS_IO_THREADS: staticConfiguration?.ioThreads } : {}),
-                    ...(staticConfiguration?.ioThreadsDoReads
-                      ? { REDIS_IO_THREADS_DO_READS: staticConfiguration?.ioThreadsDoReads }
+                    ...(staticEnvironments?.minioRootPassword
+                      ? {
+                          MINIO_ROOT_PASSWORD: staticEnvironments?.minioRootPassword,
+                        }
                       : {}),
                   },
                   healthcheck: {
-                    test: ['CMD-SHELL', 'redis-cli ping | grep PONG'],
+                    test: ['CMD-SHELL', 'mc', 'ready', 'local'],
                     interval: '5s',
                     timeout: '5s',
                     retries: 5,
@@ -141,8 +123,8 @@ export const { DockerComposeRedis } = createNestModule({
           }),
         ];
       },
-    }).DockerComposeRedis;
+    }).DockerComposeMinio;
 
-    modules[NestModuleCategory.infrastructure]!.push(dockerComposeRedisModule.forRootAsync(current.asyncModuleOptions));
+    modules[NestModuleCategory.infrastructure]!.push(dockerComposeMinioModule.forRootAsync(current.asyncModuleOptions));
   },
 });

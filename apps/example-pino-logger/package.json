@@ -2,7 +2,7 @@
   "name": "pino-logger",
   "description": "Example application with PM2 and Pino-logger",
   "devScripts": [
-    "generate",
+    "manual:prepare",
     "serve:dev:example-pino-logger"
   ],
   "prodScripts": [

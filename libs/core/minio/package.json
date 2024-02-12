@@ -1,15 +1,16 @@
 {
-  "name": "@nestjs-mod/graphql",
-  "description": "GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, integrated: dataloader, included support for pipes, filters and interceptors in resolver fields, works with Fastify (Wrapper for https://docs.nestjs.com/graphql/quick-start)",
-  "version": "1.0.0",
+  "name": "@nestjs-mod/minio",
+  "description": "Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)",
+  "version": "1.1.0",
   "keywords": [
     "nestjs",
     "nestjs-mod",
     "modules",
     "mod",
-    "graphql",
-    "apollo",
-    "system"
+    "files",
+    "minio",
+    "aws",
+    "core"
   ],
   "license": "MIT",
   "author": "EndyKaufman <admin@site15.ru>",
@@ -35,33 +36,18 @@
     }
   ],
   "dependencies": {
-    "tslib": "^2.3.0",
-    "graphql-type-json": "^0.3.2",
-    "@graphql-tools/utils": "10.0.13",
-    "dataloader": "^2.2.2",
-    "graphql": "^16.8.1"
-  },
-  "dependenciesInfo": {
-    "@nestjs/apollo": {
-      "docs": true
-    },
-    "@nestjs/graphql": {
-      "docs": true
-    },
-    "@as-integrations/fastify": {
-      "docs": true
-    }
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
-    "@nestjs/core": "*",
+    "class-validator": "*",
     "@nestjs/common": "*",
     "@nestjs-mod/common": "*",
-    "@nestjs/apollo": "*",
-    "@nestjs/graphql": "*",
-    "rxjs": "*"
+    "rxjs": "*",
+    "minio": "*",
+    "nestjs-minio": "*"
   },
   "peerDependenciesMeta": {
-    "@nestjs/core": {
+    "class-validator": {
       "optional": true
     },
     "@nestjs/common": {
@@ -70,14 +56,22 @@
     "@nestjs-mod/common": {
       "optional": true
     },
-    "@nestjs-mod/apollo": {
-      "optional": true
-    },
-    "@nestjs-mod/graphql": {
-      "optional": true
-    },
     "rxjs": {
       "optional": true
+    },
+    "minio": {
+      "optional": true
+    },
+    "nestjs-minio": {
+      "optional": true
+    }
+  },
+  "dependenciesInfo": {
+    "minio@7.1.3": {
+      "docs": true
+    },
+    "nestjs-minio@2.5.4": {
+      "docs": true
     }
   },
   "type": "commonjs",
