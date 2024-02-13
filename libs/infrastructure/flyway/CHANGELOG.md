@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.3.0...flyway-v1.3.1) (2024-02-13)
+
+
+### Bug Fixes
+
+* rename all featureName options in modules ([6d46c47](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/6d46c475c75023b4eaf53cb8d6ba7640bfad3ad6))
+
 # [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.2.0...flyway-v1.3.0) (2024-02-13)
 
 
