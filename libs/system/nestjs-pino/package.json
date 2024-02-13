@@ -1,7 +1,7 @@
 {
     "name": "@nestjs-mod/pino",
     "description": "Pino logger for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-pino)",
-    "version": "1.10.0",
+    "version": "1.11.0",
     "keywords": [
         "nestjs",
         "nestjs-mod",
