@@ -231,9 +231,9 @@ module.exports = {
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`flywayFeatureName`|Flyway feature name for generate prefix to environments keys|**optional**|-|-|
-|`flywayMigrationsFolder`|Folder with migrations|**isNotEmpty** (flywayMigrationsFolder should not be empty)|-|-|
-|`flywayConfigFile`|Javascript config file for flyway (.flyway.js)|**isNotEmpty** (flywayConfigFile should not be empty)|-|-|
+|`featureName`|Flyway feature name for generate prefix to environments keys|**optional**|-|-|
+|`migrationsFolder`|Folder with migrations|**isNotEmpty** (migrationsFolder should not be empty)|-|-|
+|`configFile`|Javascript config file for flyway (.flyway.js)|**isNotEmpty** (configFile should not be empty)|-|-|
 
 [Back to Top](#modules)
 

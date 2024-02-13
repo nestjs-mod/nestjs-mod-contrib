@@ -13,7 +13,7 @@ describe('AppService', () => {
         CacheManagerModule.forRoot({
           staticConfiguration: {
             type: 'memory',
-            cacheFeatureName: userFeatureName,
+            featureName: userFeatureName,
           },
         }),
       ],

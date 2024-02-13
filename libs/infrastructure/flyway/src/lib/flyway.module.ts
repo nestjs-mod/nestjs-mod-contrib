@@ -18,14 +18,15 @@ export const { Flyway } = createNestModule({
   staticConfigurationModel: FlywayConfiguration,
   environmentsModel: FlywayEnvironments,
   wrapForRootAsync: (asyncModuleOptions) => {
-    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.flywayFeatureName) {
-      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
-        asyncModuleOptions.staticConfiguration.flywayFeatureName
-      );
+    if (!asyncModuleOptions) {
+      asyncModuleOptions = {};
+    }
+    if (asyncModuleOptions.staticConfiguration?.featureName) {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
           propertyNameFormatters: [new FomatterClass()],
-          name: asyncModuleOptions.staticConfiguration?.flywayFeatureName,
+          name: asyncModuleOptions.staticConfiguration?.featureName,
         },
       });
     }
@@ -44,14 +45,17 @@ export const { Flyway } = createNestModule({
         staticConfigurationModel: FlywayConfiguration,
         environmentsModel: FlywayEnvironments,
         wrapForRootAsync: (asyncModuleOptions) => {
-          if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.flywayFeatureName) {
+          if (!asyncModuleOptions) {
+            asyncModuleOptions = {};
+          }
+          if (asyncModuleOptions.staticConfiguration?.featureName) {
             const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
-              asyncModuleOptions.staticConfiguration.flywayFeatureName
+              asyncModuleOptions.staticConfiguration.featureName
             );
             Object.assign(asyncModuleOptions, {
               environmentsOptions: {
                 propertyNameFormatters: [new FomatterClass()],
-                name: asyncModuleOptions.staticConfiguration?.flywayFeatureName,
+                name: asyncModuleOptions.staticConfiguration?.featureName,
               },
             });
           }

@@ -161,7 +161,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`cacheFeatureName`|Feature name for generate prefix to environments keys|**optional**|-|```cache-manager-user```|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|```cache-manager-user```|
 
 ## Feature modules
 Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.

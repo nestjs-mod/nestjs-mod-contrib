@@ -22,7 +22,10 @@ export const { DockerComposeMinio } = createNestModule({
   staticConfigurationModel: DockerComposeMinioConfiguration,
   staticEnvironmentsModel: DockerComposeMinioEnvironments,
   wrapForRootAsync: (asyncModuleOptions) => {
-    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.featureName) {
+    if (!asyncModuleOptions) {
+      asyncModuleOptions = {};
+    }
+    if (asyncModuleOptions.staticConfiguration?.featureName) {
       const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
@@ -121,7 +124,10 @@ export const { DockerComposeMinio } = createNestModule({
       staticConfigurationModel: DockerComposeMinioConfiguration,
       staticEnvironmentsModel: DockerComposeMinioEnvironments,
       wrapForRootAsync: (asyncModuleOptions) => {
-        if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.featureName) {
+        if (!asyncModuleOptions) {
+          asyncModuleOptions = {};
+        }
+        if (asyncModuleOptions.staticConfiguration?.featureName) {
           const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
             asyncModuleOptions.staticConfiguration.featureName
           );

@@ -47,7 +47,7 @@ bootstrapNestApplication({
       CacheManagerModule.forRoot({
         staticConfiguration: {
           type: isInfrastructureMode() ? 'memory' : 'redis',
-          cacheFeatureName: userFeatureName,
+          featureName: userFeatureName,
         },
       }),
     ],

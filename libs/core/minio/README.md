@@ -263,7 +263,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`minioFeatureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`region`|Region|**optional**|```us-east-1```|-|
 |`transport`|Transport|**optional**|-|-|
 |`sessionToken`|Session token|**optional**|-|-|

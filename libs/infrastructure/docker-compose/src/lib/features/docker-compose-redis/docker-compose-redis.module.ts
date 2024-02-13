@@ -22,7 +22,10 @@ export const { DockerComposeRedis } = createNestModule({
   staticConfigurationModel: DockerComposeRedisConfiguration,
   staticEnvironmentsModel: DockerComposeRedisEnvironments,
   wrapForRootAsync: (asyncModuleOptions) => {
-    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.featureName) {
+    if (!asyncModuleOptions) {
+      asyncModuleOptions = {};
+    }
+    if (asyncModuleOptions.staticConfiguration?.featureName) {
       const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
@@ -48,7 +51,10 @@ export const { DockerComposeRedis } = createNestModule({
       staticConfigurationModel: DockerComposeRedisConfiguration,
       staticEnvironmentsModel: DockerComposeRedisEnvironments,
       wrapForRootAsync: (asyncModuleOptions) => {
-        if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.featureName) {
+        if (!asyncModuleOptions) {
+          asyncModuleOptions = {};
+        }
+        if (asyncModuleOptions.staticConfiguration?.featureName) {
           const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
             asyncModuleOptions.staticConfiguration.featureName
           );

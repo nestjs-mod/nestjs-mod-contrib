@@ -15,8 +15,7 @@ import { MinioService } from './minio.service';
 export const { MinioModule } = createNestModule({
   moduleName: MINIO_MODULE_NAME,
   moduleCategory: NestModuleCategory.core,
-  moduleDescription:
-    'Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)',
+  moduleDescription: 'Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)',
   staticConfigurationModel: MinioConfiguration,
   staticEnvironmentsModel: MinioEnvironments,
   sharedProviders: [{ provide: MinioService, useValue: {} }, MinioFilesService],
@@ -60,14 +59,15 @@ export const { MinioModule } = createNestModule({
         MinioFilesBootstrapService,
       ],
   wrapForRootAsync: (asyncModuleOptions) => {
-    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.minioFeatureName) {
-      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
-        asyncModuleOptions.staticConfiguration.minioFeatureName
-      );
+    if (!asyncModuleOptions) {
+      asyncModuleOptions = {};
+    }
+    if (asyncModuleOptions.staticConfiguration?.featureName) {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
           propertyNameFormatters: [new FomatterClass()],
-          name: asyncModuleOptions.staticConfiguration?.minioFeatureName,
+          name: asyncModuleOptions.staticConfiguration?.featureName,
         },
       });
     }

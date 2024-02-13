@@ -24,7 +24,7 @@ export class MinioConfiguration
   @ConfigModelProperty({
     description: 'Feature name for generate prefix to environments keys',
   })
-  minioFeatureName?: string;
+  featureName?: string;
 
   @ConfigModelProperty({
     description: 'Region',

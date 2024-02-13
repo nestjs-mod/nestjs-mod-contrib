@@ -52,8 +52,8 @@ bootstrapNestApplication({
     core: [
       PrismaModule.forRoot({
         staticConfiguration: {
-          prismaSchemaFile: join(appFolder, 'src', 'prisma', `${flywayPrismaFeatureName}-${PRISMA_SCHEMA_FILE}`),
-          prismaFeatureName: flywayPrismaFeatureName,
+          schemaFile: join(appFolder, 'src', 'prisma', `${flywayPrismaFeatureName}-${PRISMA_SCHEMA_FILE}`),
+          featureName: flywayPrismaFeatureName,
           prismaModule: isInfrastructureMode()
             ? { PrismaClient: FakePrismaClient }
             : // remove after first run docs:infrastructure
@@ -84,9 +84,9 @@ bootstrapNestApplication({
       }),
       Flyway.forRoot({
         staticConfiguration: {
-          flywayFeatureName: flywayPrismaFeatureName,
-          flywayMigrationsFolder: join(appFolder, 'src', 'migrations'),
-          flywayConfigFile: join(rootFolder, FLYWAY_JS_CONFIG_FILE),
+          featureName: flywayPrismaFeatureName,
+          migrationsFolder: join(appFolder, 'src', 'migrations'),
+          configFile: join(rootFolder, FLYWAY_JS_CONFIG_FILE),
         },
       }),
       Pm2.forRoot({

@@ -61,15 +61,15 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updateProjectJsonFile() {
-    if (!this.flywayConfiguration.flywayConfigFile) {
+    if (!this.flywayConfiguration.configFile) {
       throw new FlywayError('flywayConfigFile not set');
     }
     const projectJson = this.nxProjectJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     const nxProjectJsonFilePath = this.nxProjectJsonService.getNxProjectJsonFilePath();
     if (projectJson && packageJsonFilePath && nxProjectJsonFilePath) {
-      const flywayConfigFilePath = this.flywayConfiguration.flywayConfigFile.replace(dirname(packageJsonFilePath), '');
-      const flywayMigrationsPath = this.flywayConfiguration.flywayMigrationsFolder.replace(
+      const flywayConfigFilePath = this.flywayConfiguration.configFile.replace(dirname(packageJsonFilePath), '');
+      const flywayMigrationsPath = this.flywayConfiguration.migrationsFolder.replace(
         dirname(packageJsonFilePath),
         ''
       );
@@ -119,7 +119,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updateFlywayConfigFile() {
-    if (!this.flywayConfiguration.flywayFeatureName) {
+    if (!this.flywayConfiguration.featureName) {
       throw new FlywayError('flywayFeatureName not set');
     }
     let flywayConfig = this.flywayConfigFileService.read();
@@ -179,22 +179,22 @@ module.exports = {
   }
 
   private createFirstMigrations() {
-    if (!this.flywayConfiguration.flywayFeatureName) {
+    if (!this.flywayConfiguration.featureName) {
       throw new FlywayError('flywayFeatureName not set');
     }
-    const flywayFeatureName = upperCamelCase(this.flywayConfiguration.flywayFeatureName);
-    const constantCaseFlywayFeatureName = constantCase(this.flywayConfiguration.flywayFeatureName);
+    const flywayFeatureName = upperCamelCase(this.flywayConfiguration.featureName);
+    const constantCaseFlywayFeatureName = constantCase(this.flywayConfiguration.featureName);
     const migrationFileName = `V202401212130__Create${flywayFeatureName}User.sql`;
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
-    const firstMigrationFilePath = join(this.flywayConfiguration.flywayMigrationsFolder, migrationFileName);
+    const firstMigrationFilePath = join(this.flywayConfiguration.migrationsFolder, migrationFileName);
     if (packageJsonFilePath) {
       let firstMigration: string = '';
       try {
         if (
-          !this.flywayConfiguration.flywayMigrationsFolder &&
-          !existsSync(this.flywayConfiguration.flywayMigrationsFolder)
+          !this.flywayConfiguration.migrationsFolder &&
+          !existsSync(this.flywayConfiguration.migrationsFolder)
         ) {
-          mkdirSync(this.flywayConfiguration.flywayMigrationsFolder, { recursive: true });
+          mkdirSync(this.flywayConfiguration.migrationsFolder, { recursive: true });
         }
         firstMigration = readFileSync(firstMigrationFilePath).toString();
       } catch (err) {
@@ -229,16 +229,16 @@ CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatu
   }
 
   private getDbConnectionEnvKeys() {
-    if (!this.flywayConfiguration.flywayFeatureName) {
+    if (!this.flywayConfiguration.featureName) {
       throw new FlywayError('flywayFeatureName not set');
     }
     const concatedDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,
-      this.flywayConfiguration.flywayFeatureName,
+      this.flywayConfiguration.featureName,
       'DATABASE_URL',
     ].join('_');
 
-    const databaseName = this.flywayConfiguration.flywayFeatureName
+    const databaseName = this.flywayConfiguration.featureName
       ? `${constantCase(concatedDatabaseName)}`
       : `DATABASE_URL`;
     return { databaseName };

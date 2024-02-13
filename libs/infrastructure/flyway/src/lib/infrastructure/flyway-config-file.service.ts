@@ -9,10 +9,10 @@ export class FlywayConfigFileService {
   constructor(protected readonly flywayConfiguration: FlywayConfiguration) {}
 
   getFlywayConfigFilePath() {
-    if (!this.flywayConfiguration.flywayConfigFile) {
+    if (!this.flywayConfiguration.configFile) {
       throw new FlywayError('flywayConfigFile not set');
     }
-    return this.flywayConfiguration.flywayConfigFile;
+    return this.flywayConfiguration.configFile;
   }
 
   read(): string | undefined {

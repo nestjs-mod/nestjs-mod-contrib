@@ -94,13 +94,13 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updateProjectJsonFile() {
-    if (!this.prismaConfiguration.prismaSchemaFile) {
+    if (!this.prismaConfiguration.schemaFile) {
       throw new PrismaError('prismaSchemaFile not set');
     }
     const projectJson = this.nxProjectJsonService.read();
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (projectJson && packageJsonFilePath) {
-      const prismaSchemaFilePath = this.prismaConfiguration.prismaSchemaFile.replace(dirname(packageJsonFilePath), '');
+      const prismaSchemaFilePath = this.prismaConfiguration.schemaFile.replace(dirname(packageJsonFilePath), '');
       // generate
       this.nxProjectJsonService.addRunCommands([
         `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`,
@@ -165,15 +165,15 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updatePrismaSchemaFile() {
-    if (!this.prismaConfiguration.prismaFeatureName) {
+    if (!this.prismaConfiguration.featureName) {
       throw new PrismaError('prismaFeatureName not set');
     }
     let prismaSchema = this.prismaSchemaFileService.read();
 
     if (!prismaSchema) {
       const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
-      const prismaFeatureName = upperCamelCase(this.prismaConfiguration.prismaFeatureName);
-      const constantCasePrismaFeatureName = constantCase(this.prismaConfiguration.prismaFeatureName);
+      const prismaFeatureName = upperCamelCase(this.prismaConfiguration.featureName);
+      const constantCasePrismaFeatureName = constantCase(this.prismaConfiguration.featureName);
 
       prismaSchema = `generator client {
   provider = "prisma-client-js"
@@ -212,8 +212,8 @@ model ${prismaFeatureName}User {
 
     const afterRemoveDatasource = (datasourceArr[0] || '') + (datasourceArr[1].split('}').slice(1).join('}') || '');
 
-    const clientNodeJSModuleName = this.prismaConfiguration.prismaFeatureName
-      ? `@prisma/${kebabCase(this.prismaConfiguration.prismaFeatureName)}-client`
+    const clientNodeJSModuleName = this.prismaConfiguration.featureName
+      ? `@prisma/${kebabCase(this.prismaConfiguration.featureName)}-client`
       : `@prisma/client`;
 
     const newGenerator = `generator client {
@@ -253,24 +253,24 @@ model ${prismaFeatureName}User {
   }
 
   private getDbConnectionEnvKeys() {
-    if (!this.prismaConfiguration.prismaFeatureName) {
+    if (!this.prismaConfiguration.featureName) {
       throw new PrismaError('prismaFeatureName not set');
     }
     const concatedDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,
-      this.prismaConfiguration.prismaFeatureName,
+      this.prismaConfiguration.featureName,
       'DATABASE_URL',
     ].join('_');
     const concatedShadowDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,
-      this.prismaConfiguration.prismaFeatureName,
+      this.prismaConfiguration.featureName,
       'SHADOW_DATABASE_URL',
     ].join('_');
 
-    const databaseName = this.prismaConfiguration.prismaFeatureName
+    const databaseName = this.prismaConfiguration.featureName
       ? `${constantCase(concatedDatabaseName)}`
       : `DATABASE_URL`;
-    const shadowDatabaseName = this.prismaConfiguration.prismaFeatureName
+    const shadowDatabaseName = this.prismaConfiguration.featureName
       ? `${constantCase(concatedShadowDatabaseName)}`
       : `SHADOW_DATABASE_URL`;
     return { databaseName, shadowDatabaseName };

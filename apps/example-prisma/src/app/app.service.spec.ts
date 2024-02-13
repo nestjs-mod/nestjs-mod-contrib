@@ -14,7 +14,7 @@ describe('AppService', () => {
         PrismaModule.forRoot({
           environments: { databaseUrl: 'fake' },
           staticConfiguration: {
-            prismaSchemaFile: join(
+            schemaFile: join(
               __dirname,
               '..',
               '..',
@@ -22,7 +22,7 @@ describe('AppService', () => {
               'apps/example-prisma/src/prisma/',
               `${userFeatureName}-${PRISMA_SCHEMA_FILE}`
             ),
-            prismaFeatureName: userFeatureName,
+            featureName: userFeatureName,
             prismaModule: { PrismaClient: FakePrismaClient },
           },
         }),

@@ -6,17 +6,17 @@ export class FlywayConfiguration {
   @ConfigModelProperty({
     description: 'Flyway feature name for generate prefix to environments keys',
   })
-  flywayFeatureName?: string;
+  featureName?: string;
 
   @ConfigModelProperty({
     description: 'Folder with migrations',
   })
   @IsNotEmpty()
-  flywayMigrationsFolder!: string;
+  migrationsFolder!: string;
 
   @ConfigModelProperty({
     description: 'Javascript config file for flyway (.flyway.js)',
   })
   @IsNotEmpty()
-  flywayConfigFile!: string;
+  configFile!: string;
 }

@@ -246,7 +246,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 | ------ | ----------- | ----------- | ------- | ----- |
 |`type`|Type of storage for store data (memory or redis)|**optional**|```memory```|-|
 |`defaultLogger`|Default logger|**optional**|-|-|
-|`cacheFeatureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`ttl`|TTL|**optional**|-|-|
 |`refreshThreshold`|Refresh threshold|**optional**|-|-|
 |`isCacheable`|Is cacheable|**optional**|-|-|

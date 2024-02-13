@@ -18,7 +18,7 @@ export class CacheManagerConfiguration implements Config {
   @ConfigModelProperty({
     description: 'Feature name for generate prefix to environments keys',
   })
-  cacheFeatureName?: string;
+  featureName?: string;
 
   @ConfigModelProperty({
     description: 'TTL',

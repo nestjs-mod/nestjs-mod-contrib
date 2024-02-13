@@ -9,10 +9,10 @@ export class PrismaSchemaFileService {
   constructor(protected readonly prismaConfiguration: PrismaConfiguration) {}
 
   getPrismaSchemaFilePath() {
-    if (!this.prismaConfiguration.prismaSchemaFile) {
+    if (!this.prismaConfiguration.schemaFile) {
       throw new PrismaError('prismaSchemaFile not set');
     }
-    return this.prismaConfiguration.prismaSchemaFile;
+    return this.prismaConfiguration.schemaFile;
   }
 
   read(): string | undefined {

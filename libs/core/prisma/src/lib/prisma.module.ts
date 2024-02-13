@@ -29,14 +29,15 @@ export const { PrismaModule } = createNestModule({
     },
   ],
   wrapForRootAsync: (asyncModuleOptions) => {
-    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.prismaFeatureName) {
-      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
-        asyncModuleOptions.staticConfiguration.prismaFeatureName
-      );
+    if (!asyncModuleOptions) {
+      asyncModuleOptions = {};
+    }
+    if (asyncModuleOptions.staticConfiguration?.featureName) {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
           propertyNameFormatters: [new FomatterClass()],
-          name: asyncModuleOptions.staticConfiguration?.prismaFeatureName,
+          name: asyncModuleOptions.staticConfiguration?.featureName,
         },
       });
     }
@@ -55,14 +56,17 @@ export const { PrismaModule } = createNestModule({
         staticConfigurationModel: PrismaConfiguration,
         environmentsModel: PrismaEnvironments,
         wrapForRootAsync: (asyncModuleOptions) => {
-          if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.prismaFeatureName) {
+          if (!asyncModuleOptions) {
+            asyncModuleOptions = {};
+          }
+          if (asyncModuleOptions.staticConfiguration?.featureName) {
             const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
-              asyncModuleOptions.staticConfiguration.prismaFeatureName
+              asyncModuleOptions.staticConfiguration.featureName
             );
             Object.assign(asyncModuleOptions, {
               environmentsOptions: {
                 propertyNameFormatters: [new FomatterClass()],
-                name: asyncModuleOptions.staticConfiguration?.prismaFeatureName,
+                name: asyncModuleOptions.staticConfiguration?.featureName,
               },
             });
           }

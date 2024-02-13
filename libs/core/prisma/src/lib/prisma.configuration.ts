@@ -39,12 +39,12 @@ export class PrismaConfiguration {
   @ConfigModelProperty({
     description: 'Prisma feature name for generate prefix to environments keys (infrastructure)',
   })
-  prismaFeatureName?: string;
+  featureName?: string;
 
   @ConfigModelProperty({
     description: 'Schema file for prisma (infrastructure)',
   })
-  prismaSchemaFile?: string;
+  schemaFile?: string;
 
   @ConfigModelProperty({
     description:

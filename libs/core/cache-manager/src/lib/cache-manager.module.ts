@@ -57,14 +57,15 @@ export const { CacheManagerModule } = createNestModule({
     },
   ],
   wrapForRootAsync: (asyncModuleOptions) => {
-    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.cacheFeatureName) {
-      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
-        asyncModuleOptions.staticConfiguration.cacheFeatureName
-      );
+    if (!asyncModuleOptions) {
+      asyncModuleOptions = {};
+    }
+    if (asyncModuleOptions.staticConfiguration?.featureName) {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
           propertyNameFormatters: [new FomatterClass()],
-          name: asyncModuleOptions.staticConfiguration?.cacheFeatureName,
+          name: asyncModuleOptions.staticConfiguration?.featureName,
         },
       });
     }

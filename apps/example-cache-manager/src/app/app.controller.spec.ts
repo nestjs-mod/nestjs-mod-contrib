@@ -15,7 +15,7 @@ describe('AppController', () => {
         CacheManagerModule.forRoot({
           staticConfiguration: {
             type: 'memory',
-            cacheFeatureName: userFeatureName,
+            featureName: userFeatureName,
           },
         }),
       ],
