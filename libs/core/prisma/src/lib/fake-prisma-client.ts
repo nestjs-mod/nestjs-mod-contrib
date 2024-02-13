@@ -1,12 +1,17 @@
 export class FakePrismaClient {
+  fakeClient = true;
+
   $on() {
-    //null
+    // null
   }
-  $connect() {
-    //null
+  async $connect() {
+    // null
   }
-  $disconnect() {
-    //null
+  async $disconnect() {
+    // null
+  }
+  async $queryRaw() {
+    // null
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [k: string]: any;

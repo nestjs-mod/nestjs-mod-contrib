@@ -28,6 +28,12 @@ export class PrismaConfiguration {
   })
   maxQueryExecutionTime?: number;
 
+  @ConfigModelProperty({
+    description: 'Ping database interval (0 - disable)',
+    default: 0,
+  })
+  pingDatabaseIntervalMs?: number;
+
   // infrastructure
 
   @ConfigModelProperty({

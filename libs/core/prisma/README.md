@@ -359,6 +359,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|-|
 |`logging`|Logging types (all_queries or long_queries)|**optional**|```long_queries```|-|
 |`maxQueryExecutionTime`|Max query execution time for detect long queries|**optional**|```5000```|-|
+|`pingDatabaseIntervalMs`|Ping database interval (0 - disable)|**optional**|```0```|-|
 |`prismaFeatureName`|Prisma feature name for generate prefix to environments keys (infrastructure)|**optional**|-|-|
 |`prismaSchemaFile`|Schema file for prisma (infrastructure)|**optional**|-|-|
 |`addMigrationScripts`|The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)|**optional**|```true```|-|
