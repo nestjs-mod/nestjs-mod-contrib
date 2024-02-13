@@ -35,10 +35,12 @@ export class FlywayConfigFileService {
     }
     try {
       const fileDir = dirname(flywayConfigFile);
-      if (!existsSync(fileDir)) {
-        mkdirSync(fileDir, { recursive: true });
+      if (fileDir) {
+        if (!existsSync(fileDir)) {
+          mkdirSync(fileDir, { recursive: true });
+        }
+        writeFileSync(flywayConfigFile, data);
       }
-      writeFileSync(flywayConfigFile, data);
     } catch (err) {
       //
     }

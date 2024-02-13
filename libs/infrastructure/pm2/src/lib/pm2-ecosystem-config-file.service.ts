@@ -28,9 +28,11 @@ export class Pm2EcosystemConfigFileService {
     }
     const content = JSON.stringify({ apps }, null, 2);
     const fileDir = dirname(this.getEcosystemConfigFilePath());
-    if (!existsSync(fileDir)) {
-      mkdirSync(fileDir, { recursive: true });
+    if (fileDir) {
+      if (!existsSync(fileDir)) {
+        mkdirSync(fileDir, { recursive: true });
+      }
+      writeFileSync(this.getEcosystemConfigFilePath(), content);
     }
-    writeFileSync(this.getEcosystemConfigFilePath(), content);
   }
 }

@@ -43,6 +43,9 @@ npm run test:example-graphql
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
 |`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|**angular dev infra**|
+|`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
+|`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -161,7 +164,7 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|[ {"name":"memory_heap"} ]|
+|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|[ ```{"name":"memory_heap"}``` ]|
 
 ### GraphqlModule
 GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, integrated: dataloader, included support for pipes, filters and interceptors in resolver fields, works with Fastify (Wrapper for https://docs.nestjs.com/graphql/quick-start)

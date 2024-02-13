@@ -45,6 +45,9 @@
     "@nestjs/apollo": {
       "docs": true
     },
+    "@apollo/server": {
+      "docs": true
+    },
     "@nestjs/graphql": {
       "docs": true
     },
@@ -71,6 +74,9 @@
       "optional": true
     },
     "@nestjs-mod/apollo": {
+      "optional": true
+    },
+    "@apollo/server": {
       "optional": true
     },
     "@nestjs-mod/graphql": {

@@ -62,17 +62,17 @@ export class MinioFilesService {
       objectId,
       ext,
     });
-    const projectUrl = `${this.minioEnvironments.useSSL ? 'https' : 'http'}://${this.minioEnvironments.serverHost}:${
-      this.minioEnvironments.serverPort
-    }`;
+    const projectUrl = `${this.minioEnvironments.minioUseSSL === 'true' ? 'https' : 'http'}://${
+      this.minioEnvironments.minioServerHost
+    }:${this.minioEnvironments.minioServerPort}`;
     this.logger.debug(`getPresignedUrls: ${downloadUrl}`);
     return this.createBucketIfNeed(this.minioConfiguration.region!, bucketName, ext).pipe(
       mergeMap(() => from(this.minioService.presignedPutObject(bucketName, fullObjectName, expiry))),
       map((uploadUrl: string) => {
-        const url = new URL(uploadUrl.replace(projectUrl, ''));
+        const url = new URL(uploadUrl);
         url.searchParams.delete('X-Amz-Credential');
         return {
-          uploadUrl: url.toString(),
+          uploadUrl: `${url.toString().replace(projectUrl.toString(), '')}`,
           downloadUrl,
         };
       })
@@ -131,7 +131,7 @@ export class MinioFilesService {
   }) {
     this.getPoliceAsString(bucketName, ext);
 
-    const fullObjectName = `${userId ?? this.minioEnvironments.defaultUserId}/${bucketName}_${
+    const fullObjectName = `${userId ?? this.minioEnvironments.minioDefaultUserId}/${bucketName}_${
       objectId ?? randomUUID()
     }.${ext}`;
     const downloadUrl = `/${bucketName}/${fullObjectName}`;

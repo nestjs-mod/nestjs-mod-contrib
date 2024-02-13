@@ -182,7 +182,7 @@ model PrismaUser {
 
 ```
 
-Connection string environment variable
+New environment variable
 
 ```bash
 PRISMA_ROOT_DATABASE_URL=postgres://postgres:postgres_password@localhost:5432/postgres?schema=public

@@ -30,6 +30,22 @@ export class DockerComposeMinioConfiguration {
     description: 'Feature name for generate prefix to environments keys',
   })
   featureName?: string;
+
+  @ConfigModelProperty({
+    description: 'External port for proxy access over nginx (infrastructure, need for disable CORS errors)',
+  })
+  nginxPort?: number;
+
+  @ConfigModelProperty({
+    description: 'Folder for store nginx config and logs (infrastructure)',
+  })
+  nginxFilesFolder!: string;
+
+  @ConfigModelProperty({
+    description: 'Locations for proxy to minio (infrastructure)',
+    default: ['files'],
+  })
+  nginxBucketsLocations?: string[];
 }
 
 @EnvModel()

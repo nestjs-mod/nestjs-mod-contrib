@@ -43,6 +43,9 @@ npm run test:example-pino-logger
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
 |`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|**angular dev infra**|
+|`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
+|`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|

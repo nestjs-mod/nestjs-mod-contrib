@@ -22,6 +22,11 @@ export class MinioConfiguration
   implements Omit<NestMinioOptions, 'endPoint' | 'accessKey' | 'secretKey' | 'useSSL' | 'port'>
 {
   @ConfigModelProperty({
+    description: 'Feature name for generate prefix to environments keys',
+  })
+  minioFeatureName?: string;
+
+  @ConfigModelProperty({
     description: 'Region',
     default: 'us-east-1',
   })

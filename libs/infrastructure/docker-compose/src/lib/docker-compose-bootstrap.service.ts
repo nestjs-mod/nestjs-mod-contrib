@@ -54,7 +54,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     const bothServicesWithEnvs = { ...bothServices };
     for (const key of Object.keys(bothServicesWithEnvs.services)) {
-      for (const envKey of Object.keys(bothServicesWithEnvs.services[key].environment)) {
+      for (const envKey of Object.keys(bothServicesWithEnvs.services[key].environment || {})) {
         bothServicesWithEnvs.services[key].environment[envKey] =
           bothServicesWithEnvs?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }
@@ -73,7 +73,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     const sampleBothServices = { ...bothServices };
 
     for (const key of Object.keys(sampleBothServices.services)) {
-      for (const envKey of Object.keys(sampleBothServices.services[key].environment)) {
+      for (const envKey of Object.keys(sampleBothServices.services[key].environment || {})) {
         sampleBothServices.services[key].environment[envKey] =
           existsServices?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }

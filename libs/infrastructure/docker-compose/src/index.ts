@@ -12,6 +12,11 @@ export * from './lib/features/docker-compose-minio/docker-compose-minio.constant
 export * from './lib/features/docker-compose-minio/docker-compose-minio.decorators';
 export * from './lib/features/docker-compose-minio/docker-compose-minio.module';
 export * from './lib/features/docker-compose-minio/docker-compose-minio.settings';
+export * from './lib/features/docker-compose-nginx/docker-compose-nginx-errors';
+export * from './lib/features/docker-compose-nginx/docker-compose-nginx.constants';
+export * from './lib/features/docker-compose-nginx/docker-compose-nginx.decorators';
+export * from './lib/features/docker-compose-nginx/docker-compose-nginx.module';
+export * from './lib/features/docker-compose-nginx/docker-compose-nginx.settings';
 export * from './lib/features/docker-compose-postgresql/docker-compose-postgresql-database.service';
 export * from './lib/features/docker-compose-postgresql/docker-compose-postgresql.constants';
 export * from './lib/features/docker-compose-postgresql/docker-compose-postgresql.decorators';

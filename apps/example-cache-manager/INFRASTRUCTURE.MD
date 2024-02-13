@@ -43,6 +43,9 @@ npm run test:example-cache-manager
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
 |`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|**angular dev infra**|
+|`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
+|`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -206,9 +209,9 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"example-cache-manager-redis":{"image":"bitnami/redis:7.2","container_name":"example-cache-manager-redis","volumes":["example-cache-manager-redis-volume:/bitnami/redis/data"],"ports":["6379:6379"],"networks":["example-cache-manager-network"],"environment":{"REDIS_DATABASE":"0","REDIS_PASSWORD":"redis_password","REDIS_DISABLE_COMMANDS":"FLUSHDB,FLUSHALL","REDIS_IO_THREADS":2,"REDIS_IO_THREADS_DO_READS":"yes"},"healthcheck":{"test":["CMD-SHELL","redis-cli ping | grep PONG"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"example-cache-manager-network":{"driver":"bridge"}}|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"example-cache-manager-redis-volume":{"name":"example-cache-manager-redis-volume"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-cache-manager-redis":{"image":"bitnami/redis:7.2","container_name":"example-cache-manager-redis","volumes":["example-cache-manager-redis-volume:/bitnami/redis/data"],"ports":["6379:6379"],"networks":["example-cache-manager-network"],"environment":{"REDIS_DATABASE":"0","REDIS_PASSWORD":"redis_password","REDIS_DISABLE_COMMANDS":"FLUSHDB,FLUSHALL","REDIS_IO_THREADS":2,"REDIS_IO_THREADS_DO_READS":"yes"},"healthcheck":{"test":["CMD-SHELL","redis-cli ping | grep PONG"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-cache-manager-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"example-cache-manager-redis-volume":{"name":"example-cache-manager-redis-volume"}}```|
 
 ### InfrastructureMarkdownReportGenerator
 Infrastructure markdown report generator.

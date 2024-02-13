@@ -19,6 +19,7 @@ export class AppComponent {
   fileName$ = new Subject<string>();
   file?: File;
   presignedUrls?: PresignedUrls;
+  outPresignedUrls$ = new Subject<PresignedUrls>();
 
   constructor(private readonly filesClientService: FilesClientService) {}
 
@@ -35,7 +36,12 @@ export class AppComponent {
 
   onFileUpload() {
     if (this.file && this.presignedUrls) {
-      this.filesClientService.uploadFile({ file: this.file, presignedUrls: this.presignedUrls }).subscribe();
+      this.filesClientService
+        .uploadFile({ file: this.file, presignedUrls: this.presignedUrls })
+        .pipe(
+          tap((presignedUrls) => this.outPresignedUrls$.next(presignedUrls))
+        )
+        .subscribe();
     }
   }
 }

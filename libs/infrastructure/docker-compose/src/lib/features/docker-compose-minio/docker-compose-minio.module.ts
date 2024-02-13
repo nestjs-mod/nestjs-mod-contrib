@@ -6,8 +6,10 @@ import {
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { constantCase, kebabCase } from 'case-anything';
+import { join } from 'path';
 import { DockerCompose } from '../../docker-compose.module';
 import { DockerComposeServiceType, getDockerComposeServiceName } from '../../docker-compose.utils';
+import { DockerComposeNginx } from '../docker-compose-nginx/docker-compose-nginx.module';
 import { DOCKER_COMPOSE_MINIO_MODULE_NAME } from './docker-compose-minio.constants';
 import { DockerComposeMinioConfiguration, DockerComposeMinioEnvironments } from './docker-compose-minio.settings';
 
@@ -35,6 +37,79 @@ export const { DockerComposeMinio } = createNestModule({
     if (!modules[NestModuleCategory.infrastructure]) {
       modules[NestModuleCategory.infrastructure] = [];
     }
+
+    const staticConfiguration = current.staticConfiguration;
+
+    if (
+      staticConfiguration &&
+      staticConfiguration.nginxFilesFolder &&
+      staticConfiguration.nginxBucketsLocations &&
+      staticConfiguration.nginxPort
+    ) {
+      const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.Minio);
+
+      const dockerComposeNginx = DockerComposeNginx.forRoot({
+        staticConfiguration: {
+          ports: { [staticConfiguration.nginxPort]: staticConfiguration.nginxPort },
+          serviceNames: { [serviceName]: 'service_started' },
+          configFolder: join(staticConfiguration.nginxFilesFolder, 'config'),
+          logsFolder: join(staticConfiguration.nginxFilesFolder, 'logs'),
+          configContent: `
+      map $sent_http_content_type $expires {
+        "text/html" epoch;
+        "text/html; charset=utf-8" epoch;
+        default off;
+    }
+    
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+    }
+    
+    server {
+        listen ${staticConfiguration.nginxPort};
+        server_name localhost;
+    
+        gzip on;
+        gzip_proxied any;
+        gzip_types text/plain application/xml text/css application/javascript application/json;
+        gzip_min_length 1000;
+        gzip_vary on;
+        gzip_disable "MSIE [1-6]\\.(?!.*SV1)";
+    
+        client_max_body_size 50m;
+        proxy_connect_timeout 3600s;
+        proxy_read_timeout 3600s;
+        proxy_send_timeout 3600s;
+        send_timeout 3600s;
+    
+        proxy_max_temp_file_size 0;
+    
+  ${staticConfiguration.nginxBucketsLocations
+    .map(
+      (nginxBucketsLocation) => `      location /${nginxBucketsLocation} {
+            proxy_set_header Host localhost:9000;
+            proxy_set_header Origin $http_origin;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            rewrite ^/${nginxBucketsLocation}/(.*)$ /$1 break;
+            proxy_pass http://${serviceName}:9000;
+            proxy_http_version 1.1;
+            proxy_set_header Accept-Language $http_accept_language;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+        }`
+    )
+    .join('\n')}    
+    }
+      `,
+        },
+      });
+
+      modules[NestModuleCategory.infrastructure]!.push(dockerComposeNginx);
+    }
+
     const dockerComposeMinioModule = createNestModule({
       project,
       moduleName: DOCKER_COMPOSE_MINIO_MODULE_NAME,
@@ -124,7 +199,6 @@ export const { DockerComposeMinio } = createNestModule({
         ];
       },
     }).DockerComposeMinio;
-
     modules[NestModuleCategory.infrastructure]!.push(dockerComposeMinioModule.forRootAsync(current.asyncModuleOptions));
   },
 });

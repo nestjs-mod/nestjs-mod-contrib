@@ -30,7 +30,11 @@ bootstrapNestApplication({
           envFile: join(rootFolder, '.env'),
         },
       }),
-      DefaultNestApplicationInitializer.forRoot({ staticConfiguration: { bufferLogs: true } }),
+      DefaultNestApplicationInitializer.forRoot({
+        staticConfiguration: {
+          bufferLogs: true,
+        },
+      }),
       NestjsPinoLoggerModule.forRoot(),
       TerminusHealthCheckModule.forRootAsync({
         configurationFactory: (memoryHealthIndicator: MemoryHealthIndicator) => ({
@@ -40,7 +44,6 @@ bootstrapNestApplication({
         }),
         inject: [MemoryHealthIndicator],
       }),
-      MinioModule.forRoot(),
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
           // When running in infrastructure mode, the backend server does not start.
@@ -48,6 +51,7 @@ bootstrapNestApplication({
         },
       }),
     ],
+    core: [MinioModule.forRoot()],
     feature: [AppModule.forRoot()],
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
@@ -68,7 +72,13 @@ bootstrapNestApplication({
           dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
-      DockerComposeMinio.forRoot({ staticConfiguration: { featureName: userFeatureName } }),
+      DockerComposeMinio.forRoot({
+        staticConfiguration: {
+          nginxPort: 1111,
+          nginxFilesFolder: join(appFolder, 'ngnix'),
+          featureName: userFeatureName,
+        },
+      }),
     ],
   },
 });

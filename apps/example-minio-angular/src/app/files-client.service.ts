@@ -10,6 +10,7 @@ export class PresignedUrls {
 @Injectable()
 export class FilesClientService {
   filesApiUrl = 'http://localhost:3006';
+  minioApiUrl = 'http://localhost:1111/files';
 
   constructor(private readonly httpClient: HttpClient) {}
 
@@ -25,13 +26,17 @@ export class FilesClientService {
 
   uploadFile({ file, presignedUrls }: { file: File; presignedUrls: PresignedUrls }) {
     return new Observable<PresignedUrls>((observer) => {
+      const outPresignedUrls: PresignedUrls = {
+        downloadUrl: this.minioApiUrl + presignedUrls.downloadUrl,
+        uploadUrl: this.minioApiUrl + presignedUrls.uploadUrl,
+      };
       if (presignedUrls.uploadUrl) {
         const xhr = new XMLHttpRequest();
-        xhr.open('PUT', presignedUrls.uploadUrl);
+        xhr.open('PUT', outPresignedUrls.uploadUrl);
         xhr.onreadystatechange = () => {
           if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-              observer.next(presignedUrls);
+              observer.next(outPresignedUrls);
               observer.complete();
             } else {
               observer.error(new Error('Error in upload file'));
@@ -40,7 +45,7 @@ export class FilesClientService {
         };
         xhr.send(file);
       } else {
-        observer.next(presignedUrls);
+        observer.next(outPresignedUrls);
         observer.complete();
       }
     });

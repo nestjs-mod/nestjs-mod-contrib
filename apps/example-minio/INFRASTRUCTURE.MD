@@ -35,6 +35,11 @@ npm run start:prod:example-minio
 # running tests for example-minio
 npm run test:example-minio
 ```
+## Running the frontend app in watch mode
+```bash
+# running frontend application for example-minio in watch mode
+npm run serve:dev:example-minio-angular
+```
 ## All scripts
 |Script|Description|
 |---|---|
@@ -49,6 +54,9 @@ npm run test:example-minio
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
 |`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|**angular dev infra**|
+|`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
+|`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -148,6 +156,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
+|`cors`|CORS options from [CORS package](https://github.com/expressjs/cors#configuration-options)|**optional**|```{"credentials":true,"methods":"GET,HEAD,PUT,PATCH,POST,DELETE"}```|```{"credentials":true,"methods":"GET,HEAD,PUT,PATCH,POST,DELETE"}```|
 |`bufferLogs`|If enabled, logs will be buffered until the "Logger#flush" method is called. @default false|**optional**|-|```true```|
 
 ### NestjsPinoLoggerModule
@@ -167,7 +176,10 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|[ {"name":"memory_heap"} ]|
+|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|[ ```{"name":"memory_heap"}``` ]|
+
+## Core modules
+Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
 
 ### MinioModule
 #### Shared providers
@@ -178,11 +190,10 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`serverHost`|Server host|`obj['serverHost']`, `process.env['EXAMPLE_MINIO_SERVER_HOST']`|**isNotEmpty** (serverHost should not be empty)|-|```localhost```|
-|`serverPort`|Server port|`obj['serverPort']`, `process.env['EXAMPLE_MINIO_SERVER_PORT']`|**optional**|-|```9000```|
-|`accessKey`|Access key|`obj['accessKey']`, `process.env['EXAMPLE_MINIO_ACCESS_KEY']`|**isNotEmpty** (accessKey should not be empty)|-|```minioadmin```|
-|`secretKey`|Secret key|`obj['secretKey']`, `process.env['EXAMPLE_MINIO_SECRET_KEY']`|**isNotEmpty** (secretKey should not be empty)|-|```6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq```|
-|`useSSL`|Use SSL|`obj['useSSL']`, `process.env['EXAMPLE_MINIO_USE_SSL']`|**optional**|```false```|```false```|
+|`minioServerHost`|Server host|`obj['minioServerHost']`, `process.env['EXAMPLE_MINIO_MINIO_SERVER_HOST']`|**isNotEmpty** (minioServerHost should not be empty)|-|```localhost```|
+|`minioServerPort`|Server port|`obj['minioServerPort']`, `process.env['EXAMPLE_MINIO_MINIO_SERVER_PORT']`|**optional**|-|```9000```|
+|`minioAccessKey`|Access key|`obj['minioAccessKey']`, `process.env['EXAMPLE_MINIO_MINIO_ACCESS_KEY']`|**isNotEmpty** (minioAccessKey should not be empty)|-|```minioadmin```|
+|`minioSecretKey`|Secret key|`obj['minioSecretKey']`, `process.env['EXAMPLE_MINIO_MINIO_SECRET_KEY']`|**isNotEmpty** (minioSecretKey should not be empty)|-|```6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq```|
 
 ## Feature modules
 Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.
@@ -241,9 +252,18 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"example-minio-minio":{"image":"bitnami/minio:2024.2.9","container_name":"example-minio-minio","volumes":["example-minio-minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["example-minio-network"],"environment":{"MINIO_ROOT_USER":"minioadmin","MINIO_ROOT_PASSWORD":"6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq"},"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"example-minio-network":{"driver":"bridge"}}|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"example-minio-minio-volume":{"name":"example-minio-minio-volume"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-minio-minio":{"image":"bitnami/minio:2024.2.9","container_name":"example-minio-minio","volumes":["example-minio-minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["example-minio-network"],"environment":{"MINIO_ROOT_USER":"minioadmin","MINIO_ROOT_PASSWORD":"6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq"},"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-minio-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"example-minio-minio-volume":{"name":"example-minio-minio-volume"}}```|
+
+#### Modules that use feature configuration
+##### Feature module name: EXAMPLE_MINIO_NGINX
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-minio-nginx":{"image":"nginx:alpine","container_name":"example-minio-nginx","volumes":["/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-minio/ngnix/config:/etc/nginx/conf.d","/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-minio/ngnix/logs:/var/log/nginx/"],"ports":["1111:1111"],"networks":["example-minio-network"],"tty":true,"restart":"always","depends_on":{"example-minio-minio":{"condition":"service_started"}}}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-minio-network":{"driver":"bridge"}}```|
 
 ### InfrastructureMarkdownReportGenerator
 Infrastructure markdown report generator.
@@ -276,6 +296,22 @@ Static variables of primitive and complex types that are used in the module and 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`featureName`|Feature name for generate prefix to environments keys|**optional**|-|```minio-user```|
+|`nginxPort`|External port for proxy access over nginx (infrastructure, need for disable CORS errors)|**optional**|-|```1111```|
+|`nginxFilesFolder`|Folder for store nginx config and logs (infrastructure)|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-minio/ngnix```|
+
+### DockerComposeNginx
+Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Static configuration
+Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`configContent`|Config content|**isNotEmpty** (configContent should not be empty)|-|```      map $sent_http_content_type $expires {        "text/html" epoch;        "text/html; charset=utf-8" epoch;        default off;    }        map $http_upgrade $connection_upgrade {        default upgrade;        '' close;    }        server {        listen 1111;        server_name localhost;            gzip on;        gzip_proxied any;        gzip_types text/plain application/xml text/css application/javascript application/json;        gzip_min_length 1000;        gzip_vary on;        gzip_disable "MSIE [1-6]\.(?!.*SV1)";            client_max_body_size 50m;        proxy_connect_timeout 3600s;        proxy_read_timeout 3600s;        proxy_send_timeout 3600s;        send_timeout 3600s;            proxy_max_temp_file_size 0;            location /files {            proxy_set_header Host localhost:9000;            proxy_set_header Origin $http_origin;            proxy_set_header X-Real-IP $remote_addr;            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;            proxy_set_header X-Forwarded-Proto $scheme;            rewrite ^/files/(.*)$ /$1 break;            proxy_pass http://example-minio-minio:9000;            proxy_http_version 1.1;            proxy_set_header Accept-Language $http_accept_language;            proxy_set_header Upgrade $http_upgrade;            proxy_set_header Connection $connection_upgrade;        }        }      ```|
+|`configFolder`|Config folder for map volume to /etc/nginx/conf.d|**isNotEmpty** (configFolder should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-minio/ngnix/config```|
+|`logsFolder`|Logs folder for map volume to /var/log/nginx/|**isNotEmpty** (logsFolder should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-minio/ngnix/logs```|
+|`serviceNames`|Depends on services|**optional**|-|```{"example-minio-minio":"service_started"}```|
+|`ports`|Ports|**optional**|-|```{"1111":1111}```|
 
 
 ## Maintainers

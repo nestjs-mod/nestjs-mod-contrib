@@ -1,4 +1,4 @@
-An example you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-cache-manager.
+An example of using Minio, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-minio and frontend on Angular here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-minio-angular.
 
 ```typescript
 import {
@@ -8,13 +8,15 @@ import {
   PACKAGE_JSON_FILE,
   ProjectUtils,
   bootstrapNestApplication,
+  isInfrastructureMode,
 } from '@nestjs-mod/common';
-import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeRedis } from '@nestjs-mod/docker-compose';
 import { join } from 'path';
-import { userFeatureName } from './app/app.constants';
 
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeMinio } from '@nestjs-mod/docker-compose';
+
+const userFeatureName = 'minio-user';
 const rootFolder = join(__dirname, '..', '..', '..');
-const appFolder = join(rootFolder, 'apps', 'example-cache-manager');
+const appFolder = join(rootFolder, 'apps', 'example-minio');
 
 bootstrapNestApplication({
   globalConfigurationOptions: { debug: true },
@@ -23,14 +25,7 @@ bootstrapNestApplication({
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            'apps/example-cache-manager',
-            PACKAGE_JSON_FILE
-          ),
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
           packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
           envFile: join(rootFolder, '.env'),
         },
@@ -56,7 +51,13 @@ bootstrapNestApplication({
           dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
-      DockerComposeRedis.forRoot({ staticConfiguration: { featureName: userFeatureName } }),
+      DockerComposeMinio.forRoot({
+        staticConfiguration: {
+          nginxPort: 1111,
+          nginxFilesFolder: join(appFolder, 'ngnix'),
+          featureName: userFeatureName,
+        },
+      }),
     ],
   },
 });
@@ -71,36 +72,51 @@ Add database options to docker-compose file for application `docker-compose.yml`
 ```yaml
 version: '3'
 services:
-  cache-manager-redis:
-    image: 'bitnami/redis:7.2'
-    container_name: 'cache-manager-redis'
+  example-minio-minio:
+    image: 'bitnami/minio:2024.2.9'
+    container_name: 'example-minio-minio'
     volumes:
-      - 'cache-manager-redis-volume:/bitnami/redis/data'
+      - 'example-minio-minio-volume:/bitnami/minio/data'
     ports:
-      - '6379:6379'
+      - '9000:9000'
+      - '9001:9001'
     networks:
-      - 'cache-manager-network'
+      - 'example-minio-network'
     environment:
-      REDIS_DATABASE: '0'
-      REDIS_PASSWORD: 'redis_password'
-      REDIS_DISABLE_COMMANDS: 'FLUSHDB,FLUSHALL'
-      REDIS_IO_THREADS: 2
-      REDIS_IO_THREADS_DO_READS: 'yes'
+      MINIO_ROOT_USER: 'minioadmin'
+      MINIO_ROOT_PASSWORD: '6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq'
     healthcheck:
       test:
         - 'CMD-SHELL'
-        - 'redis-cli ping | grep PONG'
+        - 'mc'
+        - 'ready'
+        - 'local'
       interval: '5s'
       timeout: '5s'
       retries: 5
     tty: true
     restart: 'always'
+  example-minio-nginx:
+    image: 'nginx:alpine'
+    container_name: 'example-minio-nginx'
+    volumes:
+      - './ngnix/config:/etc/nginx/conf.d'
+      - './ngnix/logs:/var/log/nginx/'
+    ports:
+      - '1111:1111'
+    networks:
+      - 'example-minio-network'
+    tty: true
+    restart: 'always'
+    depends_on:
+      example-minio-minio:
+        condition: 'service_started'
 networks:
-  example-cache-manager-network:
-    driver: bridge
+  example-minio-network:
+    driver: 'bridge'
 volumes:
-  example-cache-manager-volume:
-    name: example-cache-manager-volume
+  example-minio-minio-volume:
+    name: 'example-minio-minio-volume'
 ```
 
 Add database options to docker-compose file for application `docker-compose-example.yml` with fake credenionals
@@ -109,42 +125,58 @@ Add database options to docker-compose file for application `docker-compose-exam
 # Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
 version: '3'
 services:
-  cache-manager-redis:
-    image: 'bitnami/redis:7.2'
-    container_name: 'cache-manager-redis'
+  example-minio-minio:
+    image: 'bitnami/minio:2024.2.9'
+    container_name: 'example-minio-minio'
     volumes:
-      - 'cache-manager-redis-volume:/bitnami/redis/data'
+      - 'example-minio-minio-volume:/bitnami/minio/data'
     ports:
-      - '6379:6379'
+      - '9000:9000'
+      - '9001:9001'
     networks:
-      - 'cache-manager-network'
+      - 'example-minio-network'
     environment:
-      REDIS_DATABASE: 'value_for_redis_database'
-      REDIS_PASSWORD: 'value_for_redis_password'
-      REDIS_DISABLE_COMMANDS: 'value_for_redis_disable_commands'
-      REDIS_IO_THREADS: 'value_for_redis_io_threads'
-      REDIS_IO_THREADS_DO_READS: 'value_for_redis_io_threads_do_reads'
+      MINIO_ROOT_USER: 'value_for_minio_root_user'
+      MINIO_ROOT_PASSWORD: 'value_for_minio_root_password'
     healthcheck:
       test:
         - 'CMD-SHELL'
-        - 'redis-cli ping | grep PONG'
+        - 'mc'
+        - 'ready'
+        - 'local'
       interval: '5s'
       timeout: '5s'
       retries: 5
     tty: true
     restart: 'always'
+  example-minio-nginx:
+    image: 'nginx:alpine'
+    container_name: 'example-minio-nginx'
+    volumes:
+      - './ngnix/config:/etc/nginx/conf.d'
+      - './ngnix/logs:/var/log/nginx/'
+    ports:
+      - '1111:1111'
+    networks:
+      - 'example-minio-network'
+    tty: true
+    restart: 'always'
+    depends_on:
+      example-minio-minio:
+        condition: 'service_started'
 networks:
-  example-cache-manager-network:
-    driver: bridge
+  example-minio-network:
+    driver: 'bridge'
 volumes:
-  example-cache-manager-volume:
-    name: example-cache-manager-volume
+  example-minio-minio-volume:
+    name: 'example-minio-minio-volume'
 ```
 
 New environment variable
 
 ```bash
-EXAMPLE_CACHE_MANAGER_CACHE_MANAGER_USER_REDIS_URL=redis://:redis_password@localhost:6379
+EXAMPLE_MINIO_MINIO_USER_MINIO_ROOT_USER=minioadmin
+EXAMPLE_MINIO_MINIO_USER_MINIO_ROOT_PASSWORD=6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq
 ```
 
 When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.

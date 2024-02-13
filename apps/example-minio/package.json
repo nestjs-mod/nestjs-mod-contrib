@@ -10,6 +10,9 @@
     "docker-compose:start:example-minio",
     "serve:dev:example-minio"
   ],
+  "frontendDevScripts": [
+    "serve:dev:example-minio-angular"
+  ],
   "prodScripts": [
     "manual:prepare",
     "docker-compose:start:example-minio",

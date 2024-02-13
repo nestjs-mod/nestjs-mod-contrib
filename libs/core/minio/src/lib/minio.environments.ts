@@ -1,41 +1,40 @@
 import { EnvModel, EnvModelProperty } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
-import { NestMinioOptions } from 'nestjs-minio';
 
 @EnvModel()
-export class MinioEnvironments implements Pick<NestMinioOptions, 'accessKey' | 'secretKey' | 'useSSL'> {
+export class MinioEnvironments {
   @EnvModelProperty({
     description: 'Server host',
   })
   @IsNotEmpty()
-  serverHost!: string;
+  minioServerHost!: string;
 
   @EnvModelProperty({
     description: 'Server port',
   })
-  serverPort?: number;
+  minioServerPort?: number;
 
   @EnvModelProperty({
     description: 'Access key',
   })
   @IsNotEmpty()
-  accessKey!: string;
+  minioAccessKey!: string;
 
   @EnvModelProperty({
     description: 'Secret key',
   })
   @IsNotEmpty()
-  secretKey!: string;
+  minioSecretKey!: string;
 
   @EnvModelProperty({
     description: 'Use SSL',
-    default: false,
+    default: 'false',
   })
-  useSSL?: boolean;
+  minioUseSSL?: string;
 
   @EnvModelProperty({
     description: 'Default user id',
     default: 'default',
   })
-  defaultUserId?: string;
+  minioDefaultUserId?: string;
 }

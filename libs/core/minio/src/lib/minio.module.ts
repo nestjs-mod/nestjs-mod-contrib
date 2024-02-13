@@ -1,4 +1,9 @@
-import { NestModuleCategory, createNestModule, isInfrastructureMode } from '@nestjs-mod/common';
+import {
+  NestModuleCategory,
+  createNestModule,
+  getFeatureDotEnvPropertyNameFormatter,
+  isInfrastructureMode,
+} from '@nestjs-mod/common';
 import { NestMinioModule, NestMinioService } from 'nestjs-minio';
 import { MinioFilesBootstrapService } from './minio-files-bootstrap.service';
 import { MinioFilesService } from './minio-files.service';
@@ -9,7 +14,7 @@ import { MinioService } from './minio.service';
 
 export const { MinioModule } = createNestModule({
   moduleName: MINIO_MODULE_NAME,
-  moduleCategory: NestModuleCategory.feature,
+  moduleCategory: NestModuleCategory.core,
   staticConfigurationModel: MinioConfiguration,
   staticEnvironmentsModel: MinioEnvironments,
   sharedProviders: [{ provide: MinioService, useValue: {} }, MinioFilesService],
@@ -20,11 +25,19 @@ export const { MinioModule } = createNestModule({
           NestMinioModule.registerAsync({
             useFactory: () => {
               return {
-                ...staticConfiguration,
-                ...staticEnvironments,
-                endPoint: staticEnvironments.serverHost,
-                port: +staticEnvironments.serverPort!,
-                useSSL: String(staticEnvironments.useSSL) === 'true',
+                accessKey: staticEnvironments.minioAccessKey,
+                secretKey: staticEnvironments.minioSecretKey,
+                endPoint: staticEnvironments.minioServerHost,
+                port: +staticEnvironments.minioServerPort!,
+                useSSL: staticEnvironments.minioUseSSL === 'true',
+                credentialsProvider: staticConfiguration.credentialsProvider,
+                partSize: staticConfiguration.partSize,
+                pathStyle: staticConfiguration.pathStyle,
+                region: staticConfiguration.region,
+                s3AccelerateEndpoint: staticConfiguration.s3AccelerateEndpoint,
+                sessionToken: staticConfiguration.sessionToken,
+                transport: staticConfiguration.transport,
+                transportAgent: staticConfiguration.transportAgent,
               };
             },
           }),
@@ -44,4 +57,18 @@ export const { MinioModule } = createNestModule({
         },
         MinioFilesBootstrapService,
       ],
+  wrapForRootAsync: (asyncModuleOptions) => {
+    if (asyncModuleOptions && asyncModuleOptions.staticConfiguration?.minioFeatureName) {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
+        asyncModuleOptions.staticConfiguration.minioFeatureName
+      );
+      Object.assign(asyncModuleOptions, {
+        environmentsOptions: {
+          propertyNameFormatters: [new FomatterClass()],
+          name: asyncModuleOptions.staticConfiguration?.minioFeatureName,
+        },
+      });
+    }
+    return { asyncModuleOptions };
+  },
 });
