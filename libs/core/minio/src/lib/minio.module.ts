@@ -15,6 +15,8 @@ import { MinioService } from './minio.service';
 export const { MinioModule } = createNestModule({
   moduleName: MINIO_MODULE_NAME,
   moduleCategory: NestModuleCategory.core,
+  moduleDescription:
+    'Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)',
   staticConfigurationModel: MinioConfiguration,
   staticEnvironmentsModel: MinioEnvironments,
   sharedProviders: [{ provide: MinioService, useValue: {} }, MinioFilesService],

@@ -16,12 +16,14 @@ npm i --save minio@7.1.3 nestjs-minio@2.5.4 @nestjs-mod/minio
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [MinioModule](#miniomodule) | core | undefined |
+| [MinioModule](#miniomodule) | core | Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio) |
 
 
 ## Modules descriptions
 
 ### MinioModule
+Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)
+
 #### Use in NestJS
 A simple example of generating a link to upload and download a picture.
 

@@ -156,7 +156,6 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`cors`|CORS options from [CORS package](https://github.com/expressjs/cors#configuration-options)|**optional**|```{"credentials":true,"methods":"GET,HEAD,PUT,PATCH,POST,DELETE"}```|```{"credentials":true,"methods":"GET,HEAD,PUT,PATCH,POST,DELETE"}```|
 |`bufferLogs`|If enabled, logs will be buffered until the "Logger#flush" method is called. @default false|**optional**|-|```true```|
 
 ### NestjsPinoLoggerModule
@@ -182,6 +181,8 @@ Variables of primitive and complex types that are used in the module; values for
 Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
 
 ### MinioModule
+Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)
+
 #### Shared providers
 `MinioService`, `MinioFilesService`
 
