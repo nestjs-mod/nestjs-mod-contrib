@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/cache-manager",
   "description": "A cache module for nodejs that allows easy wrapping of functions in cache, tiered caches, and a consistent interface for NestJS-mod (Wrapper for https://www.npmjs.com/package/cache-manager)",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "keywords": [
     "nestjs",
     "nestjs-mod",
