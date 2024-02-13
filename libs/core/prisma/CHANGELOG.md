@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.5.0...prisma-v1.5.1) (2024-02-13)
+
+
+### Bug Fixes
+
+* add pingDatabaseIntervalMs to prisma config for disable setInterval ([641b272](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/641b272e030e175d85f3098d454c74e5dce6bfa0))
+* rename all featureName options in modules ([6d46c47](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/6d46c475c75023b4eaf53cb8d6ba7640bfad3ad6))
+
 # [1.5.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.4.0...prisma-v1.5.0) (2024-02-13)
 
 
