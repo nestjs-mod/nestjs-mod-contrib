@@ -1,7 +1,7 @@
 {
     "name": "@nestjs-mod/pm2",
     "description": "Production process manager for Node.JS applications with a built-in load balancer for NestJS-mod (Generator ecosystem.config.json for https://www.npmjs.com/package/pm2)",
-    "version": "1.8.0",
+    "version": "1.9.0",
     "keywords": [
         "nestjs",
         "nestjs-mod",
