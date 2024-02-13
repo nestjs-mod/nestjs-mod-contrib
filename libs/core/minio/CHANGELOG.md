@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.0...minio-v1.0.1) (2024-02-13)
+
+
+### Bug Fixes
+
+* add description to minio module of nestjs ([c480411](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c480411ed49988f864fb029de4d05f1f26de6be1))
+
 # 1.0.0 (2024-02-13)
 
 
