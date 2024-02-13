@@ -1,3 +1,11 @@
+# [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.9.0...terminus-v1.10.0) (2024-02-13)
+
+
+### Features
+
+* add DockerComposeMinio in @nestjs-mod/docker-compose, add @nestjs-mod/minio ([0d3f9b7](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/0d3f9b74ad4eb79476eda1be6266bac636d3d4a5))
+* add DockerComposeNginx to @nestjs-mod/docker-compose, add use nginx in docker-compose for minio and disable cors validations, update readme in all modules ([87cb34a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/87cb34ad31aab7e8d5fbc9510d43b501529ac9d0))
+
 # [1.9.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.8.0...terminus-v1.9.0) (2024-02-09)
 
 
