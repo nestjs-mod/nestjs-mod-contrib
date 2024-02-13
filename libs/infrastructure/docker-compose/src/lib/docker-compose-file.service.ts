@@ -30,12 +30,18 @@ export class DockerComposeFileService {
     }
     try {
       const fileDir = dirname(dockerComposeFile);
-      if (!existsSync(fileDir)) {
+      if (fileDir && !existsSync(fileDir)) {
         mkdirSync(fileDir, { recursive: true });
       }
+
       writeFileSync(
         dockerComposeFile,
-        [header, stringify(data, { defaultStringType: Scalar.QUOTE_DOUBLE })].join('\n')
+        [
+          header,
+          stringify(data, { defaultStringType: Scalar.QUOTE_DOUBLE, defaultKeyType: Scalar.PLAIN, lineWidth: 0 })
+            .split(fileDir)
+            .join('.'),
+        ].join('\n')
       );
     } catch (err) {
       //
@@ -57,10 +63,12 @@ export class DockerComposeFileService {
     }
     try {
       const fileDir = dirname(dockerComposeFile);
-      if (!existsSync(fileDir)) {
-        mkdirSync(fileDir, { recursive: true });
+      if (fileDir) {
+        if (!existsSync(fileDir)) {
+          mkdirSync(fileDir, { recursive: true });
+        }
+        this.writeFile(dockerComposeFile, data, header);
       }
-      this.writeFile(dockerComposeFile, data, header);
     } catch (err) {
       return;
     }

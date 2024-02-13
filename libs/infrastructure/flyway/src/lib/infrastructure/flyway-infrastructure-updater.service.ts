@@ -190,7 +190,10 @@ module.exports = {
     if (packageJsonFilePath) {
       let firstMigration: string = '';
       try {
-        if (!existsSync(this.flywayConfiguration.flywayMigrationsFolder)) {
+        if (
+          !this.flywayConfiguration.flywayMigrationsFolder &&
+          !existsSync(this.flywayConfiguration.flywayMigrationsFolder)
+        ) {
           mkdirSync(this.flywayConfiguration.flywayMigrationsFolder, { recursive: true });
         }
         firstMigration = readFileSync(firstMigrationFilePath).toString();
@@ -215,10 +218,12 @@ CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatu
           return;
         }
         const fileDir = dirname(firstMigrationFilePath);
-        if (!existsSync(fileDir)) {
-          mkdirSync(fileDir, { recursive: true });
+        if (fileDir) {
+          if (!existsSync(fileDir)) {
+            mkdirSync(fileDir, { recursive: true });
+          }
+          writeFileSync(firstMigrationFilePath, firstMigration);
         }
-        writeFileSync(firstMigrationFilePath, firstMigration);
       }
     }
   }

@@ -1,0 +1,130 @@
+{
+  "name": "example-minio-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/example-minio-angular/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/example-minio-angular/browser",
+        "index": "apps/example-minio-angular/src/index.html",
+        "main": "apps/example-minio-angular/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/example-minio-angular/tsconfig.app.json",
+        "inlineStyleLanguage": "less",
+        "assets": ["apps/example-minio-angular/src/favicon.ico", "apps/example-minio-angular/src/assets"],
+        "styles": ["apps/example-minio-angular/src/styles.less"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "example-minio-angular:build:production"
+        },
+        "development": {
+          "buildTarget": "example-minio-angular:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "example-minio-angular:build"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/example-minio-angular/jest.config.ts"
+      }
+    },
+    "server": {
+      "dependsOn": ["build"],
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/example-minio-angular/server",
+        "main": "apps/example-minio-angular/server.ts",
+        "tsConfig": "apps/example-minio-angular/tsconfig.server.json",
+        "inlineStyleLanguage": "less"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "example-minio-angular:build:development",
+          "serverTarget": "example-minio-angular:server:development"
+        },
+        "production": {
+          "browserTarget": "example-minio-angular:build:production",
+          "serverTarget": "example-minio-angular:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "prerender": {
+      "executor": "@angular-devkit/build-angular:prerender",
+      "options": {
+        "routes": ["/"]
+      },
+      "configurations": {
+        "development": {
+          "browserTarget": "example-minio-angular:build:development",
+          "serverTarget": "example-minio-angular:server:development"
+        },
+        "production": {
+          "browserTarget": "example-minio-angular:build:production",
+          "serverTarget": "example-minio-angular:server:production"
+        }
+      },
+      "defaultConfiguration": "production"
+    }
+  }
+}

@@ -66,6 +66,10 @@ npm run test:example-prisma-flyway
 |`npm run serve:dev:example-cache-manager`|Running example-cache-manager source code in watch mode|
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
+|`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|**angular dev infra**|
+|`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
+|`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -80,8 +84,11 @@ npm run test:example-prisma-flyway
 |`npm run start:prod:example-prisma-flyway`|Launching a built example-prisma-flyway (you must first build it using the build command)|
 |`npm run start:prod:example-cache-manager`|Launching a built example-cache-manager (you must first build it using the build command)|
 |`npm run start:prod:example-graphql`|Launching a built example-graphql (you must first build it using the build command)|
+|`npm run start:prod:example-minio`|Launching a built example-minio (you must first build it using the build command)|
+|`npm run build:prod:example-minio`||
 |**docs**|
 |`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
+|`npm run docs:infrastructure:example-minio`||
 |`npm run docs:infrastructure:example-prisma`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma|
 |`npm run docs:infrastructure:example-terminus`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus|
 |**docker-compose infra**|
@@ -93,6 +100,8 @@ npm run test:example-prisma-flyway
 |`npm run docker-compose:stop:example-prisma-flyway`|Stopping the docker-compose infrastructure for example-prisma-flyway|
 |`npm run docker-compose:start:example-cache-manager`|Running the docker-compose infrastructure for example-cache-manager|
 |`npm run docker-compose:stop:example-cache-manager`|Stopping the docker-compose infrastructure for example-cache-manager|
+|`npm run docker-compose:start:example-minio`|Running the docker-compose infrastructure for example-minio|
+|`npm run docker-compose:stop:example-minio`|Stopping the docker-compose infrastructure for example-minio|
 |**tests**|
 |`npm run test`|Running tests across the entire project|
 |`npm run test:example-pino-logger`|Running tests for example-pino-logger|
@@ -101,6 +110,7 @@ npm run test:example-prisma-flyway
 |`npm run test:example-prisma-flyway`|Running tests for example-prisma-flyway|
 |`npm run test:example-cache-manager`|Running tests for example-cache-manager|
 |`npm run test:example-graphql`|Running tests for example-graphql|
+|`npm run test:example-minio`|Running tests for example-minio|
 |**lint**|
 |`npm run lint`|Checking the typescript code for the entire project|
 |`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
@@ -178,7 +188,7 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|[ {"name":"memory_heap"} ]|
+|`standardHealthIndicators`|Standard health indicators @see https://docs.nestjs.com/recipes/terminus#setting-up-a-healthcheck|**optional**|-|[ ```{"name":"memory_heap"}``` ]|
 
 ## Core modules
 Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
@@ -201,7 +211,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|{}|
+|`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|```{}```|
 |`prismaFeatureName`|Prisma feature name for generate prefix to environments keys (infrastructure)|**optional**|-|```flyway-prisma```|
 |`prismaSchemaFile`|Schema file for prisma (infrastructure)|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/src/prisma/flyway-prisma-schema.prisma```|
 |`addMigrationScripts`|The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)|**optional**|```true```|```false```|
@@ -252,9 +262,9 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"example-prisma-flyway-postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"example-prisma-flyway-postgre-sql","volumes":["example-prisma-flyway-postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["example-prisma-flyway-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"example-prisma-flyway-network":{"driver":"bridge"}}|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"example-prisma-flyway-postgre-sql-volume":{"name":"example-prisma-flyway-postgre-sql-volume"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-prisma-flyway-postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"example-prisma-flyway-postgre-sql","volumes":["example-prisma-flyway-postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["example-prisma-flyway-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-prisma-flyway-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"example-prisma-flyway-postgre-sql-volume":{"name":"example-prisma-flyway-postgre-sql-volume"}}```|
 
 ### Flyway
 Flyway - utility for working with database migrations (official site: https://flywaydb.org, preview version only for Postgres)

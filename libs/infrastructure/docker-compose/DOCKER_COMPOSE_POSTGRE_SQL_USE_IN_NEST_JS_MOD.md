@@ -1,7 +1,13 @@
 An example you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-prisma-flyway or https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-prisma.
 
 ```typescript
-import { PACKAGE_JSON_FILE, ProjectUtils, bootstrapNestApplication } from '@nestjs-mod/common';
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+  bootstrapNestApplication,
+} from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
 import { join } from 'path';
 
@@ -18,6 +24,13 @@ bootstrapNestApplication({
           applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
           packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
           envFile: join(rootFolder, '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'init' : 'listen',
         },
       }),
     ],

@@ -16,7 +16,7 @@ import { redisUrlParse } from './docker-compose-redis.utils';
 export const { DockerComposeRedis } = createNestModule({
   moduleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
   moduleDescription:
-    'The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/redis)',
+    'The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
   globalEnvironmentsOptions: { skipValidation: true },
   globalConfigurationOptions: { skipValidation: true },
   staticConfigurationModel: DockerComposeRedisConfiguration,
@@ -41,7 +41,7 @@ export const { DockerComposeRedis } = createNestModule({
       project,
       moduleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
       moduleDescription:
-        'The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/redis)',
+        'The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
       moduleCategory: NestModuleCategory.infrastructure,
       globalEnvironmentsOptions: { name: project?.name, skipValidation: isInfrastructureMode() },
       globalConfigurationOptions: { name: project?.name, skipValidation: isInfrastructureMode() },

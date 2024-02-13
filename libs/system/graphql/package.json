@@ -37,12 +37,15 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "graphql-type-json": "^0.3.2",
-    "@graphql-tools/utils": "9.2.1",
+    "@graphql-tools/utils": "10.0.13",
     "dataloader": "^2.2.2",
     "graphql": "^16.8.1"
   },
   "dependenciesInfo": {
     "@nestjs/apollo": {
+      "docs": true
+    },
+    "@apollo/server": {
       "docs": true
     },
     "@nestjs/graphql": {
@@ -71,6 +74,9 @@
       "optional": true
     },
     "@nestjs-mod/apollo": {
+      "optional": true
+    },
+    "@apollo/server": {
       "optional": true
     },
     "@nestjs-mod/graphql": {

@@ -17,8 +17,10 @@ npm i --save @nestjs-mod/docker-compose
 | Link | Category | Description |
 | ---- | -------- | ----------- |
 | [DockerCompose](#dockercompose) | infrastructure | Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose) |
+| [DockerComposeMinio](#dockercomposeminio) | infrastructure | MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
+| [DockerComposeNginx](#dockercomposenginx) | infrastructure | Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposePostgreSQL](#dockercomposepostgresql) | infrastructure | PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator for databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose) |
-| [DockerComposeRedis](#dockercomposeredis) | infrastructure | The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/redis) |
+| [DockerComposeRedis](#dockercomposeredis) | infrastructure | The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 
 
 ## Modules descriptions
@@ -132,11 +134,243 @@ version: '3'
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"postgre-sql","volumes":["postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["default-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"default-network":{"driver":"bridge"}}|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"postgre-sql-volume":{"name":"postgre-sql-volume"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"postgre-sql":{"image":"bitnami/postgresql:15.5.0","container_name":"postgre-sql","volumes":["postgre-sql-volume:/bitnami/postgresql"],"ports":["5432:5432"],"networks":["default-network"],"healthcheck":{"test":["CMD-SHELL","pg_isready -U postgres"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"postgre-sql-volume":{"name":"postgre-sql-volume"}}```|
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
 |`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
+[Back to Top](#modules)
+
+---
+### DockerComposeMinio
+MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Use in NestJS-mod
+An example of using Minio, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-minio and frontend on Angular here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-minio-angular.
+
+```typescript
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  InfrastructureMarkdownReportGenerator,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+  bootstrapNestApplication,
+  isInfrastructureMode,
+} from '@nestjs-mod/common';
+import { join } from 'path';
+
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeMinio } from '@nestjs-mod/docker-compose';
+
+const userFeatureName = 'minio-user';
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-minio');
+
+bootstrapNestApplication({
+  globalConfigurationOptions: { debug: true },
+  globalEnvironmentsOptions: { debug: true },
+  modules: {
+    system: [
+      ProjectUtils.forRoot({
+        staticConfiguration: {
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'init' : 'listen',
+        },
+      }),
+    ],
+    infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+        },
+      }),
+      DockerCompose.forRoot({
+        configuration: {
+          dockerComposeFileVersion: '3',
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
+        },
+      }),
+      DockerComposeMinio.forRoot({
+        staticConfiguration: {
+          nginxPort: 1111,
+          nginxFilesFolder: join(appFolder, 'ngnix'),
+          featureName: userFeatureName,
+        },
+      }),
+    ],
+  },
+});
+```
+
+After connecting the module to the application and `npm run build` and starting generation of documentation through `npm run docs:infrastructure`, you will have new files and scripts to run.
+
+New scripts mostly `package.json`
+
+Add database options to docker-compose file for application `docker-compose.yml` with real credenionals and add it to `.gitignore` file
+
+```yaml
+version: '3'
+services:
+  example-minio-minio:
+    image: 'bitnami/minio:2024.2.9'
+    container_name: 'example-minio-minio'
+    volumes:
+      - 'example-minio-minio-volume:/bitnami/minio/data'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - 'example-minio-network'
+    environment:
+      MINIO_ROOT_USER: 'minioadmin'
+      MINIO_ROOT_PASSWORD: '6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq'
+    healthcheck:
+      test:
+        - 'CMD-SHELL'
+        - 'mc'
+        - 'ready'
+        - 'local'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
+  example-minio-nginx:
+    image: 'nginx:alpine'
+    container_name: 'example-minio-nginx'
+    volumes:
+      - './ngnix/config:/etc/nginx/conf.d'
+      - './ngnix/logs:/var/log/nginx/'
+    ports:
+      - '1111:1111'
+    networks:
+      - 'example-minio-network'
+    tty: true
+    restart: 'always'
+    depends_on:
+      example-minio-minio:
+        condition: 'service_started'
+networks:
+  example-minio-network:
+    driver: 'bridge'
+volumes:
+  example-minio-minio-volume:
+    name: 'example-minio-minio-volume'
+```
+
+Add database options to docker-compose file for application `docker-compose-example.yml` with fake credenionals
+
+```yaml
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: '3'
+services:
+  example-minio-minio:
+    image: 'bitnami/minio:2024.2.9'
+    container_name: 'example-minio-minio'
+    volumes:
+      - 'example-minio-minio-volume:/bitnami/minio/data'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - 'example-minio-network'
+    environment:
+      MINIO_ROOT_USER: 'value_for_minio_root_user'
+      MINIO_ROOT_PASSWORD: 'value_for_minio_root_password'
+    healthcheck:
+      test:
+        - 'CMD-SHELL'
+        - 'mc'
+        - 'ready'
+        - 'local'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
+  example-minio-nginx:
+    image: 'nginx:alpine'
+    container_name: 'example-minio-nginx'
+    volumes:
+      - './ngnix/config:/etc/nginx/conf.d'
+      - './ngnix/logs:/var/log/nginx/'
+    ports:
+      - '1111:1111'
+    networks:
+      - 'example-minio-network'
+    tty: true
+    restart: 'always'
+    depends_on:
+      example-minio-minio:
+        condition: 'service_started'
+networks:
+  example-minio-network:
+    driver: 'bridge'
+volumes:
+  example-minio-minio-volume:
+    name: 'example-minio-minio-volume'
+```
+
+New environment variable
+
+```bash
+EXAMPLE_MINIO_MINIO_USER_MINIO_ROOT_USER=minioadmin
+EXAMPLE_MINIO_MINIO_USER_MINIO_ROOT_PASSWORD=6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq
+```
+
+When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
+
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`minioRootUser`|Minio root user.|`obj['minioRootUser']`, `process.env['MINIO_ROOT_USER']`|**isNotEmpty** (minioRootUser should not be empty)|-|-|
+|`minioRootPassword`|Minio root password.|`obj['minioRootPassword']`, `process.env['MINIO_ROOT_PASSWORD']`|**isNotEmpty** (minioRootPassword should not be empty)|-|-|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
+|`externalPort`|External port for S3 API operations on the default MinIO server port.|**optional**|```9000```|-|
+|`externalConsolePort`|External console for browser access on the MinIO Console port.|**optional**|```9001```|-|
+|`image`|Docker image name|**optional**|```bitnami/minio:2024.2.9```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`nginxPort`|External port for proxy access over nginx (infrastructure, need for disable CORS errors)|**optional**|-|-|
+|`nginxFilesFolder`|Folder for store nginx config and logs (infrastructure)|**optional**|-|-|
+|`nginxBucketsLocations`|Locations for proxy to minio (infrastructure)|**optional**|[ ```files``` ]|-|
+
+[Back to Top](#modules)
+
+---
+### DockerComposeNginx
+Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name|**optional**|```nginx:alpine```|-|
+|`configContent`|Config content|**isNotEmpty** (configContent should not be empty)|-|-|
+|`configFolder`|Config folder for map volume to /etc/nginx/conf.d|**isNotEmpty** (configFolder should not be empty)|-|-|
+|`logsFolder`|Logs folder for map volume to /var/log/nginx/|**isNotEmpty** (logsFolder should not be empty)|-|-|
+|`serviceNames`|Depends on services|**optional**|-|-|
+|`ports`|Ports|**optional**|-|-|
+|`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
 
 [Back to Top](#modules)
 
@@ -148,7 +382,13 @@ PostgreSQL (Postgres) is an open source object-relational database known for rel
 An example you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-prisma-flyway or https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-prisma.
 
 ```typescript
-import { PACKAGE_JSON_FILE, ProjectUtils, bootstrapNestApplication } from '@nestjs-mod/common';
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+  bootstrapNestApplication,
+} from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
 import { join } from 'path';
 
@@ -165,6 +405,13 @@ bootstrapNestApplication({
           applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
           packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
           envFile: join(rootFolder, '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'init' : 'listen',
         },
       }),
     ],
@@ -319,13 +566,15 @@ volumes:
 
 ---
 ### DockerComposeRedis
-The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/redis)
+The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
 
 #### Use in NestJS-mod
 An example you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-cache-manager.
 
 ```typescript
 import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
   PACKAGE_JSON_FILE,
   ProjectUtils,
@@ -357,6 +606,13 @@ bootstrapNestApplication({
           envFile: join(rootFolder, '.env'),
         },
       }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'init' : 'listen',
+        },
+      }),
     ],
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
@@ -386,30 +642,30 @@ Add database options to docker-compose file for application `docker-compose.yml`
 ```yaml
 version: '3'
 services:
-  'cache-manager-redis':
-    'image': 'bitnami/redis:7.2'
-    'container_name': 'cache-manager-redis'
-    'volumes':
+  cache-manager-redis:
+    image: 'bitnami/redis:7.2'
+    container_name: 'cache-manager-redis'
+    volumes:
       - 'cache-manager-redis-volume:/bitnami/redis/data'
-    'ports':
+    ports:
       - '6379:6379'
-    'networks':
+    networks:
       - 'cache-manager-network'
-    'environment':
-      'REDIS_DATABASE': '0'
-      'REDIS_PASSWORD': 'redis_password'
-      'REDIS_DISABLE_COMMANDS': 'FLUSHDB,FLUSHALL'
-      'REDIS_IO_THREADS': 2
-      'REDIS_IO_THREADS_DO_READS': 'yes'
-    'healthcheck':
-      'test':
+    environment:
+      REDIS_DATABASE: '0'
+      REDIS_PASSWORD: 'redis_password'
+      REDIS_DISABLE_COMMANDS: 'FLUSHDB,FLUSHALL'
+      REDIS_IO_THREADS: 2
+      REDIS_IO_THREADS_DO_READS: 'yes'
+    healthcheck:
+      test:
         - 'CMD-SHELL'
         - 'redis-cli ping | grep PONG'
-      'interval': '5s'
-      'timeout': '5s'
-      'retries': 5
-    'tty': true
-    'restart': 'always'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
 networks:
   example-cache-manager-network:
     driver: bridge
@@ -424,30 +680,30 @@ Add database options to docker-compose file for application `docker-compose-exam
 # Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
 version: '3'
 services:
-  'cache-manager-redis':
-    'image': 'bitnami/redis:7.2'
-    'container_name': 'cache-manager-redis'
-    'volumes':
+  cache-manager-redis:
+    image: 'bitnami/redis:7.2'
+    container_name: 'cache-manager-redis'
+    volumes:
       - 'cache-manager-redis-volume:/bitnami/redis/data'
-    'ports':
+    ports:
       - '6379:6379'
-    'networks':
+    networks:
       - 'cache-manager-network'
-    'environment':
-      'REDIS_DATABASE': 'value_for_redis_database'
-      'REDIS_PASSWORD': 'value_for_redis_password'
-      'REDIS_DISABLE_COMMANDS': 'value_for_redis_disable_commands'
-      'REDIS_IO_THREADS': 'value_for_redis_io_threads'
-      'REDIS_IO_THREADS_DO_READS': 'value_for_redis_io_threads_do_reads'
-    'healthcheck':
-      'test':
+    environment:
+      REDIS_DATABASE: 'value_for_redis_database'
+      REDIS_PASSWORD: 'value_for_redis_password'
+      REDIS_DISABLE_COMMANDS: 'value_for_redis_disable_commands'
+      REDIS_IO_THREADS: 'value_for_redis_io_threads'
+      REDIS_IO_THREADS_DO_READS: 'value_for_redis_io_threads_do_reads'
+    healthcheck:
+      test:
         - 'CMD-SHELL'
         - 'redis-cli ping | grep PONG'
-      'interval': '5s'
-      'timeout': '5s'
-      'retries': 5
-    'tty': true
-    'restart': 'always'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
 networks:
   example-cache-manager-network:
     driver: bridge
@@ -456,7 +712,7 @@ volumes:
     name: example-cache-manager-volume
 ```
 
-Connection string environment variable
+New environment variable
 
 ```bash
 EXAMPLE_CACHE_MANAGER_CACHE_MANAGER_USER_REDIS_URL=redis://:redis_password@localhost:6379

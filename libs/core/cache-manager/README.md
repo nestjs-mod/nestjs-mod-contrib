@@ -220,7 +220,7 @@ bootstrapNestApplication({
 });
 ```
 
-Connection string environment variable
+New environment variable
 
 ```bash
 EXAMPLE_CACHE_MANAGER_CACHE_MANAGER_USER_REDIS_URL=redis://:redis_password@localhost:6379

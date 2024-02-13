@@ -1,31 +1,31 @@
 # Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
-"version": "3"
-"services":
-  "prisma-postgre-sql":
-    "image": "bitnami/postgresql:15.5.0"
-    "container_name": "prisma-postgre-sql"
-    "volumes":
+version: "3"
+services:
+  prisma-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "prisma-postgre-sql"
+    volumes:
       - "prisma-postgre-sql-volume:/bitnami/postgresql"
-    "ports":
+    ports:
       - "5432:5432"
-    "networks":
+    networks:
       - "prisma-network"
-    "healthcheck":
-      "test":
+    healthcheck:
+      test:
         - "CMD-SHELL"
         - "pg_isready -U postgres"
-      "interval": "5s"
-      "timeout": "5s"
-      "retries": 5
-    "tty": true
-    "restart": "always"
-    "environment":
-      "POSTGRESQL_USERNAME": "value_for_postgresql_username"
-      "POSTGRESQL_PASSWORD": "value_for_postgresql_password"
-      "POSTGRESQL_DATABASE": "value_for_postgresql_database"
-"networks":
-  "prisma-network":
-    "driver": "bridge"
-"volumes":
-  "prisma-postgre-sql-volume":
-    "name": "prisma-postgre-sql-volume"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: "value_for_postgresql_username"
+      POSTGRESQL_PASSWORD: "value_for_postgresql_password"
+      POSTGRESQL_DATABASE: "value_for_postgresql_database"
+networks:
+  prisma-network:
+    driver: "bridge"
+volumes:
+  prisma-postgre-sql-volume:
+    name: "prisma-postgre-sql-volume"

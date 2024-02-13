@@ -2,6 +2,8 @@ An example you can see the full example here https://github.com/nestjs-mod/nestj
 
 ```typescript
 import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
   InfrastructureMarkdownReportGenerator,
   PACKAGE_JSON_FILE,
   ProjectUtils,
@@ -33,6 +35,13 @@ bootstrapNestApplication({
           envFile: join(rootFolder, '.env'),
         },
       }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'init' : 'listen',
+        },
+      }),
     ],
     infrastructure: [
       InfrastructureMarkdownReportGenerator.forRoot({
@@ -62,30 +71,30 @@ Add database options to docker-compose file for application `docker-compose.yml`
 ```yaml
 version: '3'
 services:
-  'cache-manager-redis':
-    'image': 'bitnami/redis:7.2'
-    'container_name': 'cache-manager-redis'
-    'volumes':
+  cache-manager-redis:
+    image: 'bitnami/redis:7.2'
+    container_name: 'cache-manager-redis'
+    volumes:
       - 'cache-manager-redis-volume:/bitnami/redis/data'
-    'ports':
+    ports:
       - '6379:6379'
-    'networks':
+    networks:
       - 'cache-manager-network'
-    'environment':
-      'REDIS_DATABASE': '0'
-      'REDIS_PASSWORD': 'redis_password'
-      'REDIS_DISABLE_COMMANDS': 'FLUSHDB,FLUSHALL'
-      'REDIS_IO_THREADS': 2
-      'REDIS_IO_THREADS_DO_READS': 'yes'
-    'healthcheck':
-      'test':
+    environment:
+      REDIS_DATABASE: '0'
+      REDIS_PASSWORD: 'redis_password'
+      REDIS_DISABLE_COMMANDS: 'FLUSHDB,FLUSHALL'
+      REDIS_IO_THREADS: 2
+      REDIS_IO_THREADS_DO_READS: 'yes'
+    healthcheck:
+      test:
         - 'CMD-SHELL'
         - 'redis-cli ping | grep PONG'
-      'interval': '5s'
-      'timeout': '5s'
-      'retries': 5
-    'tty': true
-    'restart': 'always'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
 networks:
   example-cache-manager-network:
     driver: bridge
@@ -100,30 +109,30 @@ Add database options to docker-compose file for application `docker-compose-exam
 # Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
 version: '3'
 services:
-  'cache-manager-redis':
-    'image': 'bitnami/redis:7.2'
-    'container_name': 'cache-manager-redis'
-    'volumes':
+  cache-manager-redis:
+    image: 'bitnami/redis:7.2'
+    container_name: 'cache-manager-redis'
+    volumes:
       - 'cache-manager-redis-volume:/bitnami/redis/data'
-    'ports':
+    ports:
       - '6379:6379'
-    'networks':
+    networks:
       - 'cache-manager-network'
-    'environment':
-      'REDIS_DATABASE': 'value_for_redis_database'
-      'REDIS_PASSWORD': 'value_for_redis_password'
-      'REDIS_DISABLE_COMMANDS': 'value_for_redis_disable_commands'
-      'REDIS_IO_THREADS': 'value_for_redis_io_threads'
-      'REDIS_IO_THREADS_DO_READS': 'value_for_redis_io_threads_do_reads'
-    'healthcheck':
-      'test':
+    environment:
+      REDIS_DATABASE: 'value_for_redis_database'
+      REDIS_PASSWORD: 'value_for_redis_password'
+      REDIS_DISABLE_COMMANDS: 'value_for_redis_disable_commands'
+      REDIS_IO_THREADS: 'value_for_redis_io_threads'
+      REDIS_IO_THREADS_DO_READS: 'value_for_redis_io_threads_do_reads'
+    healthcheck:
+      test:
         - 'CMD-SHELL'
         - 'redis-cli ping | grep PONG'
-      'interval': '5s'
-      'timeout': '5s'
-      'retries': 5
-    'tty': true
-    'restart': 'always'
+      interval: '5s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
 networks:
   example-cache-manager-network:
     driver: bridge
@@ -132,7 +141,7 @@ volumes:
     name: example-cache-manager-volume
 ```
 
-Connection string environment variable
+New environment variable
 
 ```bash
 EXAMPLE_CACHE_MANAGER_CACHE_MANAGER_USER_REDIS_URL=redis://:redis_password@localhost:6379

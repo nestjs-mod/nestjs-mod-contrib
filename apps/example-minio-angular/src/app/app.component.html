@@ -1,0 +1,15 @@
+<h1>Welcome example-minio-angular</h1>
+<input
+  type="file"
+  class="file-input"
+  accept="image/jpg, image/jpeg, image/png, image/gif"
+  (change)="onFileSelected($event)"
+  #fileUnput
+/>
+
+{{ (fileName$ | async) || 'No file uploaded yet.' }}
+
+<button (click)="fileUnput.click()">Attach file</button>
+<button (click)="onFileUpload()">Upload file</button>
+<br />
+<img *ngIf="(outPresignedUrls$ | async)?.downloadUrl as downloadUrl" [src]="downloadUrl" />

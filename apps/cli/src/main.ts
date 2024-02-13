@@ -30,6 +30,18 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'minio',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(rootFolder, 'libs/core/minio/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/minio/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/minio'),
+          utilsFolders: [join(rootFolder, 'libs/core/minio/src/lib')],
+          modules: [import('@nestjs-mod/minio')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'graphql',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',

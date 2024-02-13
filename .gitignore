@@ -42,3 +42,7 @@ Thumbs.db
 docker-compose.yml
 
 .env
+
+.angular
+access.log
+error.log

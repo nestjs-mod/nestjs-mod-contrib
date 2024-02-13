@@ -4,3 +4,5 @@
 /.nx/cache
 dist
 .nx
+
+.angular

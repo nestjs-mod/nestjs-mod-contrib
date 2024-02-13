@@ -10,8 +10,8 @@ npm install
 ```
 ## Running the app in watch mode
 ```bash
-# running the "generate" nx command in applications and libraries which can be customized at your discretion automatically generating an index.ts file for each library checking the code and trying to fix it
-npm run generate
+# preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
+npm run manual:prepare
 
 # running example-cache-manager source code in watch mode
 npm run serve:dev:example-cache-manager
@@ -42,6 +42,10 @@ npm run test:example-cache-manager
 |`npm run serve:dev:example-cache-manager`|Running example-cache-manager source code in watch mode|
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
+|`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|**angular dev infra**|
+|`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
+|`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
 |**pm2 prod infra**|
 |`npm run pm2:start`|Launch all applications in PM2 mode|
 |`npm run pm2:stop`|Stop all applications in PM2 mode|
@@ -56,8 +60,11 @@ npm run test:example-cache-manager
 |`npm run start:prod:example-prisma-flyway`|Launching a built example-prisma-flyway (you must first build it using the build command)|
 |`npm run start:prod:example-cache-manager`|Launching a built example-cache-manager (you must first build it using the build command)|
 |`npm run start:prod:example-graphql`|Launching a built example-graphql (you must first build it using the build command)|
+|`npm run start:prod:example-minio`|Launching a built example-minio (you must first build it using the build command)|
+|`npm run build:prod:example-minio`||
 |**docs**|
 |`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
+|`npm run docs:infrastructure:example-minio`||
 |`npm run docs:infrastructure:example-prisma`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma|
 |`npm run docs:infrastructure:example-terminus`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus|
 |**docker-compose infra**|
@@ -69,6 +76,8 @@ npm run test:example-cache-manager
 |`npm run docker-compose:stop:example-prisma-flyway`|Stopping the docker-compose infrastructure for example-prisma-flyway|
 |`npm run docker-compose:start:example-cache-manager`|Running the docker-compose infrastructure for example-cache-manager|
 |`npm run docker-compose:stop:example-cache-manager`|Stopping the docker-compose infrastructure for example-cache-manager|
+|`npm run docker-compose:start:example-minio`|Running the docker-compose infrastructure for example-minio|
+|`npm run docker-compose:stop:example-minio`|Stopping the docker-compose infrastructure for example-minio|
 |**tests**|
 |`npm run test`|Running tests across the entire project|
 |`npm run test:example-pino-logger`|Running tests for example-pino-logger|
@@ -77,6 +86,7 @@ npm run test:example-cache-manager
 |`npm run test:example-prisma-flyway`|Running tests for example-prisma-flyway|
 |`npm run test:example-cache-manager`|Running tests for example-cache-manager|
 |`npm run test:example-graphql`|Running tests for example-graphql|
+|`npm run test:example-minio`|Running tests for example-minio|
 |**lint**|
 |`npm run lint`|Checking the typescript code for the entire project|
 |`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
@@ -199,9 +209,9 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|{"example-cache-manager-redis":{"image":"bitnami/redis:7.2","container_name":"example-cache-manager-redis","volumes":["example-cache-manager-redis-volume:/bitnami/redis/data"],"ports":["6379:6379"],"networks":["example-cache-manager-network"],"environment":{"REDIS_DATABASE":"0","REDIS_PASSWORD":"redis_password","REDIS_DISABLE_COMMANDS":"FLUSHDB,FLUSHALL","REDIS_IO_THREADS":2,"REDIS_IO_THREADS_DO_READS":"yes"},"healthcheck":{"test":["CMD-SHELL","redis-cli ping | grep PONG"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|{"example-cache-manager-network":{"driver":"bridge"}}|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|{"example-cache-manager-redis-volume":{"name":"example-cache-manager-redis-volume"}}|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-cache-manager-redis":{"image":"bitnami/redis:7.2","container_name":"example-cache-manager-redis","volumes":["example-cache-manager-redis-volume:/bitnami/redis/data"],"ports":["6379:6379"],"networks":["example-cache-manager-network"],"environment":{"REDIS_DATABASE":"0","REDIS_PASSWORD":"redis_password","REDIS_DISABLE_COMMANDS":"FLUSHDB,FLUSHALL","REDIS_IO_THREADS":2,"REDIS_IO_THREADS_DO_READS":"yes"},"healthcheck":{"test":["CMD-SHELL","redis-cli ping | grep PONG"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-cache-manager-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"example-cache-manager-redis-volume":{"name":"example-cache-manager-redis-volume"}}```|
 
 ### InfrastructureMarkdownReportGenerator
 Infrastructure markdown report generator.
@@ -218,7 +228,7 @@ Static variables of primitive and complex types that are used in the module and 
 |`skipEmptySettings`|Skip empty values of env and config models|**optional**|-|```true```|
 
 ### DockerComposeRedis
-The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/redis)
+The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
 
 #### Static environments
 Static variables with primitive types used in the module and can be used at the time of generating module metadata (import, controllers), the values of which can be obtained from various sources, such as: process.env or consul key value.

@@ -8,7 +8,7 @@ GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, inte
 ## Installation
 
 ```bash
-npm i --save @nestjs/apollo @nestjs/graphql @as-integrations/fastify @nestjs-mod/graphql
+npm i --save @nestjs/apollo @apollo/server @nestjs/graphql @as-integrations/fastify @nestjs-mod/graphql
 ```
 
 
@@ -294,8 +294,8 @@ bootstrapNestApplication({
 |`context`|Context function|**optional**|Function|-|
 |`metadata`|Extra static metadata to be loaded into the specification|**optional**|-|-|
 |`installSubscriptionHandlers`|If enabled, "subscriptions-transport-ws" will be automatically registered.|**optional**|```true```|-|
-|`subscriptions`|Subscriptions configuration.|**optional**|{"graphql-ws":{"path":"/graphql"}}|-|
-|`playground`|GraphQL playground options.|**optional**|{"settings":{"request.credentials":"include"}}|-|
+|`subscriptions`|Subscriptions configuration.|**optional**|```{"graphql-ws":{"path":"/graphql"}}```|-|
+|`playground`|GraphQL playground options.|**optional**|```{"settings":{"request.credentials":"include"}}```|-|
 |`autoTransformHttpErrors`|If enabled, will register a global interceptor that automatically maps "HttpException" class instances to corresponding Apollo errors.|**optional**|-|-|
 
 [Back to Top](#modules)

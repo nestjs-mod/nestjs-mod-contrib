@@ -1,33 +1,33 @@
 # Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
-"version": "3"
-"services":
-  "example-cache-manager-redis":
-    "image": "bitnami/redis:7.2"
-    "container_name": "example-cache-manager-redis"
-    "volumes":
+version: "3"
+services:
+  example-cache-manager-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-cache-manager-redis"
+    volumes:
       - "example-cache-manager-redis-volume:/bitnami/redis/data"
-    "ports":
+    ports:
       - "6379:6379"
-    "networks":
+    networks:
       - "example-cache-manager-network"
-    "environment":
-      "REDIS_DATABASE": "value_for_redis_database"
-      "REDIS_PASSWORD": "value_for_redis_password"
-      "REDIS_DISABLE_COMMANDS": "value_for_redis_disable_commands"
-      "REDIS_IO_THREADS": "value_for_redis_io_threads"
-      "REDIS_IO_THREADS_DO_READS": "value_for_redis_io_threads_do_reads"
-    "healthcheck":
-      "test":
+    environment:
+      REDIS_DATABASE: "value_for_redis_database"
+      REDIS_PASSWORD: "value_for_redis_password"
+      REDIS_DISABLE_COMMANDS: "value_for_redis_disable_commands"
+      REDIS_IO_THREADS: "value_for_redis_io_threads"
+      REDIS_IO_THREADS_DO_READS: "value_for_redis_io_threads_do_reads"
+    healthcheck:
+      test:
         - "CMD-SHELL"
         - "redis-cli ping | grep PONG"
-      "interval": "5s"
-      "timeout": "5s"
-      "retries": 5
-    "tty": true
-    "restart": "always"
-"networks":
-  "example-cache-manager-network":
-    "driver": "bridge"
-"volumes":
-  "example-cache-manager-redis-volume":
-    "name": "example-cache-manager-redis-volume"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+networks:
+  example-cache-manager-network:
+    driver: "bridge"
+volumes:
+  example-cache-manager-redis-volume:
+    name: "example-cache-manager-redis-volume"

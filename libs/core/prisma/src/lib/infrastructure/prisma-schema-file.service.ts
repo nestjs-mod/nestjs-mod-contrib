@@ -35,10 +35,13 @@ export class PrismaSchemaFileService {
     }
     try {
       const fileDir = dirname(prismaSchemaFile);
-      if (!existsSync(fileDir)) {
-        mkdirSync(fileDir, { recursive: true });
+      if (fileDir) {
+        if (!existsSync(fileDir)) {
+          mkdirSync(fileDir, { recursive: true });
+        }
+
+        writeFileSync(prismaSchemaFile, data);
       }
-      writeFileSync(prismaSchemaFile, data);
     } catch (err) {
       //
     }
