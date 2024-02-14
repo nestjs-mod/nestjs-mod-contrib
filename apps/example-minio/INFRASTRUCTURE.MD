@@ -211,7 +211,7 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`port`|The port on which to run the server.|`obj['port']`, `process.env['EXAMPLE_MINIO_PORT']`|**isNotEmpty** (port should not be empty)|-|```3006```|
+|`port`|The port on which to run the server.|`obj['port']`, `process.env['EXAMPLE_MINIO_PORT']`|**optional**|```3000```|```3006```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.

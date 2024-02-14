@@ -167,7 +167,7 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`port`|The port on which to run the server.|`obj['port']`, `process.env['PINO_LOGGER_PORT']`|**isNotEmpty** (port should not be empty)|-|```3001```|
+|`port`|The port on which to run the server.|`obj['port']`, `process.env['PINO_LOGGER_PORT']`|**optional**|```3000```|```3001```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
