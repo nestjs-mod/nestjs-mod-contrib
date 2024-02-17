@@ -9,8 +9,8 @@ import { PrismaSchemaFileService } from './infrastructure/prisma-schema-file.ser
 import { PrismaClientFactoryService } from './prisma-client-factory.service';
 import { PrismaConfiguration } from './prisma.configuration';
 import { PRISMA_MODULE_NAME } from './prisma.constants';
-import { getPrismaFeatureToken } from './prisma.decorators';
 import { PrismaEnvironments } from './prisma.environments';
+import { PRISMA_CLIENT } from './prisma.decorators';
 
 export const { PrismaModule } = createNestModule({
   moduleName: PRISMA_MODULE_NAME,
@@ -18,10 +18,10 @@ export const { PrismaModule } = createNestModule({
   moduleDescription: 'Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)',
   staticConfigurationModel: PrismaConfiguration,
   environmentsModel: PrismaEnvironments,
-  sharedProviders: [
+  sharedProviders: () => [
     PrismaClientFactoryService,
     {
-      provide: getPrismaFeatureToken(),
+      provide: PRISMA_CLIENT,
       useFactory: (prismaClientFactoryService: PrismaClientFactoryService) => {
         return prismaClientFactoryService.createPrismaClient();
       },

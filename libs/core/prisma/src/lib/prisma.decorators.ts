@@ -1,8 +1,8 @@
 import { getNestModuleDecorators } from '@nestjs-mod/common';
-import { Inject } from '@nestjs/common';
 import { PRISMA_MODULE_NAME } from './prisma.constants';
 
 export const {
+  InjectService: InjectPrismaService,
   InjectFeatures: InjectPrismaFeatures,
   InjectAllFeatures: InjectAllPrismaFeatures,
   InjectFeatureEnvironments: InjectPrismaFeatureEnvironments,
@@ -13,10 +13,7 @@ export const {
   moduleName: PRISMA_MODULE_NAME,
 });
 
-// todo: add support get prisma client instance by prismaFeatureName
-export function getPrismaFeatureToken() {
-  return `PrismaClient`;
-}
+export const PRISMA_CLIENT = 'PrismaClient';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const InjectPrismaClient = (): any => Inject(getPrismaFeatureToken());
+export const InjectPrismaClient = (contextName?: string): any => InjectPrismaService(PRISMA_CLIENT, contextName);
