@@ -162,7 +162,7 @@ export class UsersResolvers {
     resolve: (payload: UserBalanceDto, _args, ctx) => {
       const req = getRequestFromExecutionContext(ctx);
       BalanceOfUserResolver.logger.log({
-        requestId: req.headers[X_REQUEST_ID],
+        requestId: req.headers?.[X_REQUEST_ID],
       });
       // todo: requestId from request not apply in logger
       BalanceOfUserResolver.logger.log({ [CHANGE_USER_BALANCE_EVENT]: payload });
@@ -233,13 +233,13 @@ bootstrapNestApplication({
         ? DefaultNestApplicationListener.forRoot({
             staticConfiguration: {
               // When running in infrastructure mode, the backend server does not start.
-              mode: isInfrastructureMode() ? 'init' : 'listen',
+              mode: isInfrastructureMode() ? 'silent' : 'listen',
             },
           })
         : FastifyNestApplicationListener.forRoot({
             staticConfiguration: {
               // When running in infrastructure mode, the backend server does not start.
-              mode: isInfrastructureMode() ? 'init' : 'listen',
+              mode: isInfrastructureMode() ? 'silent' : 'listen',
             },
           }),
       GraphqlModule.forRoot({

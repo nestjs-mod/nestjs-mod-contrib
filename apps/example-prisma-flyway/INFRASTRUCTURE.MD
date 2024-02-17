@@ -67,6 +67,8 @@ npm run test:example-prisma-flyway
 |`npm run serve:dev:example-graphql`|Running example-graphql source code in watch mode|
 |`npm run serve:dev:example-graphql:fastify`||
 |`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
+|`npm run serve:dev:example-nats-microservice`|Running example-nats-microservice source code in watch mode|
+|`npm run serve:dev:example-redis-microservice`|Running example-redis-microservice source code in watch mode|
 |**angular dev infra**|
 |`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
 |`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
@@ -86,6 +88,8 @@ npm run test:example-prisma-flyway
 |`npm run start:prod:example-graphql`|Launching a built example-graphql (you must first build it using the build command)|
 |`npm run start:prod:example-minio`|Launching a built example-minio (you must first build it using the build command)|
 |`npm run build:prod:example-minio`||
+|`npm run start:prod:example-nats-microservice`|Launching a built example-nats-microservice (you must first build it using the build command)|
+|`npm run start:prod:example-redis-microservice`|Launching a built example-redis-microservice (you must first build it using the build command)|
 |**docs**|
 |`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
 |`npm run docs:infrastructure:example-minio`||
@@ -102,6 +106,10 @@ npm run test:example-prisma-flyway
 |`npm run docker-compose:stop:example-cache-manager`|Stopping the docker-compose infrastructure for example-cache-manager|
 |`npm run docker-compose:start:example-minio`|Running the docker-compose infrastructure for example-minio|
 |`npm run docker-compose:stop:example-minio`|Stopping the docker-compose infrastructure for example-minio|
+|`npm run docker-compose:start:example-nats-microservice`|Running the docker-compose infrastructure for example-nats-microservice|
+|`npm run docker-compose:stop:example-nats-microservice`|Stopping the docker-compose infrastructure for example-nats-microservice|
+|`npm run docker-compose:start:example-redis-microservice`|Running the docker-compose infrastructure for example-redis-microservice|
+|`npm run docker-compose:stop:example-redis-microservice`|Stopping the docker-compose infrastructure for example-redis-microservice|
 |**tests**|
 |`npm run test`|Running tests across the entire project|
 |`npm run test:example-pino-logger`|Running tests for example-pino-logger|
@@ -111,6 +119,9 @@ npm run test:example-prisma-flyway
 |`npm run test:example-cache-manager`|Running tests for example-cache-manager|
 |`npm run test:example-graphql`|Running tests for example-graphql|
 |`npm run test:example-minio`|Running tests for example-minio|
+|`npm run test:example-nats-microservice`|Running tests for example-nats-microservice|
+|`npm run e2e:example-nats-microservice`||
+|`npm run test:example-redis-microservice`|Running tests for example-redis-microservice|
 |**lint**|
 |`npm run lint`|Checking the typescript code for the entire project|
 |`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|
@@ -162,7 +173,7 @@ Static variables of primitive and complex types that are used in the module and 
 |`envFile`|Dot-env file with environment variables|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/.env```|
 
 ### DefaultNestApplicationInitializer
-Default NestJS application initializer, no third party utilities required.
+Default NestJS application initializer.
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
@@ -224,7 +235,7 @@ Feature modules with business logic of the application. NestJS and NestJS-mod co
 Integration modules are necessary to organize communication between feature or core modules (example: after creating a user in the UsersModule feature module, you need to send him a letter from the NotificationsModule core module). NestJS and NestJS-mod compatible modules.
 
 ### DefaultNestApplicationListener
-Default NestJS application listener, no third party utilities required.
+Default NestJS application listener.
 
 #### Static environments
 Static variables with primitive types used in the module and can be used at the time of generating module metadata (import, controllers), the values of which can be obtained from various sources, such as: process.env or consul key value.
@@ -232,13 +243,14 @@ Static variables with primitive types used in the module and can be used at the 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
 |`port`|The port on which to run the server.|`obj['port']`, `process.env['EXAMPLE_PRISMA_FLYWAY_PORT']`|**optional**|```3000```|```3000```|
+|`hostname`|Hostname on which to listen for incoming packets.|`obj['hostname']`, `process.env['EXAMPLE_PRISMA_FLYWAY_HOSTNAME']`|**optional**|-|-|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`mode`|Mode of start application: init - for run NestJS life cycle, listen -  for full start NestJS application|**optional**|```listen```|```init```|
+|`mode`|Mode of start application: init - for run NestJS life cycle, listen -  for full start NestJS application|**optional**|```listen```|```silent```|
 
 ## Infrastructure modules
 Infrastructure modules are needed to create configurations that launch various external services (examples: docker-compose file for raising a database, gitlab configuration for deploying an application). Only NestJS-mod compatible modules.
@@ -319,6 +331,13 @@ Static variables with primitive types used in the module and can be used at the 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
 |`rootDatabaseUrl`|Connection string for PostgreSQL with root credentials (example: postgres://postgres:postgres_password@localhost:5432/postgres?schema=public, username must be "postgres")|`obj['rootDatabaseUrl']`, `process.env['EXAMPLE_PRISMA_FLYWAY_ROOT_DATABASE_URL']`|**isNotEmpty** (rootDatabaseUrl should not be empty)|-|```postgres://postgres:postgres_password@localhost:5432/postgres?schema=public```|
+
+#### Feature environments
+Feature variables with primitive types used in the module, the values of which can be obtained from various sources, such as: process.env or consul key value.
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`databaseUrl`|Connection string for PostgreSQL with module credentials (example: postgres://feat:feat_password@localhost:5432/feat?schema=public)|`obj['databaseUrl']`, `process.env['EXAMPLE_PRISMA_FLYWAY_FEATURE_MODULE_NAME_DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
 
 #### Modules that use feature environments
 ##### Feature module name: flyway-prisma

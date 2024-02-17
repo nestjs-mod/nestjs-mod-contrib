@@ -1,0 +1,33 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-redis-microservice-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-redis-microservice-redis"
+    volumes:
+      - "example-redis-microservice-redis-volume:/bitnami/redis/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - "example-redis-microservice-network"
+    environment:
+      REDIS_DATABASE: "value_for_redis_database"
+      REDIS_PASSWORD: "value_for_redis_password"
+      REDIS_DISABLE_COMMANDS: "value_for_redis_disable_commands"
+      REDIS_IO_THREADS: "value_for_redis_io_threads"
+      REDIS_IO_THREADS_DO_READS: "value_for_redis_io_threads_do_reads"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli ping | grep PONG"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+networks:
+  example-redis-microservice-network:
+    driver: "bridge"
+volumes:
+  example-redis-microservice-redis-volume:
+    name: "example-redis-microservice-redis-volume"

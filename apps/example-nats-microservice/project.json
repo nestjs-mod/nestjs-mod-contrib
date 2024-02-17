@@ -1,0 +1,73 @@
+{
+  "name": "example-nats-microservice",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-nats-microservice/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-nats-microservice",
+        "main": "apps/example-nats-microservice/src/main.ts",
+        "tsConfig": "apps/example-nats-microservice/tsconfig.app.json",
+        "assets": [
+          "apps/example-nats-microservice/src/assets"
+        ],
+        "webpackConfig": "apps/example-nats-microservice/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "example-nats-microservice:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-nats-microservice:build:development"
+        },
+        "production": {
+          "buildTarget": "example-nats-microservice:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/example-nats-microservice/jest.config.ts"
+      }
+    },
+    "e2e-test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/example-nats-microservice/e2e-jest.config.ts"
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-nats-microservice/main.js"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": []
+}

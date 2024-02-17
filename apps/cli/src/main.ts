@@ -24,7 +24,7 @@ bootstrapNestApplication({
       DefaultNestApplicationInitializer.forRoot(),
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
-          mode: 'init',
+          mode: 'silent',
         },
       }),
     ],

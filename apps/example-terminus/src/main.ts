@@ -61,7 +61,7 @@ bootstrapNestApplication({
       }),
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
-          mode: isInfrastructureMode() ? 'init' : 'listen',
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
         },
       }),
     ],

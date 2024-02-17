@@ -135,7 +135,7 @@ export class UsersResolvers {
     resolve: (payload: UserBalanceDto, _args, ctx) => {
       const req = getRequestFromExecutionContext(ctx);
       BalanceOfUserResolver.logger.log({
-        requestId: req.headers[X_REQUEST_ID],
+        requestId: req.headers?.[X_REQUEST_ID],
       });
       // todo: requestId from request not apply in logger
       BalanceOfUserResolver.logger.log({ [CHANGE_USER_BALANCE_EVENT]: payload });

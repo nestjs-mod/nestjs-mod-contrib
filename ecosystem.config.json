@@ -34,6 +34,16 @@
       "name": "example-minio",
       "script": "node ./dist/apps/example-minio/main.js",
       "node_args": "-r dotenv/config"
+    },
+    {
+      "name": "example-nats-microservice",
+      "script": "node ./dist/apps/example-nats-microservice/main.js",
+      "node_args": "-r dotenv/config"
+    },
+    {
+      "name": "example-redis-microservice",
+      "script": "node ./dist/apps/example-redis-microservice/main.js",
+      "node_args": "-r dotenv/config"
     }
   ]
 }

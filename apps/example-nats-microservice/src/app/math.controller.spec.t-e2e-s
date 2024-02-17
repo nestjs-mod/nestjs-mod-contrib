@@ -1,0 +1,106 @@
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  bootstrapNestApplication,
+  createNestModule,
+} from '@nestjs-mod/common';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { TestingModule } from '@nestjs/testing';
+import { lastValueFrom } from 'rxjs';
+import { setTimeout } from 'timers/promises';
+import { MathClientService } from './math-client.service';
+
+// todo: add support this type of tests
+
+describe('Math over NATS (e2e)', () => {
+  let client: TestingModule;
+
+  beforeAll(async () => {
+    client = await bootstrapNestApplication({
+      // logger: new Logger('Client'),
+      project: {
+        name: 'TestMicroserviceClient',
+        description: 'Test microservice client',
+      },
+      modules: {
+        system: [
+          DefaultNestApplicationInitializer.forRoot(),
+          DefaultNestApplicationListener.forRoot({ staticConfiguration: { mode: 'init' } }),
+        ],
+        feature: [
+          createNestModule({
+            moduleName: 'MicroserviceClientModule',
+            imports: [
+              ClientsModule.register([
+                {
+                  name: 'MATH_SERVICE',
+                  transport: Transport.NATS,
+                  options: {
+                    servers: `nats://localhost:4222`,
+                    user: 'natsadmin',
+                    pass: '6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgpp1',
+                  },
+                },
+              ]),
+            ],
+            providers: [MathClientService],
+          }).MicroserviceClientModule.forRoot(),
+        ],
+      },
+    });
+  });
+
+  afterAll(async () => {
+    await client.close();
+  });
+
+  describe('sum', () => {
+    it('should return "6"', async () => {
+      const mathClientService = client.get<MathClientService>(MathClientService);
+      const result = await lastValueFrom(mathClientService.sum([1, 2, 3]));
+      expect(result).toEqual(6);
+
+      expect(mathClientService.sumResult).toEqual([6]);
+    });
+  });
+
+  describe('getDate', () => {
+    it('should return "time.us.east"', async () => {
+      const mathClientService = client.get<MathClientService>(MathClientService);
+      expect(await lastValueFrom(mathClientService.getDate([1, 2, 3]))).toHaveLength(new Date().toISOString().length);
+
+      expect(mathClientService.getDateResult[0]).toHaveLength(new Date().toISOString().length);
+    });
+  });
+
+  describe('asyncSum', () => {
+    it('should return "6"', async () => {
+      const mathClientService = client.get<MathClientService>(MathClientService);
+      const result = await lastValueFrom(mathClientService.asyncSum([1, 2, 3]));
+      expect(result).toEqual(6);
+
+      expect(mathClientService.asyncSumResult).toEqual([6]);
+    });
+  });
+
+  describe('observableSum', () => {
+    it('should return "36"', async () => {
+      const mathClientService = client.get<MathClientService>(MathClientService);
+      const result = await lastValueFrom(mathClientService.observableSum([1, 2, 3]));
+      expect(result).toEqual(36);
+
+      expect(mathClientService.observableSumResult).toEqual([6, 18, 36]);
+    });
+  });
+
+  describe('handleUserCreated', () => {
+    it('should return "undefined"', async () => {
+      const mathClientService = client.get<MathClientService>(MathClientService);
+      const result = await lastValueFrom(mathClientService.handleUserCreated({ userId: 1 }));
+      expect(result).toEqual(undefined);
+      await setTimeout(1000);
+
+      expect(mathClientService.handleUserCreatedResult).toEqual([undefined]);
+    });
+  });
+});

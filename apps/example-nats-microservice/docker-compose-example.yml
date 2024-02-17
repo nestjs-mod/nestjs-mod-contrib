@@ -1,0 +1,26 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-nats-microservice-nats:
+    image: "bitnami/nats:2.10.5"
+    container_name: "example-nats-microservice-nats"
+    volumes:
+      - "example-nats-microservice-nats-volume:/bitnami/nats/data"
+    ports:
+      - "8222:8222"
+      - "4222:4222"
+    networks:
+      - "example-nats-microservice-network"
+    environment:
+      NATS_ENABLE_AUTH: "value_for_nats_enable_auth"
+      NATS_USERNAME: "value_for_nats_username"
+      NATS_PASSWORD: "value_for_nats_password"
+      NATS_EXTRA_ARGS: "value_for_nats_extra_args"
+    tty: true
+    restart: "always"
+networks:
+  example-nats-microservice-network:
+    driver: "bridge"
+volumes:
+  example-nats-microservice-nats-volume:
+    name: "example-nats-microservice-nats-volume"
