@@ -16,7 +16,7 @@ export class LoggerRequestIdInterceptor implements NestInterceptor {
     const req = getRequestFromExecutionContext(context);
     return NestjsPinoAsyncLocalStorage.run(
       {
-        requestId: req.headers[this.nestjsPinoLoggerConfiguration.requestIdHeaderName!],
+        requestId: req.headers?.[this.nestjsPinoLoggerConfiguration.requestIdHeaderName!],
       },
       () => next.handle()
     );

@@ -43,7 +43,7 @@ export const { NestjsPinoLoggerModule } = createNestModule({
           // Define a custom request id function
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           genReqId: function (req: any, res: any) {
-            const existingID = req.id ?? req.headers[X_REQUEST_ID];
+            const existingID = req.id ?? req?.headers?.[X_REQUEST_ID];
             if (existingID) {
               return existingID;
             }
