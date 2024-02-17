@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.2...minio-v1.0.3) (2024-02-17)
+
+
+### Bug Fixes
+
+* update calculat projectUrl in minio ([17a9d4c](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/17a9d4c914c1cfeb8bbf1bea4b2175b8b4f19119))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.1...minio-v1.0.2) (2024-02-13)
 
 
