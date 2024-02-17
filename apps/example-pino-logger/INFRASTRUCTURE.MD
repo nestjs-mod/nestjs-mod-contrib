@@ -96,7 +96,7 @@ npm run test:example-pino-logger
 |`npm run test:example-graphql`|Running tests for example-graphql|
 |`npm run test:example-minio`|Running tests for example-minio|
 |`npm run test:example-nats-microservice`|Running tests for example-nats-microservice|
-|`npm run e2e:example-nats-microservice`||
+|`npm run e2e:example-nats-microservice`|Running e2e tests for example-redis-microservice|
 |`npm run test:example-redis-microservice`|Running tests for example-redis-microservice|
 |**lint**|
 |`npm run lint`|Checking the typescript code for the entire project|

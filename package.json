@@ -37,6 +37,8 @@
     "serve:dev:example-graphql": "npm run nx -- serve example-graphql --host=0.0.0.0",
     "serve:dev:example-graphql:fastify": "export PLATFORM=fastify && npm run nx -- serve example-graphql --host=0.0.0.0",
     "serve:dev:example-minio": "npm run nx -- serve example-minio --host=0.0.0.0",
+    "serve:dev:example-nats-microservice": "npm run nx -- serve example-nats-microservice --host=0.0.0.0",
+    "serve:dev:example-redis-microservice": "npm run nx -- serve example-redis-microservice --host=0.0.0.0",
     "_____angular dev infra_____": "_____angular dev infra_____",
     "serve:dev:example-minio-angular": "npm run nx -- serve example-minio-angular --disable-host-check",
     "serve:dev:example-minio-angular-ssr": "npm run nx -- serve-ssr example-minio-angular",
@@ -56,6 +58,8 @@
     "start:prod:example-graphql": "npm run nx -- start example-graphql",
     "start:prod:example-minio": "npm run nx -- start example-minio",
     "build:prod:example-minio": "npm run nx -- build example-minio",
+    "start:prod:example-nats-microservice": "npm run nx -- start example-nats-microservice",
+    "start:prod:example-redis-microservice": "npm run nx -- start example-redis-microservice",
     "_____docs_____": "_____docs_____",
     "docs:infrastructure": "export NODE_ENV=infrastructure && npm run nx:many -- -t=start --parallel=1",
     "docs:infrastructure:example-minio": "export NODE_ENV=infrastructure && npm run nx -- start example-minio --host=0.0.0.0",
@@ -72,6 +76,10 @@
     "docker-compose:stop:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose.yml down",
     "docker-compose:start:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose.yml down",
+    "docker-compose:start:example-nats-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-nats-microservice/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-nats-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-nats-microservice/docker-compose.yml down",
+    "docker-compose:start:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose.yml down",
     "_____tests_____": "_____tests_____",
     "test": "npm run nx:many -- -t=test --passWithNoTests --skip-nx-cache=true --output-style=stream-without-prefixes",
     "test:example-pino-logger": "npm run nx -- test example-pino-logger --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
@@ -81,6 +89,9 @@
     "test:example-cache-manager": "npm run nx -- test example-cache-manager --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-graphql": "npm run nx -- test example-graphql --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-minio": "npm run nx -- test example-minio --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-nats-microservice": "npm run nx -- test example-nats-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "e2e:example-nats-microservice": "npm run nx -- e2e-test example-nats-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-redis-microservice": "npm run nx -- test example-redis-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && npm run nx:many -- -t=lint",
     "lint:fix": "npm run tsc:lint && npm run nx:many -- -t=lint --fix",
@@ -172,6 +183,7 @@
     "react-refresh": "^0.10.0",
     "rucken": "^4.6.4",
     "supertest": "^6.3.3",
+    "testcontainers": "^10.7.1",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "typescript": "~5.2.2",
@@ -192,14 +204,16 @@
     "@apollo/server": "^4.3.2",
     "@as-integrations/fastify": "^2.1.1",
     "@graphql-tools/utils": "^10.0.13",
-    "@nestjs-mod/common": "2.10.0",
-    "@nestjs-mod/fastify": "1.2.0",
-    "@nestjs-mod/reports": "2.10.0",
-    "@nestjs-mod/testing": "2.10.0",
+    "@nestjs-mod/common": "2.11.0",
+    "@nestjs-mod/fastify": "1.3.0",
+    "@nestjs-mod/microservices": "1.2.0",
+    "@nestjs-mod/reports": "2.11.0",
+    "@nestjs-mod/testing": "2.11.0",
     "@nestjs/apollo": "^12.0.11",
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/graphql": "^12.0.11",
+    "@nestjs/microservices": "^10.3.3",
     "@nestjs/platform-express": "^10.0.2",
     "@nestjs/platform-fastify": "^10.3.2",
     "@nestjs/terminus": "^10.2.0",
@@ -219,7 +233,9 @@
     "graphql-fields": "^2.0.3",
     "graphql-subscriptions": "2.0.0",
     "graphql-type-json": "^0.3.2",
+    "ioredis": "^5.3.2",
     "markdown-it": "^14.0.0",
+    "nats": "^2.19.0",
     "nestjs-minio": "^2.5.4",
     "nestjs-pino": "^4.0.0",
     "pino-http": "^9.0.0",
@@ -267,6 +283,12 @@
     "serve:dev:example-minio": [
       "Running example-minio source code in watch mode"
     ],
+    "serve:dev:example-nats-microservice": [
+      "Running example-nats-microservice source code in watch mode"
+    ],
+    "serve:dev:example-redis-microservice": [
+      "Running example-redis-microservice source code in watch mode"
+    ],
     "serve:dev:example-minio-angular": [
       "Running frontend application for example-minio in watch mode"
     ],
@@ -313,6 +335,12 @@
       "Launching a built example-minio (you must first build it using the build command)"
     ],
     "build:prod:example-minio": [],
+    "start:prod:example-nats-microservice": [
+      "Launching a built example-nats-microservice (you must first build it using the build command)"
+    ],
+    "start:prod:example-redis-microservice": [
+      "Launching a built example-redis-microservice (you must first build it using the build command)"
+    ],
     "docs:infrastructure": [
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure"
     ],
@@ -353,6 +381,18 @@
     "docker-compose:stop:example-minio": [
       "Stopping the docker-compose infrastructure for example-minio"
     ],
+    "docker-compose:start:example-nats-microservice": [
+      "Running the docker-compose infrastructure for example-nats-microservice"
+    ],
+    "docker-compose:stop:example-nats-microservice": [
+      "Stopping the docker-compose infrastructure for example-nats-microservice"
+    ],
+    "docker-compose:start:example-redis-microservice": [
+      "Running the docker-compose infrastructure for example-redis-microservice"
+    ],
+    "docker-compose:stop:example-redis-microservice": [
+      "Stopping the docker-compose infrastructure for example-redis-microservice"
+    ],
     "test": [
       "Running tests across the entire project"
     ],
@@ -376,6 +416,15 @@
     ],
     "test:example-minio": [
       "Running tests for example-minio"
+    ],
+    "test:example-nats-microservice": [
+      "Running tests for example-nats-microservice"
+    ],
+    "e2e:example-nats-microservice": [
+      "Running e2e tests for example-redis-microservice"
+    ],
+    "test:example-redis-microservice": [
+      "Running tests for example-redis-microservice"
     ],
     "lint": [
       "Checking the typescript code for the entire project"
