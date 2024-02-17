@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.5.1...prisma-v1.6.0) (2024-02-17)
+
+
+### Features
+
+* add support in prisma work with context mode ([b3a1f55](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b3a1f55cfb6ef7f1708298fbfd69752735a0d160))
+
 ## [1.5.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.5.0...prisma-v1.5.1) (2024-02-13)
 
 
