@@ -11,6 +11,7 @@ export class MinioEnvironments {
 
   @EnvModelProperty({
     description: 'Server port',
+    hidden: true,
   })
   minioServerPort?: number;
 
@@ -29,12 +30,14 @@ export class MinioEnvironments {
   @EnvModelProperty({
     description: 'Use SSL',
     default: 'false',
+    hidden: true,
   })
   minioUseSSL?: string;
 
   @EnvModelProperty({
     description: 'Default user id',
     default: 'default',
+    hidden: true,
   })
   minioDefaultUserId?: string;
 }

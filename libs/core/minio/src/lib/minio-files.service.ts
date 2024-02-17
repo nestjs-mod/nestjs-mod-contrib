@@ -64,7 +64,7 @@ export class MinioFilesService {
     });
     const projectUrl = `${this.minioEnvironments.minioUseSSL === 'true' ? 'https' : 'http'}://${
       this.minioEnvironments.minioServerHost
-    }:${this.minioEnvironments.minioServerPort}`;
+    }${this.minioEnvironments.minioServerPort ? `:${this.minioEnvironments.minioServerPort}` : ''}`;
     this.logger.debug(`getPresignedUrls: ${downloadUrl}`);
     return this.createBucketIfNeed(this.minioConfiguration.region!, bucketName, ext).pipe(
       mergeMap(() => from(this.minioService.presignedPutObject(bucketName, fullObjectName, expiry))),

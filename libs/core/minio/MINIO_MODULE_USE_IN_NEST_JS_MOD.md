@@ -82,7 +82,7 @@ bootstrapNestApplication({
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
           // When running in infrastructure mode, the backend server does not start.
-          mode: isInfrastructureMode() ? 'init' : 'listen',
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
           postListen: async ({ app }) => {
             if (app) {
               const appController = app.get<AppController>(AppController);
