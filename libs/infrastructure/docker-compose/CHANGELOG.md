@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.6.1...docker-compose-v1.7.0) (2024-02-17)
+
+
+### Features
+
+* add DockerComposeNats to @nestjs-mod/docker-compose ([11c838b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/11c838be393a1390140090a20529d1629624ad3f))
+
 ## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.6.0...docker-compose-v1.6.1) (2024-02-13)
 
 
