@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.11.0...pino-v1.11.1) (2024-02-17)
+
+
+### Bug Fixes
+
+* ignore error if header is empty ([5f02c75](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5f02c754b1938f6772d4e67e9a85e4c84692ce01))
+
 # [1.11.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.10.0...pino-v1.11.0) (2024-02-13)
 
 
