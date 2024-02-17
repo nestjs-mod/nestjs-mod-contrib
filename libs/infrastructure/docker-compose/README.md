@@ -18,6 +18,7 @@ npm i --save @nestjs-mod/docker-compose
 | ---- | -------- | ----------- |
 | [DockerCompose](#dockercompose) | infrastructure | Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose) |
 | [DockerComposeMinio](#dockercomposeminio) | infrastructure | MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
+| [DockerComposeNats](#dockercomposenats) | infrastructure | NATS is an open source, lightweight and high-performance messaging system. It is ideal for distributed systems and supports modern cloud architectures and pub-sub, request-reply and queuing models. (Generator for nats in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeNginx](#dockercomposenginx) | infrastructure | Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposePostgreSQL](#dockercomposepostgresql) | infrastructure | PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator for databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose) |
 | [DockerComposeRedis](#dockercomposeredis) | infrastructure | The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
@@ -140,6 +141,19 @@ version: '3'
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
 |`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
 
+#### Modules that use feature configuration
+##### Feature module name: MINIO
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"minio":{"image":"bitnami/minio:2024.2.9","container_name":"minio","volumes":["minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["default-network"],"environment":{},"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"minio-volume":{"name":"minio-volume"}}```|
+|`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
+|`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
 [Back to Top](#modules)
 
 ---
@@ -183,7 +197,7 @@ bootstrapNestApplication({
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
           // When running in infrastructure mode, the backend server does not start.
-          mode: isInfrastructureMode() ? 'init' : 'listen',
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
         },
       }),
     ],
@@ -344,14 +358,41 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name|**optional**|```bitnami/minio:2024.2.9```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
 |`externalPort`|External port for S3 API operations on the default MinIO server port.|**optional**|```9000```|-|
 |`externalConsolePort`|External console for browser access on the MinIO Console port.|**optional**|```9001```|-|
-|`image`|Docker image name|**optional**|```bitnami/minio:2024.2.9```|-|
-|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`nginxPort`|External port for proxy access over nginx (infrastructure, need for disable CORS errors)|**optional**|-|-|
 |`nginxFilesFolder`|Folder for store nginx config and logs (infrastructure)|**optional**|-|-|
 |`nginxBucketsLocations`|Locations for proxy to minio (infrastructure)|**optional**|[ ```files``` ]|-|
+
+[Back to Top](#modules)
+
+---
+### DockerComposeNats
+NATS is an open source, lightweight and high-performance messaging system. It is ideal for distributed systems and supports modern cloud architectures and pub-sub, request-reply and queuing models. (Generator for nats in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`natsEnableAuth`|Enable Authentication.|`obj['natsEnableAuth']`, `process.env['NATS_ENABLE_AUTH']`|**optional**|-|-|
+|`natsUsername`|Username credential for client connections.|`obj['natsUsername']`, `process.env['NATS_USERNAME']`|**optional**|-|-|
+|`natsPassword`|Password credential for client connections.|`obj['natsPassword']`, `process.env['NATS_PASSWORD']`|**optional**|-|-|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name.|**optional**|```bitnami/nats:2.10.5```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
+|`externalClientPort`|External client port for sharing container.|**optional**|```4222```|-|
+|`externalHttpPort`|External http port for sharing container.|**optional**|```8222```|-|
+|`extraArgs`|Extra arguments.|**optional**|```-js```|-|
 
 [Back to Top](#modules)
 
@@ -411,7 +452,7 @@ bootstrapNestApplication({
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
           // When running in infrastructure mode, the backend server does not start.
-          mode: isInfrastructureMode() ? 'init' : 'listen',
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
         },
       }),
     ],
@@ -551,9 +592,9 @@ volumes:
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name|**optional**|```bitnami/postgresql:15.5.0```|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
 |`externalPort`|External port for sharing container.|**optional**|```5432```|-|
-|`image`|Docker image name|**optional**|```bitnami/postgresql:15.5.0```|-|
 
 #### Feature environments
 
@@ -610,7 +651,7 @@ bootstrapNestApplication({
       DefaultNestApplicationListener.forRoot({
         staticConfiguration: {
           // When running in infrastructure mode, the backend server does not start.
-          mode: isInfrastructureMode() ? 'init' : 'listen',
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
         },
       }),
     ],
@@ -733,13 +774,13 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name|**optional**|```bitnami/redis:7.2```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
 |`externalPort`|External port for sharing container.|**optional**|```6379```|-|
-|`image`|Docker image name|**optional**|```bitnami/redis:7.2```|-|
 |`disableCommands`|Redis disable commands.|**optional**|```FLUSHDB,FLUSHALL```|-|
 |`ioThreads`|Redis IO threads.|**optional**|```2```|-|
 |`ioThreadsDoReads`|Redis IO threads.|**optional**|```yes```|-|
-|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 
 [Back to Top](#modules)
 

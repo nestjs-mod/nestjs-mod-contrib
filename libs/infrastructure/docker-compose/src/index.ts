@@ -12,6 +12,11 @@ export * from './lib/features/docker-compose-minio/docker-compose-minio.constant
 export * from './lib/features/docker-compose-minio/docker-compose-minio.decorators';
 export * from './lib/features/docker-compose-minio/docker-compose-minio.module';
 export * from './lib/features/docker-compose-minio/docker-compose-minio.settings';
+export * from './lib/features/docker-compose-nats/docker-compose-nats-errors';
+export * from './lib/features/docker-compose-nats/docker-compose-nats.constants';
+export * from './lib/features/docker-compose-nats/docker-compose-nats.decorators';
+export * from './lib/features/docker-compose-nats/docker-compose-nats.module';
+export * from './lib/features/docker-compose-nats/docker-compose-nats.settings';
 export * from './lib/features/docker-compose-nginx/docker-compose-nginx-errors';
 export * from './lib/features/docker-compose-nginx/docker-compose-nginx.constants';
 export * from './lib/features/docker-compose-nginx/docker-compose-nginx.decorators';

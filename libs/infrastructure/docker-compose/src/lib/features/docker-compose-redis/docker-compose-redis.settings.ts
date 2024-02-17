@@ -4,6 +4,17 @@ import { IsNotEmpty } from 'class-validator';
 @ConfigModel()
 export class DockerComposeRedisConfiguration {
   @ConfigModelProperty({
+    description: 'Docker image name',
+    default: 'bitnami/redis:7.2',
+  })
+  image?: string;
+
+  @ConfigModelProperty({
+    description: 'Feature name for generate prefix to environments keys',
+  })
+  featureName?: string;
+
+  @ConfigModelProperty({
     description: 'Network, if not set networkNames have project name and driver=bridge.',
   })
   networks?: { name: string; driver: string }[];
@@ -13,12 +24,6 @@ export class DockerComposeRedisConfiguration {
     default: 6379,
   })
   externalPort?: number;
-
-  @ConfigModelProperty({
-    description: 'Docker image name',
-    default: 'bitnami/redis:7.2',
-  })
-  image?: string;
 
   @ConfigModelProperty({
     description: 'Redis disable commands.',
@@ -37,11 +42,6 @@ export class DockerComposeRedisConfiguration {
     default: 'yes',
   })
   ioThreadsDoReads?: string;
-
-  @ConfigModelProperty({
-    description: 'Feature name for generate prefix to environments keys',
-  })
-  featureName?: string;
 }
 
 @EnvModel()

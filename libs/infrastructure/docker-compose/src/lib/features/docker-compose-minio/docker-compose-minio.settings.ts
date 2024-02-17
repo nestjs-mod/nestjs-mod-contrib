@@ -4,6 +4,17 @@ import { IsNotEmpty } from 'class-validator';
 @ConfigModel()
 export class DockerComposeMinioConfiguration {
   @ConfigModelProperty({
+    description: 'Docker image name',
+    default: 'bitnami/minio:2024.2.9',
+  })
+  image?: string;
+
+  @ConfigModelProperty({
+    description: 'Feature name for generate prefix to environments keys',
+  })
+  featureName?: string;
+
+  @ConfigModelProperty({
     description: 'Network, if not set networkNames have project name and driver=bridge.',
   })
   networks?: { name: string; driver: string }[];
@@ -19,17 +30,6 @@ export class DockerComposeMinioConfiguration {
     default: 9001,
   })
   externalConsolePort?: number;
-
-  @ConfigModelProperty({
-    description: 'Docker image name',
-    default: 'bitnami/minio:2024.2.9',
-  })
-  image?: string;
-
-  @ConfigModelProperty({
-    description: 'Feature name for generate prefix to environments keys',
-  })
-  featureName?: string;
 
   @ConfigModelProperty({
     description: 'External port for proxy access over nginx (infrastructure, need for disable CORS errors)',
