@@ -187,8 +187,8 @@ bootstrapNestApplication({
     core: [
       PrismaModule.forRoot({
         staticConfiguration: {
-          prismaSchemaFile: join(appFolder, 'src', 'prisma', `${userFeatureName}-${PRISMA_SCHEMA_FILE}`),
-          prismaFeatureName: userFeatureName,
+          schemaFile: join(appFolder, 'src', 'prisma', `${userFeatureName}-${PRISMA_SCHEMA_FILE}`),
+          featureName: userFeatureName,
           prismaModule: isInfrastructureMode()
             ? { PrismaClient: FakePrismaClient }
             : // remove after first run docs:infrastructure
