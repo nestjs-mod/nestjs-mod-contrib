@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.2.1...cache-manager-v1.2.2) (2024-02-21)
+
+
+### Bug Fixes
+
+* update version of cache-manager ([c4a7977](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c4a79775dd86c11384811b431015ce58b56e7592))
+
 ## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.2.0...cache-manager-v1.2.1) (2024-02-13)
 
 
