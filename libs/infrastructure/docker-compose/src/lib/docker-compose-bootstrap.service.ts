@@ -29,7 +29,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     private readonly packageJsonService: PackageJsonService,
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly gitignoreService: GitignoreService
-  ) {}
+  ) { }
 
   onApplicationBootstrap() {
     this.createDockerComposeFile();
@@ -55,10 +55,22 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     const bothServicesWithEnvs = { ...bothServices };
     for (const key of Object.keys(bothServicesWithEnvs.services)) {
       for (const envKey of Object.keys(bothServicesWithEnvs.services[key].environment || {})) {
-        bothServicesWithEnvs.services[key].environment[envKey] =
+        let value =
           bothServicesWithEnvs?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
+        value = (typeof value === 'string' || typeof value === 'number' || !value) ? value : String(value)
+
+        const keys = Object.keys(process.env);
+
+        if (value) {
+          for (const key of keys) {
+            value = String(value).replace(new RegExp(`%${key}%`, 'ig'), process.env[key] || '');
+          }
+        }
+
+        bothServicesWithEnvs.services[key].environment[envKey] = value
       }
     }
+
     this.dockerComposeFileService.write(bothServicesWithEnvs);
 
     // example
