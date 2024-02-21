@@ -35,9 +35,9 @@ bootstrapNestApplication({
       }),
       Flyway.forRoot({
         staticConfiguration: {
-          flywayFeatureName: flywayPrismaFeatureName,
-          flywayMigrationsFolder: join(appFolder, 'src', 'migrations'),
-          flywayConfigFile: join(rootFolder, FLYWAY_JS_CONFIG_FILE),
+          featureName: flywayPrismaFeatureName,
+          migrationsFolder: join(appFolder, 'src', 'migrations'),
+          configFile: join(rootFolder, FLYWAY_JS_CONFIG_FILE),
         },
       }),
     ],
