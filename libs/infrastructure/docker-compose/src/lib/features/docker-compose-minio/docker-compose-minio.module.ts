@@ -49,12 +49,11 @@ export const { DockerComposeMinio } = createNestModule({
       staticConfiguration.nginxBucketsLocations &&
       staticConfiguration.nginxPort
     ) {
-      const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.Minio);
 
       const dockerComposeNginx = DockerComposeNginx.forRoot({
         staticConfiguration: {
           ports: { [staticConfiguration.nginxPort]: staticConfiguration.nginxPort },
-          serviceNames: { [serviceName]: 'service_started' },
+          dependsOnServiceNames: { [DockerComposeServiceType.Minio]: 'service_started' },
           configFolder: join(staticConfiguration.nginxFilesFolder, 'config'),
           logsFolder: join(staticConfiguration.nginxFilesFolder, 'logs'),
           configContent: `
@@ -89,22 +88,22 @@ export const { DockerComposeMinio } = createNestModule({
         proxy_max_temp_file_size 0;
     
   ${staticConfiguration.nginxBucketsLocations
-    .map(
-      (nginxBucketsLocation) => `      location /${nginxBucketsLocation} {
+              .map(
+                (nginxBucketsLocation) => `      location /${nginxBucketsLocation} {
             proxy_set_header Host localhost:9000;
             proxy_set_header Origin $http_origin;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto $scheme;
             rewrite ^/${nginxBucketsLocation}/(.*)$ /$1 break;
-            proxy_pass http://${serviceName}:9000;
+            proxy_pass http://%${DockerComposeServiceType.Minio}%:9000;
             proxy_http_version 1.1;
             proxy_set_header Accept-Language $http_accept_language;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection $connection_upgrade;
         }`
-    )
-    .join('\n')}    
+              )
+              .join('\n')}    
     }
       `,
         },
@@ -144,9 +143,9 @@ export const { DockerComposeMinio } = createNestModule({
         const networks =
           (project?.name
             ? staticConfiguration?.networks?.map((n) => ({
-                ...n,
-                name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
-              })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
+              ...n,
+              name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
+            })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
             : staticConfiguration?.networks) ?? [];
 
         if (networks?.length === 0) {
@@ -177,13 +176,13 @@ export const { DockerComposeMinio } = createNestModule({
                   environment: {
                     ...(staticEnvironments?.minioRootUser
                       ? {
-                          MINIO_ROOT_USER: staticEnvironments?.minioRootUser,
-                        }
+                        MINIO_ROOT_USER: staticEnvironments?.minioRootUser,
+                      }
                       : {}),
                     ...(staticEnvironments?.minioRootPassword
                       ? {
-                          MINIO_ROOT_PASSWORD: staticEnvironments?.minioRootPassword,
-                        }
+                        MINIO_ROOT_PASSWORD: staticEnvironments?.minioRootPassword,
+                      }
                       : {}),
                   },
                   healthcheck: {
