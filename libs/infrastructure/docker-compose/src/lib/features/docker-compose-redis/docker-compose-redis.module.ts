@@ -130,7 +130,7 @@ export const { DockerComposeRedis } = createNestModule({
                       : {}),
                   },
                   healthcheck: {
-                    test: redisSettings?.password ? ['CMD-SHELL', 'redis-cli ping | grep PONG'] : ['CMD-SHELL', 'redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG'],
+                    test: redisSettings?.password ? ['CMD-SHELL', 'redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG'] : ['CMD-SHELL', 'redis-cli ping | grep PONG'],
                     interval: '5s',
                     timeout: '5s',
                     retries: 5,
