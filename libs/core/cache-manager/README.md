@@ -8,7 +8,7 @@ A cache module for nodejs that allows easy wrapping of functions in cache, tiere
 ## Installation
 
 ```bash
-npm i --save redis@4.6.7 cache-manager@5.2.3 cache-manager-redis-yet@4.1.2 @nestjs-mod/cache-manager
+npm i --save redis@4.6.7 cache-manager@5.4.0 cache-manager-redis-yet@4.1.2 @nestjs-mod/cache-manager
 ```
 
 
