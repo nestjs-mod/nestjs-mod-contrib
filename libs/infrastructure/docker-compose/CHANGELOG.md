@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.8.0...docker-compose-v1.8.1) (2024-02-21)
+
+
+### Bug Fixes
+
+* support work with password ([db06f0b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/db06f0b27a44b2761ec57df63932e7b2699fb1b0))
+
 # [1.8.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.7.0...docker-compose-v1.8.0) (2024-02-21)
 
 
