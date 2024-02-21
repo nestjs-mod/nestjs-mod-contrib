@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty, EnvModel, EnvModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, EnvModel, EnvModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
 
 @ConfigModel()
@@ -22,6 +22,7 @@ export class DockerComposeRedisConfiguration {
   @ConfigModelProperty({
     description: 'External port for sharing container.',
     default: 6379,
+    transform: new NumberTransformer()
   })
   externalPort?: number;
 
@@ -34,6 +35,7 @@ export class DockerComposeRedisConfiguration {
   @ConfigModelProperty({
     description: 'Redis IO threads.',
     default: 2,
+    transform: new NumberTransformer()
   })
   ioThreads?: number;
 

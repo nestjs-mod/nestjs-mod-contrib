@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
 import { StartOptions } from 'pm2';
 
@@ -114,6 +114,7 @@ export class Pm2Configuration implements StartOptions {
    */
   @ConfigModelProperty({
     description: 'The minimum uptime of the script before it’s considered successfully started.',
+    transform: new NumberTransformer()
   })
   min_uptime?: number;
 
@@ -122,6 +123,7 @@ export class Pm2Configuration implements StartOptions {
    */
   @ConfigModelProperty({
     description: 'The maximum number of times in a row a script will be restarted if it exits in less than min_uptime.',
+    transform: new NumberTransformer()
   })
   max_restarts?: number;
 
@@ -170,6 +172,7 @@ export class Pm2Configuration implements StartOptions {
   @ConfigModelProperty({
     description:
       'The number of milliseconds to wait after a stop or restart command issues a SIGINT signal to kill the script forceably with a SIGKILL signal.',
+      transform: new NumberTransformer()
   })
   kill_timeout?: number;
 
@@ -178,6 +181,7 @@ export class Pm2Configuration implements StartOptions {
    */
   @ConfigModelProperty({
     description: 'Number of millseconds to wait before restarting a script that has exited.',
+    transform: new NumberTransformer()
   })
   restart_delay?: number;
 
@@ -205,6 +209,7 @@ export class Pm2Configuration implements StartOptions {
    */
   @ConfigModelProperty({
     description: 'How many instances of script to create. Only relevant in exec_mode ‘cluster’.',
+    transform: new NumberTransformer()
   })
   instances?: number;
 

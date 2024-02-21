@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { LoggerService, Type } from '@nestjs/common';
 import { HealthIndicatorFunction, TerminusModuleOptions } from '@nestjs/terminus';
 import { ErrorLogStyle } from '@nestjs/terminus/dist/terminus-options.interface';
@@ -23,6 +23,7 @@ export class TerminusHealthCheckStaticConfiguration implements TerminusModuleOpt
 
   @ConfigModelProperty({
     description: `The timeout to wait in ms before the application shuts down @default 0`,
+    transform: new NumberTransformer()
   })
   gracefulShutdownTimeoutMs?: number;
 }

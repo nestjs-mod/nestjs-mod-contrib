@@ -1,4 +1,4 @@
-import { EnvModel, EnvModelProperty } from '@nestjs-mod/common';
+import { EnvModel, EnvModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
 
 @EnvModel()
@@ -11,7 +11,9 @@ export class MinioEnvironments {
 
   @EnvModelProperty({
     description: 'Server port',
+    default: 9000,
     hidden: true,
+    transform: new NumberTransformer()
   })
   minioServerPort?: number;
 

@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty, EnvModel, EnvModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, EnvModel, EnvModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
 
 @ConfigModel()
@@ -17,6 +17,7 @@ export class DockerComposePostgresConfiguration {
   @ConfigModelProperty({
     description: 'External port for sharing container.',
     default: 5432,
+    transform: new NumberTransformer()
   })
   externalPort?: number;
 }

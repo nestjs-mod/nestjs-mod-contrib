@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { Agent } from 'http';
 import { NestMinioOptions } from 'nestjs-minio';
 
@@ -19,8 +19,7 @@ export enum DefaultBucketNames {
 
 @ConfigModel()
 export class MinioConfiguration
-  implements Omit<NestMinioOptions, 'endPoint' | 'accessKey' | 'secretKey' | 'useSSL' | 'port'>
-{
+  implements Omit<NestMinioOptions, 'endPoint' | 'accessKey' | 'secretKey' | 'useSSL' | 'port'> {
   @ConfigModelProperty({
     description: 'Feature name for generate prefix to environments keys',
   })
@@ -44,6 +43,7 @@ export class MinioConfiguration
 
   @ConfigModelProperty({
     description: 'Part size',
+    transform: new NumberTransformer()
   })
   partSize?: number;
 

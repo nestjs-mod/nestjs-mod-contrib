@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { Logger } from '@nestjs/common';
 import { IsNotEmpty } from 'class-validator';
 
@@ -25,12 +25,14 @@ export class PrismaConfiguration {
   @ConfigModelProperty({
     description: 'Max query execution time for detect long queries',
     default: 5000,
+    transform: new NumberTransformer()
   })
   maxQueryExecutionTime?: number;
 
   @ConfigModelProperty({
     description: 'Ping database interval (0 - disable)',
     default: 0,
+    transform: new NumberTransformer()
   })
   pingDatabaseIntervalMs?: number;
 

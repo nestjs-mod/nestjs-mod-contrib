@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty, EnvModel, EnvModelProperty } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, EnvModel, EnvModelProperty, NumberTransformer } from '@nestjs-mod/common';
 
 @ConfigModel()
 export class DockerComposeNatsConfiguration {
@@ -21,12 +21,14 @@ export class DockerComposeNatsConfiguration {
   @ConfigModelProperty({
     description: 'External client port for sharing container.',
     default: 4222,
+    transform: new NumberTransformer()
   })
   externalClientPort?: number;
 
   @ConfigModelProperty({
     description: 'External http port for sharing container.',
     default: 8222,
+    transform: new NumberTransformer()
   })
   externalHttpPort?: number;
 
