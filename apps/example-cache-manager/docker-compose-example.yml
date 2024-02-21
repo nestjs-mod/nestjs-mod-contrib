@@ -19,7 +19,7 @@ services:
     healthcheck:
       test:
         - "CMD-SHELL"
-        - "redis-cli ping | grep PONG"
+        - "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"
       interval: "5s"
       timeout: "5s"
       retries: 5
