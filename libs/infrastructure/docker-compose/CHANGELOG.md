@@ -1,3 +1,17 @@
+# [1.8.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.7.0...docker-compose-v1.8.0) (2024-02-21)
+
+
+### Bug Fixes
+
+* add support replace service namewith project name prefix in nginx depends_on ([df58fde](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/df58fde91d92b6c7eca5cd9c108dbd0914ab14cb))
+* update healthcheck for redis, add support work with password ([74549c6](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/74549c6057edc871da6383c812e575be377ffb91))
+* update nginx config for minio ([e5b19a2](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e5b19a2c56465524c76d91d8defb7309d182acfb))
+
+
+### Features
+
+* search and replace env values in envs to other env ([4b947a3](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4b947a308e0d587fb489a774b7b021b50d8c39e9))
+
 # [1.7.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.6.1...docker-compose-v1.7.0) (2024-02-17)
 
 
