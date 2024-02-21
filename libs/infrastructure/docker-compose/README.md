@@ -409,7 +409,7 @@ Nginx is a web server that can also be used as a reverse proxy, load balancer, m
 |`configContent`|Config content|**isNotEmpty** (configContent should not be empty)|-|-|
 |`configFolder`|Config folder for map volume to /etc/nginx/conf.d|**isNotEmpty** (configFolder should not be empty)|-|-|
 |`logsFolder`|Logs folder for map volume to /var/log/nginx/|**isNotEmpty** (logsFolder should not be empty)|-|-|
-|`serviceNames`|Depends on services|**optional**|-|-|
+|`dependsOnServiceNames`|Depends on services|**optional**|-|-|
 |`ports`|Ports|**optional**|-|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
 
