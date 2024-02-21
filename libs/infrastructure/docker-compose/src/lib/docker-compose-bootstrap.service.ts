@@ -131,12 +131,12 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
               [`docker-compose:start:${applicationPackageJson?.name}`]: {
                 commands: [
                   `export COMPOSE_INTERACTIVE_NO_CLI=1`,
-                  `docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
+                  `docker compose -f .${dockerComposeFilePath} --compatibility up -d`,
                 ],
                 comments: [`Running the docker-compose infrastructure for ${applicationPackageJson?.name}`],
               },
               [`docker-compose:stop:${applicationPackageJson?.name}`]: {
-                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1`, `docker-compose -f .${dockerComposeFilePath} down`],
+                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1`, `docker compose -f .${dockerComposeFilePath} down`],
                 comments: [`Stopping the docker-compose infrastructure for ${applicationPackageJson?.name}`],
               },
             },
