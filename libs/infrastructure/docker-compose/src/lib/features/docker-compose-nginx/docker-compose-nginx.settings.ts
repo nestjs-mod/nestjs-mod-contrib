@@ -30,7 +30,7 @@ export class DockerComposeNginxConfiguration {
   @ConfigModelProperty({
     description: 'Depends on services',
   })
-  serviceNames?: Record<string, 'service_started' | 'service_healthy' | 'service_completed_successfully'>;
+  dependsOnServiceNames?: Record<string, 'service_started' | 'service_healthy' | 'service_completed_successfully'>;
 
   @ConfigModelProperty({
     description: 'Ports',

@@ -31,9 +31,9 @@ export const { DockerComposeNginx } = createNestModule({
         const networks =
           (project?.name
             ? staticConfiguration?.networks?.map((n) => ({
-                ...n,
-                name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
-              })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
+              ...n,
+              name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
+            })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
             : staticConfiguration?.networks) ?? [];
 
         if (networks?.length === 0) {
@@ -47,12 +47,12 @@ export const { DockerComposeNginx } = createNestModule({
 
         const ports = Object.entries(staticConfiguration?.ports || {}).map(([, port]) => port);
         for (let i = 0; i <= ports.length; i++) {
-          configContent = configContent.replace(new RegExp(`%port${i + 1}%`, 'g'), String(ports[i]));
+          configContent = configContent.replace(new RegExp(`%port${i + 1}%`, 'ig'), String(ports[i]));
         }
 
-        for (const serviceName of Object.keys(staticConfiguration.serviceNames || {})) {
+        for (const serviceName of Object.keys(staticConfiguration.dependsOnServiceNames || {})) {
           configContent = configContent.replace(
-            new RegExp(`%${serviceName}%`, 'g'),
+            new RegExp(`%${serviceName}%`, 'ig'),
             getDockerComposeServiceName(project?.name, serviceName)
           );
         }
@@ -85,9 +85,20 @@ export const { DockerComposeNginx } = createNestModule({
                   networks: networkNames,
                   tty: true,
                   restart: 'always',
-                  depends_on: Object.entries(staticConfiguration.serviceNames || {})
+                  depends_on: Object.entries(staticConfiguration.dependsOnServiceNames || {}).map(([serviceName, condition]) => {
+                    const keys = Object.keys(process.env);
+
+                    if (serviceName) {
+                      for (const key of keys) {
+                        serviceName = String(serviceName).replace(new RegExp(`%${key}%`, 'ig'), process.env[key] || '');
+                      }
+                    }
+                    // todo: fix type
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    return [serviceName, condition] as any
+                  })
                     .map(([serviceName, condition]) => ({
-                      [serviceName]: { condition },
+                      [getDockerComposeServiceName(project?.name, serviceName)]: { condition },
                     }))
                     .reduce((all, cur) => ({ ...all, ...cur }), {}),
                 },
