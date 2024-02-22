@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.3.1...flyway-v1.3.2) (2024-02-22)
+
+
+### Bug Fixes
+
+* disable generate first migrations if migrations folder is exists, add baselineOnMigrate=true options when we create config file ([d7e0e41](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/d7e0e41f019d9ab9dd2c3ee41041ee6f804131d8))
+
 ## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.3.0...flyway-v1.3.1) (2024-02-13)
 
 
