@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.0...prisma-v1.6.1) (2024-02-22)
+
+
+### Bug Fixes
+
+* add transform: new NumberTransformer() for all number options in settings ([71fc6d8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/71fc6d84936e4ba0dfa0881a2e1ff57b5b03914f))
+
 # [1.6.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.5.1...prisma-v1.6.0) (2024-02-17)
 
 
