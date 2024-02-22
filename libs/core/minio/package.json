@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/minio",
   "description": "Minio client for NestJS-mod (Wrapper for https://www.npmjs.com/package/nestjs-minio)",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "nestjs",
     "nestjs-mod",

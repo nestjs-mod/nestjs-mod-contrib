@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.3...minio-v1.0.4) (2024-02-22)
+
+
+### Bug Fixes
+
+* add transform: new NumberTransformer() for all number options in settings ([71fc6d8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/71fc6d84936e4ba0dfa0881a2e1ff57b5b03914f))
+
 ## [1.0.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.2...minio-v1.0.3) (2024-02-17)
 
 
