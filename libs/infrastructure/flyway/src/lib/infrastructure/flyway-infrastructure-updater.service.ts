@@ -2,7 +2,7 @@ import { NxProjectJsonService, PackageJsonService, WrapApplicationOptionsService
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { constantCase, upperCamelCase } from 'case-anything';
 import { ConnectionString } from 'connection-string';
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
 import { FlywayError } from '../flyway-errors';
 import { FlywayConfiguration } from '../flyway.configuration';
@@ -17,7 +17,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
     private readonly flywayConfiguration: FlywayConfiguration,
     private readonly flywayConfigFileService: FlywayConfigFileService,
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
-  ) {}
+  ) { }
 
   onModuleInit() {
     this.update();
@@ -146,6 +146,7 @@ module.exports = {
     password: PASSWORD,
     table: '__migrations',
     sqlMigrationSuffixes: '.sql',
+    baselineOnMigrate: true
   },
   // Use to configure environment variables used by flyway
   env: {
@@ -188,42 +189,39 @@ module.exports = {
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     const firstMigrationFilePath = join(this.flywayConfiguration.migrationsFolder, migrationFileName);
     if (packageJsonFilePath) {
-      let firstMigration: string = '';
       try {
         if (
           !this.flywayConfiguration.migrationsFolder &&
           !existsSync(this.flywayConfiguration.migrationsFolder)
         ) {
           mkdirSync(this.flywayConfiguration.migrationsFolder, { recursive: true });
+
+          const firstMigration = `-- CreateTable
+          CREATE TABLE "${flywayFeatureName}User" (
+              "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+              "externalUserId" UUID NOT NULL,
+              "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+              "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          
+              CONSTRAINT "PK_${constantCaseFlywayFeatureName}_USER" PRIMARY KEY ("id")
+          );
+          
+          -- CreateIndex
+          CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatureName}User"("externalUserId");
+          `;
+          if (!firstMigrationFilePath) {
+            return;
+          }
+          const fileDir = dirname(firstMigrationFilePath);
+          if (fileDir) {
+            if (!existsSync(fileDir)) {
+              mkdirSync(fileDir, { recursive: true });
+            }
+            writeFileSync(firstMigrationFilePath, firstMigration);
+          }
         }
-        firstMigration = readFileSync(firstMigrationFilePath).toString();
       } catch (err) {
         //
-      }
-      if (!firstMigration) {
-        firstMigration = `-- CreateTable
-CREATE TABLE "${flywayFeatureName}User" (
-    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-    "externalUserId" UUID NOT NULL,
-    "createdAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "PK_${constantCaseFlywayFeatureName}_USER" PRIMARY KEY ("id")
-);
-
--- CreateIndex
-CREATE UNIQUE INDEX "UQ_${constantCaseFlywayFeatureName}_USER" ON "${flywayFeatureName}User"("externalUserId");
-`;
-        if (!firstMigrationFilePath) {
-          return;
-        }
-        const fileDir = dirname(firstMigrationFilePath);
-        if (fileDir) {
-          if (!existsSync(fileDir)) {
-            mkdirSync(fileDir, { recursive: true });
-          }
-          writeFileSync(firstMigrationFilePath, firstMigration);
-        }
       }
     }
   }
