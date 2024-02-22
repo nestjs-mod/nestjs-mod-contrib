@@ -1,3 +1,11 @@
+## [1.8.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.8.1...docker-compose-v1.8.2) (2024-02-22)
+
+
+### Bug Fixes
+
+* add transform: new NumberTransformer() for all number options in settings ([71fc6d8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/71fc6d84936e4ba0dfa0881a2e1ff57b5b03914f))
+* update "docker-compose" to "docker compose" when we create scripts for run docker compose ([0c35cb0](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/0c35cb00229dbba60e75aaa1c9e8955097952cc2))
+
 ## [1.8.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.8.0...docker-compose-v1.8.1) (2024-02-21)
 
 
