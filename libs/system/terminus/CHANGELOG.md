@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.10.0...terminus-v1.10.1) (2024-02-22)
+
+
+### Bug Fixes
+
+* add transform: new NumberTransformer() for all number options in settings ([71fc6d8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/71fc6d84936e4ba0dfa0881a2e1ff57b5b03914f))
+
 # [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.9.0...terminus-v1.10.0) (2024-02-13)
 
 
