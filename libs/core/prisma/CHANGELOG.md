@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.1...prisma-v1.6.2) (2024-02-25)
+
+
+### Bug Fixes
+
+* add type TransactionPrismaClient ([05b308c](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/05b308c6bbd4aab8595d51b50e8aef93751dc0c2))
+
 ## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.0...prisma-v1.6.1) (2024-02-22)
 
 
