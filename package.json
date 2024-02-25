@@ -47,7 +47,7 @@
     "pm2:stop": "./node_modules/.bin/pm2 delete all",
     "_____prod infra_____": "_____prod infra_____",
     "start": "npm run nx:many -- -t=start",
-    "build": "npm run generate && npm run tsc:lint && npm run nx:many -- -t=build --skip-nx-cache=true",
+    "build": "npm run generate -- -t=build --skip-nx-cache=true && npm run tsc:lint && npm run nx:many -- -t=build --skip-nx-cache=true",
     "start:prod:cli": "npm run nx -- start cli --host=0.0.0.0",
     "start:prod:example-pino-logger": "npm run nx -- start example-pino-logger",
     "start:prod:example-terminus": "npm run nx -- start example-terminus",

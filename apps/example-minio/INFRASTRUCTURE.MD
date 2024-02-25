@@ -203,7 +203,7 @@ Static variables with primitive types used in the module and can be used at the 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
 |`minioServerHost`|Server host|`obj['minioServerHost']`, `process.env['EXAMPLE_MINIO_MINIO_SERVER_HOST']`|**isNotEmpty** (minioServerHost should not be empty)|-|```localhost```|
-|`minioServerPort`|Server port|`obj['minioServerPort']`, `process.env['EXAMPLE_MINIO_MINIO_SERVER_PORT']`|**optional**|-|-|
+|`minioServerPort`|Server port|`obj['minioServerPort']`, `process.env['EXAMPLE_MINIO_MINIO_SERVER_PORT']`|**optional**|```9000```|```9000```|
 |`minioAccessKey`|Access key|`obj['minioAccessKey']`, `process.env['EXAMPLE_MINIO_MINIO_ACCESS_KEY']`|**isNotEmpty** (minioAccessKey should not be empty)|-|```minioadmin```|
 |`minioSecretKey`|Secret key|`obj['minioSecretKey']`, `process.env['EXAMPLE_MINIO_MINIO_SECRET_KEY']`|**isNotEmpty** (minioSecretKey should not be empty)|-|```6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq```|
 |`minioUseSSL`|Use SSL|`obj['minioUseSSL']`, `process.env['EXAMPLE_MINIO_MINIO_USE_SSL']`|**optional**|```false```|```false```|

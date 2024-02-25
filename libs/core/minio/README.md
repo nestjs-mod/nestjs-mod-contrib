@@ -252,7 +252,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
 |`minioServerHost`|Server host|`obj['minioServerHost']`, `process.env['MINIO_SERVER_HOST']`|**isNotEmpty** (minioServerHost should not be empty)|-|-|
-|`minioServerPort`|Server port|`obj['minioServerPort']`, `process.env['MINIO_SERVER_PORT']`|**optional**|-|-|
+|`minioServerPort`|Server port|`obj['minioServerPort']`, `process.env['MINIO_SERVER_PORT']`|**optional**|```9000```|```9000```|
 |`minioAccessKey`|Access key|`obj['minioAccessKey']`, `process.env['MINIO_ACCESS_KEY']`|**isNotEmpty** (minioAccessKey should not be empty)|-|-|
 |`minioSecretKey`|Secret key|`obj['minioSecretKey']`, `process.env['MINIO_SECRET_KEY']`|**isNotEmpty** (minioSecretKey should not be empty)|-|-|
 |`minioUseSSL`|Use SSL|`obj['minioUseSSL']`, `process.env['MINIO_USE_SSL']`|**optional**|```false```|```false```|
