@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.2.2...cache-manager-v1.2.3) (2024-02-25)
+
+
+### Bug Fixes
+
+* expose getServiceToken from docker modules, cache-modules, prisma and terminus ([108dc60](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/108dc606fe4a8bb0f91375b244814ac32dbc7525))
+
 ## [1.2.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.2.1...cache-manager-v1.2.2) (2024-02-21)
 
 
