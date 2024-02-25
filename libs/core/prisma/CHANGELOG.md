@@ -1,3 +1,11 @@
+## [1.6.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.2...prisma-v1.6.3) (2024-02-25)
+
+
+### Bug Fixes
+
+* add ext methods to FakePrismaClient ([c39adbf](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c39adbf05b2571a6f35990027f8428553e8f45c6))
+* expose getServiceToken from docker modules, cache-modules, prisma and terminus ([108dc60](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/108dc606fe4a8bb0f91375b244814ac32dbc7525))
+
 ## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.1...prisma-v1.6.2) (2024-02-25)
 
 
