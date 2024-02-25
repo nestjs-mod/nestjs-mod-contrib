@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_MODULE_NAME } from './docker-compose.constants';
 
 export const {
@@ -9,5 +9,9 @@ export const {
   InjectAllModuleSettings: InjectAllDockerComposeModuleSettings,
   InjectModuleSettings: InjectDockerComposeModuleSettings,
 } = getNestModuleDecorators({
+  moduleName: DOCKER_COMPOSE_MODULE_NAME,
+});
+
+export const { getServiceToken: getCacheManagerServiceToken } = getNestModuleInternalUtils({
   moduleName: DOCKER_COMPOSE_MODULE_NAME,
 });

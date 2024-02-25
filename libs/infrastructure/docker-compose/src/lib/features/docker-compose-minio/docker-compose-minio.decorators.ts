@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_MODULE_NAME } from '../../docker-compose.constants';
 
 const DOCKER_COMPOSE_MINIO_MODULE_NAME = `${DOCKER_COMPOSE_MODULE_NAME}Minio`;
@@ -15,6 +15,10 @@ export const {
   moduleName: DOCKER_COMPOSE_MINIO_MODULE_NAME,
 });
 
+export const { getServiceToken: getDockerComposeMinioServiceToken } = getNestModuleInternalUtils({
+  moduleName: DOCKER_COMPOSE_MINIO_MODULE_NAME,
+});
+
 export const {
   InjectFeatures: InjectDockerComposeMinioInternalFeatures,
   InjectAllFeatures: InjectAllDockerComposeMinioInternalFeatures,
@@ -23,5 +27,9 @@ export const {
   InjectAllModuleSettings: InjectAllDockerComposeMinioInternaModuleSettings,
   InjectModuleSettings: InjectDockerComposeMinioInternaModuleSettings,
 } = getNestModuleDecorators({
+  moduleName: DOCKER_COMPOSE_MINIO_INTERNAL_MODULE_NAME,
+});
+
+export const { getServiceToken: getDockerComposeMinioInternalServiceToken } = getNestModuleInternalUtils({
   moduleName: DOCKER_COMPOSE_MINIO_INTERNAL_MODULE_NAME,
 });

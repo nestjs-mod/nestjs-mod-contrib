@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_MODULE_NAME } from '../../docker-compose.constants';
 
 const DOCKER_COMPOSE_POSTGRES_MODULE_NAME = `${DOCKER_COMPOSE_MODULE_NAME}PostgreSQL`;
@@ -15,6 +15,10 @@ export const {
   moduleName: DOCKER_COMPOSE_POSTGRES_MODULE_NAME,
 });
 
+export const { getServiceToken: getDockerComposePostgreSQLServiceToken } = getNestModuleInternalUtils({
+  moduleName: DOCKER_COMPOSE_POSTGRES_MODULE_NAME,
+});
+
 export const {
   InjectFeatures: InjectDockerComposePostgresInternalFeatures,
   InjectAllFeatures: InjectAllDockerComposePostgresInternalFeatures,
@@ -23,5 +27,9 @@ export const {
   InjectAllModuleSettings: InjectAllDockerComposePostgresInternaModuleSettings,
   InjectModuleSettings: InjectDockerComposePostgresInternaModuleSettings,
 } = getNestModuleDecorators({
+  moduleName: DOCKER_COMPOSE_POSTGRES_INTERNAL_MODULE_NAME,
+});
+
+export const { getServiceToken: getDockerComposePostgreSQLInternalServiceToken } = getNestModuleInternalUtils({
   moduleName: DOCKER_COMPOSE_POSTGRES_INTERNAL_MODULE_NAME,
 });

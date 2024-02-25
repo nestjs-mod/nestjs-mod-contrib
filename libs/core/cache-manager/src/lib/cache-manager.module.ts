@@ -1,20 +1,17 @@
 import {
   NestModuleCategory,
   createNestModule,
-  getFeatureDotEnvPropertyNameFormatter,
-  getNestModuleInternalUtils,
+  getFeatureDotEnvPropertyNameFormatter
 } from '@nestjs-mod/common';
 import { Cache, createCache, memoryStore } from 'cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
 import { CacheManagerConfiguration } from './cache-manager.configuration';
 import { CACHE_MANAGER_MODULE_NAME } from './cache-manager.constants';
+import { getCacheManagerEnvironmentsLoaderToken } from './cache-manager.decorators';
 import { CacheManagerEnvironments } from './cache-manager.environments';
 import { CacheManagerService } from './cache-manager.service';
 import { redisUrlParse } from './cache-manager.utils';
 
-const { getEnvironmentsLoaderToken } = getNestModuleInternalUtils({
-  moduleName: CACHE_MANAGER_MODULE_NAME,
-});
 
 export const { CacheManagerModule } = createNestModule({
   moduleName: CACHE_MANAGER_MODULE_NAME,
@@ -52,7 +49,7 @@ export const { CacheManagerModule } = createNestModule({
         CacheManagerService,
         CacheManagerEnvironments,
         // need for wait resolve env config
-        getEnvironmentsLoaderToken(options.contextName),
+        getCacheManagerEnvironmentsLoaderToken(options.contextName),
       ],
     },
   ],

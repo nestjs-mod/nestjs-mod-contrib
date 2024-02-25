@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_MODULE_NAME } from '../../docker-compose.constants';
 
 const DOCKER_COMPOSE_NGINX_MODULE_NAME = `${DOCKER_COMPOSE_MODULE_NAME}Nginx`;
@@ -15,6 +15,11 @@ export const {
   moduleName: DOCKER_COMPOSE_NGINX_MODULE_NAME,
 });
 
+export const { getServiceToken: getDockerComposeNginxServiceToken } = getNestModuleInternalUtils({
+  moduleName: DOCKER_COMPOSE_NGINX_MODULE_NAME,
+});
+
+
 export const {
   InjectFeatures: InjectDockerComposeNginxInternalFeatures,
   InjectAllFeatures: InjectAllDockerComposeNginxInternalFeatures,
@@ -23,5 +28,9 @@ export const {
   InjectAllModuleSettings: InjectAllDockerComposeNginxInternaModuleSettings,
   InjectModuleSettings: InjectDockerComposeNginxInternaModuleSettings,
 } = getNestModuleDecorators({
+  moduleName: DOCKER_COMPOSE_NGINX_INTERNAL_MODULE_NAME,
+});
+
+export const { getServiceToken: getDockerComposeNginxInternalServiceToken } = getNestModuleInternalUtils({
   moduleName: DOCKER_COMPOSE_NGINX_INTERNAL_MODULE_NAME,
 });

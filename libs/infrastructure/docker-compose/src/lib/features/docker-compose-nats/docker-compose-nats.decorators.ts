@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_MODULE_NAME } from '../../docker-compose.constants';
 
 const DOCKER_COMPOSE_NATS_MODULE_NAME = `${DOCKER_COMPOSE_MODULE_NAME}Nats`;
@@ -15,6 +15,10 @@ export const {
   moduleName: DOCKER_COMPOSE_NATS_MODULE_NAME,
 });
 
+export const { getServiceToken: getDockerComposeNatsServiceToken } = getNestModuleInternalUtils({
+  moduleName: DOCKER_COMPOSE_NATS_MODULE_NAME,
+});
+
 export const {
   InjectFeatures: InjectDockerComposeNatsInternalFeatures,
   InjectAllFeatures: InjectAllDockerComposeNatsInternalFeatures,
@@ -25,3 +29,8 @@ export const {
 } = getNestModuleDecorators({
   moduleName: DOCKER_COMPOSE_NATS_INTERNAL_MODULE_NAME,
 });
+
+export const { getServiceToken: getDockerComposeNatsInternalServiceToken } = getNestModuleInternalUtils({
+  moduleName: DOCKER_COMPOSE_NATS_INTERNAL_MODULE_NAME,
+});
+

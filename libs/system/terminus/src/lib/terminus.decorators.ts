@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { TERMINUS_MODULE_NAME } from './terminus.constants';
 
 export const {
@@ -12,3 +12,8 @@ export const {
 } = getNestModuleDecorators({
   moduleName: TERMINUS_MODULE_NAME,
 });
+
+export const { getServiceToken: getTerminusHealthCheckServiceToken } = getNestModuleInternalUtils({
+  moduleName: TERMINUS_MODULE_NAME,
+});
+

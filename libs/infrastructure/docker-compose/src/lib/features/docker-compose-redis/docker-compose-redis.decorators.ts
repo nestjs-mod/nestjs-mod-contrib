@@ -1,4 +1,4 @@
-import { getNestModuleDecorators } from '@nestjs-mod/common';
+import { getNestModuleDecorators, getNestModuleInternalUtils } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_MODULE_NAME } from '../../docker-compose.constants';
 
 const DOCKER_COMPOSE_REDIS_MODULE_NAME = `${DOCKER_COMPOSE_MODULE_NAME}Redis`;
@@ -15,6 +15,10 @@ export const {
   moduleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
 });
 
+export const { getServiceToken: getDockerComposeRedisServiceToken } = getNestModuleInternalUtils({
+  moduleName: DOCKER_COMPOSE_REDIS_MODULE_NAME,
+});
+
 export const {
   InjectFeatures: InjectDockerComposeRedisInternalFeatures,
   InjectAllFeatures: InjectAllDockerComposeRedisInternalFeatures,
@@ -23,5 +27,9 @@ export const {
   InjectAllModuleSettings: InjectAllDockerComposeRedisInternaModuleSettings,
   InjectModuleSettings: InjectDockerComposeRedisInternaModuleSettings,
 } = getNestModuleDecorators({
+  moduleName: DOCKER_COMPOSE_REDIS_INTERNAL_MODULE_NAME,
+});
+
+export const { getServiceToken: getDockerComposeRedisInternalServiceToken } = getNestModuleInternalUtils({
   moduleName: DOCKER_COMPOSE_REDIS_INTERNAL_MODULE_NAME,
 });
