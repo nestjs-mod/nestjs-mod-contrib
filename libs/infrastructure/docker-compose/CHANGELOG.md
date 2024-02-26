@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.8.3...docker-compose-v1.9.0) (2024-02-26)
+
+
+### Features
+
+* add support update nginx config file with nginxConfigContent option in DockerComposeMinio, add generate prod yml file and prod env file for it with envs used on start docker images ([68fccf7](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/68fccf70aa2808a97ecaafbee32b3ce5016122b6))
+
 ## [1.8.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.8.2...docker-compose-v1.8.3) (2024-02-25)
 
 
