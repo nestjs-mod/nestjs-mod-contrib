@@ -66,8 +66,8 @@
     "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && npm run nx -- start example-prisma --host=0.0.0.0",
     "docs:infrastructure:example-terminus": "export NODE_ENV=infrastructure && npm run nx -- start example-terminus --host=0.0.0.0",
     "_____docker-compose infra_____": "_____docker-compose infra_____",
-    "docker-compose:start:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose.yml --compatibility up -d",
-    "docker-compose:stop:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose.yml down",
+    "docker-compose:start:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose-prod.yml --compatibility up -d",
+    "docker-compose:stop:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose-prod.yml down",
     "docker-compose:start": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose.yml --compatibility up -d",
     "docker-compose:stop": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose.yml down",
     "docker-compose:start:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose.yml --compatibility up -d",
@@ -80,6 +80,21 @@
     "docker-compose:stop:example-nats-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-nats-microservice/docker-compose.yml down",
     "docker-compose:start:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose.yml down",
+    "_____docker-compose prod-infra_____": "_____docker-compose prod-infra_____",
+    "docker-compose:start-prod:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose-prod.yml --env-file ./apps/example-prisma/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose-prod.yml --env-file ./apps/example-prisma/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose-prod.yml --env-file ./apps/example-redis-microservice/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose-prod.yml --env-file ./apps/example-redis-microservice/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-nats-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-nats-microservice/docker-compose-prod.yml --env-file ./apps/example-nats-microservice/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-nats-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-nats-microservice/docker-compose-prod.yml --env-file ./apps/example-nats-microservice/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose-prod.yml --env-file ./apps/example-cache-manager/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-cache-manager": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-cache-manager/docker-compose-prod.yml --env-file ./apps/example-cache-manager/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-flyway/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-flyway/docker-compose-prod.env down",
+    "docker-compose:start-prod": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose-prod.yml --env-file ./docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./docker-compose-prod.yml --env-file ./docker-compose-prod.env down",
+    "docker-compose:start-prod:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose-prod.yml --env-file ./apps/example-minio/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose-prod.yml --env-file ./apps/example-minio/docker-compose-prod.env down",
     "_____tests_____": "_____tests_____",
     "test": "npm run nx:many -- -t=test --passWithNoTests --skip-nx-cache=true --output-style=stream-without-prefixes",
     "test:example-pino-logger": "npm run nx -- test example-pino-logger --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
@@ -392,6 +407,48 @@
     ],
     "docker-compose:stop:example-redis-microservice": [
       "Stopping the docker-compose infrastructure for example-redis-microservice"
+    ],
+    "docker-compose:start-prod:prisma": [
+      "Running the main docker-compose prod infrastructure for prisma"
+    ],
+    "docker-compose:stop-prod:prisma": [
+      "Stopping the main docker-compose prod infrastructure for prisma"
+    ],
+    "docker-compose:start-prod:example-redis-microservice": [
+      "Running the main docker-compose prod infrastructure for example-redis-microservice"
+    ],
+    "docker-compose:stop-prod:example-redis-microservice": [
+      "Stopping the main docker-compose prod infrastructure for example-redis-microservice"
+    ],
+    "docker-compose:start-prod:example-nats-microservice": [
+      "Running the main docker-compose prod infrastructure for example-nats-microservice"
+    ],
+    "docker-compose:stop-prod:example-nats-microservice": [
+      "Stopping the main docker-compose prod infrastructure for example-nats-microservice"
+    ],
+    "docker-compose:start-prod:example-cache-manager": [
+      "Running the main docker-compose prod infrastructure for example-cache-manager"
+    ],
+    "docker-compose:stop-prod:example-cache-manager": [
+      "Stopping the main docker-compose prod infrastructure for example-cache-manager"
+    ],
+    "docker-compose:start-prod:example-prisma-flyway": [
+      "Running the main docker-compose prod infrastructure for example-prisma-flyway"
+    ],
+    "docker-compose:stop-prod:example-prisma-flyway": [
+      "Stopping the main docker-compose prod infrastructure for example-prisma-flyway"
+    ],
+    "docker-compose:start-prod": [
+      "Running the main docker-compose prod infrastructure"
+    ],
+    "docker-compose:stop-prod": [
+      "Stopping the main docker-compose prod infrastructure"
+    ],
+    "docker-compose:start-prod:example-minio": [
+      "Running the main docker-compose prod infrastructure for example-minio"
+    ],
+    "docker-compose:stop-prod:example-minio": [
+      "Stopping the main docker-compose prod infrastructure for example-minio"
     ],
     "test": [
       "Running tests across the entire project"

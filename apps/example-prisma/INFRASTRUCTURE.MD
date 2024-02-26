@@ -104,6 +104,21 @@ npm run test:example-prisma
 |`npm run docker-compose:stop:example-nats-microservice`|Stopping the docker-compose infrastructure for example-nats-microservice|
 |`npm run docker-compose:start:example-redis-microservice`|Running the docker-compose infrastructure for example-redis-microservice|
 |`npm run docker-compose:stop:example-redis-microservice`|Stopping the docker-compose infrastructure for example-redis-microservice|
+|**docker-compose prod-infra**|
+|`npm run docker-compose:start-prod:prisma`|Running the main docker-compose prod infrastructure for prisma|
+|`npm run docker-compose:stop-prod:prisma`|Stopping the main docker-compose prod infrastructure for prisma|
+|`npm run docker-compose:start-prod:example-redis-microservice`|Running the main docker-compose prod infrastructure for example-redis-microservice|
+|`npm run docker-compose:stop-prod:example-redis-microservice`|Stopping the main docker-compose prod infrastructure for example-redis-microservice|
+|`npm run docker-compose:start-prod:example-nats-microservice`|Running the main docker-compose prod infrastructure for example-nats-microservice|
+|`npm run docker-compose:stop-prod:example-nats-microservice`|Stopping the main docker-compose prod infrastructure for example-nats-microservice|
+|`npm run docker-compose:start-prod:example-cache-manager`|Running the main docker-compose prod infrastructure for example-cache-manager|
+|`npm run docker-compose:stop-prod:example-cache-manager`|Stopping the main docker-compose prod infrastructure for example-cache-manager|
+|`npm run docker-compose:start-prod:example-prisma-flyway`|Running the main docker-compose prod infrastructure for example-prisma-flyway|
+|`npm run docker-compose:stop-prod:example-prisma-flyway`|Stopping the main docker-compose prod infrastructure for example-prisma-flyway|
+|`npm run docker-compose:start-prod`|Running the main docker-compose prod infrastructure|
+|`npm run docker-compose:stop-prod`|Stopping the main docker-compose prod infrastructure|
+|`npm run docker-compose:start-prod:example-minio`|Running the main docker-compose prod infrastructure for example-minio|
+|`npm run docker-compose:stop-prod:example-minio`|Stopping the main docker-compose prod infrastructure for example-minio|
 |**tests**|
 |`npm run test`|Running tests across the entire project|
 |`npm run test:example-pino-logger`|Running tests for example-pino-logger|

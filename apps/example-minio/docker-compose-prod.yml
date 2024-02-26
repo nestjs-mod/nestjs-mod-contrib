@@ -1,0 +1,48 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-minio-minio:
+    image: "bitnami/minio:2024.2.9"
+    container_name: "example-minio-minio"
+    volumes:
+      - "example-minio-minio-volume:/bitnami/minio/data"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - "example-minio-network"
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "mc"
+        - "ready"
+        - "local"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-minio-nginx:
+    image: "nginx:alpine"
+    container_name: "example-minio-nginx"
+    volumes:
+      - "./ngnix/config:/etc/nginx/conf.d"
+      - "./ngnix/logs:/var/log/nginx/"
+    ports:
+      - "1111:1111"
+    networks:
+      - "example-minio-network"
+    tty: true
+    restart: "always"
+    depends_on:
+      example-minio-minio:
+        condition: "service_started"
+networks:
+  example-minio-network:
+    driver: "bridge"
+volumes:
+  example-minio-minio-volume:
+    name: "example-minio-minio-volume"

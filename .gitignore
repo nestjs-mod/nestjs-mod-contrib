@@ -46,3 +46,6 @@ docker-compose.yml
 .angular
 access.log
 error.log
+docker-compose.env
+
+docker-compose-prod.env

@@ -1,0 +1,33 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-cache-manager-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-cache-manager-redis"
+    volumes:
+      - "example-cache-manager-redis-volume:/bitnami/redis/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - "example-cache-manager-network"
+    environment:
+      REDIS_DATABASE: "${REDIS_DATABASE}"
+      REDIS_PASSWORD: "${REDIS_PASSWORD}"
+      REDIS_DISABLE_COMMANDS: "${REDIS_DISABLE_COMMANDS}"
+      REDIS_IO_THREADS: "${REDIS_IO_THREADS}"
+      REDIS_IO_THREADS_DO_READS: "${REDIS_IO_THREADS_DO_READS}"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+networks:
+  example-cache-manager-network:
+    driver: "bridge"
+volumes:
+  example-cache-manager-redis-volume:
+    name: "example-cache-manager-redis-volume"
