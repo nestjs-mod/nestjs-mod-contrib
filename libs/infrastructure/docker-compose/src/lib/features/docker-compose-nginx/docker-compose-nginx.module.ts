@@ -56,6 +56,13 @@ export const { DockerComposeNginx } = createNestModule({
             getDockerComposeServiceName(project?.name, serviceName)
           );
         }
+
+        const keys = Object.keys(process.env);
+
+        for (const key of keys) {
+          configContent = configContent.replace(new RegExp(`%${key}%`, 'ig'), process.env[key] || '');
+        }
+
         if (staticConfiguration.configFolder) {
           if (!existsSync(staticConfiguration.configFolder)) {
             mkdirSync(staticConfiguration.configFolder, { recursive: true });

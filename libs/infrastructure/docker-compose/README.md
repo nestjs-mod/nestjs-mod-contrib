@@ -366,6 +366,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`nginxPort`|External port for proxy access over nginx (infrastructure, need for disable CORS errors)|**optional**|-|-|
 |`nginxFilesFolder`|Folder for store nginx config and logs (infrastructure)|**optional**|-|-|
 |`nginxBucketsLocations`|Locations for proxy to minio (infrastructure)|**optional**|[ ```files``` ]|-|
+|`nginxConfigContent`|Custom nginx config content (infrastructure)|**optional**|-|-|
 
 [Back to Top](#modules)
 

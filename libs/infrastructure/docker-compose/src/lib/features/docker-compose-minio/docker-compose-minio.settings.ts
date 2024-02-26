@@ -49,6 +49,11 @@ export class DockerComposeMinioConfiguration {
     default: ['files'],
   })
   nginxBucketsLocations?: string[];
+  
+  @ConfigModelProperty({
+    description: 'Custom nginx config content (infrastructure)',
+  })
+  nginxConfigContent?: string;
 }
 
 @EnvModel()

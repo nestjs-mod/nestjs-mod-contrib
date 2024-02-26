@@ -103,7 +103,8 @@ export const { DockerComposeMinio } = createNestModule({
             proxy_set_header Connection $connection_upgrade;
         }`
               )
-              .join('\n')}    
+              .join('\n')} 
+        ${staticConfiguration.nginxConfigContent ? staticConfiguration.nginxConfigContent : ''}   
     }
       `,
         },
