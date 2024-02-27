@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.3...prisma-v1.6.4) (2024-02-27)
+
+
+### Bug Fixes
+
+* update getPrismaClientToken function for correct work ([0292ea2](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/0292ea2a6963c624d0e5eaca4b11846cae52120c))
+
 ## [1.6.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.2...prisma-v1.6.3) (2024-02-25)
 
 
