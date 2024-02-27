@@ -47,6 +47,7 @@ export class PrismaClientFactoryService implements OnModuleInit, OnModuleDestroy
   }
 
   private getLogger() {
+    // todo: add info about feature name and context name
     return this.prismaConfiguration.defaultLogger ?? this.logger;
   }
 
