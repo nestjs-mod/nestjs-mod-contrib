@@ -1,3 +1,10 @@
+## [1.6.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.5...prisma-v1.6.6) (2024-02-28)
+
+
+### Bug Fixes
+
+* add support correct order on write env key values ([41f1e4b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/41f1e4b0a922327855461e4a2917e79aeba165d9))
+
 ## [1.6.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.4...prisma-v1.6.5) (2024-02-28)
 
 
