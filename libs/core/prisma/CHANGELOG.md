@@ -1,3 +1,10 @@
+## [1.6.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.4...prisma-v1.6.5) (2024-02-28)
+
+
+### Bug Fixes
+
+* add comment to env file about shadowDatabaseName ([de5b69a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/de5b69a4f04e0bbb47b86f59bcf9c8811c8a7dfb))
+
 ## [1.6.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.3...prisma-v1.6.4) (2024-02-27)
 
 
