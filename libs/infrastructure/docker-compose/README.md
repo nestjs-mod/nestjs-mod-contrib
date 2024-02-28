@@ -366,7 +366,8 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`externalPort`|External port for S3 API operations on the default MinIO server port.|**optional**|```9000```|-|
 |`externalConsolePort`|External console for browser access on the MinIO Console port.|**optional**|```9001```|-|
 |`nginxPort`|External port for proxy access over nginx (infrastructure, need for disable CORS errors)|**optional**|-|-|
-|`nginxFilesFolder`|Folder for store nginx config and logs (infrastructure)|**optional**|-|-|
+|`nginxConfigFolder`|Folder for store nginx config (infrastructure)|**optional**|-|-|
+|`nginxLogsFolder`|Folder for store nginx logs (infrastructure)|**optional**|-|-|
 |`nginxBucketsLocations`|Locations for proxy to minio (infrastructure)|**optional**|[ ```files``` ]|-|
 |`nginxConfigContent`|Custom nginx config content (infrastructure)|**optional**|-|-|
 

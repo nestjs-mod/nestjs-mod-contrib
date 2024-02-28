@@ -75,7 +75,8 @@ bootstrapNestApplication({
       DockerComposeMinio.forRoot({
         staticConfiguration: {
           nginxPort: 1111,
-          nginxFilesFolder: join(appFolder, 'ngnix'),
+          nginxLogsFolder: join(appFolder, 'ngnix', 'logs'),
+          nginxConfigFolder: join(appFolder, 'ngnix', 'config'),
           featureName: userFeatureName,
           nginxConfigContent: `location /api {
         if ($request_method = 'OPTIONS') {
@@ -113,7 +114,7 @@ bootstrapNestApplication({
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
-    }`
+    }`,
         },
       }),
     ],

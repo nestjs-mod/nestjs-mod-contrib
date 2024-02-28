@@ -85,7 +85,7 @@ export const { DockerComposeNginx } = createNestModule({
                   image: staticConfiguration?.image,
                   container_name: serviceName,
                   volumes: [
-                    `${staticConfiguration.configFolder}:/etc/nginx/conf.d`,
+                    staticConfiguration.configFolder ? `${staticConfiguration.configFolder}:/etc/nginx/conf.d` : '',
                     staticConfiguration.logsFolder ? `${staticConfiguration.logsFolder}:/var/log/nginx/` : '',
                   ].filter(Boolean),
                   ports: Object.entries(staticConfiguration.ports || {}).map(([key, value]) => `${key}:${value}`),

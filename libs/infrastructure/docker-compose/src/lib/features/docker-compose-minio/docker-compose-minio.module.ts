@@ -6,7 +6,6 @@ import {
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { constantCase, kebabCase } from 'case-anything';
-import { join } from 'path';
 import { DockerCompose } from '../../docker-compose.module';
 import { DockerComposeServiceType, getDockerComposeServiceName } from '../../docker-compose.utils';
 import { DockerComposeNginx } from '../docker-compose-nginx/docker-compose-nginx.module';
@@ -43,19 +42,13 @@ export const { DockerComposeMinio } = createNestModule({
 
     const staticConfiguration = current.staticConfiguration;
 
-    if (
-      staticConfiguration &&
-      staticConfiguration.nginxFilesFolder &&
-      staticConfiguration.nginxBucketsLocations &&
-      staticConfiguration.nginxPort
-    ) {
-
+    if (staticConfiguration?.nginxBucketsLocations && staticConfiguration.nginxPort) {
       const dockerComposeNginx = DockerComposeNginx.forRoot({
         staticConfiguration: {
           ports: { [staticConfiguration.nginxPort]: staticConfiguration.nginxPort },
           dependsOnServiceNames: { [DockerComposeServiceType.Minio]: 'service_started' },
-          configFolder: join(staticConfiguration.nginxFilesFolder, 'config'),
-          logsFolder: join(staticConfiguration.nginxFilesFolder, 'logs'),
+          configFolder: staticConfiguration.nginxConfigFolder ? staticConfiguration.nginxConfigFolder : undefined,
+          logsFolder: staticConfiguration.nginxLogsFolder ? staticConfiguration.nginxLogsFolder : undefined,
           configContent: `
       map $sent_http_content_type $expires {
         "text/html" epoch;
@@ -88,8 +81,8 @@ export const { DockerComposeMinio } = createNestModule({
         proxy_max_temp_file_size 0;
     
   ${staticConfiguration.nginxBucketsLocations
-              .map(
-                (nginxBucketsLocation) => `      location /${nginxBucketsLocation} {
+    .map(
+      (nginxBucketsLocation) => `      location /${nginxBucketsLocation} {
             proxy_set_header Host localhost:9000;
             proxy_set_header Origin $http_origin;
             proxy_set_header X-Real-IP $remote_addr;
@@ -102,8 +95,8 @@ export const { DockerComposeMinio } = createNestModule({
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection $connection_upgrade;
         }`
-              )
-              .join('\n')} 
+    )
+    .join('\n')} 
         ${staticConfiguration.nginxConfigContent ? staticConfiguration.nginxConfigContent : ''}   
     }
       `,
@@ -144,9 +137,9 @@ export const { DockerComposeMinio } = createNestModule({
         const networks =
           (project?.name
             ? staticConfiguration?.networks?.map((n) => ({
-              ...n,
-              name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
-            })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
+                ...n,
+                name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
+              })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
             : staticConfiguration?.networks) ?? [];
 
         if (networks?.length === 0) {
@@ -177,13 +170,13 @@ export const { DockerComposeMinio } = createNestModule({
                   environment: {
                     ...(staticEnvironments?.minioRootUser
                       ? {
-                        MINIO_ROOT_USER: staticEnvironments?.minioRootUser,
-                      }
+                          MINIO_ROOT_USER: staticEnvironments?.minioRootUser,
+                        }
                       : {}),
                     ...(staticEnvironments?.minioRootPassword
                       ? {
-                        MINIO_ROOT_PASSWORD: staticEnvironments?.minioRootPassword,
-                      }
+                          MINIO_ROOT_PASSWORD: staticEnvironments?.minioRootPassword,
+                        }
                       : {}),
                   },
                   healthcheck: {

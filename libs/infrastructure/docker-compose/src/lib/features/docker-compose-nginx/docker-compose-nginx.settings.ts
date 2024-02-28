@@ -19,7 +19,7 @@ export class DockerComposeNginxConfiguration {
     description: 'Config folder for map volume to /etc/nginx/conf.d',
   })
   @IsNotEmpty()
-  configFolder!: string;
+  configFolder?: string;
 
   @ConfigModelProperty({
     description: 'Logs folder for map volume to /var/log/nginx/',
