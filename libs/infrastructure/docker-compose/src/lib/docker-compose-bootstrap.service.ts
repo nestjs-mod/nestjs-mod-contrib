@@ -91,6 +91,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           lines[`# ${serviceName} (generated)`] = '';
           writeTitle = false;
         }
+        delete lines[envKey];
         lines[envKey] = value;
       }
     }
@@ -109,6 +110,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         if (!sampleBothServices.services![key].environment) {
           sampleBothServices.services![key].environment = {};
         }
+        delete sampleBothServices.services[key].environment[envKey];
         sampleBothServices.services[key].environment[envKey] =
           existsServices?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }
@@ -131,6 +133,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         if (!sampleBothProdServices.services![key].environment) {
           sampleBothProdServices.services![key].environment = {};
         }
+        delete sampleBothServices.services[key].environment[envKey];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (sampleBothProdServices.services as any)[key].environment[envKey] = `\${${envKey}}`;
       }
