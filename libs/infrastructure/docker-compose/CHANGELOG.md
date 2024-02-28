@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.0...docker-compose-v1.9.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* add new options prodDockerComposeFile and prodDockerComposeEnvFile for customization output files ([0e8754d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/0e8754d5b6f19c9796ef8a16b37b9f4d9b17317e))
+
 # [1.9.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.8.3...docker-compose-v1.9.0) (2024-02-26)
 
 
