@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.3...docker-compose-v1.9.4) (2024-02-28)
+
+
+### Bug Fixes
+
+* set logsFolder as optional in DockerComposeNginx ([bfa80e9](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/bfa80e952020a8839d5c0002b0b0536eb19b5187))
+
 ## [1.9.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.2...docker-compose-v1.9.3) (2024-02-28)
 
 
