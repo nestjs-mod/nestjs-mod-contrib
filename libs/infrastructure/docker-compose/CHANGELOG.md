@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.4...docker-compose-v1.10.0) (2024-02-28)
+
+
+### Features
+
+* remove nginxFilesFolder and add nginxConfigFolder and nginxLogsFolder in DockerComposeMinioConfiguration ([d44f92b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/d44f92b3d47281c111e530743e15470c23f70b9c))
+
 ## [1.9.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.3...docker-compose-v1.9.4) (2024-02-28)
 
 
