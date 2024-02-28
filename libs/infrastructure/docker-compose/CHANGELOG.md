@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.1...docker-compose-v1.9.2) (2024-02-28)
+
+
+### Bug Fixes
+
+* add support correct order on write env key values ([b9b5aab](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b9b5aab4603691594a60cf44181974baa4d4989f))
+
 ## [1.9.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.0...docker-compose-v1.9.1) (2024-02-28)
 
 
