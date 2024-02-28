@@ -158,6 +158,8 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       const envs = this.dotEnvService.read(false, true);
       if (envs?.[databaseName] && !envs[shadowDatabaseName]) {
         const parsed = this.parseDatabaseUrl(envs[databaseName] || '');
+        delete envs['# shadow database, need for create migrations from diff of old and new schema content'];
+        envs['# shadow database, need for create migrations from diff of old and new schema content'] = '';
         envs[shadowDatabaseName] = envs[databaseName]?.replace(`/${parsed.DATABASE}?`, `/shadow_${parsed.DATABASE}?`);
         this.dotEnvService.write(envs, true);
       }
