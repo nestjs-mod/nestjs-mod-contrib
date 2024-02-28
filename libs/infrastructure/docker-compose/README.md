@@ -150,7 +150,7 @@ version: '3'
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"minio":{"image":"bitnami/minio:2024.2.9","container_name":"minio","volumes":["minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["default-network"],"environment":{},"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"minio":{"image":"bitnami/minio:2024.2.9","container_name":"minio","volumes":["minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["default-network"],"environment":{"MINIO_ROOT_USER":"minioadmin","MINIO_ROOT_PASSWORD":"6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq"},"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
 |`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
 |`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"minio-volume":{"name":"minio-volume"}}```|
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
@@ -352,8 +352,8 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`minioRootUser`|Minio root user.|`obj['minioRootUser']`, `process.env['MINIO_ROOT_USER']`|**isNotEmpty** (minioRootUser should not be empty)|-|-|
-|`minioRootPassword`|Minio root password.|`obj['minioRootPassword']`, `process.env['MINIO_ROOT_PASSWORD']`|**isNotEmpty** (minioRootPassword should not be empty)|-|-|
+|`minioRootUser`|Minio root user.|`obj['minioRootUser']`, `process.env['MINIO_ROOT_USER']`|**isNotEmpty** (minioRootUser should not be empty)|-|```minioadmin```|
+|`minioRootPassword`|Minio root password.|`obj['minioRootPassword']`, `process.env['MINIO_ROOT_PASSWORD']`|**isNotEmpty** (minioRootPassword should not be empty)|-|```6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq```|
 
 #### Static configuration
 
@@ -381,9 +381,9 @@ NATS is an open source, lightweight and high-performance messaging system. It is
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`natsEnableAuth`|Enable Authentication.|`obj['natsEnableAuth']`, `process.env['NATS_ENABLE_AUTH']`|**optional**|-|-|
-|`natsUsername`|Username credential for client connections.|`obj['natsUsername']`, `process.env['NATS_USERNAME']`|**optional**|-|-|
-|`natsPassword`|Password credential for client connections.|`obj['natsPassword']`, `process.env['NATS_PASSWORD']`|**optional**|-|-|
+|`natsEnableAuth`|Enable Authentication.|`obj['natsEnableAuth']`, `process.env['NATS_ENABLE_AUTH']`|**optional**|-|```yes```|
+|`natsUsername`|Username credential for client connections.|`obj['natsUsername']`, `process.env['NATS_USERNAME']`|**optional**|-|```natsadmin```|
+|`natsPassword`|Password credential for client connections.|`obj['natsPassword']`, `process.env['NATS_PASSWORD']`|**optional**|-|```6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgpp1```|
 
 #### Static configuration
 
@@ -411,7 +411,7 @@ Nginx is a web server that can also be used as a reverse proxy, load balancer, m
 |`image`|Docker image name|**optional**|```nginx:alpine```|-|
 |`configContent`|Config content|**isNotEmpty** (configContent should not be empty)|-|-|
 |`configFolder`|Config folder for map volume to /etc/nginx/conf.d|**isNotEmpty** (configFolder should not be empty)|-|-|
-|`logsFolder`|Logs folder for map volume to /var/log/nginx/|**isNotEmpty** (logsFolder should not be empty)|-|-|
+|`logsFolder`|Logs folder for map volume to /var/log/nginx/|**optional**|-|-|
 |`dependsOnServiceNames`|Depends on services|**optional**|-|-|
 |`ports`|Ports|**optional**|-|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
