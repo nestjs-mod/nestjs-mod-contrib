@@ -26,15 +26,15 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     private readonly dotEnvService: DotEnvService
   ) {}
 
-  onModuleInit() {
-    this.update();
+  async onModuleInit() {
+    await this.update();
   }
 
-  update() {
+  async update() {
     this.updatePackageJsonFile();
     this.updateProjectJsonFile();
     this.updatePrismaSchemaFile();
-    this.updateDotEnvFile();
+    await this.updateDotEnvFile();
   }
 
   private updatePackageJsonFile() {
@@ -151,7 +151,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     }
   }
 
-  private updateDotEnvFile() {
+  private async updateDotEnvFile() {
     if (this.prismaConfiguration.addMigrationScripts) {
       const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
       // update env file
@@ -161,7 +161,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
         delete envs['# shadow database, need for create migrations from diff of old and new schema content'];
         envs['# shadow database, need for create migrations from diff of old and new schema content'] = '';
         envs[shadowDatabaseName] = envs[databaseName]?.replace(`/${parsed.DATABASE}?`, `/shadow_${parsed.DATABASE}?`);
-        this.dotEnvService.write(envs, true);
+        await this.dotEnvService.write(envs, true);
       }
     }
   }
