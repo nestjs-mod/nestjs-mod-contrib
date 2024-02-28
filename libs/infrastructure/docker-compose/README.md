@@ -114,6 +114,8 @@ version: '3'
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|-|
+|`prodDockerComposeFile`|Main file for prod docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**optional**|-|-|
+|`prodDockerComposeEnvFile`|Dotenv file for for prod docker-compose file.|**optional**|-|-|
 |`dockerComposeFileVersion`|Docker-compose file version. @see https://docs.docker.com/compose/compose-file/compose-versioning|**isNotEmpty** (dockerComposeFileVersion should not be empty)|```3```|-|
 
 #### Feature configuration

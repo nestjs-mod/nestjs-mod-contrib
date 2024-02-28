@@ -1,5 +1,6 @@
 import {
   ApplicationPackageJsonService,
+  DotEnvService,
   GitignoreService,
   InjectableFeatureConfigurationType,
   PackageJsonService,
@@ -7,11 +8,13 @@ import {
 } from '@nestjs-mod/common';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { snakeCase } from 'case-anything';
-import { writeFileSync } from 'fs';
 import { basename, dirname } from 'path';
 import { DockerComposeFileService } from './docker-compose-file.service';
 import { DockerComposeConfiguration } from './docker-compose.configuration';
-import { DOCKER_COMPOSE_INFRA_CATEGORY_NAME, DOCKER_COMPOSE_PROD_INFRA_CATEGORY_NAME } from './docker-compose.constants';
+import {
+  DOCKER_COMPOSE_INFRA_CATEGORY_NAME,
+  DOCKER_COMPOSE_PROD_INFRA_CATEGORY_NAME,
+} from './docker-compose.constants';
 import { InjectAllDockerComposeFeatures } from './docker-compose.decorators';
 import { DockerComposeFeatureConfiguration } from './docker-compose.feature-configuration';
 import { ManualDockerComposeFeatures } from './manual-docker-compose.service';
@@ -29,17 +32,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     private readonly dockerComposeFileService: DockerComposeFileService,
     private readonly packageJsonService: PackageJsonService,
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
-    private readonly gitignoreService: GitignoreService
-  ) { }
+    private readonly gitignoreService: GitignoreService,
+    private readonly dotEnvService: DotEnvService
+  ) {}
 
   onApplicationBootstrap() {
     this.createDockerComposeFile();
-    this.updatePackageJson(); const { dockerComposeProdEnvFilePath } = this.getFilesPathes();
+    this.updatePackageJson();
+    const { dockerComposeProdEnvFilePath } = this.getFilesPathes();
     this.gitignoreService.addGitIgnoreEntry([
       basename(this.dockerComposeConfiguration.dockerComposeFile),
       basename(dockerComposeProdEnvFilePath),
       'access.log',
-      'error.log'
+      'error.log',
     ]);
   }
 
@@ -58,14 +63,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       merge(featureServices, manualServices)
     );
 
+    const { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath } =
+      this.getFilesPathes();
+
     const bothServicesWithEnvs = { ...bothServices };
-    const lines: string[] = []
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lines: Record<string, any> = this.dotEnvService.readFile(dockerComposeProdEnvFilePath, false) || {};
+
     for (const serviceName of Object.keys(bothServicesWithEnvs.services)) {
-      let writeTitle = true
+      let writeTitle = true;
       for (const envKey of Object.keys(bothServicesWithEnvs.services[serviceName].environment || {})) {
         let value =
           bothServicesWithEnvs?.services?.[serviceName]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
-        value = (typeof value === 'string' || typeof value === 'number' || !value) ? value : String(value)
+        value = typeof value === 'string' || typeof value === 'number' || !value ? value : String(value);
 
         const keys = Object.keys(process.env);
 
@@ -75,22 +85,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           }
         }
 
-        bothServicesWithEnvs.services[serviceName].environment[envKey] = value
+        bothServicesWithEnvs.services[serviceName].environment[envKey] = value;
         if (writeTitle) {
-          lines.push(`# ${serviceName}`)
-          writeTitle = false
+          delete lines[`# ${serviceName} (generated)`];
+          lines[`# ${serviceName} (generated)`] = '';
+          writeTitle = false;
         }
-        lines.push(`${envKey}=${value}`)
+        lines[envKey] = value;
       }
     }
-
 
     this.dockerComposeFileService.write(bothServicesWithEnvs);
 
     // example
-
-
-    const { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath } = this.getFilesPathes();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const existsServices: any = this.dockerComposeFileService.readFile(dockerComposeExampleFilePath) ?? {};
@@ -100,7 +107,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     for (const key of Object.keys(sampleBothServices.services)) {
       for (const envKey of Object.keys(sampleBothServices.services[key].environment || {})) {
         if (!sampleBothServices.services![key].environment) {
-          sampleBothServices.services![key].environment = {}
+          sampleBothServices.services![key].environment = {};
         }
         sampleBothServices.services[key].environment[envKey] =
           existsServices?.services?.[key]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
@@ -114,7 +121,6 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     // prod
 
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const existsProdServices = this.dockerComposeFileService.readFile(dockerComposeExampleFilePath) ?? {};
 
@@ -123,7 +129,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     for (const key of Object.keys(sampleBothProdServices.services || {})) {
       for (const envKey of Object.keys(sampleBothProdServices.services?.[key].environment || {})) {
         if (!sampleBothProdServices.services![key].environment) {
-          sampleBothProdServices.services![key].environment = {}
+          sampleBothProdServices.services![key].environment = {};
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (sampleBothProdServices.services as any)[key].environment[envKey] = `\${${envKey}}`;
@@ -134,8 +140,8 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       sampleBothProdServices,
       '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.'
     );
-    writeFileSync(dockerComposeProdEnvFilePath, lines.join('\n'));
 
+    this.dotEnvService.writeFile(dockerComposeProdEnvFilePath, lines);
   }
 
   private getFilesPathes() {
@@ -143,14 +149,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       .getDockerComposeFilePath()
       .replace('.yml', '-example.yml')
       .replace('/-example.yml', '/example.yml');
-    const dockerComposeProdFilePath = this.dockerComposeFileService
-      .getDockerComposeFilePath()
-      .replace('.yml', '-prod.yml')
-      .replace('/-prod.yml', '/prod.yml');
-    const dockerComposeProdEnvFilePath = this.dockerComposeFileService
-      .getDockerComposeFilePath()
-      .replace('.yml', '-prod.env')
-      .replace('/-prod.env', '/prod.env');
+    const dockerComposeProdFilePath =
+      this.dockerComposeConfiguration.prodDockerComposeFile ||
+      this.dockerComposeFileService
+        .getDockerComposeFilePath()
+
+        .replace('.yml', '-prod.yml')
+        .replace('/-prod.yml', '/prod.yml');
+    const dockerComposeProdEnvFilePath =
+      this.dockerComposeConfiguration.prodDockerComposeEnvFile ||
+      this.dockerComposeFileService
+        .getDockerComposeFilePath()
+        .replace('.yml', '-prod.env')
+        .replace('/-prod.env', '/prod.env');
     return { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath };
   }
 
@@ -165,14 +176,8 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       );
       let { dockerComposeProdFilePath, dockerComposeProdEnvFilePath } = this.getFilesPathes();
 
-      dockerComposeProdFilePath = dockerComposeProdFilePath.replace(
-        dirname(packageJsonFilePath),
-        ''
-      );
-      dockerComposeProdEnvFilePath = dockerComposeProdEnvFilePath.replace(
-        dirname(packageJsonFilePath),
-        ''
-      );
+      dockerComposeProdFilePath = dockerComposeProdFilePath.replace(dirname(packageJsonFilePath), '');
+      dockerComposeProdEnvFilePath = dockerComposeProdEnvFilePath.replace(dirname(packageJsonFilePath), '');
 
       if (packageJson.scripts) {
         if (dirname(packageJsonFilePath.replace(dirname(packageJsonFilePath), '')) === dirname(dockerComposeFilePath)) {
@@ -202,7 +207,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
                 comments: ['Running the main docker-compose prod infrastructure'],
               },
               [`docker-compose:stop-prod`]: {
-                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`],
+                commands: [
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`,
+                ],
                 comments: ['Stopping the main docker-compose prod infrastructure'],
               },
             },
@@ -236,7 +243,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
                 comments: [`Running the main docker-compose prod infrastructure for ${applicationPackageJson?.name}`],
               },
               [`docker-compose:stop-prod:${applicationPackageJson?.name}`]: {
-                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`],
+                commands: [
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`,
+                ],
                 comments: [`Stopping the main docker-compose prod infrastructure for ${applicationPackageJson?.name}`],
               },
             },
