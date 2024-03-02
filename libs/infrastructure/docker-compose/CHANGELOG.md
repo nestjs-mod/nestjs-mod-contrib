@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.10.0...docker-compose-v1.10.1) (2024-03-02)
+
+
+### Bug Fixes
+
+* add exampleDockerComposeFile, beforeSaveExampleDockerComposeFile, beforeSaveDockerComposeFile, beforeSaveProdDockerComposeFile, beforeSaveDockerComposeEnvFile, beforeSaveProdDockerComposeEnvFile to DockerComposeConfiguration ([19e32ac](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/19e32ac6db0e86ba233ad751d15e588be241e59f))
+
 # [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.9.4...docker-compose-v1.10.0) (2024-02-28)
 
 
