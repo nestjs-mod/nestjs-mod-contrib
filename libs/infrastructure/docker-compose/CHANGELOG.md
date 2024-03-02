@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.10.1...docker-compose-v1.10.2) (2024-03-02)
+
+
+### Bug Fixes
+
+* update generator env file for samples ([7d2d823](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/7d2d82323cffc21c979985731d18faa738870cb0))
+
 ## [1.10.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.10.0...docker-compose-v1.10.1) (2024-03-02)
 
 
