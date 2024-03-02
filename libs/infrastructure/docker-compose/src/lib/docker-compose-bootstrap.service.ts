@@ -165,9 +165,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         sampleBothProdServices.services[serviceName].environment[envKey] = `\${${envKey}}`;
         if (writeTitle) {
-          delete prodLines[`# ${envKey} (generated)`];
+          delete prodLines[`# ${serviceName} (generated)`];
 
-          prodLines[`# ${envKey} (generated)`] = '';
+          prodLines[`# ${serviceName} (generated)`] = '';
 
           writeTitle = false;
         }
