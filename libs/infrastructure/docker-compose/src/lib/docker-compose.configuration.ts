@@ -1,5 +1,6 @@
 import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
+import { Compose } from 'compose-spec-schema';
 
 @ConfigModel()
 export class DockerComposeConfiguration {
@@ -17,7 +18,13 @@ export class DockerComposeConfiguration {
   prodDockerComposeFile?: string;
 
   @ConfigModelProperty({
-    description: 'Dotenv file for for prod docker-compose file.',
+    description:
+      'Example file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.',
+  })
+  exampleDockerComposeFile?: string;
+
+  @ConfigModelProperty({
+    description: 'Dotenv file for prod docker-compose file.',
   })
   prodDockerComposeEnvFile?: string;
 
@@ -27,4 +34,42 @@ export class DockerComposeConfiguration {
   })
   @IsNotEmpty()
   dockerComposeFileVersion!: string;
+
+  @ConfigModelProperty({
+    description: 'Before save file for example docker-compose.',
+  })
+  beforeSaveExampleDockerComposeFile?: ({ data, header }: { data: Compose; header?: string }) => Promise<{
+    data: Compose;
+    header?: string;
+  }>;
+
+  @ConfigModelProperty({
+    description: 'Before save main file for docker-compose.',
+  })
+  beforeSaveDockerComposeFile?: ({ data, header }: { data: Compose; header?: string }) => Promise<{
+    data: Compose;
+    header?: string;
+  }>;
+
+  @ConfigModelProperty({
+    description: 'Before save main file for prod docker-compose.',
+  })
+  beforeSaveProdDockerComposeFile?: ({ data, header }: { data: Compose; header?: string }) => Promise<{
+    data: Compose;
+    header?: string;
+  }>;
+
+  @ConfigModelProperty({
+    description: 'Method before save dotenv file for docker-compose file.',
+  })
+  beforeSaveDockerComposeEnvFile?: (
+    data: Record<string, string | undefined>
+  ) => Promise<Record<string, string | undefined>>;
+
+  @ConfigModelProperty({
+    description: 'Method before save dotenv file for prod docker-compose file.',
+  })
+  beforeSaveProdDockerComposeEnvFile?: (
+    data: Record<string, string | undefined>
+  ) => Promise<Record<string, string | undefined>>;
 }

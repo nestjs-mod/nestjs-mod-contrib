@@ -100,10 +100,22 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       }
     }
 
-    this.dockerComposeFileService.write(bothServicesWithEnvs);
+    const mainData = this.dockerComposeConfiguration.beforeSaveDockerComposeFile
+      ? await this.dockerComposeConfiguration.beforeSaveDockerComposeFile({
+          data: bothServicesWithEnvs,
+        })
+      : {
+          data: bothServicesWithEnvs,
+        };
+    this.dockerComposeFileService.write(mainData.data);
 
     if (envFilePath) {
-      await this.dotEnvService.writeFile(envFilePath, lines);
+      await this.dotEnvService.writeFile(
+        envFilePath,
+        this.dockerComposeConfiguration.beforeSaveDockerComposeEnvFile
+          ? await this.dockerComposeConfiguration.beforeSaveDockerComposeEnvFile(lines)
+          : lines
+      );
     }
 
     // example
@@ -123,11 +135,18 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           existsServices?.services?.[serviceName]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
       }
     }
-    this.dockerComposeFileService.writeFile(
-      dockerComposeExampleFilePath,
-      sampleBothServices,
-      '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.'
-    );
+    const header =
+      '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.';
+    const sampleData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
+      ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
+          data: sampleBothServices,
+          header,
+        })
+      : {
+          data: sampleBothServices,
+          header,
+        };
+    this.dockerComposeFileService.writeFile(dockerComposeExampleFilePath, sampleData.data, sampleData.header);
 
     // prod
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -157,33 +176,47 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         prodLines[envKey] = value;
       }
     }
-    this.dockerComposeFileService.writeFile(
-      dockerComposeProdFilePath,
-      sampleBothProdServices,
-      '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.'
-    );
+    const prodData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
+      ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
+          data: sampleBothProdServices,
+          header,
+        })
+      : {
+          data: sampleBothProdServices,
+          header,
+        };
+    this.dockerComposeFileService.writeFile(dockerComposeProdFilePath, prodData.data, prodData.header);
 
-    await this.dotEnvService.writeFile(dockerComposeProdEnvFilePath, prodLines);
+    await this.dotEnvService.writeFile(
+      dockerComposeProdEnvFilePath,
+      this.dockerComposeConfiguration.beforeSaveProdDockerComposeEnvFile
+        ? await this.dockerComposeConfiguration.beforeSaveProdDockerComposeEnvFile(prodLines)
+        : prodLines
+    );
   }
 
   private getFilesPathes() {
-    const dockerComposeExampleFilePath = this.dockerComposeFileService
-      .getDockerComposeFilePath()
-      .replace('.yml', '-example.yml')
-      .replace('/-example.yml', '/example.yml');
+    const dockerComposeExampleFilePath =
+      this.dockerComposeConfiguration.exampleDockerComposeFile ||
+      this.dockerComposeFileService
+        .getDockerComposeFilePath()
+        .replace('.yml', '-example.yml')
+        .replace('/-example.yml', '/example.yml');
+
     const dockerComposeProdFilePath =
       this.dockerComposeConfiguration.prodDockerComposeFile ||
       this.dockerComposeFileService
         .getDockerComposeFilePath()
-
         .replace('.yml', '-prod.yml')
         .replace('/-prod.yml', '/prod.yml');
+
     const dockerComposeProdEnvFilePath =
       this.dockerComposeConfiguration.prodDockerComposeEnvFile ||
       this.dockerComposeFileService
         .getDockerComposeFilePath()
         .replace('.yml', '-prod.env')
         .replace('/-prod.env', '/prod.env');
+
     return { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath };
   }
 

@@ -115,8 +115,14 @@ version: '3'
 | ------ | ----------- | ----------- | ------- | ----- |
 |`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|-|
 |`prodDockerComposeFile`|Main file for prod docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**optional**|-|-|
-|`prodDockerComposeEnvFile`|Dotenv file for for prod docker-compose file.|**optional**|-|-|
+|`exampleDockerComposeFile`|Example file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**optional**|-|-|
+|`prodDockerComposeEnvFile`|Dotenv file for prod docker-compose file.|**optional**|-|-|
 |`dockerComposeFileVersion`|Docker-compose file version. @see https://docs.docker.com/compose/compose-file/compose-versioning|**isNotEmpty** (dockerComposeFileVersion should not be empty)|```3```|-|
+|`beforeSaveExampleDockerComposeFile`|Before save file for example docker-compose.|**optional**|-|-|
+|`beforeSaveDockerComposeFile`|Before save main file for docker-compose.|**optional**|-|-|
+|`beforeSaveProdDockerComposeFile`|Before save main file for prod docker-compose.|**optional**|-|-|
+|`beforeSaveDockerComposeEnvFile`|Method before save dotenv file for docker-compose file.|**optional**|-|-|
+|`beforeSaveProdDockerComposeEnvFile`|Method before save dotenv file for prod docker-compose file.|**optional**|-|-|
 
 #### Feature configuration
 
