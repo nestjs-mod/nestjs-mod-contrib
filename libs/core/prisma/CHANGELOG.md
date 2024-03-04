@@ -1,3 +1,11 @@
+## [1.6.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.6...prisma-v1.6.7) (2024-03-04)
+
+
+### Bug Fixes
+
+* add check prisma schema name in commands before add new command ([218b0f3](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/218b0f360643909783dea7472c7e49b5f0769938))
+* removed all "--" as it caused a side effect and prevented the command from completing correctly ([d5e3d36](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/d5e3d36417120bdd576a03b82837cd9d7c3bbcf8))
+
 ## [1.6.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.5...prisma-v1.6.6) (2024-02-28)
 
 
