@@ -102,18 +102,22 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     if (projectJson && packageJsonFilePath) {
       const prismaSchemaFilePath = this.prismaConfiguration.schemaFile.replace(dirname(packageJsonFilePath), '');
       // generate
-      this.nxProjectJsonService.addRunCommands([
-        `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`,
-      ]);
       this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
-        'prisma-generate'
+        undefined,
+        prismaSchemaFilePath
+      );
+      this.nxProjectJsonService.addRunCommands(
+        [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
+        'prisma-generate',
+        prismaSchemaFilePath
       );
 
       // pull
       this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma db pull --schema=.${prismaSchemaFilePath}`],
-        'prisma-pull'
+        'prisma-pull',
+        prismaSchemaFilePath
       );
 
       if (this.prismaConfiguration.addMigrationScripts) {
@@ -139,13 +143,15 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
         // migrate-dev
         this.nxProjectJsonService.addRunCommands(
           [`./node_modules/.bin/prisma migrate dev --schema=.${prismaSchemaFilePath}`],
-          'prisma-migrate-dev'
+          'prisma-migrate-dev',
+          prismaSchemaFilePath
         );
 
         // migrate-deploy
         this.nxProjectJsonService.addRunCommands(
           [`./node_modules/.bin/prisma migrate deploy --schema=.${prismaSchemaFilePath}`],
-          'prisma-migrate-deploy'
+          'prisma-migrate-deploy',
+          prismaSchemaFilePath
         );
       }
     }
