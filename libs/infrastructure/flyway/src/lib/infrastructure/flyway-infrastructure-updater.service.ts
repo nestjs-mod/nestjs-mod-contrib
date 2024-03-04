@@ -40,15 +40,15 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
           FLYWAY_SCRIPTS_CATEGORY_NAME,
           {
             [`flyway:create:${projectName}`]: {
-              commands: [`npm run nx -- run ${projectName}:flyway-create-migration`],
+              commands: [`./node_modules/.bin/nx run ${projectName}:flyway-create-migration`],
               comments: [`Command to create new empty migration for ${projectName}`],
             },
             [`flyway:migrate:${projectName}`]: {
-              commands: [`npm run nx -- run ${projectName}:flyway-migrate`],
+              commands: [`./node_modules/.bin/nx run ${projectName}:flyway-migrate`],
               comments: [`Applying migrations for ${projectName}`],
             },
             'flyway:migrate': {
-              commands: ['npm run nx:many -- -t=flyway-migrate'],
+              commands: ['./node_modules/.bin/nx run-many -t=flyway-migrate'],
               comments: ['Applying migrations of all applications and modules'],
             },
           },

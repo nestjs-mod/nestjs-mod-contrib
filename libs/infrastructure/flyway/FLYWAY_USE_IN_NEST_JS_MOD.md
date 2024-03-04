@@ -53,8 +53,8 @@ New scripts mostly `package.json`
 {
   "scripts": {
     "_____flyway_____": "_____flyway_____",
-    "flyway:create:example-prisma-flyway": "npm run nx -- run example-prisma-flyway:flyway-create-migration",
-    "flyway:migrate:example-prisma-flyway": "npm run nx -- run example-prisma-flyway:flyway-migrate"
+    "flyway:create:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:flyway-create-migration",
+    "flyway:migrate:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:flyway-migrate"
   },
   "scriptsComments": {
     "flyway:create:example-prisma-flyway": ["Command to create new empty migration for example-prisma-flyway"],

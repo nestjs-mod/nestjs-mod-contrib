@@ -80,7 +80,7 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
         'db',
         {
           'db:create': {
-            commands: ['npm run nx:many -- -t=db-create'],
+            commands: ['./node_modules/.bin/nx run-many -t=db-create'],
             comments: [`Creation all databases of applications and modules`],
           },
         },

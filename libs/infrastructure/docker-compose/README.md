@@ -490,7 +490,7 @@ New scripts mostly `package.json`
 {
   "scripts": {
     "_____db_____": "_____db_____",
-    "db:create": "npm run nx:many -- -t=db-create"
+    "db:create": "./node_modules/.bin/nx run-many --exclude=@nestjs-mod/contrib -t=db-create"
   },
   "scriptsComments": {
     "db:create": ["Creation all databases of applications and modules"]
