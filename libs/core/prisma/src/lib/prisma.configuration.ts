@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty, NumberTransformer, StringTransformer } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { Logger } from '@nestjs/common';
 import { IsNotEmpty } from 'class-validator';
 
@@ -62,7 +62,6 @@ export class PrismaConfiguration {
 
   @ConfigModelProperty({
     description: 'Binary targets (infrastructure)',
-    transform: new StringTransformer(),
   })
   binaryTargets?: string[];
 }
