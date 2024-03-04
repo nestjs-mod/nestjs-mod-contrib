@@ -2,6 +2,7 @@ generator client {
   provider = "prisma-client-js"
   engineType = "binary"
   output   = "../../../../node_modules/@prisma/flyway-prisma-client"
+  
 }
 datasource db {
   provider          = "postgres"

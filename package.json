@@ -153,7 +153,7 @@
     "@angular/language-service": "~17.1.0",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.7.10",
+    "@nestjs-mod/schematics": "2.7.12",
     "@nestjs/schematics": "^10.0.1",
     "@nestjs/testing": "^10.0.2",
     "@nx/eslint": "17.2.8",

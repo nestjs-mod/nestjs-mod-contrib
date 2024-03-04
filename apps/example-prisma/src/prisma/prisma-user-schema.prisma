@@ -2,6 +2,7 @@ generator client {
   provider = "prisma-client-js"
   engineType = "binary"
   output   = "../../../../node_modules/@prisma/prisma-user-client"
+  
 }
 datasource db {
   provider          = "postgres"
