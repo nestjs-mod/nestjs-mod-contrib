@@ -1,3 +1,10 @@
+## [1.6.8](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.7...prisma-v1.6.8) (2024-03-04)
+
+
+### Bug Fixes
+
+* add binaryTargets to prisma configuration ([9656b37](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9656b3783dbd1d4a36eb763d26abf075b0bc9453))
+
 ## [1.6.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.6.6...prisma-v1.6.7) (2024-03-04)
 
 
