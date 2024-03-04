@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.10.2...docker-compose-v1.10.3) (2024-03-04)
+
+
+### Bug Fixes
+
+* removed all "--" as it caused a side effect and prevented the command from completing correctly ([d5e3d36](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/d5e3d36417120bdd576a03b82837cd9d7c3bbcf8))
+
 ## [1.10.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.10.1...docker-compose-v1.10.2) (2024-03-02)
 
 
