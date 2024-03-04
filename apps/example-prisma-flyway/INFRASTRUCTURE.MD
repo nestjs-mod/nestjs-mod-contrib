@@ -241,6 +241,7 @@ Static variables of primitive and complex types that are used in the module and 
 |`featureName`|Prisma feature name for generate prefix to environments keys (infrastructure)|**optional**|-|```flyway-prisma```|
 |`schemaFile`|Schema file for prisma (infrastructure)|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/src/prisma/flyway-prisma-schema.prisma```|
 |`addMigrationScripts`|The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)|**optional**|```true```|```false```|
+|`binaryTargets`|Binary targets (infrastructure)|**optional**|-|[ ```native```, ```linux-musl-openssl-3.0.x```, ```linux-musl-openssl-3.0.x``` ]|
 
 ## Feature modules
 Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.

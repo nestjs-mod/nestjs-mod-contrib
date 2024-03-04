@@ -234,6 +234,7 @@ Static variables of primitive and complex types that are used in the module and 
 |`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|```{}```|
 |`featureName`|Prisma feature name for generate prefix to environments keys (infrastructure)|**optional**|-|```prisma-user```|
 |`schemaFile`|Schema file for prisma (infrastructure)|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma/src/prisma/prisma-user-schema.prisma```|
+|`binaryTargets`|Binary targets (infrastructure)|**optional**|-|[ ```native```, ```linux-musl-openssl-3.0.x```, ```linux-musl-openssl-3.0.x``` ]|
 
 ## Feature modules
 Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.

@@ -61,6 +61,11 @@ bootstrapNestApplication({
               // uncomment after first run docs:infrastructure
               import(`@prisma/flyway-prisma-client`),
           addMigrationScripts: false,
+          binaryTargets: [
+            'native',
+            'linux-musl-openssl-3.0.x',
+            'linux-musl-openssl-3.0.x',
+          ],
         },
       }),
     ],

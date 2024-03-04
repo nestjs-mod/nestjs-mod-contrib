@@ -59,6 +59,11 @@ bootstrapNestApplication({
             ? { PrismaClient: FakePrismaClient }
             : import(`@prisma/prisma-user-client`),
           addMigrationScripts: true,
+          binaryTargets: [
+            'native',
+            'linux-musl-openssl-3.0.x',
+            'linux-musl-openssl-3.0.x',
+          ],
         },
       }),
     ],
