@@ -364,6 +364,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`schemaFile`|Schema file for prisma (infrastructure)|**optional**|-|-|
 |`addMigrationScripts`|The option specifies whether it is necessary to create scripts to work with database migrations, for those who use third-party applications to create and apply migrations in the database (infrastructure, example: https://flywaydb.org, https://www.npmjs.com/package/db-migrate)|**optional**|```true```|-|
 |`customSchemaContent`|Unsafe string custom content for add to end of prisma schema file (infrastructure)|**optional**|-|-|
+|`binaryTargets`|Binary targets (infrastructure)|**optional**|-|-|
 
 [Back to Top](#modules)
 

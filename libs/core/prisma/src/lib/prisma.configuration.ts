@@ -1,4 +1,4 @@
-import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, NumberTransformer, StringTransformer } from '@nestjs-mod/common';
 import { Logger } from '@nestjs/common';
 import { IsNotEmpty } from 'class-validator';
 
@@ -25,14 +25,14 @@ export class PrismaConfiguration {
   @ConfigModelProperty({
     description: 'Max query execution time for detect long queries',
     default: 5000,
-    transform: new NumberTransformer()
+    transform: new NumberTransformer(),
   })
   maxQueryExecutionTime?: number;
 
   @ConfigModelProperty({
     description: 'Ping database interval (0 - disable)',
     default: 0,
-    transform: new NumberTransformer()
+    transform: new NumberTransformer(),
   })
   pingDatabaseIntervalMs?: number;
 
@@ -59,4 +59,10 @@ export class PrismaConfiguration {
     description: 'Unsafe string custom content for add to end of prisma schema file (infrastructure)',
   })
   customSchemaContent?: string;
+
+  @ConfigModelProperty({
+    description: 'Binary targets (infrastructure)',
+    transform: new StringTransformer(),
+  })
+  binaryTargets?: string[];
 }

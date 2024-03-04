@@ -187,6 +187,11 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   provider = "prisma-client-js"
   engineType = "binary"
   output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client"
+  ${
+    (this.prismaConfiguration.binaryTargets || []).length > 0
+      ? `binaryTargets = ${JSON.stringify(this.prismaConfiguration.binaryTargets)}`
+      : ''
+  }
 }
 
 datasource db {
@@ -228,6 +233,11 @@ model ${prismaFeatureName}User {
   provider = "prisma-client-js"
   engineType = "binary"
   output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/${clientNodeJSModuleName}"
+  ${
+    (this.prismaConfiguration.binaryTargets || []).length > 0
+      ? `binaryTargets = ${JSON.stringify(this.prismaConfiguration.binaryTargets)}`
+      : ''
+  }
 }`;
 
     const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
