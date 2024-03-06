@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.11.0...docker-compose-v1.11.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* add undocumented environments ([f1a245c](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/f1a245cf21f03769122b6873f6d1a251e067c7e9))
+
 # [1.11.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.10.3...docker-compose-v1.11.0) (2024-03-06)
 
 
