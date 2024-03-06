@@ -280,56 +280,56 @@ export class DockerComposeAuthorizerEnvironments {
   // https://github.com/authorizerdev/authorizer/blob/27b51ad36918b922934d8dd47f72e6fbefca5dcb/server/constants/env.go
 
   @EnvModelProperty({ hidden: true })
-  smtpLocalName!: string;
+  smtpLocalName?: string;
 
   @EnvModelProperty({ hidden: true })
-  jwtSecret!: string;
+  jwtSecret?: string;
 
   @EnvModelProperty({ hidden: true })
-  jwtPrivateKey!: string;
+  jwtPrivateKey?: string;
 
   @EnvModelProperty({ hidden: true })
-  jwtPublicKey!: string;
+  jwtPublicKey?: string;
 
   @EnvModelProperty({ hidden: true })
-  appUrl!: string;
+  appUrl?: string;
 
   @EnvModelProperty({ hidden: true })
-  discordClientId!: string;
+  discordClientId?: string;
 
   @EnvModelProperty({ hidden: true })
-  discordClientSecret!: string;
+  discordClientSecret?: string;
 
   @EnvModelProperty({ hidden: true })
-  twitchClientId!: string;
+  twitchClientId?: string;
 
   @EnvModelProperty({ hidden: true })
-  twitchClientSecret!: string;
+  twitchClientSecret?: string;
 
   @EnvModelProperty({ hidden: true })
-  clientId!: string;
+  clientId?: string;
 
   @EnvModelProperty({ hidden: true })
-  clientSecret!: string;
+  clientSecret?: string;
 
   @EnvModelProperty({ hidden: true })
-  encryptionKey!: string;
+  encryptionKey?: string;
 
   @EnvModelProperty({ hidden: true })
-  isProd!: string;
+  isProd?: string;
 
   @EnvModelProperty({ hidden: true })
-  allowedOrigins!: string;
+  allowedOrigins?: string;
 
   @EnvModelProperty({ hidden: true })
-  twilioApiKey!: string;
+  twilioApiKey?: string;
 
   @EnvModelProperty({ hidden: true })
-  twilioApiSecret!: string;
+  twilioApiSecret?: string;
 
   @EnvModelProperty({ hidden: true })
-  twilioAccountSid!: string;
+  twilioAccountSid?: string;
 
   @EnvModelProperty({ hidden: true })
-  twilioSender!: string;
+  twilioSender?: string;
 }

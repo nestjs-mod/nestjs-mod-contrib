@@ -143,57 +143,57 @@ export class DockerComposeAuthorizerConfiguration {
   // https://github.com/authorizerdev/authorizer/blob/27b51ad36918b922934d8dd47f72e6fbefca5dcb/server/constants/env.go
 
   @ConfigModelProperty()
-  test!: string;
+  test?: string;
 
   @ConfigModelProperty()
-  envPath!: string;
+  envPath?: string;
 
   @ConfigModelProperty()
-  isEmailServiceEnabled!: string;
+  isEmailServiceEnabled?: string;
 
   @ConfigModelProperty()
-  isSmsServiceEnabled!: string;
+  isSmsServiceEnabled?: string;
 
   @ConfigModelProperty()
-  appCookieSecure!: string;
+  appCookieSecure?: string;
 
   @ConfigModelProperty()
-  adminCookieSecure!: string;
+  adminCookieSecure?: string;
 
   @ConfigModelProperty()
-  jwtType!: string;
+  jwtType?: string;
 
   @ConfigModelProperty()
-  jwk!: string;
+  jwk?: string;
 
   @ConfigModelProperty()
-  disableMobileBasicAuthentication!: string;
+  disableMobileBasicAuthentication?: string;
 
   @ConfigModelProperty()
-  disableRedisForEnv!: string;
+  disableRedisForEnv?: string;
 
   @ConfigModelProperty()
-  disableStrongPassword!: string;
+  disableStrongPassword?: string;
 
   @ConfigModelProperty()
-  enforceMultiFactorAuthentication!: string;
+  enforceMultiFactorAuthentication?: string;
 
   @ConfigModelProperty()
-  disableMultiFactorAuthentication!: string;
+  disableMultiFactorAuthentication?: string;
 
   @ConfigModelProperty()
-  disableTotpLogin!: string;
+  disableTotpLogin?: string;
 
   @ConfigModelProperty()
-  disableMailOtpLogin!: string;
+  disableMailOtpLogin?: string;
 
   @ConfigModelProperty()
-  disablePhoneVerification!: string;
+  disablePhoneVerification?: string;
 
   @ConfigModelProperty()
-  defaultAuthorizeResponseType!: string;
+  defaultAuthorizeResponseType?: string;
 
   @ConfigModelProperty()
-  defaultAuthorizeResponseMode!: string;
+  defaultAuthorizeResponseMode?: string;
 
 }
