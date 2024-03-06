@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.11.1...docker-compose-v1.11.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* change new properties as optional ([4a5585f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4a5585fdeafe597e51b6450c87d40586f6e81ed1))
+
 ## [1.11.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.11.0...docker-compose-v1.11.1) (2024-03-06)
 
 
