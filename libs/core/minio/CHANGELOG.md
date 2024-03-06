@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.4...minio-v1.1.0) (2024-03-06)
+
+
+### Features
+
+* add @nestjs-mod/authorizer for work with https://authorizer.dev/, add DockerComposeAuthorizer for deploy authorizer server, add option notStaticKeysOfEnvironments in docker services for exclude some keys from generated dot env file ([12380a4](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/12380a4c690345265b4df02de51250c96f21e417))
+
 ## [1.0.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.0.3...minio-v1.0.4) (2024-02-22)
 
 
