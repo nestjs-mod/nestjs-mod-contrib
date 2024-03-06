@@ -144,7 +144,7 @@ version: '3'
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"authorizer":{"image":"lakhansamani/authorizer:1.3.8","container_name":"authorizer","ports":["8000:8080"],"networks":["default-network"],"environment":{"DATABASE_NAME":"authorizer","IMAGE":"lakhansamani/authorizer:1.3.8","EXTERNAL_CLIENT_PORT":8000,"ENV":"production","PORT":8080,"COOKIE_NAME":"authorizer","RESET_PASSWORD_URL":"/reset-password","DISABLE_PLAYGROUND":true,"ROLES":"user,admin","DEFAULT_ROLES":"user","JWT_ROLE_CLAIM":"role","ORGANIZATION_NAME":"Authorizer","ORGANIZATION_LOGO":"Authorizer Logo","ACCESS_TOKEN_EXPIRY_TIME":"30m","COUCHBASE_BUCKET":"authorizer","COUCHBASE_BUCKET_RAM_QUOTA":1000,"COUCHBASE_SCOPE":"_default"},"keysOfEnvironmentsWithStaticValue":["FEATURE_NAME","IMAGE","NETWORKS","DEPENDS_ON_SERVICE_NAMES","ENV"],"tty":true,"restart":"always","depends_on":{}}}```|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"authorizer":{"image":"lakhansamani/authorizer:1.3.8","container_name":"authorizer","ports":["8000:8080"],"networks":["default-network"],"environment":{"DATABASE_NAME":"authorizer","PORT":8080,"COOKIE_NAME":"authorizer","DISABLE_PLAYGROUND":true,"ACCESS_TOKEN_EXPIRY_TIME":"30m","IMAGE":"lakhansamani/authorizer:1.3.8","EXTERNAL_CLIENT_PORT":8000,"ENV":"production","RESET_PASSWORD_URL":"/reset-password","ROLES":"user,admin","DEFAULT_ROLES":"user","JWT_ROLE_CLAIM":"role","ORGANIZATION_NAME":"Authorizer","ORGANIZATION_LOGO":"Authorizer Logo","COUCHBASE_BUCKET":"authorizer","COUCHBASE_BUCKET_RAM_QUOTA":1000,"COUCHBASE_SCOPE":"_default"},"keysOfEnvironmentsWithStaticValue":["FEATURE_NAME","IMAGE","NETWORKS","DEPENDS_ON_SERVICE_NAMES","ENV"],"tty":true,"restart":"always","depends_on":{}}}```|
 |`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
 |`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|-|
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
@@ -333,6 +333,59 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`databaseUrl`|Database connection string. In case of cluster url eg. for cassandra db, you can use comma separated IPs.|`obj['databaseUrl']`, `process.env['DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
 |`databaseName`|Name of database to connect to. This is useful in case of arangodb and mongodb. If not set, default value will be used.|`obj['databaseName']`, `process.env['DATABASE_NAME']`|**optional**|```authorizer```|```authorizer```|
 |`redisUrl`|Redis URL where sessions can be persisted	false	sessions will be stored in memory.|`obj['redisUrl']`, `process.env['REDIS_URL']`|**optional**|-|-|
+|`databasePort`|Port on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb.|`obj['databasePort']`, `process.env['DATABASE_PORT']`|**optional**|-|-|
+|`databaseHost`|Host/IP on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb type.|`obj['databaseHost']`, `process.env['DATABASE_HOST']`|**optional**|-|-|
+|`databaseUsername`|Username for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|`obj['databaseUsername']`, `process.env['DATABASE_USERNAME']`|**optional**|-|-|
+|`databasePassword`|Password for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|`obj['databasePassword']`, `process.env['DATABASE_PASSWORD']`|**optional**|-|-|
+|`databaseCert`|Base64 encoded certificate string used to make SSL connection. At the moment supported by cassandradb,scylladb type.|`obj['databaseCert']`, `process.env['DATABASE_CERT']`|**optional**|-|-|
+|`databaseCertKey`|Base64 encoded key string used to make SSL connection. At the moment supported by cassandradb,scylladb type|`obj['databaseCertKey']`, `process.env['DATABASE_CERT_KEY']`|**optional**|-|-|
+|`databaseCaCert`|Base64 encoded CA certificate string used to make SSL connection. At the moment supported by cassandradb, scylladb type.|`obj['databaseCaCert']`, `process.env['DATABASE_CA_CERT']`|**optional**|-|-|
+|`port`|Port on which server should be running.|`obj['port']`, `process.env['PORT']`|**optional**|```8080```|```8080```|
+|`authorizerUrl`|Domain name of the server, eg https://authorizer.herokuapp.com.|`obj['authorizerUrl']`, `process.env['AUTHORIZER_URL']`|**optional**|-|-|
+|`cookieName`|Name of cookie to be set by server.|`obj['cookieName']`, `process.env['COOKIE_NAME']`|**optional**|```authorizer```|```authorizer```|
+|`smtpHost`|SMTP host is used to send email verification emails and forgot password emails	false	If not set email sending can fail.|`obj['smtpHost']`, `process.env['SMTP_HOST']`|**optional**|-|-|
+|`smtpPort`|SMTP Port is used along with SMTP host.|`obj['smtpPort']`, `process.env['SMTP_PORT']`|**optional**|-|-|
+|`smtpUsername`|Username for your smtp provider.|`obj['smtpUsername']`, `process.env['SMTP_USERNAME']`|**optional**|-|-|
+|`smtpPassword`|Password for your smt provider|`obj['smtpPassword']`, `process.env['SMTP_PASSWORD']`|**optional**|-|-|
+|`senderEmail`|Email to be used in From section while sending emails.|`obj['senderEmail']`, `process.env['SENDER_EMAIL']`|**optional**|-|-|
+|`senderName`|Email sender name that is displayed in the inbox instead of just showing the email address.|`obj['senderName']`, `process.env['SENDER_NAME']`|**optional**|-|-|
+|`disablePlayground`|To disable playground|`obj['disablePlayground']`, `process.env['DISABLE_PLAYGROUND']`|**optional**|```true```|```true```|
+|`accessTokenExpiryTime`|Time interval for how long access token will be expired in 1h15m15s format.|`obj['accessTokenExpiryTime']`, `process.env['ACCESS_TOKEN_EXPIRY_TIME']`|**optional**|```30m```|```30m```|
+|`awsAccessKeyId`|AWS access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|`obj['awsAccessKeyId']`, `process.env['AWS_ACCESS_KEY_ID']`|**optional**|-|-|
+|`awsSecretAccessKey`|AWS secret access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|`obj['awsSecretAccessKey']`, `process.env['AWS_SECRET_ACCESS_KEY']`|**optional**|-|-|
+|`googleClientId`|OAuth Google login client id.|`obj['googleClientId']`, `process.env['GOOGLE_CLIENT_ID']`|**optional**|-|-|
+|`googleClientSecret`|OAuth Google login client secret.|`obj['googleClientSecret']`, `process.env['GOOGLE_CLIENT_SECRET']`|**optional**|-|-|
+|`githubClientId`|OAuth Github login client id.|`obj['githubClientId']`, `process.env['GITHUB_CLIENT_ID']`|**optional**|-|-|
+|`githubClientSecret`|OAuth Github login client secret.|`obj['githubClientSecret']`, `process.env['GITHUB_CLIENT_SECRET']`|**optional**|-|-|
+|`facebookClientId`|OAuth Facebook login client id.|`obj['facebookClientId']`, `process.env['FACEBOOK_CLIENT_ID']`|**optional**|-|-|
+|`facebookClientSecret`|OAuth Facebook login client secret.|`obj['facebookClientSecret']`, `process.env['FACEBOOK_CLIENT_SECRET']`|**optional**|-|-|
+|`linkedinClientId`|OAuth LinkedIn login client id.|`obj['linkedinClientId']`, `process.env['LINKEDIN_CLIENT_ID']`|**optional**|-|-|
+|`linkedinClientSecret`|OAuth LinkedIn login client secret.|`obj['linkedinClientSecret']`, `process.env['LINKEDIN_CLIENT_SECRET']`|**optional**|-|-|
+|`appleClientId`|OAuth Apple login client id.|`obj['appleClientId']`, `process.env['APPLE_CLIENT_ID']`|**optional**|-|-|
+|`appleClientSecret`|OAuth Apple login client secret.|`obj['appleClientSecret']`, `process.env['APPLE_CLIENT_SECRET']`|**optional**|-|-|
+|`twitterClientId`|OAuth Twitter login client id.|`obj['twitterClientId']`, `process.env['TWITTER_CLIENT_ID']`|**optional**|-|-|
+|`twitterClientSecret`|OAuth Twitter login client secret.|`obj['twitterClientSecret']`, `process.env['TWITTER_CLIENT_SECRET']`|**optional**|-|-|
+|`microsoftClientId`|OAuth Microsoft login client id.|`obj['microsoftClientId']`, `process.env['MICROSOFT_CLIENT_ID']`|**optional**|-|-|
+|`microsoftClientSecret`|OAuth Microsoft login client secret.|`obj['microsoftClientSecret']`, `process.env['MICROSOFT_CLIENT_SECRET']`|**optional**|-|-|
+|`microsoftActiveDirectoryTenantId`|Microsoft Active Directory Tenant ID obtained from azure portal.|`obj['microsoftActiveDirectoryTenantId']`, `process.env['MICROSOFT_ACTIVE_DIRECTORY_TENANT_ID']`|**optional**|-|-|
+|`smtpLocalName`|-|`obj['smtpLocalName']`, `process.env['SMTP_LOCAL_NAME']`|**optional**|-|-|
+|`jwtSecret`|-|`obj['jwtSecret']`, `process.env['JWT_SECRET']`|**optional**|-|-|
+|`jwtPrivateKey`|-|`obj['jwtPrivateKey']`, `process.env['JWT_PRIVATE_KEY']`|**optional**|-|-|
+|`jwtPublicKey`|-|`obj['jwtPublicKey']`, `process.env['JWT_PUBLIC_KEY']`|**optional**|-|-|
+|`appUrl`|-|`obj['appUrl']`, `process.env['APP_URL']`|**optional**|-|-|
+|`discordClientId`|-|`obj['discordClientId']`, `process.env['DISCORD_CLIENT_ID']`|**optional**|-|-|
+|`discordClientSecret`|-|`obj['discordClientSecret']`, `process.env['DISCORD_CLIENT_SECRET']`|**optional**|-|-|
+|`twitchClientId`|-|`obj['twitchClientId']`, `process.env['TWITCH_CLIENT_ID']`|**optional**|-|-|
+|`twitchClientSecret`|-|`obj['twitchClientSecret']`, `process.env['TWITCH_CLIENT_SECRET']`|**optional**|-|-|
+|`clientId`|-|`obj['clientId']`, `process.env['CLIENT_ID']`|**optional**|-|-|
+|`clientSecret`|-|`obj['clientSecret']`, `process.env['CLIENT_SECRET']`|**optional**|-|-|
+|`encryptionKey`|-|`obj['encryptionKey']`, `process.env['ENCRYPTION_KEY']`|**optional**|-|-|
+|`isProd`|-|`obj['isProd']`, `process.env['IS_PROD']`|**optional**|-|-|
+|`allowedOrigins`|-|`obj['allowedOrigins']`, `process.env['ALLOWED_ORIGINS']`|**optional**|-|-|
+|`twilioApiKey`|-|`obj['twilioApiKey']`, `process.env['TWILIO_API_KEY']`|**optional**|-|-|
+|`twilioApiSecret`|-|`obj['twilioApiSecret']`, `process.env['TWILIO_API_SECRET']`|**optional**|-|-|
+|`twilioAccountSid`|-|`obj['twilioAccountSid']`, `process.env['TWILIO_ACCOUNT_SID']`|**optional**|-|-|
+|`twilioSender`|-|`obj['twilioSender']`, `process.env['TWILIO_SENDER']`|**optional**|-|-|
 
 #### Static configuration
 
@@ -345,29 +398,12 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`externalClientPort`|External port for sharing container.|**optional**|```8000```|-|
 |`dependsOnServiceNames`|Depends on services|**optional**|-|-|
 |`env`|Which env you are running your server in. Supported envs production, development.|**optional**|```production```|-|
-|`databasePort`|Port on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb.|**optional**|-|-|
-|`databaseHost`|Host/IP on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb type.|**optional**|-|-|
-|`databaseUsername`|Username for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|**optional**|-|-|
-|`databasePassword`|Password for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|**optional**|-|-|
-|`databaseCert`|Base64 encoded certificate string used to make SSL connection. At the moment supported by cassandradb,scylladb type.|**optional**|-|-|
-|`databaseCertKey`|Base64 encoded key string used to make SSL connection. At the moment supported by cassandradb,scylladb type|**optional**|-|-|
-|`databaseCaCert`|Base64 encoded CA certificate string used to make SSL connection. At the moment supported by cassandradb, scylladb type.|**optional**|-|-|
-|`port`|Port on which server should be running.|**optional**|```8080```|-|
-|`authorizerUrl`|Domain name of the server, eg https://authorizer.herokuapp.com.|**optional**|-|-|
-|`cookieName`|Name of cookie to be set by server.|**optional**|```authorizer```|-|
-|`smtpHost`|SMTP host is used to send email verification emails and forgot password emails	false	If not set email sending can fail.|**optional**|-|-|
-|`smtpPort`|SMTP Port is used along with SMTP host.|**optional**|-|-|
-|`smtpUsername`|Username for your smtp provider.|**optional**|-|-|
-|`smtpPassword`|Password for your smt provider|**optional**|-|-|
-|`senderEmail`|Email to be used in From section while sending emails.|**optional**|-|-|
-|`senderName`|Email sender name that is displayed in the inbox instead of just showing the email address.|**optional**|-|-|
 |`resetPasswordUrl`|Reset password link, that can be used to send the correct forgot password link.|**optional**|```/reset-password```|-|
 |`disableBasicAuthentication`|Used to explicitly disable email and password based authentication.|**optional**|-|-|
 |`disableEmailVerification`|Used to disable the email verification while signing up.|**optional**|-|-|
 |`disableMagicLinkLogin`|Used to disable the password less login up.|**optional**|-|-|
 |`disableLoginPage`|Used to disable the default login page that comes with authorizer instance. This is helpful when user is building their custom login page.|**optional**|-|-|
 |`disableSignUp`|Used to disable the sign up feature. It is useful when you want to have beta release of your product and invite only limited users.|**optional**|-|-|
-|`disablePlayground`|To disable playground|**optional**|```true```|-|
 |`roles`|Comma separated list of roles that your platform supports.|**optional**|```user,admin```|-|
 |`defaultRoles`|Comma separated list of roles that acts as Default roles which you would like to assign to users while they signup /login.|**optional**|```user```|-|
 |`protectedRoles`|Comma separated list of roles for which signup should be disabled. Example admin roles. This roles can only assigned manually via super admin like adminUpdateProfile.|**optional**|-|-|
@@ -375,28 +411,28 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`organizationName`|Name of organization that you want on default login page.|**optional**|```Authorizer```|-|
 |`organizationLogo`|Logo of organization that you want on default login page.|**optional**|```Authorizer Logo```|-|
 |`customAccessTokenScript`|Javascript function to add extra keys to your JWT id token. This feature is developed using otto and only supports writing function in ES5. Check the sample here.|**optional**|-|-|
-|`accessTokenExpiryTime`|Time interval for how long access token will be expired in 1h15m15s format.|**optional**|```30m```|-|
 |`awsRegion`|AWS, region id, where dynamod db tables are to be created. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
-|`awsAccessKeyId`|AWS access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
-|`awsSecretAccessKey`|AWS secret access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
 |`couchbaseBucket`|Bucket used for couchbase database. Used with DATABASE_TYPE=couchbase.|**optional**|```authorizer```|-|
 |`couchbaseBucketRamQuota`|RAM Quota for the bucket used for couchbase database. It has to be numeric value only. Used with DATABASE_TYPE=couchbase.|**optional**|```1000```|-|
 |`couchbaseScope`|Scope in which bucket is created. Used with DATABASE_TYPE=couchbase.|**optional**|```_default```|-|
-|`googleClientId`|OAuth Google login client id.|**optional**|-|-|
-|`googleClientSecret`|OAuth Google login client secret.|**optional**|-|-|
-|`githubClientId`|OAuth Github login client id.|**optional**|-|-|
-|`githubClientSecret`|OAuth Github login client secret.|**optional**|-|-|
-|`facebookClientId`|OAuth Facebook login client id.|**optional**|-|-|
-|`facebookClientSecret`|OAuth Facebook login client secret.|**optional**|-|-|
-|`linkedinClientId`|OAuth LinkedIn login client id.|**optional**|-|-|
-|`linkedinClientSecret`|OAuth LinkedIn login client secret.|**optional**|-|-|
-|`appleClientId`|OAuth Apple login client id.|**optional**|-|-|
-|`appleClientSecret`|OAuth Apple login client secret.|**optional**|-|-|
-|`twitterClientId`|OAuth Twitter login client id.|**optional**|-|-|
-|`twitterClientSecret`|OAuth Twitter login client secret.|**optional**|-|-|
-|`microsoftClientId`|OAuth Microsoft login client id.|**optional**|-|-|
-|`microsoftClientSecret`|OAuth Microsoft login client secret.|**optional**|-|-|
-|`microsoftActiveDirectoryTenantId`|Microsoft Active Directory Tenant ID obtained from azure portal.|**optional**|-|-|
+|`test`|-|**optional**|-|-|
+|`envPath`|-|**optional**|-|-|
+|`isEmailServiceEnabled`|-|**optional**|-|-|
+|`isSmsServiceEnabled`|-|**optional**|-|-|
+|`appCookieSecure`|-|**optional**|-|-|
+|`adminCookieSecure`|-|**optional**|-|-|
+|`jwtType`|-|**optional**|-|-|
+|`jwk`|-|**optional**|-|-|
+|`disableMobileBasicAuthentication`|-|**optional**|-|-|
+|`disableRedisForEnv`|-|**optional**|-|-|
+|`disableStrongPassword`|-|**optional**|-|-|
+|`enforceMultiFactorAuthentication`|-|**optional**|-|-|
+|`disableMultiFactorAuthentication`|-|**optional**|-|-|
+|`disableTotpLogin`|-|**optional**|-|-|
+|`disableMailOtpLogin`|-|**optional**|-|-|
+|`disablePhoneVerification`|-|**optional**|-|-|
+|`defaultAuthorizeResponseType`|-|**optional**|-|-|
+|`defaultAuthorizeResponseMode`|-|**optional**|-|-|
 
 [Back to Top](#modules)
 

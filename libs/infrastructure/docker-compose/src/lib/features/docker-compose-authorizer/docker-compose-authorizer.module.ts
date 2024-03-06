@@ -6,13 +6,11 @@ import {
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { constantCase, kebabCase } from 'case-anything';
-import { DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME } from './docker-compose-authorizer.constants';
-import {
-  DockerComposeAuthorizerConfiguration,
-  DockerComposeAuthorizerEnvironments,
-} from './docker-compose-authorizer.settings';
 import { DockerCompose } from '../../docker-compose.module';
-import { getDockerComposeServiceName, DockerComposeServiceType } from '../../docker-compose.utils';
+import { DockerComposeServiceType, getDockerComposeServiceName } from '../../docker-compose.utils';
+import { DockerComposeAuthorizerConfiguration } from './docker-compose-authorizer.configuration';
+import { DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME } from './docker-compose-authorizer.constants';
+import { DockerComposeAuthorizerEnvironments } from './docker-compose-authorizer.environments';
 
 export const { DockerComposeAuthorizer } = createNestModule({
   moduleName: DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME,
@@ -107,7 +105,7 @@ export const { DockerComposeAuthorizer } = createNestModule({
                 [serviceName]: {
                   image: staticConfiguration?.image,
                   container_name: serviceName,
-                  ports: [`${staticConfiguration?.externalClientPort}:${staticConfiguration?.port}`],
+                  ports: [`${staticConfiguration?.externalClientPort}:${staticEnvironments?.port}`],
                   networks: networkNames,
                   environment: {
                     ...Object.entries({ ...staticEnvironments, ...staticConfiguration }).reduce(
