@@ -1,0 +1,38 @@
+{
+  "name": "authorizer",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/core/authorizer/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/core/authorizer",
+        "tsConfig": "libs/core/authorizer/tsconfig.lib.json",
+        "packageJson": "libs/core/authorizer/package.json",
+        "main": "libs/core/authorizer/src/index.ts",
+        "assets": ["libs/core/authorizer/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs authorizer {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/core/authorizer/jest.config.ts"
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/libs/core/authorizer"
+      }
+    }
+  },
+  "tags": []
+}

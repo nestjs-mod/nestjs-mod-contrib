@@ -7,7 +7,7 @@ import {
   merge,
 } from '@nestjs-mod/common';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
-import { snakeCase } from 'case-anything';
+import { constantCase, snakeCase } from 'case-anything';
 import { basename, dirname } from 'path';
 import { DockerComposeFileService } from './docker-compose-file.service';
 import { DockerComposeConfiguration } from './docker-compose.configuration';
@@ -49,16 +49,16 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
   }
 
   private async createDockerComposeFile() {
-    const featureServices = Object.entries(this.dockerComposeFeatureConfigurations)
+    const featureServices: DockerComposeFeatureConfiguration = Object.entries(this.dockerComposeFeatureConfigurations)
       .map(([, services]) => services)
       .reduce(
         (all, cur) => ({ ...all, ...cur.reduce((curAll, curCur) => merge(curAll, curCur.featureConfiguration), {}) }),
         {}
       );
-    const manualServices = this.manualDockerComposeFeatures
+    const manualServices: DockerComposeFeatureConfiguration = this.manualDockerComposeFeatures
       .getManualDockerComposeFeatureConfigurations()
       .reduce((all, cur) => merge(all, cur), {});
-    const bothServices = merge(
+    const bothServices: DockerComposeFeatureConfiguration = merge(
       { version: this.dockerComposeConfiguration.dockerComposeFileVersion },
       merge(featureServices, manualServices)
     );
@@ -66,16 +66,18 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     const { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath } =
       this.getFilesPathes();
 
-    const bothServicesWithEnvs = { ...bothServices };
+    const bothServicesWithEnvs: DockerComposeFeatureConfiguration = { ...bothServices };
     const envFilePath = this.dotEnvService.getEnvFilePath();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const lines: Record<string, any> = (envFilePath && this.dotEnvService.readFile(envFilePath, false)) || {};
 
-    for (const serviceName of Object.keys(bothServicesWithEnvs.services)) {
+    for (const serviceName of Object.keys(bothServicesWithEnvs.services || {})) {
       let writeTitle = true;
-      for (const envKey of Object.keys(bothServicesWithEnvs.services[serviceName].environment || {})) {
+      for (const envKey of Object.keys(bothServicesWithEnvs.services?.[serviceName].environment || {})) {
         let value =
-          bothServicesWithEnvs?.services?.[serviceName]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (bothServicesWithEnvs?.services?.[serviceName]?.environment as any)?.[envKey] ||
+          snakeCase(`value_for_${envKey}`);
         value = typeof value === 'string' || typeof value === 'number' || !value ? value : String(value);
 
         const keys = Object.keys(process.env);
@@ -86,17 +88,27 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           }
         }
 
-        bothServicesWithEnvs.services[serviceName].environment[envKey] = value;
-        if (writeTitle) {
-          delete lines[`# ${serviceName} (generated)`];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (bothServicesWithEnvs.services![serviceName].environment as any)[envKey] = value;
 
-          lines[`# ${serviceName} (generated)`] = '';
+        if (
+          !bothServicesWithEnvs.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+          )
+        ) {
+          if (writeTitle) {
+            delete lines[`# ${serviceName} (generated)`];
 
-          writeTitle = false;
+            lines[`# ${serviceName} (generated)`] = '';
+
+            writeTitle = false;
+          }
+
+          delete lines[envKey];
+          lines[envKey] = value;
+        } else {
+          delete lines[envKey];
         }
-
-        delete lines[envKey];
-        lines[envKey] = value;
       }
     }
 
@@ -125,14 +137,30 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     const sampleBothServices = { ...bothServices };
 
-    for (const serviceName of Object.keys(sampleBothServices.services)) {
-      for (const envKey of Object.keys(sampleBothServices.services[serviceName].environment || {})) {
+    for (const serviceName of Object.keys(sampleBothServices.services || {})) {
+      for (const envKey of Object.keys(sampleBothServices.services?.[serviceName].environment || {})) {
         if (!sampleBothServices.services![serviceName].environment) {
           sampleBothServices.services![serviceName].environment = {};
         }
-        delete sampleBothServices.services[serviceName].environment[envKey];
-        sampleBothServices.services[serviceName].environment[envKey] =
-          existsServices?.services?.[serviceName]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        delete (sampleBothServices.services![serviceName].environment as any)[envKey];
+
+        if (
+          bothServicesWithEnvs.services?.[serviceName].keysOfEnvironmentsWithStaticValue?.some(
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+          )
+        ) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (sampleBothServices.services![serviceName].environment as any)[envKey] =
+            existsServices?.services?.[serviceName]?.environment?.[envKey] ||
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (bothServicesWithEnvs.services![serviceName].environment as any)[envKey] ||
+            snakeCase(`value_for_${envKey}`);
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (sampleBothServices.services![serviceName].environment as any)[envKey] =
+            existsServices?.services?.[serviceName]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
+        }
       }
     }
     const header =
@@ -161,19 +189,36 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           sampleBothProdServices.services![serviceName].environment = {};
         }
 
-        delete sampleBothServices.services[serviceName].environment[envKey];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        sampleBothProdServices.services[serviceName].environment[envKey] = `\${${envKey}}`;
-        if (writeTitle) {
-          delete prodLines[`# ${serviceName} (generated)`];
+        if (
+          !sampleBothProdServices.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+          )
+        ) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          delete (sampleBothServices.services![serviceName].environment as any)[envKey];
 
-          prodLines[`# ${serviceName} (generated)`] = '';
-
-          writeTitle = false;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (sampleBothProdServices.services![serviceName].environment as any)[envKey] = `\${${envKey}}`;
         }
-        const value = prodLines[envKey] || snakeCase(`value_for_${envKey}`);
-        delete prodLines[envKey];
-        prodLines[envKey] = value;
+
+        if (
+          !sampleBothProdServices.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+          )
+        ) {
+          if (writeTitle) {
+            delete prodLines[`# ${serviceName} (generated)`];
+
+            prodLines[`# ${serviceName} (generated)`] = '';
+
+            writeTitle = false;
+          }
+          const value = prodLines[envKey] || lines[envKey] || snakeCase(`value_for_${envKey}`);
+          delete prodLines[envKey];
+          prodLines[envKey] = value;
+        } else {
+          delete prodLines[envKey];
+        }
       }
     }
     const prodData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile

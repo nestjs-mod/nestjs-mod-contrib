@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Compose } from 'compose-spec-schema';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname } from 'path';
 import { Scalar, parse, stringify } from 'yaml';
 import { DockerComposeConfiguration } from './docker-compose.configuration';
+import { DockerComposeFeatureConfiguration } from './docker-compose.feature-configuration';
 
 @Injectable()
 export class DockerComposeFileService {
@@ -13,7 +13,7 @@ export class DockerComposeFileService {
     return this.dockerComposeConfiguration.dockerComposeFile;
   }
 
-  readFile(dockerComposeFile: string): Compose | undefined {
+  readFile(dockerComposeFile: string): DockerComposeFeatureConfiguration | undefined {
     if (dockerComposeFile && existsSync(dockerComposeFile)) {
       try {
         return parse(readFileSync(dockerComposeFile).toString());
@@ -24,7 +24,7 @@ export class DockerComposeFileService {
     return undefined;
   }
 
-  writeFile(dockerComposeFile: string, data: Compose, header?: string) {
+  writeFile(dockerComposeFile: string, data: DockerComposeFeatureConfiguration, header?: string) {
     if (!dockerComposeFile) {
       return;
     }
@@ -32,6 +32,10 @@ export class DockerComposeFileService {
       const fileDir = dirname(dockerComposeFile);
       if (fileDir && !existsSync(fileDir)) {
         mkdirSync(fileDir, { recursive: true });
+      }
+
+      for (const serviceName of Object.keys(data.services || {})) {
+        delete data.services![serviceName].keysOfEnvironmentsWithStaticValue;
       }
 
       writeFileSync(
@@ -48,7 +52,7 @@ export class DockerComposeFileService {
     }
   }
 
-  read(): Compose | undefined {
+  read(): DockerComposeFeatureConfiguration | undefined {
     const dockerComposeFile = this.getDockerComposeFilePath();
     if (!dockerComposeFile) {
       return undefined;
@@ -56,7 +60,7 @@ export class DockerComposeFileService {
     return this.readFile(dockerComposeFile);
   }
 
-  write(data: Compose, header?: string) {
+  write(data: DockerComposeFeatureConfiguration, header?: string) {
     const dockerComposeFile = this.getDockerComposeFilePath();
     if (!dockerComposeFile) {
       return;

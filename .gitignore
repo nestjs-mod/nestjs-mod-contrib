@@ -39,13 +39,7 @@ testem.log
 Thumbs.db
 
 .nx/cache
-docker-compose.yml
-
-.env
 
 .angular
 access.log
 error.log
-docker-compose.env
-
-docker-compose-prod.env

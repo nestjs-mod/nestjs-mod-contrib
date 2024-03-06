@@ -1,6 +1,6 @@
 import { ConfigModel, ConfigModelProperty } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
-import { Compose } from 'compose-spec-schema';
+import { DockerComposeFeatureConfiguration } from './docker-compose.feature-configuration';
 
 @ConfigModel()
 export class DockerComposeConfiguration {
@@ -38,24 +38,42 @@ export class DockerComposeConfiguration {
   @ConfigModelProperty({
     description: 'Before save file for example docker-compose.',
   })
-  beforeSaveExampleDockerComposeFile?: ({ data, header }: { data: Compose; header?: string }) => Promise<{
-    data: Compose;
+  beforeSaveExampleDockerComposeFile?: ({
+    data,
+    header,
+  }: {
+    data: DockerComposeFeatureConfiguration;
+    header?: string;
+  }) => Promise<{
+    data: DockerComposeFeatureConfiguration;
     header?: string;
   }>;
 
   @ConfigModelProperty({
     description: 'Before save main file for docker-compose.',
   })
-  beforeSaveDockerComposeFile?: ({ data, header }: { data: Compose; header?: string }) => Promise<{
-    data: Compose;
+  beforeSaveDockerComposeFile?: ({
+    data,
+    header,
+  }: {
+    data: DockerComposeFeatureConfiguration;
+    header?: string;
+  }) => Promise<{
+    data: DockerComposeFeatureConfiguration;
     header?: string;
   }>;
 
   @ConfigModelProperty({
     description: 'Before save main file for prod docker-compose.',
   })
-  beforeSaveProdDockerComposeFile?: ({ data, header }: { data: Compose; header?: string }) => Promise<{
-    data: Compose;
+  beforeSaveProdDockerComposeFile?: ({
+    data,
+    header,
+  }: {
+    data: DockerComposeFeatureConfiguration;
+    header?: string;
+  }) => Promise<{
+    data: DockerComposeFeatureConfiguration;
     header?: string;
   }>;
 

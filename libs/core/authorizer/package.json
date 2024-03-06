@@ -1,0 +1,73 @@
+{
+  "name": "@nestjs-mod/authorizer",
+  "version": "0.0.1",
+  "description": "Universal javaScript SDK for Authorizer API (Wrapper for https://www.npmjs.com/package/@authorizerdev/authorizer-js)",
+  "keywords": [
+    "nestjs",
+    "nestjs-mod",
+    "modules",
+    "mod",
+    "files",
+    "authorizerdev",
+    "authorizer-js",
+    "core"
+  ],
+  "license": "MIT",
+  "author": "EndyKaufman <admin@site15.ru>",
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+  },
+  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+  },
+  "maintainers": [
+    {
+      "name": "EndyKaufman",
+      "email": "admin@site15.ru"
+    }
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "class-validator": "*",
+    "@nestjs/common": "*",
+    "@nestjs/core": "*",
+    "@nestjs-mod/common": "*",
+    "@authorizerdev/authorizer-js": "*"
+  },
+  "peerDependenciesMeta": {
+    "class-validator": {
+      "optional": true
+    },
+    "@nestjs/common": {
+      "optional": true
+    },
+    "@nestjs/core": {
+      "optional": true
+    },
+    "@nestjs-mod/common": {
+      "optional": true
+    },
+    "@authorizerdev/authorizer-js": {
+      "optional": true
+    }
+  },
+  "dependenciesInfo": {
+    "@authorizerdev/authorizer-js@2.0.0": {
+      "docs": true
+    }
+  },
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts"
+}

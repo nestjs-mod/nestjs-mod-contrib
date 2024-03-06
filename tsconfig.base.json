@@ -26,6 +26,7 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
+      "@nestjs-mod/authorizer": ["libs/core/authorizer/src/index.ts"],
       "@nestjs-mod/cache-manager": ["libs/core/cache-manager/src/index.ts"],
       "@nestjs-mod/docker-compose": ["libs/infrastructure/docker-compose/src/index.ts"],
       "@nestjs-mod/flyway": ["libs/infrastructure/flyway/src/index.ts"],

@@ -291,7 +291,7 @@ bootstrapNestApplication({
 |`inheritResolversFromInterfaces`|Inherit missing resolvers from their interface types defined in the resolvers object.|**optional**|-|-|
 |`transformSchema`|Function to be applied to the schema letting you register custom transformations.|**optional**|-|-|
 |`transformAutoSchemaFile`|Apply `transformSchema` to the `autoSchemaFile`|**optional**|-|-|
-|`context`|Context function|**optional**|Function|-|
+|`context`|Context function|**optional**|```defaultContextFunction```|-|
 |`metadata`|Extra static metadata to be loaded into the specification|**optional**|-|-|
 |`installSubscriptionHandlers`|If enabled, "subscriptions-transport-ws" will be automatically registered.|**optional**|```true```|-|
 |`subscriptions`|Subscriptions configuration.|**optional**|```{"graphql-ws":{"path":"/graphql"}}```|-|

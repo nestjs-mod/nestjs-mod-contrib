@@ -17,6 +17,7 @@ npm i --save @nestjs-mod/docker-compose
 | Link | Category | Description |
 | ---- | -------- | ----------- |
 | [DockerCompose](#dockercompose) | infrastructure | Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose) |
+| [DockerComposeAuthorizer](#dockercomposeauthorizer) | infrastructure | Authorizer is an open-source authentication and authorization solution for your applications. Bring your database and have complete control over the user information. You can self-host authorizer instances and connect to supported databases. (Generator for https://authorizer.dev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeMinio](#dockercomposeminio) | infrastructure | MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeNats](#dockercomposenats) | infrastructure | NATS is an open source, lightweight and high-performance messaging system. It is ideal for distributed systems and supports modern cloud architectures and pub-sub, request-reply and queuing models. (Generator for nats in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeNginx](#dockercomposenginx) | infrastructure | Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
@@ -137,6 +138,19 @@ version: '3'
 |`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
 
 #### Modules that use feature configuration
+##### Feature module name: AUTHORIZER
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"authorizer":{"image":"lakhansamani/authorizer:1.3.8","container_name":"authorizer","ports":["8000:8080"],"networks":["default-network"],"environment":{"DATABASE_NAME":"authorizer","IMAGE":"lakhansamani/authorizer:1.3.8","EXTERNAL_CLIENT_PORT":8000,"ENV":"production","PORT":8080,"COOKIE_NAME":"authorizer","RESET_PASSWORD_URL":"/reset-password","DISABLE_PLAYGROUND":true,"ROLES":"user,admin","DEFAULT_ROLES":"user","JWT_ROLE_CLAIM":"role","ORGANIZATION_NAME":"Authorizer","ORGANIZATION_LOGO":"Authorizer Logo","ACCESS_TOKEN_EXPIRY_TIME":"30m","COUCHBASE_BUCKET":"authorizer","COUCHBASE_BUCKET_RAM_QUOTA":1000,"COUCHBASE_SCOPE":"_default"},"keysOfEnvironmentsWithStaticValue":["FEATURE_NAME","IMAGE","NETWORKS","DEPENDS_ON_SERVICE_NAMES","ENV"],"tty":true,"restart":"always","depends_on":{}}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|-|
+|`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
+|`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
+#### Modules that use feature configuration
 ##### Feature module name: POSTGRE_SQL
 
 
@@ -156,11 +170,233 @@ version: '3'
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"minio":{"image":"bitnami/minio:2024.2.9","container_name":"minio","volumes":["minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["default-network"],"environment":{"MINIO_ROOT_USER":"minioadmin","MINIO_ROOT_PASSWORD":"6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq"},"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"minio":{"image":"bitnami/minio:2024.2.9","container_name":"minio","volumes":["minio-volume:/bitnami/minio/data"],"ports":["9000:9000","9001:9001"],"networks":["default-network"],"environment":{"MINIO_ROOT_USER":"minioadmin","MINIO_ROOT_PASSWORD":"6EcbcW66JsKvFrY2bZw6QGKjHhefca7Kgppq"},"keysOfEnvironmentsWithStaticValue":["FEATURE_NAME","IMAGE","NETWORKS","NGINX_BUCKETS_LOCATIONS","NGINX_CONFIG_CONTENT","NGINX_CONFIG_FOLDER","NGINX_LOGS_FOLDER"],"healthcheck":{"test":["CMD-SHELL","mc","ready","local"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
 |`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
 |`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"minio-volume":{"name":"minio-volume"}}```|
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
 |`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
+[Back to Top](#modules)
+
+---
+### DockerComposeAuthorizer
+Authorizer is an open-source authentication and authorization solution for your applications. Bring your database and have complete control over the user information. You can self-host authorizer instances and connect to supported databases. (Generator for https://authorizer.dev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Use in NestJS-mod
+An approximate description of how to connect, an extended description with an example application will be next time (todo: right now I have a lot of work and don’t have time to arrange everything properly 😉)
+
+```typescript
+bootstrapNestApplication({
+  globalConfigurationOptions: { debug: true },
+  globalEnvironmentsOptions: { debug: true },
+  modules: {
+    system: [
+      ProjectUtils.forRoot({
+        staticConfiguration: {
+          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
+        },
+      }),
+    ],
+    infrastructure: [
+      DockerCompose.forRoot({
+        configuration: {
+          dockerComposeFileVersion: '3',
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
+        },
+      }),
+      DockerComposePostgreSQL.forFeature({
+        featureModuleName: authorizerFeatureName,
+      }),
+      DockerComposeRedis.forRoot(),
+      DockerComposeAuthorizer.forRoot({
+        staticEnvironments: {
+          redisUrl: '%SERVER_AUTHORIZER_INTERNAL_REDIS_URL%',
+          databaseUrl: '%SERVER_AUTHORIZER_INTERNAL_DATABASE_URL%',
+        },
+        staticConfiguration: {
+          featureName: authorizerFeatureName,
+          organizationName: 'OrganizationName',
+          dependsOnServiceNames: {
+            'postgre-sql-migrations': 'service_completed_successfully',
+            redis: 'service_healthy',
+          },
+        },
+      }),
+    ],
+  },
+});
+```
+
+After connecting the module to the application and `npm run build` and starting generation of documentation through `npm run docs:infrastructure`, you will have new files and scripts to run.
+
+New scripts mostly `package.json`
+
+Add database options to docker-compose file for application `docker-compose.yml` with real credenionals and add it to `.gitignore` file
+
+```yaml
+version: '3'
+services:
+  server-authorizer:
+    image: "lakhansamani/authorizer:1.3.8"
+    container_name: "server-authorizer"
+    ports:
+      - "8000:8080"
+    networks:
+      - "server-network"
+    environment:
+      REDIS_URL: "redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379"
+      DATABASE_URL: "postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer"
+      ADMIN_SECRET: "VfKSfPPljhHBXCEohnitursmgDxfAyiD"
+      DATABASE_TYPE: "postgres"
+      DATABASE_NAME: "authorizer"
+      FEATURE_NAME: "authorizer"
+      ORGANIZATION_NAME: "OrganizationName"
+      DEPENDS_ON_SERVICE_NAMES: "[object Object]"
+      IMAGE: "lakhansamani/authorizer:1.3.8"
+      EXTERNAL_CLIENT_PORT: "8000"
+      ENV: "production"
+      PORT: "8080"
+      COOKIE_NAME: "authorizer"
+      RESET_PASSWORD_URL: "/reset-password"
+      DISABLE_PLAYGROUND: "true"
+      ROLES: "user,admin"
+      DEFAULT_ROLES: "user"
+      JWT_ROLE_CLAIM: "role"
+      ORGANIZATION_LOGO: "Authorizer Logo"
+      ACCESS_TOKEN_EXPIRY_TIME: "30m"
+      COUCHBASE_BUCKET: "authorizer"
+      COUCHBASE_BUCKET_RAM_QUOTA: "1000"
+      COUCHBASE_SCOPE: "_default"
+    tty: true
+    restart: "always"
+    depends_on:
+      server-postgre-sql-migrations:
+        condition: "service_completed_successfully"
+      server-redis:
+        condition: "service_healthy"
+networks:
+  server-network:
+    driver: 'bridge'
+```
+
+New environment variable
+
+```bash
+SERVER_AUTHORIZER_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer?schema=public
+SERVER_AUTHORIZER_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
+SERVER_AUTHORIZER_INTERNAL_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer
+SERVER_AUTHORIZER_INTERNAL_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
+# server-authorizer (generated)
+REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
+DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer
+ADMIN_SECRET=VfKSfPPljhHBXCEohnitursmgDxfAyiD
+DATABASE_TYPE=postgres
+DATABASE_NAME=authorizer
+FEATURE_NAME=authorizer
+ORGANIZATION_NAME='OrganizationName'
+IMAGE=lakhansamani/authorizer:1.3.8
+EXTERNAL_CLIENT_PORT=8000
+ENV=production
+PORT=8080
+COOKIE_NAME=authorizer
+RESET_PASSWORD_URL=/reset-password
+DISABLE_PLAYGROUND=true
+ROLES=user,admin
+DEFAULT_ROLES=user
+JWT_ROLE_CLAIM=role
+ORGANIZATION_LOGO='Authorizer Logo'
+ACCESS_TOKEN_EXPIRY_TIME=30m
+COUCHBASE_BUCKET=authorizer
+COUCHBASE_BUCKET_RAM_QUOTA=1000
+COUCHBASE_SCOPE=_default
+```
+
+When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
+
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`adminSecret`|Super admin secret used to access the master data.|`obj['adminSecret']`, `process.env['ADMIN_SECRET']`|**isNotEmpty** (adminSecret should not be empty)|-|-|
+|`databaseType`|Which database you are using. Supported database types are postgres, mysql, planetscale, sqlite, sqlserver, mongodb, arangodb, yugabyte, mariadb, cassandradb, scylladb, couchbase, dynamodb.|`obj['databaseType']`, `process.env['DATABASE_TYPE']`|**isNotEmpty** (databaseType should not be empty)|-|-|
+|`databaseUrl`|Database connection string. In case of cluster url eg. for cassandra db, you can use comma separated IPs.|`obj['databaseUrl']`, `process.env['DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
+|`databaseName`|Name of database to connect to. This is useful in case of arangodb and mongodb. If not set, default value will be used.|`obj['databaseName']`, `process.env['DATABASE_NAME']`|**optional**|```authorizer```|```authorizer```|
+|`redisUrl`|Redis URL where sessions can be persisted	false	sessions will be stored in memory.|`obj['redisUrl']`, `process.env['REDIS_URL']`|**optional**|-|-|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name.|**optional**|```lakhansamani/authorizer:1.3.8```|-|
+|`featureName`|Feature name for generate prefix to environments keys.|**optional**|-|-|
+|`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
+|`externalClientPort`|External port for sharing container.|**optional**|```8000```|-|
+|`dependsOnServiceNames`|Depends on services|**optional**|-|-|
+|`env`|Which env you are running your server in. Supported envs production, development.|**optional**|```production```|-|
+|`databasePort`|Port on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb.|**optional**|-|-|
+|`databaseHost`|Host/IP on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb type.|**optional**|-|-|
+|`databaseUsername`|Username for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|**optional**|-|-|
+|`databasePassword`|Password for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|**optional**|-|-|
+|`databaseCert`|Base64 encoded certificate string used to make SSL connection. At the moment supported by cassandradb,scylladb type.|**optional**|-|-|
+|`databaseCertKey`|Base64 encoded key string used to make SSL connection. At the moment supported by cassandradb,scylladb type|**optional**|-|-|
+|`databaseCaCert`|Base64 encoded CA certificate string used to make SSL connection. At the moment supported by cassandradb, scylladb type.|**optional**|-|-|
+|`port`|Port on which server should be running.|**optional**|```8080```|-|
+|`authorizerUrl`|Domain name of the server, eg https://authorizer.herokuapp.com.|**optional**|-|-|
+|`cookieName`|Name of cookie to be set by server.|**optional**|```authorizer```|-|
+|`smtpHost`|SMTP host is used to send email verification emails and forgot password emails	false	If not set email sending can fail.|**optional**|-|-|
+|`smtpPort`|SMTP Port is used along with SMTP host.|**optional**|-|-|
+|`smtpUsername`|Username for your smtp provider.|**optional**|-|-|
+|`smtpPassword`|Password for your smt provider|**optional**|-|-|
+|`senderEmail`|Email to be used in From section while sending emails.|**optional**|-|-|
+|`senderName`|Email sender name that is displayed in the inbox instead of just showing the email address.|**optional**|-|-|
+|`resetPasswordUrl`|Reset password link, that can be used to send the correct forgot password link.|**optional**|```/reset-password```|-|
+|`disableBasicAuthentication`|Used to explicitly disable email and password based authentication.|**optional**|-|-|
+|`disableEmailVerification`|Used to disable the email verification while signing up.|**optional**|-|-|
+|`disableMagicLinkLogin`|Used to disable the password less login up.|**optional**|-|-|
+|`disableLoginPage`|Used to disable the default login page that comes with authorizer instance. This is helpful when user is building their custom login page.|**optional**|-|-|
+|`disableSignUp`|Used to disable the sign up feature. It is useful when you want to have beta release of your product and invite only limited users.|**optional**|-|-|
+|`disablePlayground`|To disable playground|**optional**|```true```|-|
+|`roles`|Comma separated list of roles that your platform supports.|**optional**|```user,admin```|-|
+|`defaultRoles`|Comma separated list of roles that acts as Default roles which you would like to assign to users while they signup /login.|**optional**|```user```|-|
+|`protectedRoles`|Comma separated list of roles for which signup should be disabled. Example admin roles. This roles can only assigned manually via super admin like adminUpdateProfile.|**optional**|-|-|
+|`jwtRoleClaim`|Claim key that will be part of JWT token.|**optional**|```role```|-|
+|`organizationName`|Name of organization that you want on default login page.|**optional**|```Authorizer```|-|
+|`organizationLogo`|Logo of organization that you want on default login page.|**optional**|```Authorizer Logo```|-|
+|`customAccessTokenScript`|Javascript function to add extra keys to your JWT id token. This feature is developed using otto and only supports writing function in ES5. Check the sample here.|**optional**|-|-|
+|`accessTokenExpiryTime`|Time interval for how long access token will be expired in 1h15m15s format.|**optional**|```30m```|-|
+|`awsRegion`|AWS, region id, where dynamod db tables are to be created. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
+|`awsAccessKeyId`|AWS access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
+|`awsSecretAccessKey`|AWS secret access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
+|`couchbaseBucket`|Bucket used for couchbase database. Used with DATABASE_TYPE=couchbase.|**optional**|```authorizer```|-|
+|`couchbaseBucketRamQuota`|RAM Quota for the bucket used for couchbase database. It has to be numeric value only. Used with DATABASE_TYPE=couchbase.|**optional**|```1000```|-|
+|`couchbaseScope`|Scope in which bucket is created. Used with DATABASE_TYPE=couchbase.|**optional**|```_default```|-|
+|`googleClientId`|OAuth Google login client id.|**optional**|-|-|
+|`googleClientSecret`|OAuth Google login client secret.|**optional**|-|-|
+|`githubClientId`|OAuth Github login client id.|**optional**|-|-|
+|`githubClientSecret`|OAuth Github login client secret.|**optional**|-|-|
+|`facebookClientId`|OAuth Facebook login client id.|**optional**|-|-|
+|`facebookClientSecret`|OAuth Facebook login client secret.|**optional**|-|-|
+|`linkedinClientId`|OAuth LinkedIn login client id.|**optional**|-|-|
+|`linkedinClientSecret`|OAuth LinkedIn login client secret.|**optional**|-|-|
+|`appleClientId`|OAuth Apple login client id.|**optional**|-|-|
+|`appleClientSecret`|OAuth Apple login client secret.|**optional**|-|-|
+|`twitterClientId`|OAuth Twitter login client id.|**optional**|-|-|
+|`twitterClientSecret`|OAuth Twitter login client secret.|**optional**|-|-|
+|`microsoftClientId`|OAuth Microsoft login client id.|**optional**|-|-|
+|`microsoftClientSecret`|OAuth Microsoft login client secret.|**optional**|-|-|
+|`microsoftActiveDirectoryTenantId`|Microsoft Active Directory Tenant ID obtained from azure portal.|**optional**|-|-|
 
 [Back to Top](#modules)
 

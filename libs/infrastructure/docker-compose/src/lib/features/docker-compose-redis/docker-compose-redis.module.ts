@@ -71,9 +71,9 @@ export const { DockerComposeRedis } = createNestModule({
         const networks =
           (project?.name
             ? staticConfiguration?.networks?.map((n) => ({
-              ...n,
-              name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
-            })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
+                ...n,
+                name: kebabCase([project?.name, n.name, 'network'].filter(Boolean).join('-')),
+              })) ?? [{ name: kebabCase(`${project?.name}-network`), driver: 'bridge' }]
             : staticConfiguration?.networks) ?? [];
 
         if (networks?.length === 0) {
@@ -83,11 +83,11 @@ export const { DockerComposeRedis } = createNestModule({
         const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.Redis);
         let redisSettings:
           | {
-            host: string;
-            port: number;
-            database: string;
-            password: string | null;
-          }
+              host: string;
+              port: number;
+              database: string;
+              password: string | null;
+            }
           | undefined = undefined;
 
         if (!staticEnvironments?.redisUrl && !isInfrastructureMode()) {
@@ -117,8 +117,8 @@ export const { DockerComposeRedis } = createNestModule({
                   environment: {
                     ...(redisSettings?.database
                       ? {
-                        REDIS_DATABASE: redisSettings?.database,
-                      }
+                          REDIS_DATABASE: redisSettings?.database,
+                        }
                       : {}),
                     ...(redisSettings?.password ? { REDIS_PASSWORD: redisSettings?.password } : {}),
                     ...(staticConfiguration?.disableCommands
@@ -129,8 +129,20 @@ export const { DockerComposeRedis } = createNestModule({
                       ? { REDIS_IO_THREADS_DO_READS: staticConfiguration?.ioThreadsDoReads }
                       : {}),
                   },
+                  keysOfEnvironmentsWithStaticValue: (
+                    [
+                      'disableCommands',
+                      'featureName',
+                      'image',
+                      'ioThreads',
+                      'ioThreadsDoReads',
+                      'networks',
+                    ] as (keyof DockerComposeRedisConfiguration)[]
+                  ).map((v) => constantCase(v)),
                   healthcheck: {
-                    test: redisSettings?.password ? ['CMD-SHELL', 'redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG'] : ['CMD-SHELL', 'redis-cli ping | grep PONG'],
+                    test: redisSettings?.password
+                      ? ['CMD-SHELL', 'redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG']
+                      : ['CMD-SHELL', 'redis-cli ping | grep PONG'],
                     interval: '5s',
                     timeout: '5s',
                     retries: 5,

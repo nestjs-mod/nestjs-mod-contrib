@@ -30,6 +30,18 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'authorizer',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          packageFile: join(rootFolder, 'libs/core/authorizer/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/authorizer/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/authorizer'),
+          utilsFolders: [join(rootFolder, 'libs/core/authorizer/src/lib')],
+          modules: [import('@nestjs-mod/authorizer')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'minio',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
