@@ -12,10 +12,10 @@ services:
     networks:
       - "example-nats-microservice-network"
     environment:
-      NATS_ENABLE_AUTH: "${NATS_ENABLE_AUTH}"
-      NATS_USERNAME: "${NATS_USERNAME}"
-      NATS_PASSWORD: "${NATS_PASSWORD}"
-      NATS_EXTRA_ARGS: "${NATS_EXTRA_ARGS}"
+      NATS_ENABLE_AUTH: "${EXAMPLE_NATS_MICROSERVICE_NATS_ENABLE_AUTH}"
+      NATS_USERNAME: "${EXAMPLE_NATS_MICROSERVICE_NATS_USERNAME}"
+      NATS_PASSWORD: "${EXAMPLE_NATS_MICROSERVICE_NATS_PASSWORD}"
+      NATS_EXTRA_ARGS: "${EXAMPLE_NATS_MICROSERVICE_NATS_EXTRA_ARGS}"
     tty: true
     restart: "always"
 networks:

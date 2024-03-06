@@ -3,7 +3,9 @@ import {
   DotEnvService,
   GitignoreService,
   InjectableFeatureConfigurationType,
+  NxProjectJsonService,
   PackageJsonService,
+  defaultContextName,
   merge,
 } from '@nestjs-mod/common';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
@@ -33,7 +35,8 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     private readonly packageJsonService: PackageJsonService,
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly gitignoreService: GitignoreService,
-    private readonly dotEnvService: DotEnvService
+    private readonly dotEnvService: DotEnvService,
+    private readonly nxProjectJsonService: NxProjectJsonService
   ) {}
 
   async onApplicationBootstrap() {
@@ -49,12 +52,17 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
   }
 
   private async createDockerComposeFile() {
+    const projectJson = this.nxProjectJsonService.read();
+    const packageJson = this.packageJsonService.read();
+    const projectName = projectJson?.name || packageJson?.name || defaultContextName();
+
     const featureServices: DockerComposeFeatureConfiguration = Object.entries(this.dockerComposeFeatureConfigurations)
-      .map(([, services]) => services)
+      .map(([featureModuleName, services]) => services.map((s) => ({ ...s, featureModuleName })))
       .reduce(
         (all, cur) => ({ ...all, ...cur.reduce((curAll, curCur) => merge(curAll, curCur.featureConfiguration), {}) }),
         {}
       );
+    // todo: add support featureModuleName
     const manualServices: DockerComposeFeatureConfiguration = this.manualDockerComposeFeatures
       .getManualDockerComposeFeatureConfigurations()
       .reduce((all, cur) => merge(all, cur), {});
@@ -74,10 +82,16 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     for (const serviceName of Object.keys(bothServicesWithEnvs.services || {})) {
       let writeTitle = true;
       for (const envKey of Object.keys(bothServicesWithEnvs.services?.[serviceName].environment || {})) {
+        const fullEnvKey = [...new Set([projectName, bothServicesWithEnvs.featureModuleName, envKey])]
+          .filter(Boolean)
+          .map((v) => constantCase(v || envKey))
+          .join('_');
         let value =
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (bothServicesWithEnvs?.services?.[serviceName]?.environment as any)?.[envKey] ||
-          snakeCase(`value_for_${envKey}`);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (bothServicesWithEnvs?.services?.[serviceName]?.environment as any)?.[fullEnvKey] ||
+          snakeCase(`value_for_${fullEnvKey}`);
         value = typeof value === 'string' || typeof value === 'number' || !value ? value : String(value);
 
         const keys = Object.keys(process.env);
@@ -105,9 +119,11 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           }
 
           delete lines[envKey];
-          lines[envKey] = value;
+          delete lines[fullEnvKey];
+          lines[fullEnvKey] = value;
         } else {
           delete lines[envKey];
+          delete lines[fullEnvKey];
         }
       }
     }
@@ -139,6 +155,10 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     for (const serviceName of Object.keys(sampleBothServices.services || {})) {
       for (const envKey of Object.keys(sampleBothServices.services?.[serviceName].environment || {})) {
+        const fullEnvKey = [...new Set([projectName, bothServicesWithEnvs.featureModuleName, envKey])]
+          .filter(Boolean)
+          .map((v) => constantCase(v || envKey))
+          .join('_');
         if (!sampleBothServices.services![serviceName].environment) {
           sampleBothServices.services![serviceName].environment = {};
         }
@@ -153,13 +173,18 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (sampleBothServices.services![serviceName].environment as any)[envKey] =
             existsServices?.services?.[serviceName]?.environment?.[envKey] ||
+            existsServices?.services?.[serviceName]?.environment?.[fullEnvKey] ||
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (bothServicesWithEnvs.services![serviceName].environment as any)[envKey] ||
-            snakeCase(`value_for_${envKey}`);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (bothServicesWithEnvs.services![serviceName].environment as any)[fullEnvKey] ||
+            snakeCase(`value_for_${fullEnvKey}`);
         } else {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (sampleBothServices.services![serviceName].environment as any)[envKey] =
-            existsServices?.services?.[serviceName]?.environment?.[envKey] || snakeCase(`value_for_${envKey}`);
+            existsServices?.services?.[serviceName]?.environment?.[envKey] ||
+            existsServices?.services?.[serviceName]?.environment?.[fullEnvKey] ||
+            snakeCase(`value_for_${fullEnvKey}`);
         }
       }
     }
@@ -185,6 +210,10 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     for (const serviceName of Object.keys(sampleBothProdServices.services || {})) {
       let writeTitle = true;
       for (const envKey of Object.keys(sampleBothProdServices.services?.[serviceName].environment || {})) {
+        const fullEnvKey = [...new Set([projectName, bothServicesWithEnvs.featureModuleName, envKey])]
+          .filter(Boolean)
+          .map((v) => constantCase(v || envKey))
+          .join('_');
         if (!sampleBothProdServices.services![serviceName].environment) {
           sampleBothProdServices.services![serviceName].environment = {};
         }
@@ -198,12 +227,12 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           delete (sampleBothServices.services![serviceName].environment as any)[envKey];
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (sampleBothProdServices.services![serviceName].environment as any)[envKey] = `\${${envKey}}`;
+          (sampleBothProdServices.services![serviceName].environment as any)[envKey] = `\${${fullEnvKey}}`;
         }
 
         if (
           !sampleBothProdServices.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
-            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(fullEnvKey) === constantCase(k)
           )
         ) {
           if (writeTitle) {
@@ -213,11 +242,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
             writeTitle = false;
           }
-          const value = prodLines[envKey] || lines[envKey] || snakeCase(`value_for_${envKey}`);
+          const value = prodLines[fullEnvKey] || lines[fullEnvKey] || snakeCase(`value_for_${fullEnvKey}`);
           delete prodLines[envKey];
-          prodLines[envKey] = value;
+          delete prodLines[fullEnvKey];
+          prodLines[fullEnvKey] = value;
         } else {
           delete prodLines[envKey];
+          delete prodLines[fullEnvKey];
         }
       }
     }

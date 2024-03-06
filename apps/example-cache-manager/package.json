@@ -8,10 +8,12 @@
   },
   "devScripts": [
     "manual:prepare",
+    "docker-compose:start:example-cache-manager",
     "serve:dev:example-cache-manager"
   ],
   "prodScripts": [
     "manual:prepare",
+    "docker-compose:start:example-cache-manager",
     "start:prod:example-cache-manager"
   ],
   "testsScripts": [

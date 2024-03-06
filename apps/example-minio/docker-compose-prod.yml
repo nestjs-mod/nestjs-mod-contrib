@@ -12,8 +12,8 @@ services:
     networks:
       - "example-minio-network"
     environment:
-      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
-      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+      MINIO_ROOT_USER: "${EXAMPLE_MINIO_MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${EXAMPLE_MINIO_MINIO_ROOT_PASSWORD}"
     healthcheck:
       test:
         - "CMD-SHELL"

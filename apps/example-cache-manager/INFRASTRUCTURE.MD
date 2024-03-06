@@ -13,6 +13,9 @@ npm install
 # preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
 npm run manual:prepare
 
+# running the docker-compose infrastructure for example-cache-manager
+npm run docker-compose:start:example-cache-manager
+
 # running example-cache-manager source code in watch mode
 npm run serve:dev:example-cache-manager
 ```
@@ -20,6 +23,9 @@ npm run serve:dev:example-cache-manager
 ```bash
 # preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
 npm run manual:prepare
+
+# running the docker-compose infrastructure for example-cache-manager
+npm run docker-compose:start:example-cache-manager
 
 # launching a built example-cache-manager (you must first build it using the build command)
 npm run start:prod:example-cache-manager

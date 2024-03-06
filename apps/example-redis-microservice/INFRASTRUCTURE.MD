@@ -190,7 +190,7 @@ Static variables with primitive types used in the module and can be used at the 
 |`host`|Host|`obj['host']`, `process.env['EXAMPLE_REDIS_MICROSERVICE_REDIS_HOST']`|**optional**|-|-|
 |`port`|Port|`obj['port']`, `process.env['EXAMPLE_REDIS_MICROSERVICE_REDIS_PORT']`|**optional**|```6379```|```6379```|
 |`username`|If set, client will send AUTH command with the value of this option as the first argument when connected, this is supported since Redis 6|`obj['username']`, `process.env['EXAMPLE_REDIS_MICROSERVICE_REDIS_USERNAME']`|**optional**|-|-|
-|`password`|If set, client will send AUTH command with the value of this option when connected|`obj['password']`, `process.env['EXAMPLE_REDIS_MICROSERVICE_REDIS_PASSWORD']`|**optional**|-|```redis_password```|
+|`password`|If set, client will send AUTH command with the value of this option when connected|`obj['password']`, `process.env['EXAMPLE_REDIS_MICROSERVICE_REDIS_PASSWORD']`|**optional**|-|-|
 |`db`|Database index to use|`obj['db']`, `process.env['EXAMPLE_REDIS_MICROSERVICE_REDIS_DB']`|**optional**|```0```|```0```|
 
 ### NestjsPinoLoggerModule

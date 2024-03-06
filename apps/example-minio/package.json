@@ -13,11 +13,6 @@
   "frontendDevScripts": [
     "serve:dev:example-minio-angular"
   ],
-  "prodScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-minio",
-    "start:prod:example-minio"
-  ],
   "testsScripts": [
     "test:example-minio"
   ]

@@ -78,43 +78,6 @@ bootstrapNestApplication({
           nginxLogsFolder: join(appFolder, 'ngnix', 'logs'),
           nginxConfigFolder: join(appFolder, 'ngnix', 'config'),
           featureName: userFeatureName,
-          nginxConfigContent: `location /api {
-        if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Max-Age' 1728000;
-            add_header 'Content-Type' 'text/plain charset=UTF-8';
-            add_header 'Content-Length' 0;
-            return 204;
-        }
-        proxy_pass http://server:%EXAMPLE_MINIO_PORT%;
-        proxy_http_version 1.1;
-        proxy_set_header Accept-Language $http_accept_language;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-        proxy_set_header Host $host;
-        proxy_set_header Origin $http_origin;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location /graphql {
-        if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Max-Age' 1728000;
-            add_header 'Content-Type' 'text/plain charset=UTF-8';
-            add_header 'Content-Length' 0;
-            return 204;
-        }
-        proxy_pass http://server:%EXAMPLE_MINIO_PORT%;
-        proxy_http_version 1.1;
-        proxy_set_header Accept-Language $http_accept_language;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection $connection_upgrade;
-        proxy_set_header Host $host;
-        proxy_set_header Origin $http_origin;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }`,
         },
       }),
     ],

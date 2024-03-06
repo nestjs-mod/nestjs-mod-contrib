@@ -10,6 +10,9 @@ import {
 
 @ConfigModel()
 export class DockerComposeFeatureConfiguration implements Compose {
+  // need for create env files from code
+  featureModuleName?: string;
+
   @ConfigModelProperty({
     description:
       'The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md',
