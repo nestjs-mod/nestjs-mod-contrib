@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.11.2...docker-compose-v1.12.0) (2024-03-06)
+
+
+### Features
+
+* update logic for search env keys, add project name to key name ([5e3c3af](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5e3c3af3122e564ca596392bbd0cf5018043f3cd))
+
 ## [1.11.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.11.1...docker-compose-v1.11.2) (2024-03-06)
 
 
