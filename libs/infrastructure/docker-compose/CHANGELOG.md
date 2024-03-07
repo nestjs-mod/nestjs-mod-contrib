@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.13.0...docker-compose-v1.13.1) (2024-03-07)
+
+
+### Bug Fixes
+
+* add generate copy of env keys with localhost docker services ([62f4917](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/62f4917201e524f80ee8ac465a47ffb8bf6442a2))
+
 # [1.13.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.12.0...docker-compose-v1.13.0) (2024-03-07)
 
 
