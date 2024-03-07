@@ -1,5 +1,5 @@
 import { Authorizer, ConfigType } from '@authorizerdev/authorizer-js';
-import { ExecutionContext, Injectable, OnModuleInit } from '@nestjs/common';
+import { ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthorizerConfiguration } from './authorizer.configuration';
 import { AllowEmptyUser, CheckAccess } from './authorizer.decorators';
@@ -8,7 +8,7 @@ import { AuthorizerError } from './authorizer.errors';
 import { AuthorizerUser } from './authorizer.types';
 
 @Injectable()
-export class AuthorizerService extends Authorizer implements OnModuleInit {
+export class AuthorizerService extends Authorizer {
   constructor(
     private readonly _config: ConfigType,
     private readonly reflector: Reflector,
@@ -16,21 +16,6 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
     private readonly authorizerEnvironments: AuthorizerEnvironments
   ) {
     super(_config);
-  }
-
-  async onModuleInit() {
-    const authEnvs: { CLIENT_ID: string } = (
-      (await this.graphqlQuery({
-        query: '{_env{CLIENT_ID}}',
-        variables: {},
-        headers: {
-          'x-authorizer-admin-secret': this.authorizerEnvironments.adminSecret,
-        },
-      })) as // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      any
-    )._env;
-
-    this.config.clientID = authEnvs['CLIENT_ID'];
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -1,15 +1,15 @@
 import { ConfigType } from '@authorizerdev/authorizer-js';
-import {
-  ArrayOfStringTransformer,
-  EnvModel,
-  EnvModelProperty,
-} from '@nestjs-mod/common';
+import { ArrayOfStringTransformer, EnvModel, EnvModelProperty } from '@nestjs-mod/common';
 import { IsNotEmpty } from 'class-validator';
 
 @EnvModel()
-export class AuthorizerEnvironments
-  implements Omit<ConfigType, 'extraHeaders' | 'clientID'>
-{
+export class AuthorizerEnvironments implements Omit<ConfigType, 'extraHeaders' | 'clientID'> {
+  @EnvModelProperty({
+    description: 'Client ID',
+  })
+  @IsNotEmpty()
+  clientId!: string;
+
   @EnvModelProperty({
     description: 'Authorizer URL',
   })
@@ -25,8 +25,7 @@ export class AuthorizerEnvironments
   @EnvModelProperty({
     description: 'Admin secret',
   })
-  @IsNotEmpty()
-  adminSecret!: string;
+  adminSecret?: string;
 
   @EnvModelProperty({
     description:

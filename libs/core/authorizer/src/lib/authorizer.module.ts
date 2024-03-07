@@ -31,8 +31,15 @@ export const { AuthorizerModule } = createNestModule({
                 {
                   authorizerURL: authorizerEnvironments.authorizerURL,
                   redirectURL: authorizerEnvironments.redirectURL,
-                  clientID: '',
-                  extraHeaders: options.staticConfiguration.extraHeaders,
+                  clientID: authorizerEnvironments.clientId,
+                  extraHeaders: {
+                    ...options.staticConfiguration.extraHeaders,
+                    ...(authorizerEnvironments.adminSecret
+                      ? {
+                          'x-authorizer-admin-secret': authorizerEnvironments.adminSecret,
+                        }
+                      : {}),
+                  },
                 } as ConfigType,
                 reflector,
                 options.staticConfiguration,
