@@ -121,6 +121,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       }
     }
 
+    for (const [key] of Object.entries(lines)) {
+      const localKey = `LOCALHOST_${key}`;
+      for (const serviceName of Object.keys(bothServicesWithEnvs.services || {})) {
+        if (lines[key].includes(serviceName) && !key.startsWith('LOCALHOST')) {
+          const localValue = lines[localKey] !== undefined ? lines[localKey] : lines[key];
+          delete lines[`# ${key} (generated)`];
+          delete lines[localKey];
+          lines[`# ${key} (generated)`] = '';
+          lines[localKey] = localValue.split(serviceName).join('localhost');
+        }
+      }
+    }
+
     const mainData = this.dockerComposeConfiguration.beforeSaveDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveDockerComposeFile({
           data: bothServicesWithEnvs,
@@ -245,6 +258,20 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         }
       }
     }
+
+    for (const [key] of Object.entries(prodLines)) {
+      const localKey = `LOCALHOST_${key}`;
+      for (const serviceName of Object.keys(sampleBothProdServices.services || {})) {
+        if (prodLines[key].includes(serviceName) && !key.startsWith('LOCALHOST')) {
+          const localValue = prodLines[localKey] !== undefined ? prodLines[localKey] : prodLines[key];
+          delete prodLines[`# ${key} (generated)`];
+          delete prodLines[localKey];
+          prodLines[`# ${key} (generated)`] = '';
+          prodLines[localKey] = localValue.split(serviceName).join('localhost');
+        }
+      }
+    }
+
     const prodData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
           data: sampleBothProdServices,
