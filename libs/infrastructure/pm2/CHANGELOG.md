@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.10.0...pm2-v1.11.0) (2024-03-07)
+
+
+### Features
+
+* update logic for search env keys in docker compose services, use service name as prefix for env key name ([e544c7b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e544c7b093094d5ccb1b9766430ac1e5e434a475))
+
 # [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.9.1...pm2-v1.10.0) (2024-03-06)
 
 
