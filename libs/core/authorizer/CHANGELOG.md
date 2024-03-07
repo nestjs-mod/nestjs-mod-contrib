@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.0...authorizer-v1.1.1) (2024-03-07)
+
+
+### Bug Fixes
+
+* add clientId options and remove get it on onModuleInit ([3ae52e0](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/3ae52e0621fb451ec35eda75ca05240f106d357c))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.0.0...authorizer-v1.1.0) (2024-03-07)
 
 
