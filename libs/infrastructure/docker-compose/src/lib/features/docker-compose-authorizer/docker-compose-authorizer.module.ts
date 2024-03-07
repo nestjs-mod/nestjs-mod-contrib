@@ -116,15 +116,13 @@ export const { DockerComposeAuthorizer } = createNestModule({
                       {}
                     ),
                   },
-                  keysOfEnvironmentsWithStaticValue: (
-                    [
-                      'featureName',
-                      'image',
-                      'networks',
-                      'dependsOnServiceNames',
-                      'env',
-                    ] as (keyof DockerComposeAuthorizerConfiguration)[]
-                  ).map((v) => constantCase(v)),
+                  keysOfEnvironmentsWithStaticValue: [
+                    'featureName',
+                    'image',
+                    'networks',
+                    'dependsOnServiceNames',
+                    'env',
+                  ] as (keyof DockerComposeAuthorizerConfiguration)[],
                   tty: true,
                   restart: 'always',
                   depends_on: Object.entries(staticConfiguration.dependsOnServiceNames || {})

@@ -107,14 +107,12 @@ export const { DockerComposeNats } = createNestModule({
                     ...(staticEnvironments?.natsPassword ? { NATS_PASSWORD: staticEnvironments?.natsPassword } : {}),
                     ...(staticConfiguration.extraArgs ? { NATS_EXTRA_ARGS: staticConfiguration.extraArgs } : {}),
                   },
-                  keysOfEnvironmentsWithStaticValue: (
-                    [
-                      'featureName',
-                      'image',
-                      'extraArgs',
-                      'networks'
-                    ] as (keyof DockerComposeNatsConfiguration)[]
-                  ).map((v) => constantCase(v)),
+                  keysOfEnvironmentsWithStaticValue: [
+                    'featureName',
+                    'image',
+                    'extraArgs',
+                    'networks',
+                  ] as (keyof DockerComposeNatsConfiguration)[],
                   tty: true,
                   restart: 'always',
                 },

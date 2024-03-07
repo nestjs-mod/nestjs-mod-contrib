@@ -179,17 +179,15 @@ export const { DockerComposeMinio } = createNestModule({
                         }
                       : {}),
                   },
-                  keysOfEnvironmentsWithStaticValue: (
-                    [
-                      'featureName',
-                      'image',
-                      'networks',
-                      'nginxBucketsLocations',
-                      'nginxConfigContent',
-                      'nginxConfigFolder',
-                      'nginxLogsFolder',
-                    ] as (keyof DockerComposeMinioConfiguration)[]
-                  ).map((v) => constantCase(v)),
+                  keysOfEnvironmentsWithStaticValue: [
+                    'featureName',
+                    'image',
+                    'networks',
+                    'nginxBucketsLocations',
+                    'nginxConfigContent',
+                    'nginxConfigFolder',
+                    'nginxLogsFolder',
+                  ] as (keyof DockerComposeMinioConfiguration)[],
                   healthcheck: {
                     test: ['CMD-SHELL', 'mc', 'ready', 'local'],
                     interval: '5s',

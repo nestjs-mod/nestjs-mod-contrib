@@ -129,16 +129,14 @@ export const { DockerComposeRedis } = createNestModule({
                       ? { REDIS_IO_THREADS_DO_READS: staticConfiguration?.ioThreadsDoReads }
                       : {}),
                   },
-                  keysOfEnvironmentsWithStaticValue: (
-                    [
-                      'disableCommands',
-                      'featureName',
-                      'image',
-                      'ioThreads',
-                      'ioThreadsDoReads',
-                      'networks',
-                    ] as (keyof DockerComposeRedisConfiguration)[]
-                  ).map((v) => constantCase(v)),
+                  keysOfEnvironmentsWithStaticValue: [
+                    'disableCommands',
+                    'featureName',
+                    'image',
+                    'ioThreads',
+                    'ioThreadsDoReads',
+                    'networks',
+                  ] as (keyof DockerComposeRedisConfiguration)[],
                   healthcheck: {
                     test: redisSettings?.password
                       ? ['CMD-SHELL', 'redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG']
