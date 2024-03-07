@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.3.0...cache-manager-v1.4.0) (2024-03-07)
+
+
+### Features
+
+* update logic for search env keys in docker compose services, use service name as prefix for env key name ([e544c7b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e544c7b093094d5ccb1b9766430ac1e5e434a475))
+
 # [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.2.3...cache-manager-v1.3.0) (2024-03-06)
 
 
