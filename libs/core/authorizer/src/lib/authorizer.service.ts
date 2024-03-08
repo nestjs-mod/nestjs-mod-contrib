@@ -16,6 +16,11 @@ export class AuthorizerService extends Authorizer {
     private readonly authorizerEnvironments: AuthorizerEnvironments
   ) {
     super(_config);
+    this.config.extraHeaders = {
+      ...(this.config.extraHeaders || {}),
+      ['x-authorizer-url']:
+        _config.extraHeaders?.['x-authorizer-url'] || this.config.extraHeaders?.['x-authorizer-url'] || '',
+    };
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
