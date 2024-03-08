@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.1...authorizer-v1.1.2) (2024-03-08)
+
+
+### Bug Fixes
+
+* rewrite x-authorizer-url in AuthorizerService constructor ([e73b7e8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e73b7e86199d800398a8f1953086c8fdfce3411b))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.0...authorizer-v1.1.1) (2024-03-07)
 
 
