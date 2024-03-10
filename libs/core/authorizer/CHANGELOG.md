@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.2...authorizer-v1.1.3) (2024-03-10)
+
+
+### Bug Fixes
+
+* add decorator for extract token - CurrentAuthorizerUserToken, add correct replace x-authorizer-url header ([39f8eeb](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/39f8eeb25ce18c48ff4e21e807b517f71e039cc6))
+
 ## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.1...authorizer-v1.1.2) (2024-03-08)
 
 
