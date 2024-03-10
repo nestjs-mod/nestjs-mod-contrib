@@ -6,10 +6,9 @@ import {
 import { Reflector } from '@nestjs/core';
 import { AUTHORIZER_MODULE_NAME } from './authorizer.constants';
 
-export const { InjectService: InjectAuthorizerService } =
-  getNestModuleDecorators({
-    moduleName: AUTHORIZER_MODULE_NAME,
-  });
+export const { InjectService: InjectAuthorizerService } = getNestModuleDecorators({
+  moduleName: AUTHORIZER_MODULE_NAME,
+});
 
 export const {
   getServiceToken: getAuthorizerServiceToken,
@@ -25,9 +24,13 @@ export const CheckAccess = Reflector.createDecorator<CheckAccessOptions>();
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { AuthorizerRequest, CheckAccessOptions } from './authorizer.types';
 
-export const CurrentAuthorizerUser = createParamDecorator(
-  (data: unknown, ctx: ExecutionContext) => {
-    const request = getRequestFromExecutionContext(ctx) as AuthorizerRequest;
-    return request.authorizerUser;
-  }
-);
+export const CurrentAuthorizerUser = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+  const request = getRequestFromExecutionContext(ctx) as AuthorizerRequest;
+  return request.authorizerUser;
+});
+
+export const CurrentAuthorizerUserToken = createParamDecorator((data: unknown, ctx: ExecutionContext) => {
+  const request = getRequestFromExecutionContext(ctx) as AuthorizerRequest;
+
+  return request?.headers?.authorization?.split(' ')[1];
+});

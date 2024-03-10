@@ -19,7 +19,9 @@ export class AuthorizerService extends Authorizer {
     this.config.extraHeaders = {
       ...(this.config.extraHeaders || {}),
       ['x-authorizer-url']:
-        _config.extraHeaders?.['x-authorizer-url'] || this.config.extraHeaders?.['x-authorizer-url'] || '',
+        authorizerConfiguration.extraHeaders?.['x-authorizer-url'] ||
+        this.config.extraHeaders?.['x-authorizer-url'] ||
+        '',
     };
   }
 
