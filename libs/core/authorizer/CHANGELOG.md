@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.3...authorizer-v1.1.4) (2024-03-10)
+
+
+### Bug Fixes
+
+* update logic with validate token ([8beff8d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8beff8d55116ad94e7085257976c2419873a3aa1))
+
 ## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.2...authorizer-v1.1.3) (2024-03-10)
 
 
