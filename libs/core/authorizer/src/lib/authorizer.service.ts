@@ -1,5 +1,5 @@
 import { Authorizer, ConfigType } from '@authorizerdev/authorizer-js';
-import { ExecutionContext, Injectable } from '@nestjs/common';
+import { ExecutionContext, Injectable, Logger } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthorizerConfiguration } from './authorizer.configuration';
 import { AllowEmptyUser, CheckAccess } from './authorizer.decorators';
@@ -9,6 +9,8 @@ import { AuthorizerUser } from './authorizer.types';
 
 @Injectable()
 export class AuthorizerService extends Authorizer {
+  private logger = new Logger(AuthorizerService.name);
+
   constructor(
     private readonly _config: ConfigType,
     private readonly reflector: Reflector,
@@ -45,7 +47,15 @@ export class AuthorizerService extends Authorizer {
       if (token) {
         // check user in authorizer
         try {
-          req.authorizerUser = (await this.getProfile(req?.headers)) as AuthorizerUser;
+          const getProfileResult = await this.getProfile(req?.headers);
+          if (getProfileResult.errors?.length === 0) {
+            req.authorizerUser = getProfileResult.data as AuthorizerUser;
+          } else {
+            for (const err of getProfileResult.errors) {
+              this.logger.error(err.message, err.stack);
+            }
+            throw new AuthorizerError(getProfileResult.errors[0].message);
+          }
         } catch (err) {
           req.authorizerUser = { id: undefined };
         }
