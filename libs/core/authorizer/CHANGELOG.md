@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.5...authorizer-v1.1.6) (2024-03-11)
+
+
+### Bug Fixes
+
+* set externalUserId in request if it empty after get profile from authorizer ([73740c5](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/73740c5a9ea4cfb7c2be2ef283e54572d00b3a00))
+
 ## [1.1.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.4...authorizer-v1.1.5) (2024-03-11)
 
 
