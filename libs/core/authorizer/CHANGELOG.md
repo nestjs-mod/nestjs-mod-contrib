@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.4...authorizer-v1.1.5) (2024-03-11)
+
+
+### Bug Fixes
+
+* set authorizerUser id to externalUserId in header if it empty ([c0ac026](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c0ac026366d2ea69e9819c29ed768f0a44f902a7))
+
 ## [1.1.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.3...authorizer-v1.1.4) (2024-03-10)
 
 
