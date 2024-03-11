@@ -100,6 +100,7 @@ export class AuthorizerService extends Authorizer {
 
     if (req.authorizerUser?.id && !req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName!]) {
       req.headers[this.authorizerConfiguration.externalUserIdHeaderName!] = req.authorizerUser?.id;
+      req.externalUserId = req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName!];
     }
 
     return req.authorizerUser;
