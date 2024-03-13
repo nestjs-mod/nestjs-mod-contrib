@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.6...authorizer-v1.1.7) (2024-03-13)
+
+
+### Bug Fixes
+
+* add skippedByAuthorizer options to AuthorizerRequest for skip validations in other guards ([63e07b3](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/63e07b395426f006260557f9bea7fcb826f5c970))
+
 ## [1.1.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.5...authorizer-v1.1.6) (2024-03-11)
 
 
