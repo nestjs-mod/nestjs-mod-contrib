@@ -103,6 +103,7 @@ export class AuthorizerService extends Authorizer {
       req.externalUserId = req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName!];
     }
 
+    req.skippedByAuthorizer = req.authorizerUser === undefined || req.authorizerUser?.id === undefined;
     return req.authorizerUser;
   }
 }
