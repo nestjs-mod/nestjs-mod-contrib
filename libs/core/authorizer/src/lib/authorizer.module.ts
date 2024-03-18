@@ -19,43 +19,43 @@ export const { AuthorizerModule } = createNestModule({
     isInfrastructureMode()
       ? []
       : [
-          {
-            // need for patch empty service
-            provide: `${AUTHORIZER_MODULE_NAME}_loader`,
-            useFactory: async (
-              emptyAuthorizerService: AuthorizerService,
-              authorizerEnvironments: AuthorizerEnvironments,
-              reflector: Reflector
-            ) => {
-              const authorizerService = new AuthorizerService(
-                {
-                  authorizerURL: authorizerEnvironments.authorizerURL,
-                  redirectURL: authorizerEnvironments.redirectURL,
-                  clientID: authorizerEnvironments.clientId,
-                  extraHeaders: {
-                    ...options.staticConfiguration.extraHeaders,
-                    ...(authorizerEnvironments.adminSecret
-                      ? {
-                          'x-authorizer-admin-secret': authorizerEnvironments.adminSecret,
-                        }
-                      : {}),
-                  },
-                } as ConfigType,
-                reflector,
-                options.staticConfiguration,
-                authorizerEnvironments
-              );
+        {
+          // need for patch empty service
+          provide: `${AUTHORIZER_MODULE_NAME}_loader`,
+          useFactory: async (
+            emptyAuthorizerService: AuthorizerService,
+            authorizerEnvironments: AuthorizerEnvironments,
+            reflector: Reflector
+          ) => {
+            const authorizerService = new AuthorizerService(
+              {
+                authorizerURL: authorizerEnvironments.authorizerURL,
+                redirectURL: authorizerEnvironments.redirectURL,
+                clientID: authorizerEnvironments.clientId || '',
+                extraHeaders: {
+                  ...options.staticConfiguration.extraHeaders,
+                  ...(authorizerEnvironments.adminSecret
+                    ? {
+                      'x-authorizer-admin-secret': authorizerEnvironments.adminSecret,
+                    }
+                    : {}),
+                },
+              } as ConfigType,
+              reflector,
+              options.staticConfiguration,
+              authorizerEnvironments
+            );
 
-              Object.setPrototypeOf(emptyAuthorizerService, authorizerService);
-              Object.assign(emptyAuthorizerService, authorizerService);
-            },
-            inject: [
-              AuthorizerService,
-              AuthorizerEnvironments,
-              Reflector,
-              // need for wait resolve env config
-              getAuthorizerEnvironmentsLoaderToken(options.contextName),
-            ],
+            Object.setPrototypeOf(emptyAuthorizerService, authorizerService);
+            Object.assign(emptyAuthorizerService, authorizerService);
           },
-        ],
+          inject: [
+            AuthorizerService,
+            AuthorizerEnvironments,
+            Reflector,
+            // need for wait resolve env config
+            getAuthorizerEnvironmentsLoaderToken(options.contextName),
+          ],
+        },
+      ],
 });

@@ -7,7 +7,6 @@ export class AuthorizerEnvironments implements Omit<ConfigType, 'extraHeaders' |
   @EnvModelProperty({
     description: 'Client ID',
   })
-  @IsNotEmpty()
   clientId!: string;
 
   @EnvModelProperty({

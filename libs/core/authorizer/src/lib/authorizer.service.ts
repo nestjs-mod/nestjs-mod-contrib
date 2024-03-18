@@ -1,5 +1,5 @@
 import { Authorizer, ConfigType } from '@authorizerdev/authorizer-js';
-import { ExecutionContext, Injectable, Logger } from '@nestjs/common';
+import { ExecutionContext, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthorizerConfiguration } from './authorizer.configuration';
 import { AllowEmptyUser, CheckAccess } from './authorizer.decorators';
@@ -8,7 +8,7 @@ import { AuthorizerError } from './authorizer.errors';
 import { AuthorizerUser } from './authorizer.types';
 
 @Injectable()
-export class AuthorizerService extends Authorizer {
+export class AuthorizerService extends Authorizer implements OnModuleInit {
   private logger = new Logger(AuthorizerService.name);
 
   constructor(
@@ -25,6 +25,21 @@ export class AuthorizerService extends Authorizer {
         this.config.extraHeaders?.['x-authorizer-url'] ||
         '',
     };
+  }
+
+  async onModuleInit() {
+    if (!this.config.clientID) {
+      const authEnvs: { CLIENT_ID: string } = (
+        (await this.graphqlQuery({
+          query: '{_env{CLIENT_ID}}',
+          variables: {},
+          headers: this.config.extraHeaders,
+        })) as // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        any
+      )._env;
+
+      this.config.clientID = authEnvs['CLIENT_ID'];
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,12 +85,12 @@ export class AuthorizerService extends Authorizer {
           req.authorizerUser = {
             id: req.externalUserId
               ? (
-                  await this.authorizerConfiguration.getAuthorizerUserFromExternalUserId!(
-                    req.externalUserId,
-                    req.externalAppId,
-                    ctx
-                  )
-                )?.id
+                await this.authorizerConfiguration.getAuthorizerUserFromExternalUserId!(
+                  req.externalUserId,
+                  req.externalAppId,
+                  ctx
+                )
+              )?.id
               : undefined,
           };
         }
