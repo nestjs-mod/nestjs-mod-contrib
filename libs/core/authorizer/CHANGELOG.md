@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.7...authorizer-v1.1.8) (2024-03-18)
+
+
+### Bug Fixes
+
+* revert detect clientID if it not set ([121938b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/121938b54b6697324b63d568d2b2575b62258763))
+
 ## [1.1.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.6...authorizer-v1.1.7) (2024-03-13)
 
 
