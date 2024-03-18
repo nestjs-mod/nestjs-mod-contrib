@@ -29,16 +29,14 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
 
   async onModuleInit() {
     if (!this.config.clientID) {
-      const authEnvs: { CLIENT_ID: string } = (
+      const authEnvs: { CLIENT_ID: string } =
         (await this.graphqlQuery({
           query: '{_env{CLIENT_ID}}',
           variables: {},
           headers: this.config.extraHeaders,
-        })) as // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        any
-      )._env;
+        }))?.data?._env;
 
-      this.config.clientID = authEnvs['CLIENT_ID'];
+      this.config.clientID = authEnvs?.['CLIENT_ID'];
     }
   }
 
