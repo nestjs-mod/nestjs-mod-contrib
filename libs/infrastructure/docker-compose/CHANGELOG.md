@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.13.1...docker-compose-v1.14.0) (2024-03-19)
+
+
+### Features
+
+* add prefix to Authorizer env keys, change external port for sharing Authorizer container to 8080 ([84f5ba3](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/84f5ba30a585c5a5015b622e686dbe9f319dd3d6))
+
 ## [1.13.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.13.0...docker-compose-v1.13.1) (2024-03-07)
 
 
