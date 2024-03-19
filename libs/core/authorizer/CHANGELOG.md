@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.9...authorizer-v1.2.0) (2024-03-19)
+
+
+### Features
+
+* add prefix to Authorizer env keys, change external port for sharing Authorizer container to 8080 ([84f5ba3](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/84f5ba30a585c5a5015b622e686dbe9f319dd3d6))
+
 ## [1.1.9](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.1.8...authorizer-v1.1.9) (2024-03-18)
 
 
