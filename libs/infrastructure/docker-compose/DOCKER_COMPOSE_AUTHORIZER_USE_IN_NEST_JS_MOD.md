@@ -64,7 +64,7 @@ services:
     image: "lakhansamani/authorizer:1.3.8"
     container_name: "server-authorizer"
     ports:
-      - "8000:8080"
+      - "8080:8080"
     networks:
       - "server-network"
     environment:
@@ -77,7 +77,7 @@ services:
       ORGANIZATION_NAME: "OrganizationName"
       DEPENDS_ON_SERVICE_NAMES: "[object Object]"
       IMAGE: "lakhansamani/authorizer:1.3.8"
-      EXTERNAL_CLIENT_PORT: "8000"
+      EXTERNAL_CLIENT_PORT: "8080"
       ENV: "production"
       PORT: "8080"
       COOKIE_NAME: "authorizer"
@@ -119,7 +119,7 @@ DATABASE_NAME=authorizer
 FEATURE_NAME=authorizer
 ORGANIZATION_NAME='OrganizationName'
 IMAGE=lakhansamani/authorizer:1.3.8
-EXTERNAL_CLIENT_PORT=8000
+EXTERNAL_CLIENT_PORT=8080
 ENV=production
 PORT=8080
 COOKIE_NAME=authorizer

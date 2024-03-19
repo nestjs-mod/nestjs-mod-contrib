@@ -32,6 +32,11 @@ export class AuthorizerConfiguration
   implements Pick<ConfigType, 'extraHeaders'>
 {
   @ConfigModelProperty({
+    description: 'Feature name for generate prefix to environments keys',
+  })
+  featureName?: string;
+
+  @ConfigModelProperty({
     description: 'Extra headers',
   })
   extraHeaders?: Record<string, string> | undefined;

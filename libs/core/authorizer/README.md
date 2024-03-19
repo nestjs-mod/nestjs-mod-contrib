@@ -153,17 +153,18 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`clientId`|Client ID|`obj['clientId']`, `process.env['CLIENT_ID']`|**isNotEmpty** (clientId should not be empty)|-|-|
-|`authorizerURL`|Authorizer URL|`obj['authorizerURL']`, `process.env['AUTHORIZER_URL']`|**isNotEmpty** (authorizerURL should not be empty)|-|-|
-|`redirectURL`|Redirect URL|`obj['redirectURL']`, `process.env['REDIRECT_URL']`|**isNotEmpty** (redirectURL should not be empty)|-|-|
-|`adminSecret`|Admin secret|`obj['adminSecret']`, `process.env['ADMIN_SECRET']`|**optional**|-|-|
-|`allowedExternalAppIds`|Allowed identifiers of external applications, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing.|`obj['allowedExternalAppIds']`, `process.env['ALLOWED_EXTERNAL_APP_IDS']`|**optional**|-|-|
+|`clientId`|Client ID|`obj['clientId']`, `process.env['AUTHORIZER_CLIENT_ID']`|**optional**|-|-|
+|`authorizerURL`|Authorizer URL|`obj['authorizerURL']`, `process.env['AUTHORIZER_AUTHORIZER_URL']`|**isNotEmpty** (authorizerURL should not be empty)|-|-|
+|`redirectURL`|Redirect URL|`obj['redirectURL']`, `process.env['AUTHORIZER_REDIRECT_URL']`|**isNotEmpty** (redirectURL should not be empty)|-|-|
+|`adminSecret`|Admin secret|`obj['adminSecret']`, `process.env['AUTHORIZER_ADMIN_SECRET']`|**optional**|-|-|
+|`allowedExternalAppIds`|Allowed identifiers of external applications, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing.|`obj['allowedExternalAppIds']`, `process.env['AUTHORIZER_ALLOWED_EXTERNAL_APP_IDS']`|**optional**|-|-|
 
 #### Static configuration
 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`extraHeaders`|Extra headers|**optional**|-|-|
 |`getRequestFromContext`|Function for resolve request from execution context|**optional**|```getRequestFromExecutionContext```|-|
 |`checkAccessValidator`|External function for validate permissions|**optional**|```defaultAuthorizerCheckAccessValidator```|-|

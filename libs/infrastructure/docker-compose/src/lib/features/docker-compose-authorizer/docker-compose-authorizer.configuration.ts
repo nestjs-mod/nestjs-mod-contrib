@@ -21,7 +21,7 @@ export class DockerComposeAuthorizerConfiguration {
   @ConfigModelProperty({
     description: 'External port for sharing container.',
     transform: new NumberTransformer(),
-    default: 8000,
+    default: 8080,
   })
   externalClientPort?: number;
 

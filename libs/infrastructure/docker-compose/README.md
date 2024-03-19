@@ -144,7 +144,7 @@ version: '3'
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"authorizer":{"image":"lakhansamani/authorizer:1.3.8","container_name":"authorizer","ports":["8000:8080"],"networks":["default-network"],"environment":{"DATABASE_NAME":"authorizer","PORT":8080,"COOKIE_NAME":"authorizer","DISABLE_PLAYGROUND":true,"ACCESS_TOKEN_EXPIRY_TIME":"30m","IMAGE":"lakhansamani/authorizer:1.3.8","EXTERNAL_CLIENT_PORT":8000,"ENV":"production","RESET_PASSWORD_URL":"/reset-password","ROLES":"user,admin","DEFAULT_ROLES":"user","JWT_ROLE_CLAIM":"role","ORGANIZATION_NAME":"Authorizer","ORGANIZATION_LOGO":"Authorizer Logo","COUCHBASE_BUCKET":"authorizer","COUCHBASE_BUCKET_RAM_QUOTA":1000,"COUCHBASE_SCOPE":"_default"},"keysOfEnvironmentsWithStaticValue":["featureName","image","networks","dependsOnServiceNames","env"],"tty":true,"restart":"always","depends_on":{}}}```|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"authorizer":{"image":"lakhansamani/authorizer:1.3.8","container_name":"authorizer","ports":["8080:8080"],"networks":["default-network"],"environment":{"DATABASE_NAME":"authorizer","PORT":8080,"COOKIE_NAME":"authorizer","DISABLE_PLAYGROUND":true,"ACCESS_TOKEN_EXPIRY_TIME":"30m","IMAGE":"lakhansamani/authorizer:1.3.8","EXTERNAL_CLIENT_PORT":8080,"ENV":"production","RESET_PASSWORD_URL":"/reset-password","ROLES":"user,admin","DEFAULT_ROLES":"user","JWT_ROLE_CLAIM":"role","ORGANIZATION_NAME":"Authorizer","ORGANIZATION_LOGO":"Authorizer Logo","COUCHBASE_BUCKET":"authorizer","COUCHBASE_BUCKET_RAM_QUOTA":1000,"COUCHBASE_SCOPE":"_default"},"keysOfEnvironmentsWithStaticValue":["featureName","image","networks","dependsOnServiceNames","env"],"tty":true,"restart":"always","depends_on":{}}}```|
 |`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
 |`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|-|
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
@@ -249,7 +249,7 @@ services:
     image: "lakhansamani/authorizer:1.3.8"
     container_name: "server-authorizer"
     ports:
-      - "8000:8080"
+      - "8080:8080"
     networks:
       - "server-network"
     environment:
@@ -262,7 +262,7 @@ services:
       ORGANIZATION_NAME: "OrganizationName"
       DEPENDS_ON_SERVICE_NAMES: "[object Object]"
       IMAGE: "lakhansamani/authorizer:1.3.8"
-      EXTERNAL_CLIENT_PORT: "8000"
+      EXTERNAL_CLIENT_PORT: "8080"
       ENV: "production"
       PORT: "8080"
       COOKIE_NAME: "authorizer"
@@ -304,7 +304,7 @@ DATABASE_NAME=authorizer
 FEATURE_NAME=authorizer
 ORGANIZATION_NAME='OrganizationName'
 IMAGE=lakhansamani/authorizer:1.3.8
-EXTERNAL_CLIENT_PORT=8000
+EXTERNAL_CLIENT_PORT=8080
 ENV=production
 PORT=8080
 COOKIE_NAME=authorizer
@@ -395,7 +395,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`image`|Docker image name.|**optional**|```lakhansamani/authorizer:1.3.8```|-|
 |`featureName`|Feature name for generate prefix to environments keys.|**optional**|-|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
-|`externalClientPort`|External port for sharing container.|**optional**|```8000```|-|
+|`externalClientPort`|External port for sharing container.|**optional**|```8080```|-|
 |`dependsOnServiceNames`|Depends on services|**optional**|-|-|
 |`env`|Which env you are running your server in. Supported envs production, development.|**optional**|```production```|-|
 |`resetPasswordUrl`|Reset password link, that can be used to send the correct forgot password link.|**optional**|```/reset-password```|-|
