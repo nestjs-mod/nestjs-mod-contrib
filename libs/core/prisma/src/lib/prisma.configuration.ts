@@ -11,6 +11,7 @@ export class PrismaConfiguration {
 
   @ConfigModelProperty({
     description: 'NodeJS module with Prisma modules',
+    hideValueFromOutputs: true,
   })
   @IsNotEmpty()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

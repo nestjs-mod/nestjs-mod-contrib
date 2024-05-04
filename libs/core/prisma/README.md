@@ -356,7 +356,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
 |`defaultLogger`|Default logger|**optional**|-|-|
-|`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|-|
+|`prismaModule`|NodeJS module with Prisma modules|**isNotEmpty** (prismaModule should not be empty)|-|**hidden**|
 |`logging`|Logging types (all_queries or long_queries)|**optional**|```long_queries```|-|
 |`maxQueryExecutionTime`|Max query execution time for detect long queries|**optional**|```5000```|-|
 |`pingDatabaseIntervalMs`|Ping database interval (0 - disable)|**optional**|```0```|-|
