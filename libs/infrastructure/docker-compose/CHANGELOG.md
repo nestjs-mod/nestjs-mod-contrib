@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.14.0...docker-compose-v1.14.1) (2024-05-04)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([aee56d5](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/aee56d58a3d60cb3d1969cea12cf1f8c27cbdf57))
+
 # [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.13.1...docker-compose-v1.14.0) (2024-03-19)
 
 
