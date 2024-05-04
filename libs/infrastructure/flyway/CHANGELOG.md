@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.5.0...flyway-v1.5.1) (2024-05-04)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([aee56d5](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/aee56d58a3d60cb3d1969cea12cf1f8c27cbdf57))
+
 # [1.5.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.4.0...flyway-v1.5.0) (2024-03-07)
 
 
