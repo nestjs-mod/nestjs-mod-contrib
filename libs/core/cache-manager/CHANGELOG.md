@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.4.0...cache-manager-v1.4.1) (2024-05-04)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([aee56d5](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/aee56d58a3d60cb3d1969cea12cf1f8c27cbdf57))
+
 # [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.3.0...cache-manager-v1.4.0) (2024-03-07)
 
 
