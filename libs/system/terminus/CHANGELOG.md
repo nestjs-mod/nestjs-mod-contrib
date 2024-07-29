@@ -1,3 +1,12 @@
+# [1.13.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.12.1...terminus-v1.13.0) (2024-07-29)
+
+
+### Features
+
+* npm run nx -- migrate latest && npm run npx nx migrate --run-migrations ([e16fb8a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e16fb8a6648061448de7de441e0d26a4c72324f4))
+* npm run update:lib-versions && npm run manual:prepare ([4c27038](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4c270386e5cff279438ccce4905ddc352220c0e1))
+* npm run update:nestjs-mod-versions ([f9ebf6b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/f9ebf6b0791ad9661f7fde0f637c65738c498c9c))
+
 ## [1.12.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.12.0...terminus-v1.12.1) (2024-05-04)
 
 
