@@ -3,12 +3,11 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/example-terminus/src",
   "projectType": "application",
+  "tags": [],
   "targets": {
     "build": {
       "executor": "@nx/webpack:webpack",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "target": "node",
@@ -16,9 +15,7 @@
         "outputPath": "dist/apps/example-terminus",
         "main": "apps/example-terminus/src/main.ts",
         "tsConfig": "apps/example-terminus/tsconfig.app.json",
-        "assets": [
-          "apps/example-terminus/src/assets"
-        ],
+        "assets": ["apps/example-terminus/src/assets"],
         "webpackConfig": "apps/example-terminus/webpack.config.js"
       },
       "configurations": {
@@ -42,16 +39,11 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/example-terminus/jest.config.ts"
       }
@@ -59,9 +51,7 @@
     "start": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "node dist/apps/example-terminus/main.js"
-        ],
+        "commands": ["node dist/apps/example-terminus/main.js"],
         "parallel": false
       }
     },
@@ -76,6 +66,5 @@
         "color": true
       }
     }
-  },
-  "tags": []
+  }
 }
