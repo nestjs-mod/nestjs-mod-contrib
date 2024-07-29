@@ -37,7 +37,7 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "graphql-type-json": "^0.3.2",
-    "@graphql-tools/utils": "10.0.13",
+    "@graphql-tools/utils": "^10.0.13",
     "dataloader": "^2.2.2",
     "graphql": "^16.8.1"
   },
@@ -79,7 +79,7 @@
     "@apollo/server": {
       "optional": true
     },
-    "@nestjs-mod/graphql": {
+    "@nestjs/graphql": {
       "optional": true
     },
     "rxjs": {
