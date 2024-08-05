@@ -32,7 +32,7 @@ export class NestjsPinoLoggerConfiguration implements Params {
   pinoHttp?: Options | DestinationStream | [Options, DestinationStream];
 
   @ConfigModelProperty({
-    description: `Optional parameter to change property name \`context\` in resulted logs, so logs will be like: {"level":30, ... "RENAME_CONTEXT_VALUE_HERE":"AppController" }`,
+    description: `Optional parameter to change property name \`context\` in resulted logs, so logs will be like: \\{"level":30, ... "RENAME_CONTEXT_VALUE_HERE":"AppController" \\}`,
   })
   renameContext?: string;
 
