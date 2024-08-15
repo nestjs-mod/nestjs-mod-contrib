@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.3.1...authorizer-v1.3.2) (2024-08-15)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([bcda74e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/bcda74e33d42f9e79b48ef33dd0e5ec1c578eb5c))
+
 ## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.3.0...authorizer-v1.3.1) (2024-08-15)
 
 
