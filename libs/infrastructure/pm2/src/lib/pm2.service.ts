@@ -14,7 +14,7 @@ export class Pm2Service implements OnApplicationBootstrap {
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly packageJsonService: PackageJsonService,
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
-  ) {}
+  ) { }
 
   onApplicationBootstrap() {
     this.updatePm2EcosystemConfigFile();
@@ -66,7 +66,7 @@ export class Pm2Service implements OnApplicationBootstrap {
     };
     currentConfig.apps = currentConfig.apps.map((app) => {
       if (app.name === appName) {
-        return currentApp;
+        return { ...currentApp, ...app };
       }
       return app;
     }) as StartOptions[];
