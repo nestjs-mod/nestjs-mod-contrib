@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.12.1...pm2-v1.12.2) (2024-08-15)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([bcda74e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/bcda74e33d42f9e79b48ef33dd0e5ec1c578eb5c))
+
 ## [1.12.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.12.0...pm2-v1.12.1) (2024-08-15)
 
 
