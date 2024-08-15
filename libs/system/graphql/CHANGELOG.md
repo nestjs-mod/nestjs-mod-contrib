@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.4.0...graphql-v1.4.1) (2024-08-15)
+
+
+### Bug Fixes
+
+* added merging of the original application options with new options ([4d126b8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4d126b8b42fdc50b2f4222202e6151ba49568baa))
+* update nestjs-mod libs ([3481d3a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/3481d3aac9e53003aa9109ee070c11f9d85853aa))
+
 # [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.3.1...graphql-v1.4.0) (2024-07-29)
 
 

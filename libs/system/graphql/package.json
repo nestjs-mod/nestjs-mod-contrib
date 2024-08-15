@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/graphql",
   "description": "GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, integrated: dataloader, included support for pipes, filters and interceptors in resolver fields, works with Fastify (Wrapper for https://docs.nestjs.com/graphql/quick-start)",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "keywords": [
     "nestjs",
     "nestjs-mod",
