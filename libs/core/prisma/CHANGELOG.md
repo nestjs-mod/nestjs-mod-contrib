@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.9.1...prisma-v1.9.2) (2024-08-15)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([bcda74e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/bcda74e33d42f9e79b48ef33dd0e5ec1c578eb5c))
+
 ## [1.9.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.9.0...prisma-v1.9.1) (2024-08-15)
 
 
