@@ -3,7 +3,7 @@
 
 Terminus integration provides readiness/liveness health checks for NestJS-mod (Wrapper for https://www.npmjs.com/package/@nestjs/terminus)
 
-[![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram bot][telegram-image]][telegram-url]
+[![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
 ## Installation
 
@@ -185,5 +185,7 @@ MIT
 [npm-url]: https://npmjs.org/package/@nestjs-mod/terminus
 [telegram-image]: https://img.shields.io/badge/group-telegram-blue.svg?maxAge=2592000
 [telegram-url]: https://t.me/nestjs_mod
+[discord-image]: https://img.shields.io/badge/discord-online-brightgreen.svg
+[discord-url]: https://discord.gg/meY7UXaG
 [downloads-image]: https://badgen.net/npm/dm/@nestjs-mod/terminus
 [downloads-url]: https://npmjs.org/package/@nestjs-mod/terminus

@@ -3,7 +3,7 @@
 
 Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose)
 
-[![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram bot][telegram-image]][telegram-url]
+[![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
 ## Installation
 
@@ -1085,5 +1085,7 @@ MIT
 [npm-url]: https://npmjs.org/package/@nestjs-mod/docker-compose
 [telegram-image]: https://img.shields.io/badge/group-telegram-blue.svg?maxAge=2592000
 [telegram-url]: https://t.me/nestjs_mod
+[discord-image]: https://img.shields.io/badge/discord-online-brightgreen.svg
+[discord-url]: https://discord.gg/meY7UXaG
 [downloads-image]: https://badgen.net/npm/dm/@nestjs-mod/docker-compose
 [downloads-url]: https://npmjs.org/package/@nestjs-mod/docker-compose
