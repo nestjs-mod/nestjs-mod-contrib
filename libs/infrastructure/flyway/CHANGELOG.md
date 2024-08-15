@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.6.1...flyway-v1.6.2) (2024-08-15)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([bcda74e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/bcda74e33d42f9e79b48ef33dd0e5ec1c578eb5c))
+
 ## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.6.0...flyway-v1.6.1) (2024-08-15)
 
 
