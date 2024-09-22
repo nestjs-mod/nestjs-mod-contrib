@@ -1,3 +1,10 @@
+## [1.14.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.14.2...pino-v1.14.3) (2024-09-22)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([db15c5b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/db15c5b3d48b0844c66d437e00a15a690610da1a))
+
 ## [1.14.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.14.1...pino-v1.14.2) (2024-08-15)
 
 
