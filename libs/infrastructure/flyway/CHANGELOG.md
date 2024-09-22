@@ -1,3 +1,15 @@
+# [1.7.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.6.2...flyway-v1.7.0) (2024-09-22)
+
+
+### Bug Fixes
+
+* update nestjs-mod libs ([db15c5b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/db15c5b3d48b0844c66d437e00a15a690610da1a))
+
+
+### Features
+
+* add support use custom nxProjectJsonFile in prisma, docker-compose-postgresql, flyway ([d8530d9](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/d8530d9ed591af51e86f645a4320def58ecff227))
+
 ## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.6.1...flyway-v1.6.2) (2024-08-15)
 
 
