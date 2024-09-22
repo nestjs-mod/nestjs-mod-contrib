@@ -65,4 +65,9 @@ export class PrismaConfiguration {
     description: 'Binary targets (infrastructure)',
   })
   binaryTargets?: string[];
+
+  @ConfigModelProperty({
+    description: 'Application or library project.json-file (nx)',
+  })
+  nxProjectJsonFile?: string;
 }

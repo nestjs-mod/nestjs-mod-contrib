@@ -877,6 +877,7 @@ volumes:
 |`image`|Docker image name|**optional**|```bitnami/postgresql:15.5.0```|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
 |`externalPort`|External port for sharing container.|**optional**|```5432```|-|
+|`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
 
 #### Feature environments
 

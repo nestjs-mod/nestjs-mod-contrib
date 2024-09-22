@@ -17,9 +17,14 @@ export class DockerComposePostgresConfiguration {
   @ConfigModelProperty({
     description: 'External port for sharing container.',
     default: 5432,
-    transform: new NumberTransformer()
+    transform: new NumberTransformer(),
   })
   externalPort?: number;
+
+  @ConfigModelProperty({
+    description: 'Application or library project.json-file (nx)',
+  })
+  nxProjectJsonFile?: string;
 }
 
 @EnvModel()

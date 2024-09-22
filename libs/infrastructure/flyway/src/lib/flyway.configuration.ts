@@ -19,4 +19,9 @@ export class FlywayConfiguration {
   })
   @IsNotEmpty()
   configFile!: string;
+
+  @ConfigModelProperty({
+    description: 'Application or library project.json-file (nx)',
+  })
+  nxProjectJsonFile?: string;
 }

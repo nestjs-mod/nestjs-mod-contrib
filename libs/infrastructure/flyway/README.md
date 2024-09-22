@@ -234,6 +234,7 @@ module.exports = {
 |`featureName`|Flyway feature name for generate prefix to environments keys|**optional**|-|-|
 |`migrationsFolder`|Folder with migrations|**isNotEmpty** (migrationsFolder should not be empty)|-|-|
 |`configFile`|Javascript config file for flyway (.flyway.js)|**isNotEmpty** (configFile should not be empty)|-|-|
+|`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
 
 [Back to Top](#modules)
 

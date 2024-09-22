@@ -11,12 +11,14 @@ import { DockerComposeServiceType, getDockerComposeServiceName } from '../../doc
 import { ManualDockerComposeFeatures } from '../../manual-docker-compose.service';
 import { InjectDockerComposePostgresModuleSettings } from './docker-compose-postgresql.decorators';
 import { DockerComposePostgresService } from './docker-compose-postgresql.service';
+import { DockerComposePostgresConfiguration } from './docker-compose-postgresql.settings';
 
 @Injectable()
 export class DockerComposePostgresDatabaseService implements OnModuleInit {
   constructor(
     private readonly dockerComposePostgresService: DockerComposePostgresService,
     private readonly manualDockerComposeFeatures: ManualDockerComposeFeatures,
+    private readonly dockerComposePostgresConfiguration: DockerComposePostgresConfiguration,
     @InjectDockerComposePostgresModuleSettings()
     private readonly moduleSettings: TModuleSettings,
     @Optional()
@@ -48,7 +50,9 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
           )
         )
         .flat(),
-      'db-create'
+      'db-create',
+      undefined,
+      this.dockerComposePostgresConfiguration.nxProjectJsonFile
     );
   }
 

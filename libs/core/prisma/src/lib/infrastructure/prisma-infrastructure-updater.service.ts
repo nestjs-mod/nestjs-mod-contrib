@@ -38,7 +38,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updatePackageJsonFile() {
-    const projectJson = this.nxProjectJsonService.read();
+    const projectJson = this.nxProjectJsonService.read(this.prismaConfiguration.nxProjectJsonFile);
     if (projectJson) {
       const projectName = projectJson.name;
       const packageJson = this.packageJsonService.read();
@@ -97,7 +97,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
     if (!this.prismaConfiguration.schemaFile) {
       throw new PrismaError('prismaSchemaFile not set');
     }
-    const projectJson = this.nxProjectJsonService.read();
+    const projectJson = this.nxProjectJsonService.read(this.prismaConfiguration.nxProjectJsonFile);
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     if (projectJson && packageJsonFilePath) {
       const prismaSchemaFilePath = this.prismaConfiguration.schemaFile.replace(dirname(packageJsonFilePath), '');
@@ -105,19 +105,22 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
         undefined,
-        prismaSchemaFilePath
+        prismaSchemaFilePath,
+        this.prismaConfiguration.nxProjectJsonFile
       );
       this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
         'prisma-generate',
-        prismaSchemaFilePath
+        prismaSchemaFilePath,
+        this.prismaConfiguration.nxProjectJsonFile
       );
 
       // pull
       this.nxProjectJsonService.addRunCommands(
         [`./node_modules/.bin/prisma db pull --schema=.${prismaSchemaFilePath}`],
         'prisma-pull',
-        prismaSchemaFilePath
+        prismaSchemaFilePath,
+        this.prismaConfiguration.nxProjectJsonFile
       );
 
       if (this.prismaConfiguration.addMigrationScripts) {
@@ -136,7 +139,9 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
               [
                 `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseName}} --app-database-url=\${${SHADOW_DATABASE_URL}}`,
               ],
-              'db-create'
+              'db-create',
+              undefined,
+              this.prismaConfiguration.nxProjectJsonFile
             );
           }
         }
@@ -144,14 +149,16 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
         this.nxProjectJsonService.addRunCommands(
           [`./node_modules/.bin/prisma migrate dev --schema=.${prismaSchemaFilePath}`],
           'prisma-migrate-dev',
-          prismaSchemaFilePath
+          prismaSchemaFilePath,
+          this.prismaConfiguration.nxProjectJsonFile
         );
 
         // migrate-deploy
         this.nxProjectJsonService.addRunCommands(
           [`./node_modules/.bin/prisma migrate deploy --schema=.${prismaSchemaFilePath}`],
           'prisma-migrate-deploy',
-          prismaSchemaFilePath
+          prismaSchemaFilePath,
+          this.prismaConfiguration.nxProjectJsonFile
         );
       }
     }

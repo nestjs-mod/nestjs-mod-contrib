@@ -17,7 +17,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
     private readonly flywayConfiguration: FlywayConfiguration,
     private readonly flywayConfigFileService: FlywayConfigFileService,
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
-  ) { }
+  ) {}
 
   onModuleInit() {
     this.update();
@@ -31,7 +31,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updatePackageJsonFile() {
-    const projectJson = this.nxProjectJsonService.read();
+    const projectJson = this.nxProjectJsonService.read(this.flywayConfiguration.nxProjectJsonFile);
     if (projectJson) {
       const projectName = projectJson.name;
       const packageJson = this.packageJsonService.read();
@@ -64,56 +64,66 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
     if (!this.flywayConfiguration.configFile) {
       throw new FlywayError('flywayConfigFile not set');
     }
-    const projectJson = this.nxProjectJsonService.read();
+    const projectJson = this.nxProjectJsonService.read(this.flywayConfiguration.nxProjectJsonFile);
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
-    const nxProjectJsonFilePath = this.nxProjectJsonService.getNxProjectJsonFilePath();
+    const nxProjectJsonFilePath =
+      this.flywayConfiguration.nxProjectJsonFile || this.nxProjectJsonService.getNxProjectJsonFilePath();
     if (projectJson && packageJsonFilePath && nxProjectJsonFilePath) {
       const flywayConfigFilePath = this.flywayConfiguration.configFile.replace(dirname(packageJsonFilePath), '');
-      const flywayMigrationsPath = this.flywayConfiguration.migrationsFolder.replace(
-        dirname(packageJsonFilePath),
-        ''
-      );
+      const flywayMigrationsPath = this.flywayConfiguration.migrationsFolder.replace(dirname(packageJsonFilePath), '');
 
       const { databaseName } = this.getDbConnectionEnvKeys();
       // new migration
       this.nxProjectJsonService.addRunCommands(
         [`echo 'select 1;' > .${flywayMigrationsPath}/V\`date +%Y%m%d%H%M\`__NewMigration.sql`],
-        'flyway-create-migration'
+        'flyway-create-migration',
+        undefined,
+        this.flywayConfiguration.nxProjectJsonFile
       );
       // migrate
       this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} migrate`,
         ],
-        'flyway-migrate'
+        'flyway-migrate',
+        undefined,
+        this.flywayConfiguration.nxProjectJsonFile
       );
       // info
       this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} info`,
         ],
-        'flyway-info'
+        'flyway-info',
+        undefined,
+        this.flywayConfiguration.nxProjectJsonFile
       );
       // baseline
       this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} baseline`,
         ],
-        'flyway-baseline'
+        'flyway-baseline',
+        undefined,
+        this.flywayConfiguration.nxProjectJsonFile
       );
       // validate
       this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} validate`,
         ],
-        'flyway-validate'
+        'flyway-validate',
+        undefined,
+        this.flywayConfiguration.nxProjectJsonFile
       );
       // repair
       this.nxProjectJsonService.addRunCommands(
         [
           `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} repair`,
         ],
-        'flyway-repair'
+        'flyway-repair',
+        undefined,
+        this.flywayConfiguration.nxProjectJsonFile
       );
     }
   }
@@ -190,10 +200,7 @@ module.exports = {
     const firstMigrationFilePath = join(this.flywayConfiguration.migrationsFolder, migrationFileName);
     if (packageJsonFilePath) {
       try {
-        if (
-          !this.flywayConfiguration.migrationsFolder &&
-          !existsSync(this.flywayConfiguration.migrationsFolder)
-        ) {
+        if (!this.flywayConfiguration.migrationsFolder && !existsSync(this.flywayConfiguration.migrationsFolder)) {
           mkdirSync(this.flywayConfiguration.migrationsFolder, { recursive: true });
 
           const firstMigration = `-- CreateTable
