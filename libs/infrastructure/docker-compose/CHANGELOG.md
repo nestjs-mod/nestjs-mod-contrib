@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.16.0...docker-compose-v1.16.1) (2024-09-23)
+
+
+### Bug Fixes
+
+* correct support use custom nxProjectJsonFile in docker-compose-postgresql ([2464a11](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/2464a11b9f87a14d954d4399397575218e6d9e75))
+
 # [1.16.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.15.2...docker-compose-v1.16.0) (2024-09-22)
 
 
