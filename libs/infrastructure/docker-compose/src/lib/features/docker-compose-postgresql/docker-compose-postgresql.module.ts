@@ -9,6 +9,7 @@ import { DockerComposePostgresService } from './docker-compose-postgresql.servic
 import {
   DockerComposePostgresConfiguration,
   DockerComposePostgresEnvironments,
+  DockerComposePostgresFeatureConfiguration,
   DockerComposePostgresFeatureEnvironments,
 } from './docker-compose-postgresql.settings';
 
@@ -28,6 +29,7 @@ export const { DockerComposePostgreSQL } = createNestModule({
   staticConfigurationModel: DockerComposePostgresConfiguration,
   staticEnvironmentsModel: DockerComposePostgresEnvironments,
   featureEnvironmentsModel: DockerComposePostgresFeatureEnvironments,
+  featureConfigurationModel: DockerComposePostgresFeatureConfiguration,
   sharedImports: [DockerCompose.forFeature({ featureModuleName: DOCKER_COMPOSE_POSTGRES_MODULE_NAME })],
   sharedProviders: [DockerComposePostgresService, DockerComposePostgresDatabaseService],
   wrapForFeatureAsync: (asyncModuleOptions) => {
@@ -66,6 +68,7 @@ export const { DockerComposePostgreSQL } = createNestModule({
       staticConfigurationModel: DockerComposePostgresConfiguration,
       staticEnvironmentsModel: DockerComposePostgresEnvironments,
       featureEnvironmentsModel: DockerComposePostgresFeatureEnvironments,
+      featureConfigurationModel: DockerComposePostgresFeatureConfiguration,
       globalEnvironmentsOptions: { name: project?.name, skipValidation: isInfrastructureMode() },
       globalConfigurationOptions: { name: project?.name, skipValidation: isInfrastructureMode() },
       providers: [

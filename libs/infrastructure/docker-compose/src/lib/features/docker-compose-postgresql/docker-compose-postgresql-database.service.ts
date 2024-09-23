@@ -1,5 +1,6 @@
 import {
   EnvModelInfoValidationsPropertyNameFormatters,
+  InjectableFeatureConfigurationType,
   NxProjectJsonService,
   PackageJsonService,
   TModuleSettings,
@@ -9,9 +10,15 @@ import { Injectable, OnModuleInit, Optional } from '@nestjs/common';
 import { ConnectionString } from 'connection-string';
 import { DockerComposeServiceType, getDockerComposeServiceName } from '../../docker-compose.utils';
 import { ManualDockerComposeFeatures } from '../../manual-docker-compose.service';
-import { InjectDockerComposePostgresModuleSettings } from './docker-compose-postgresql.decorators';
+import {
+  InjectDockerComposePostgresFeatures,
+  InjectDockerComposePostgresModuleSettings,
+} from './docker-compose-postgresql.decorators';
 import { DockerComposePostgresService } from './docker-compose-postgresql.service';
-import { DockerComposePostgresConfiguration } from './docker-compose-postgresql.settings';
+import {
+  DockerComposePostgresConfiguration,
+  DockerComposePostgresFeatureConfiguration,
+} from './docker-compose-postgresql.settings';
 
 @Injectable()
 export class DockerComposePostgresDatabaseService implements OnModuleInit {
@@ -19,6 +26,8 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
     private readonly dockerComposePostgresService: DockerComposePostgresService,
     private readonly manualDockerComposeFeatures: ManualDockerComposeFeatures,
     private readonly dockerComposePostgresConfiguration: DockerComposePostgresConfiguration,
+    @InjectDockerComposePostgresFeatures()
+    private readonly dockerComposePostgresFeatureConfigurations: InjectableFeatureConfigurationType<DockerComposePostgresFeatureConfiguration>[],
     @InjectDockerComposePostgresModuleSettings()
     private readonly moduleSettings: TModuleSettings,
     @Optional()
@@ -41,8 +50,24 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
   private updateNxProjectFile() {
     const { featureDatabaseUrlEnvKeys, rootDatabaseUrlEnvKey } = this.getEnvKeys();
 
+    for (let index = 0; index < featureDatabaseUrlEnvKeys.length; index++) {
+      const featureDatabaseUrlEnvKey = featureDatabaseUrlEnvKeys[index];
+      this.nxProjectJsonService.addRunCommands(
+        featureDatabaseUrlEnvKey.databaseUrlEnvKeys
+          .map(
+            (databaseUrlEnvKey) =>
+              `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseUrlEnvKey}} --app-database-url=\${${databaseUrlEnvKey}}`
+          )
+          .flat(),
+        'db-create',
+        undefined,
+        featureDatabaseUrlEnvKey.configuration?.nxProjectJsonFile
+      );
+    }
+
     this.nxProjectJsonService.addRunCommands(
       featureDatabaseUrlEnvKeys
+        .filter((k) => !k.configuration)
         .map((featureDatabaseUrlEnvKey) =>
           featureDatabaseUrlEnvKey.databaseUrlEnvKeys.map(
             (databaseUrlEnvKey) =>
@@ -105,6 +130,9 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
       ([featureModuleName, moduleSettingsList]) => {
         return {
           featureModuleName,
+          configuration:
+            this.dockerComposePostgresFeatureConfigurations.find((c) => c.featureModuleName === featureModuleName)
+              ?.featureConfiguration || undefined,
           databaseUrlEnvKeys: moduleSettingsList
             .map((moduleSettings) =>
               moduleSettings?.validations['databaseUrl']?.propertyNameFormatters

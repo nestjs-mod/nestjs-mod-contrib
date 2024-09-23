@@ -46,3 +46,11 @@ export class DockerComposePostgresFeatureEnvironments {
   @IsNotEmpty()
   databaseUrl!: string;
 }
+
+@ConfigModel()
+export class DockerComposePostgresFeatureConfiguration {
+  @ConfigModelProperty({
+    description: 'Application or library project.json-file (nx)',
+  })
+  nxProjectJsonFile?: string;
+}
