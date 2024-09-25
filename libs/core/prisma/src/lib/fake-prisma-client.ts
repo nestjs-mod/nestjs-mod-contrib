@@ -33,3 +33,6 @@ export class FakePrismaClient {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   $extends: any;
 }
+
+// need for use it as default PrismaClient when we don't have generated client
+export { FakePrismaClient as PrismaClient };
