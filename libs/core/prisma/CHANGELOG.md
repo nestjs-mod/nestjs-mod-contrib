@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.10.0...prisma-v1.10.1) (2024-09-25)
+
+
+### Bug Fixes
+
+* reexprt FakePrismaClient as PrismaClient, for use as mock import prisma client in applications ([84ce917](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/84ce9176c317976ee9ff4de9745038c09c443302))
+
 # [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.9.2...prisma-v1.10.0) (2024-09-22)
 
 
