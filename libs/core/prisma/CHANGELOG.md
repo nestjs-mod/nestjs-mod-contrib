@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.10.1...prisma-v1.10.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* add suport use empty featureName in prisma anf flyway modules ([4f39089](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4f3908968f703d7607d2c4de85fc39792c5cc628))
+
 ## [1.10.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.10.0...prisma-v1.10.1) (2024-09-25)
 
 
