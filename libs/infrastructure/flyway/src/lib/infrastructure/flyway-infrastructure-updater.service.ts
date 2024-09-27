@@ -129,9 +129,6 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updateFlywayConfigFile() {
-    if (!this.flywayConfiguration.featureName) {
-      throw new FlywayError('flywayFeatureName not set');
-    }
     let flywayConfig = this.flywayConfigFileService.read();
     if (!flywayConfig) {
       flywayConfig = `
@@ -190,11 +187,12 @@ module.exports = {
   }
 
   private createFirstMigrations() {
-    if (!this.flywayConfiguration.featureName) {
-      throw new FlywayError('flywayFeatureName not set');
-    }
-    const flywayFeatureName = upperCamelCase(this.flywayConfiguration.featureName);
-    const constantCaseFlywayFeatureName = constantCase(this.flywayConfiguration.featureName);
+    const flywayFeatureName = this.flywayConfiguration.featureName
+      ? upperCamelCase(this.flywayConfiguration.featureName)
+      : '';
+    const constantCaseFlywayFeatureName = this.flywayConfiguration.featureName
+      ? constantCase(this.flywayConfiguration.featureName)
+      : '';
     const migrationFileName = `V202401212130__Create${flywayFeatureName}User.sql`;
     const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     const firstMigrationFilePath = join(this.flywayConfiguration.migrationsFolder, migrationFileName);
@@ -234,14 +232,13 @@ module.exports = {
   }
 
   private getDbConnectionEnvKeys() {
-    if (!this.flywayConfiguration.featureName) {
-      throw new FlywayError('flywayFeatureName not set');
-    }
     const concatedDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,
       this.flywayConfiguration.featureName,
       'DATABASE_URL',
-    ].join('_');
+    ]
+      .filter(Boolean)
+      .join('_');
 
     const databaseName = this.flywayConfiguration.featureName
       ? `${constantCase(concatedDatabaseName)}`

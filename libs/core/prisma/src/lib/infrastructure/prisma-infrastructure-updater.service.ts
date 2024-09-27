@@ -180,15 +180,16 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updatePrismaSchemaFile() {
-    if (!this.prismaConfiguration.featureName) {
-      throw new PrismaError('prismaFeatureName not set');
-    }
     let prismaSchema = this.prismaSchemaFileService.read();
 
     if (!prismaSchema) {
       const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();
-      const prismaFeatureName = upperCamelCase(this.prismaConfiguration.featureName);
-      const constantCasePrismaFeatureName = constantCase(this.prismaConfiguration.featureName);
+      const prismaFeatureName = this.prismaConfiguration.featureName
+        ? upperCamelCase(this.prismaConfiguration.featureName)
+        : '';
+      const constantCasePrismaFeatureName = this.prismaConfiguration.featureName
+        ? constantCase(this.prismaConfiguration.featureName)
+        : '';
 
       prismaSchema = `generator client {
   provider = "prisma-client-js"
@@ -278,19 +279,20 @@ model ${prismaFeatureName}User {
   }
 
   private getDbConnectionEnvKeys() {
-    if (!this.prismaConfiguration.featureName) {
-      throw new PrismaError('prismaFeatureName not set');
-    }
     const concatedDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,
       this.prismaConfiguration.featureName,
       'DATABASE_URL',
-    ].join('_');
+    ]
+      .filter(Boolean)
+      .join('_');
     const concatedShadowDatabaseName = [
       this.wrapApplicationOptionsService.project?.name,
       this.prismaConfiguration.featureName,
       'SHADOW_DATABASE_URL',
-    ].join('_');
+    ]
+      .filter(Boolean)
+      .join('_');
 
     const databaseName = this.prismaConfiguration.featureName
       ? `${constantCase(concatedDatabaseName)}`
