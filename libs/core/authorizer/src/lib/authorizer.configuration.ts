@@ -1,15 +1,7 @@
 import { ConfigType } from '@authorizerdev/authorizer-js';
-import {
-  ConfigModel,
-  ConfigModelProperty,
-  getRequestFromExecutionContext,
-} from '@nestjs-mod/common';
+import { ConfigModel, ConfigModelProperty, getRequestFromExecutionContext } from '@nestjs-mod/common';
 import { ExecutionContext } from '@nestjs/common';
-import {
-  AuthorizerRequest,
-  AuthorizerUser,
-  CheckAccessOptions,
-} from './authorizer.types';
+import { AuthorizerRequest, AuthorizerUser, CheckAccessOptions } from './authorizer.types';
 
 export const defaultAuthorizerCheckAccessValidator = async (
   authorizerUser?: AuthorizerUser,
@@ -18,24 +10,24 @@ export const defaultAuthorizerCheckAccessValidator = async (
   return Boolean(
     authorizerUser?.roles?.length &&
       options?.roles?.length &&
-      options.roles?.some((or) =>
-        authorizerUser?.roles?.some((ur) => ur === or)
-      )
+      options.roles?.some((or) => authorizerUser?.roles?.some((ur) => ur === or))
   );
 };
 
-export const defaultAuthorizerGetAuthorizerUserFromExternalUserId = (
-  externalUserId: string
-) => ({ id: externalUserId });
+export const defaultAuthorizerGetAuthorizerUserFromExternalUserId = (externalUserId: string) => ({
+  id: externalUserId,
+});
+
 @ConfigModel()
-export class AuthorizerConfiguration
-  implements Pick<ConfigType, 'extraHeaders'>
-{
+export class AuthorizerStaticConfiguration {
   @ConfigModelProperty({
     description: 'Feature name for generate prefix to environments keys',
   })
   featureName?: string;
+}
 
+@ConfigModel()
+export class AuthorizerConfiguration implements Pick<ConfigType, 'extraHeaders'> {
   @ConfigModelProperty({
     description: 'Extra headers',
   })
