@@ -8,6 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { AuthorizerConfiguration, AuthorizerStaticConfiguration } from './authorizer.configuration';
 import { AUTHORIZER_ENV_PREFIX, AUTHORIZER_MODULE_NAME } from './authorizer.constants';
+import { getAuthorizerEnvironmentsLoaderToken } from './authorizer.decorators';
 import { AuthorizerEnvironments } from './authorizer.environments';
 import { AuthorizerService } from './authorizer.service';
 
@@ -60,8 +61,8 @@ export const { AuthorizerModule } = createNestModule({
             ) => {
               const authorizerService = new AuthorizerService(
                 {
-                  authorizerURL: authorizerEnvironments.authorizerURL,
-                  redirectURL: authorizerEnvironments.redirectURL,
+                  authorizerURL: authorizerEnvironments.authorizerURL || '',
+                  redirectURL: authorizerEnvironments.redirectURL || '',
                   clientID: authorizerEnvironments.clientId || '',
                   extraHeaders: {
                     ...authorizerConfiguration.extraHeaders,
@@ -80,7 +81,14 @@ export const { AuthorizerModule } = createNestModule({
               Object.setPrototypeOf(emptyAuthorizerService, authorizerService);
               Object.assign(emptyAuthorizerService, authorizerService);
             },
-            inject: [AuthorizerService, AuthorizerEnvironments, Reflector, AuthorizerConfiguration],
+            inject: [
+              AuthorizerService,
+              AuthorizerEnvironments,
+              AuthorizerConfiguration,
+              Reflector,
+              // need for wait resolve env config
+              getAuthorizerEnvironmentsLoaderToken(options.contextName),
+            ],
           },
         ],
 });
