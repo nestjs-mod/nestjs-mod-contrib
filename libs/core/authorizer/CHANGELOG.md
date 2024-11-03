@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.3.3...authorizer-v1.4.0) (2024-11-03)
+
+
+### Features
+
+* add AuthorizerStaticConfiguration with featureName options ([5c14da8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5c14da81d39e35e9a6789f93e1d13a0bd24f5e53))
+
 ## [1.3.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.3.2...authorizer-v1.3.3) (2024-09-22)
 
 
