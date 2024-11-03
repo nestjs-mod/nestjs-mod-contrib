@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.4.0...authorizer-v1.4.1) (2024-11-03)
+
+
+### Bug Fixes
+
+* add AuthorizerStaticConfiguration with featureName options, fix order of inject services ([79ec2be](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/79ec2be19cb378d545027afac4d0282c0fee2711))
+
 # [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.3.3...authorizer-v1.4.0) (2024-11-03)
 
 
