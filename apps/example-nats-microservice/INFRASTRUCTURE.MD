@@ -126,7 +126,7 @@ npm run test:example-nats-microservice
 |**db**|
 |`npm run db:create`|Creation all databases of applications and modules|
 |**prisma**|
-|`npm run prisma:migrate-dev-new:example-prisma`|Command to create new empty migration for example-prisma|
+|`npm run prisma:migrate-dev-new:example-prisma`|Command to create new empty migration for example-prisma, for set name pass name to --args, example: npm run flyway:create:appname --args=Init|
 |`npm run prisma:migrate-dev:example-prisma`|Alias for create new migration for example-prisma (example: `npm run prisma:migrate-dev:example-prisma --name=new)`|
 |`npm run prisma:migrate-deploy:example-prisma`|Applying migrations for example-prisma|
 |`npm run prisma:migrate-deploy`|Applying migrations of all applications and modules|
@@ -134,11 +134,11 @@ npm run test:example-nats-microservice
 |`npm run prisma:generate`|Generation of client prisma schema of all applications and modules|
 |`npm run prisma:pull:example-prisma`|Generating a prisma schema based on a database for example-prisma|
 |`npm run prisma:pull:example-prisma-flyway`|Generating a prisma schema based on a database for example-prisma-flyway|
-|`npm run prisma:migrate-dev-new:example-prisma-flyway`|Command to create new empty migration for example-prisma-flyway|
+|`npm run prisma:migrate-dev-new:example-prisma-flyway`|Command to create new empty migration for example-prisma-flyway, for set name pass name to --args, example: npm run flyway:create:appname --args=Init|
 |`npm run prisma:migrate-dev:example-prisma-flyway`|Alias for create new migration for example-prisma-flyway (example: `npm run prisma:migrate-dev:example-prisma-flyway --name=new)`|
 |`npm run prisma:migrate-deploy:example-prisma-flyway`|Applying migrations for example-prisma-flyway|
 |**flyway**|
-|`npm run flyway:create:example-prisma-flyway`|Command to create new empty migration for example-prisma-flyway|
+|`npm run flyway:create:example-prisma-flyway`|Command to create new empty migration for example-prisma-flyway, for set name pass name to --args, example: npm run flyway:create:appname --args=Init|
 |`npm run flyway:migrate:example-prisma-flyway`|Applying migrations for example-prisma-flyway|
 |`npm run flyway:migrate`|Applying migrations of all applications and modules|
 |**utils**|

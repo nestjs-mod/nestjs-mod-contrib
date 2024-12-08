@@ -158,7 +158,7 @@ import {
   isInfrastructureMode,
 } from '@nestjs-mod/common';
 import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
-import { FakePrismaClient, PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
+import { PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
 import { join } from 'path';
 import { userFeatureName } from './app/app.constants';
 import { AppModule } from './app/app.module';
@@ -190,11 +190,9 @@ bootstrapNestApplication({
           schemaFile: join(appFolder, 'src', 'prisma', `${userFeatureName}-${PRISMA_SCHEMA_FILE}`),
           featureName: userFeatureName,
           prismaModule: isInfrastructureMode()
-            ? { PrismaClient: FakePrismaClient }
-            : // remove after first run docs:infrastructure
-              { PrismaClient: FakePrismaClient },
-          // uncomment after first run docs:infrastructure
-          // import(`@prisma/prisma-user-client`),
+            ? import(`@nestjs-mod/prisma`)
+            : // replace to your client after first run docs:infrastructure
+              import(`@nestjs-mod/prisma`),
           addMigrationScripts: true,
         },
       }),

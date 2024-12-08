@@ -879,6 +879,13 @@ volumes:
 |`externalPort`|External port for sharing container.|**optional**|```5432```|-|
 |`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
 
+#### Feature configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
+
 #### Feature environments
 
 

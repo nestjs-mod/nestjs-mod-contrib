@@ -203,7 +203,7 @@
     "prettier": "^2.6.2",
     "prisma": "^5.19.1",
     "react-refresh": "^0.10.0",
-    "rucken": "^4.10.4",
+    "rucken": "^4.11.5",
     "supertest": "^6.3.3",
     "testcontainers": "^10.7.1",
     "ts-jest": "^29.1.0",
@@ -507,7 +507,7 @@
       "Creation all databases of applications and modules"
     ],
     "prisma:migrate-dev-new:example-prisma": [
-      "Command to create new empty migration for example-prisma"
+      "Command to create new empty migration for example-prisma, for set name pass name to --args, example: npm run flyway:create:appname --args=Init"
     ],
     "prisma:migrate-dev:example-prisma": [
       "Alias for create new migration for example-prisma (example: `npm run prisma:migrate-dev:example-prisma --name=new)`"
@@ -531,7 +531,7 @@
       "Generating a prisma schema based on a database for example-prisma-flyway"
     ],
     "prisma:migrate-dev-new:example-prisma-flyway": [
-      "Command to create new empty migration for example-prisma-flyway"
+      "Command to create new empty migration for example-prisma-flyway, for set name pass name to --args, example: npm run flyway:create:appname --args=Init"
     ],
     "prisma:migrate-dev:example-prisma-flyway": [
       "Alias for create new migration for example-prisma-flyway (example: `npm run prisma:migrate-dev:example-prisma-flyway --name=new)`"
@@ -540,7 +540,7 @@
       "Applying migrations for example-prisma-flyway"
     ],
     "flyway:create:example-prisma-flyway": [
-      "Command to create new empty migration for example-prisma-flyway"
+      "Command to create new empty migration for example-prisma-flyway, for set name pass name to --args, example: npm run flyway:create:appname --args=Init"
     ],
     "flyway:migrate:example-prisma-flyway": [
       "Applying migrations for example-prisma-flyway"

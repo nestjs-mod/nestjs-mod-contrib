@@ -159,18 +159,24 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`adminSecret`|Admin secret|`obj['adminSecret']`, `process.env['AUTHORIZER_ADMIN_SECRET']`|**optional**|-|-|
 |`allowedExternalAppIds`|Allowed identifiers of external applications, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing.|`obj['allowedExternalAppIds']`, `process.env['AUTHORIZER_ALLOWED_EXTERNAL_APP_IDS']`|**optional**|-|-|
 
-#### Static configuration
+#### Configuration
 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`extraHeaders`|Extra headers|**optional**|-|-|
 |`getRequestFromContext`|Function for resolve request from execution context|**optional**|```getRequestFromExecutionContext```|-|
 |`checkAccessValidator`|External function for validate permissions|**optional**|```defaultAuthorizerCheckAccessValidator```|-|
 |`externalUserIdHeaderName`|A header for searching for an external user ID, if you have logged in previously and do not need to log in again in the authorization service, can be used during testing.|**optional**|```x-external-user-id```|-|
 |`externalAppIdHeaderName`|Header for searching for external application identifiers, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing.|**optional**|```x-external-app-id```|-|
 |`getAuthorizerUserFromExternalUserId`|Function for resolve authorizer user by externalUserId|**optional**|```defaultAuthorizerGetAuthorizerUserFromExternalUserId```|-|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 
 [Back to Top](#modules)
 
