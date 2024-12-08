@@ -85,7 +85,7 @@ New scripts mostly `package.json`
     "flyway:migrate:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:flyway-migrate"
   },
   "scriptsComments": {
-    "flyway:create:example-prisma-flyway": ["Command to create new empty migration for example-prisma-flyway"],
+    "flyway:create:example-prisma-flyway": ["Command to create new empty migration for example-prisma-flyway, for set name pass name to --args, example: npm run flyway:create:appname --args=Init"],
     "flyway:migrate:example-prisma-flyway": ["Applying migrations for example-prisma-flyway"]
   }
 }
@@ -100,7 +100,7 @@ Additional commands in the nx application `project.json`
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "echo 'select 1;' > ./apps/example-prisma-flyway/src/migrations/V`date +%Y%m%d%H%M`__NewMigration.sql"
+          "echo 'select 1;' > ./apps/example-prisma-flyway/src/migrations/V`date +%Y%m%d%H%M`__${npm_config_args:-NewMigration}.sql"
         ],
         "parallel": false,
         "envFile": "./.env",

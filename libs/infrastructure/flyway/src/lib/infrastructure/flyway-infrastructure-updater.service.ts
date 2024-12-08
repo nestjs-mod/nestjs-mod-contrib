@@ -41,7 +41,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
           {
             [`flyway:create:${projectName}`]: {
               commands: [`./node_modules/.bin/nx run ${projectName}:flyway-create-migration`],
-              comments: [`Command to create new empty migration for ${projectName}`],
+              comments: [`Command to create new empty migration for ${projectName}, for set name pass name to --args, example: npm run flyway:create:appname --args=Init`],
             },
             [`flyway:migrate:${projectName}`]: {
               commands: [`./node_modules/.bin/nx run ${projectName}:flyway-migrate`],
@@ -75,7 +75,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
       const { databaseName } = this.getDbConnectionEnvKeys();
       // new migration
       this.nxProjectJsonService.addRunCommands(
-        [`echo 'select 1;' > .${flywayMigrationsPath}/V\`date +%Y%m%d%H%M\`__NewMigration.sql`],
+        [`echo 'select 1;' > .${flywayMigrationsPath}/V\`date +%Y%m%d%H%M\`__\${npm_config_args:-NewMigration}.sql`],
         'flyway-create-migration',
         undefined,
         this.flywayConfiguration.nxProjectJsonFile
