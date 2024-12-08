@@ -1,3 +1,10 @@
+## [1.7.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.1...flyway-v1.7.2) (2024-12-08)
+
+
+### Bug Fixes
+
+* add support set name on create migration for flyway ([65866ed](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/65866ed4ce48f7c48e868d99c994ea97bf6e0306))
+
 ## [1.7.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.0...flyway-v1.7.1) (2024-09-27)
 
 
