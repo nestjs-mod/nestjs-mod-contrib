@@ -86,9 +86,9 @@ New scripts mostly `package.json`
     "prisma:migrate-dev-new:example-prisma": "./node_modules/.bin/nx run example-prisma:prisma-migrate-dev --create-only --name=new",
     "prisma:migrate-dev:example-prisma": "./node_modules/.bin/nx run example-prisma:prisma-migrate-dev --create-only",
     "prisma:migrate-deploy:example-prisma": "./node_modules/.bin/nx run example-prisma:prisma-migrate-deploy",
-    "prisma:migrate-deploy": "./node_modules/.bin/nx run-many --exclude=@nestjs-mod/contrib -t=prisma-migrate-deploy",
-    "prisma:pull": "./node_modules/.bin/nx run-many --exclude=@nestjs-mod/contrib -t=prisma-pull",
-    "prisma:generate": "./node_modules/.bin/nx run-many --exclude=@nestjs-mod/contrib -t=prisma-generate"
+    "prisma:migrate-deploy": "./node_modules/.bin/nx run-many -t=prisma-migrate-deploy",
+    "prisma:pull": "./node_modules/.bin/nx run-many -t=prisma-pull",
+    "prisma:generate": "./node_modules/.bin/nx run-many -t=prisma-generate"
   },
   "scriptsComments": {
     "prisma:pull": ["Generating a prisma schema based on a database"],

@@ -103,21 +103,13 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       const prismaSchemaFilePath = this.prismaConfiguration.schemaFile.replace(dirname(packageJsonFilePath), '');
       // generate
       this.nxProjectJsonService.addRunCommands(
-        [
-          `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}${
-            this.prismaConfiguration.previewFeatures?.includes('typedSql') ? ' --sql' : ''
-          }`,
-        ],
+        [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
         undefined,
         prismaSchemaFilePath,
         this.prismaConfiguration.nxProjectJsonFile
       );
       this.nxProjectJsonService.addRunCommands(
-        [
-          `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}${
-            this.prismaConfiguration.previewFeatures?.includes('typedSql') ? ' --sql' : ''
-          }`,
-        ],
+        [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
         'prisma-generate',
         prismaSchemaFilePath,
         this.prismaConfiguration.nxProjectJsonFile
@@ -125,7 +117,12 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
 
       // pull
       this.nxProjectJsonService.addRunCommands(
-        [`./node_modules/.bin/prisma db pull --schema=.${prismaSchemaFilePath}`],
+        [
+          `./node_modules/.bin/prisma db pull --schema=.${prismaSchemaFilePath}`,
+          ...(this.prismaConfiguration.previewFeatures?.includes('typedSql')
+            ? [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath} --sql`]
+            : []),
+        ],
         'prisma-pull',
         prismaSchemaFilePath,
         this.prismaConfiguration.nxProjectJsonFile
