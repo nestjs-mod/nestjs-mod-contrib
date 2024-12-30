@@ -34,7 +34,7 @@ Commands for create empty NestJS-mod application
 
 ```bash
 # Create empty nx project
-npx --yes create-nx-workspace@19.5.3 --name=project-name --preset=apps --interactive=false --ci=skip
+npx --yes create-nx-workspace@20.3.0 --name=project-name --preset=apps --interactive=false --ci=skip
 
 # Go to created project
 cd project-name
