@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/prisma",
   "description": "Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only for Postgres)",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "keywords": [
     "nestjs",
     "nestjs-mod",
