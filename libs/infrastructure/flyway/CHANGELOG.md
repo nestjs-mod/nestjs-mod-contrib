@@ -1,3 +1,10 @@
+## [1.7.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.2...flyway-v1.7.3) (2024-12-30)
+
+
+### Bug Fixes
+
+* update deps ([67d7179](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/67d7179e8078b8cb0bd7fdc3874563bc91c4e031))
+
 ## [1.7.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.1...flyway-v1.7.2) (2024-12-08)
 
 
