@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.16.1...docker-compose-v1.16.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* update deps ([67d7179](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/67d7179e8078b8cb0bd7fdc3874563bc91c4e031))
+
 ## [1.16.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.16.0...docker-compose-v1.16.1) (2024-09-23)
 
 
