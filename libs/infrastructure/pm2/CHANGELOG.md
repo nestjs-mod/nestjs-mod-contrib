@@ -1,3 +1,10 @@
+## [1.12.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.12.3...pm2-v1.12.4) (2024-12-30)
+
+
+### Bug Fixes
+
+* update deps ([67d7179](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/67d7179e8078b8cb0bd7fdc3874563bc91c4e031))
+
 ## [1.12.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.12.2...pm2-v1.12.3) (2024-09-22)
 
 
