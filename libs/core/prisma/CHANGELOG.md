@@ -1,3 +1,10 @@
+## [1.10.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.10.2...prisma-v1.10.3) (2024-12-30)
+
+
+### Bug Fixes
+
+* add previewFeatures to PrismaConfiguration ([9264be6](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9264be682010f091c0b0dd8ef3e92fb170d7d2f1))
+
 ## [1.10.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.10.1...prisma-v1.10.2) (2024-09-27)
 
 
