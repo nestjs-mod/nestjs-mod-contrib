@@ -3,6 +3,7 @@ generator client {
   engineType = "binary"
   output   = "../../../../node_modules/@prisma/flyway-prisma-client"
   binaryTargets = ["native","linux-musl-openssl-3.0.x","linux-musl-openssl-3.0.x"]
+  
 }
 datasource db {
   provider          = "postgres"

@@ -76,5 +76,6 @@
       "unitTestRunner": "jest"
     }
   },
-  "useInferencePlugins": false
+  "useInferencePlugins": false,
+  "useLegacyCache": true
 }

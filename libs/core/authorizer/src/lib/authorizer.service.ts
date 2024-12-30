@@ -42,8 +42,8 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getUserFromRequest(ctx: ExecutionContext, checkAccess = true): Promise<AuthorizerUser | undefined> {
-    const req = this.authorizerConfiguration.getRequestFromContext!(ctx) || {};
-
+    const req = this.authorizerConfiguration.getRequestFromContext?.(ctx) || {};
+    
     const allowEmptyUserMetadata =
       (typeof ctx.getHandler === 'function' && this.reflector.get(AllowEmptyUser, ctx.getHandler())) ||
       (typeof ctx.getClass === 'function' && this.reflector.get(AllowEmptyUser, ctx.getClass())) ||
