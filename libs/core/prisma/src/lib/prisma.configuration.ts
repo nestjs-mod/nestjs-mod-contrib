@@ -67,6 +67,11 @@ export class PrismaConfiguration {
   binaryTargets?: string[];
 
   @ConfigModelProperty({
+    description: 'Preview features (infrastructure)',
+  })
+  previewFeatures?: string[];
+
+  @ConfigModelProperty({
     description: 'Application or library project.json-file (nx)',
   })
   nxProjectJsonFile?: string;

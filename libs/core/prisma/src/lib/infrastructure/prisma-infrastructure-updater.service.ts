@@ -103,13 +103,21 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       const prismaSchemaFilePath = this.prismaConfiguration.schemaFile.replace(dirname(packageJsonFilePath), '');
       // generate
       this.nxProjectJsonService.addRunCommands(
-        [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
+        [
+          `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}${
+            this.prismaConfiguration.previewFeatures?.includes('typedSql') ? ' --sql' : ''
+          }`,
+        ],
         undefined,
         prismaSchemaFilePath,
         this.prismaConfiguration.nxProjectJsonFile
       );
       this.nxProjectJsonService.addRunCommands(
-        [`./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}`],
+        [
+          `./node_modules/.bin/prisma generate --schema=.${prismaSchemaFilePath}${
+            this.prismaConfiguration.previewFeatures?.includes('typedSql') ? ' --sql' : ''
+          }`,
+        ],
         'prisma-generate',
         prismaSchemaFilePath,
         this.prismaConfiguration.nxProjectJsonFile
@@ -200,6 +208,11 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       ? `binaryTargets = ${JSON.stringify(this.prismaConfiguration.binaryTargets)}`
       : ''
   }
+  ${
+    (this.prismaConfiguration.previewFeatures || []).length > 0
+      ? `previewFeatures = ${JSON.stringify(this.prismaConfiguration.previewFeatures)}`
+      : ''
+  }
 }
 
 datasource db {
@@ -244,6 +257,11 @@ model ${prismaFeatureName}User {
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0
       ? `binaryTargets = ${JSON.stringify(this.prismaConfiguration.binaryTargets)}`
+      : ''
+  }
+  ${
+    (this.prismaConfiguration.previewFeatures || []).length > 0
+      ? `previewFeatures = ${JSON.stringify(this.prismaConfiguration.previewFeatures)}`
       : ''
   }
 }`;
