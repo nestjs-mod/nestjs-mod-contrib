@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.5.3...cache-manager-v1.5.4) (2024-12-30)
+
+
+### Bug Fixes
+
+* update deps ([67d7179](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/67d7179e8078b8cb0bd7fdc3874563bc91c4e031))
+
 ## [1.5.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.5.2...cache-manager-v1.5.3) (2024-09-22)
 
 
