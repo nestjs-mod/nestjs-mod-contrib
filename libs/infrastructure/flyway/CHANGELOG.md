@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.3...flyway-v1.8.0) (2025-01-04)
+
+
+### Features
+
+* add support change migrations table name ([8528530](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8528530e3e9ea6a36d21c04666b7ca8b2a3e8629))
+
 ## [1.7.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.2...flyway-v1.7.3) (2024-12-30)
 
 
