@@ -83,7 +83,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
       // migrate
       this.nxProjectJsonService.addRunCommands(
         [
-          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} migrate`,
+          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_TABLE=${projectJson.name} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} migrate`,
         ],
         'flyway-migrate',
         undefined,
@@ -92,7 +92,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
       // info
       this.nxProjectJsonService.addRunCommands(
         [
-          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} info`,
+          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_TABLE=${projectJson.name} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} info`,
         ],
         'flyway-info',
         undefined,
@@ -101,7 +101,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
       // baseline
       this.nxProjectJsonService.addRunCommands(
         [
-          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} baseline`,
+          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_TABLE=${projectJson.name} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} baseline`,
         ],
         'flyway-baseline',
         undefined,
@@ -110,7 +110,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
       // validate
       this.nxProjectJsonService.addRunCommands(
         [
-          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} validate`,
+          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_TABLE=${projectJson.name} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} validate`,
         ],
         'flyway-validate',
         undefined,
@@ -119,7 +119,7 @@ export class FlywayInfrastructureUpdaterService implements OnModuleInit {
       // repair
       this.nxProjectJsonService.addRunCommands(
         [
-          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} repair`,
+          `export DATABASE_URL=\${${databaseName}} && export DATABASE_MIGRATIONS_TABLE=${projectJson.name} && export DATABASE_MIGRATIONS_LOCATIONS=.${flywayMigrationsPath} && ./node_modules/.bin/flyway -c .${flywayConfigFilePath} repair`,
         ],
         'flyway-repair',
         undefined,
@@ -151,7 +151,7 @@ module.exports = {
     locations: \`filesystem:\${process.env.DATABASE_MIGRATIONS_LOCATIONS || 'migrations'}\`,
     user: USERNAME,
     password: PASSWORD,
-    table: '__migrations',
+    table: process.env.DATABASE_MIGRATIONS_TABLE ? \`__migrations_\${process.env.DATABASE_MIGRATIONS_TABLE}\` : '__migrations',
     sqlMigrationSuffixes: '.sql',
     baselineOnMigrate: true
   },
