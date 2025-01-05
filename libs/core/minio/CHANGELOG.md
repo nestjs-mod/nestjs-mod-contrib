@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.3.4...minio-v1.3.5) (2025-01-05)
+
+
+### Bug Fixes
+
+* change private methods to public ([e4d7304](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e4d730496736fa58bffbc62a7c6e3efe0dbd39a9))
+
 ## [1.3.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.3.3...minio-v1.3.4) (2024-12-30)
 
 
