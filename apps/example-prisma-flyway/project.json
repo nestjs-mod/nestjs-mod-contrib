@@ -89,7 +89,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js migrate"
+          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_TABLE=example-prisma-flyway && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js migrate"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -100,7 +100,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js info"
+          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_TABLE=example-prisma-flyway && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js info"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -111,7 +111,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js baseline"
+          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_TABLE=example-prisma-flyway && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js baseline"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -122,7 +122,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js validate"
+          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_TABLE=example-prisma-flyway && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js validate"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -133,7 +133,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js repair"
+          "export DATABASE_URL=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL} && export DATABASE_MIGRATIONS_TABLE=example-prisma-flyway && export DATABASE_MIGRATIONS_LOCATIONS=./apps/example-prisma-flyway/src/migrations && ./node_modules/.bin/flyway -c ./.flyway.js repair"
         ],
         "parallel": false,
         "envFile": "./.env",
