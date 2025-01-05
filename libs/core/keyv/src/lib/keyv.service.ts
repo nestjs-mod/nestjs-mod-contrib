@@ -15,14 +15,14 @@ import Keyv, {
 export class KeyvService<GenericValue = any>
   implements Omit<Keyv<GenericValue>, 'opts' | 'hooks' | 'stats' | 'get' | '_eventListeners' | '_maxListeners'>
 {
-  get(
+  get<Value = GenericValue>(
     key: unknown,
     options?: unknown
   ):
-    | Promise<StoredDataNoRaw<GenericValue>>
-    | Promise<StoredDataRaw<GenericValue>>
-    | Promise<StoredDataNoRaw<GenericValue>[]>
-    | Promise<StoredDataRaw<GenericValue>[]> {
+    | Promise<StoredDataNoRaw<Value>>
+    | Promise<StoredDataRaw<Value>>
+    | Promise<StoredDataNoRaw<Value>[]>
+    | Promise<StoredDataRaw<Value>[]> {
     throw new Error('Method not implemented.');
   }
   iterator?: ((argument: any) => AsyncGenerator<any, void>) | undefined;

@@ -2,7 +2,7 @@ import { NestModuleCategory, createNestModule, getFeatureDotEnvPropertyNameForma
 
 import Keyv from 'keyv';
 import { KeyvConfiguration } from './keyv.configuration';
-import { KEYV_MODULE_NAME } from './keyv.constants';
+import { KEYV_ENV_PREFIX, KEYV_MODULE_NAME } from './keyv.constants';
 import { getKeyvEnvironmentsLoaderToken } from './keyv.decorators';
 import { KeyvEnvironments } from './keyv.environments';
 import { KeyvService } from './keyv.service';
@@ -47,11 +47,21 @@ export const { KeyvModule } = createNestModule({
       asyncModuleOptions = {};
     }
     if (asyncModuleOptions.staticConfiguration?.featureName) {
-      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(asyncModuleOptions.staticConfiguration.featureName);
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(
+        `${KEYV_ENV_PREFIX}_${asyncModuleOptions.staticConfiguration?.featureName}`
+      );
       Object.assign(asyncModuleOptions, {
         environmentsOptions: {
           propertyNameFormatters: [new FomatterClass()],
-          name: asyncModuleOptions.staticConfiguration?.featureName,
+          name: `${KEYV_ENV_PREFIX}_${asyncModuleOptions.staticConfiguration?.featureName}`,
+        },
+      });
+    } else {
+      const FomatterClass = getFeatureDotEnvPropertyNameFormatter(KEYV_ENV_PREFIX);
+      Object.assign(asyncModuleOptions, {
+        environmentsOptions: {
+          propertyNameFormatters: [new FomatterClass()],
+          name: KEYV_ENV_PREFIX,
         },
       });
     }
