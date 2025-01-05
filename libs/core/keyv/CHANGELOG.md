@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.0.0...keyv-v1.0.1) (2025-01-05)
+
+
+### Bug Fixes
+
+* append global env prefix "keyv" ([b1f5e02](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b1f5e02e601df2a127948ff22f02da35b478b442))
+
 # 1.0.0 (2025-01-05)
 
 
