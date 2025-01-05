@@ -32,7 +32,10 @@ export class MinioFilesService {
   creatAllBuckets() {
     return forkJoin(
       Object.entries(this.minioConfiguration.buckets ?? {}).map(([bucketName, bucketValue]) => {
-        return this.createBucketIfNeed(this.minioConfiguration.region!, bucketName, bucketValue.ext[0]);
+        if (!this.minioConfiguration.region) {
+          throw new MinioNoSuchBucketPolicyError(`Region not set`);
+        }
+        return this.createBucketIfNeed(this.minioConfiguration.region, bucketName, bucketValue.ext[0]);
       })
     ).pipe(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,7 +69,12 @@ export class MinioFilesService {
       this.minioEnvironments.minioServerHost
     }${this.minioEnvironments.minioServerPort ? `:${this.minioEnvironments.minioServerPort}` : ''}`;
     this.logger.debug(`getPresignedUrls: ${downloadUrl}`);
-    return this.createBucketIfNeed(this.minioConfiguration.region!, bucketName, ext).pipe(
+
+    if (!this.minioConfiguration.region) {
+      throw new MinioNoSuchBucketPolicyError(`Region not set`);
+    }
+
+    return this.createBucketIfNeed(this.minioConfiguration.region, bucketName, ext).pipe(
       mergeMap(() => from(this.minioService.presignedPutObject(bucketName, fullObjectName, expiry))),
       map((uploadUrl: string) => {
         const url = new URL(uploadUrl);
@@ -112,7 +120,10 @@ export class MinioFilesService {
         ext,
       })}`
     );
-    return this.createBucketIfNeed(this.minioConfiguration.region!, bucketName, ext).pipe(
+    if (!this.minioConfiguration.region) {
+      throw new MinioNoSuchBucketPolicyError(`Region not set`);
+    }
+    return this.createBucketIfNeed(this.minioConfiguration.region, bucketName, ext).pipe(
       mergeMap(() => from(this.minioService.putObject(bucketName, fullObjectName, buffer))),
       map(() => downloadUrl)
     );
@@ -152,7 +163,7 @@ export class MinioFilesService {
     );
   }
 
-  public createBucketIfNeed(bucketRegion: string, bucketName: string, ext: string) {
+  createBucketIfNeed(bucketRegion: string, bucketName: string, ext: string) {
     return from(this.minioService.bucketExists(bucketName)).pipe(
       catchError((err) => {
         this.logger.error(err, err.stack);
@@ -180,8 +191,8 @@ export class MinioFilesService {
     );
   }
 
-  private getPoliceAsString(bucketName: string, ext: string) {
-    const bucket = this.minioConfiguration.buckets![bucketName];
+  getPoliceAsString(bucketName: string, ext: string) {
+    const bucket = this.minioConfiguration.buckets?.[bucketName];
     if (!bucket) {
       throw new MinioNoSuchBucketPolicyError(`Bucket with name "${bucketName}" not set`);
     }
@@ -191,7 +202,7 @@ export class MinioFilesService {
     return JSON.stringify(bucket.policy);
   }
 
-  private getFromDownloadUrlWithoutBucketNames(downloadUrl: string) {
+  getFromDownloadUrlWithoutBucketNames(downloadUrl: string) {
     const bucketNames = Object.keys(this.minioConfiguration.buckets ?? {});
     for (const bucketName of bucketNames) {
       const sep = `/${bucketName}/`;

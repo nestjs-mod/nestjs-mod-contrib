@@ -29,7 +29,7 @@ export const { MinioModule } = createNestModule({
                 accessKey: staticEnvironments.minioAccessKey,
                 secretKey: staticEnvironments.minioSecretKey,
                 endPoint: staticEnvironments.minioServerHost,
-                port: +staticEnvironments.minioServerPort!,
+                ...(staticEnvironments.minioServerPort ? { port: +staticEnvironments.minioServerPort } : {}),
                 useSSL: staticEnvironments.minioUseSSL === 'true',
                 credentialsProvider: staticConfiguration.credentialsProvider,
                 partSize: staticConfiguration.partSize,
