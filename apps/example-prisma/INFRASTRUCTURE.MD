@@ -63,6 +63,7 @@ npm run test:example-prisma
 |`npm run serve:dev:example-minio`|Running example-minio source code in watch mode|
 |`npm run serve:dev:example-nats-microservice`|Running example-nats-microservice source code in watch mode|
 |`npm run serve:dev:example-redis-microservice`|Running example-redis-microservice source code in watch mode|
+|`npm run serve:dev:example-keyv`|Running example-keyv source code in watch mode|
 |**angular dev infra**|
 |`npm run serve:dev:example-minio-angular`|Running frontend application for example-minio in watch mode|
 |`npm run serve:dev:example-minio-angular-ssr`|Running frontend application in SSR mode for example-minio in watch mode|
@@ -84,11 +85,13 @@ npm run test:example-prisma
 |`npm run build:prod:example-minio`||
 |`npm run start:prod:example-nats-microservice`|Launching a built example-nats-microservice (you must first build it using the build command)|
 |`npm run start:prod:example-redis-microservice`|Launching a built example-redis-microservice (you must first build it using the build command)|
+|`npm run start:prod:example-keyv`|Launching a built example-keyv (you must first build it using the build command)|
 |**docs**|
 |`npm run docs:infrastructure`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure|
 |`npm run docs:infrastructure:example-minio`||
 |`npm run docs:infrastructure:example-prisma`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-prisma|
 |`npm run docs:infrastructure:example-terminus`|Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus|
+|`npm run docs:infrastructure:example-keyv`||
 |**docker-compose infra**|
 |`npm run docker-compose:start:prisma`|Running the docker-compose infrastructure for prisma|
 |`npm run docker-compose:stop:prisma`|Stopping the docker-compose infrastructure for prisma|
@@ -104,6 +107,8 @@ npm run test:example-prisma
 |`npm run docker-compose:stop:example-nats-microservice`|Stopping the docker-compose infrastructure for example-nats-microservice|
 |`npm run docker-compose:start:example-redis-microservice`|Running the docker-compose infrastructure for example-redis-microservice|
 |`npm run docker-compose:stop:example-redis-microservice`|Stopping the docker-compose infrastructure for example-redis-microservice|
+|`npm run docker-compose:start:example-keyv`|Running the docker-compose infrastructure for example-keyv|
+|`npm run docker-compose:stop:example-keyv`|Stopping the docker-compose infrastructure for example-keyv|
 |**docker-compose prod-infra**|
 |`npm run docker-compose:start-prod:prisma`|Running the main docker-compose prod infrastructure for prisma|
 |`npm run docker-compose:stop-prod:prisma`|Stopping the main docker-compose prod infrastructure for prisma|
@@ -119,6 +124,8 @@ npm run test:example-prisma
 |`npm run docker-compose:stop-prod`|Stopping the main docker-compose prod infrastructure|
 |`npm run docker-compose:start-prod:example-minio`|Running the main docker-compose prod infrastructure for example-minio|
 |`npm run docker-compose:stop-prod:example-minio`|Stopping the main docker-compose prod infrastructure for example-minio|
+|`npm run docker-compose:start-prod:example-keyv`|Running the main docker-compose prod infrastructure for example-keyv|
+|`npm run docker-compose:stop-prod:example-keyv`|Stopping the main docker-compose prod infrastructure for example-keyv|
 |**tests**|
 |`npm run test`|Running tests across the entire project|
 |`npm run test:example-pino-logger`|Running tests for example-pino-logger|
@@ -131,6 +138,7 @@ npm run test:example-prisma
 |`npm run test:example-nats-microservice`|Running tests for example-nats-microservice|
 |`npm run e2e:example-nats-microservice`|Running e2e tests for example-redis-microservice|
 |`npm run test:example-redis-microservice`|Running tests for example-redis-microservice|
+|`npm run test:example-keyv`|Running tests for example-keyv|
 |**lint**|
 |`npm run lint`|Checking the typescript code for the entire project|
 |`npm run lint:fix`|Checking the typescript code throughout the project and trying to fix everything possible|

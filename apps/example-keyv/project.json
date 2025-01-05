@@ -1,0 +1,57 @@
+{
+  "name": "example-keyv",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-keyv/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-keyv",
+        "main": "apps/example-keyv/src/main.ts",
+        "tsConfig": "apps/example-keyv/tsconfig.app.json",
+        "assets": ["apps/example-keyv/src/assets"],
+        "webpackConfig": "apps/example-keyv/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "example-keyv:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-keyv:build:development"
+        },
+        "production": {
+          "buildTarget": "example-keyv:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/apps/example-keyv/main.js"],
+        "parallel": false
+      }
+    }
+  }
+}

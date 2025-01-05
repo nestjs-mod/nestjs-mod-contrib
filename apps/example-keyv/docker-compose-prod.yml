@@ -1,0 +1,33 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-keyv-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-keyv-redis"
+    volumes:
+      - "example-keyv-redis-volume:/bitnami/redis/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - "example-keyv-network"
+    environment:
+      REDIS_DATABASE: "${EXAMPLE_KEYV_REDIS_REDIS_DATABASE}"
+      REDIS_PASSWORD: "${EXAMPLE_KEYV_REDIS_REDIS_PASSWORD}"
+      REDIS_DISABLE_COMMANDS: "${EXAMPLE_KEYV_REDIS_REDIS_DISABLE_COMMANDS}"
+      REDIS_IO_THREADS: "${EXAMPLE_KEYV_REDIS_REDIS_IO_THREADS}"
+      REDIS_IO_THREADS_DO_READS: "${EXAMPLE_KEYV_REDIS_REDIS_IO_THREADS_DO_READS}"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+networks:
+  example-keyv-network:
+    driver: "bridge"
+volumes:
+  example-keyv-redis-volume:
+    name: "example-keyv-redis-volume"

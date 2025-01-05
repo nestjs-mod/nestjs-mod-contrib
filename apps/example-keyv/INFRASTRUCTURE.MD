@@ -1,7 +1,7 @@
-# example-cache-manager
+# example-keyv
 > Version: 0.0.0
 
-Example application with cache-manager and redis
+A collection of modules unified for NestJS-mod
 ## Installation
 ```bash
 git clone https://github.com/nestjs-mod/nestjs-mod-contrib.git
@@ -13,27 +13,21 @@ npm install
 # preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
 npm run manual:prepare
 
-# running the docker-compose infrastructure for example-cache-manager
-npm run docker-compose:start:example-cache-manager
-
-# running example-cache-manager source code in watch mode
-npm run serve:dev:example-cache-manager
+# running example-keyv source code in watch mode
+npm run serve:dev:example-keyv
 ```
 ## Running the app in production mode
 ```bash
 # preparing code, building code, creating infrastructure documentation and all the files necessary to raise the infrastructure and running tests (generate, build, docs:infrastructure, test)
 npm run manual:prepare
 
-# running the docker-compose infrastructure for example-cache-manager
-npm run docker-compose:start:example-cache-manager
-
-# launching a built example-cache-manager (you must first build it using the build command)
-npm run start:prod:example-cache-manager
+# launching a built example-keyv (you must first build it using the build command)
+npm run start:prod:example-keyv
 ```
 ## Test
 ```bash
-# running tests for example-cache-manager
-npm run test:example-cache-manager
+# running tests for example-keyv
+npm run test:example-keyv
 ```
 ## All scripts
 |Script|Description|
@@ -173,7 +167,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`applicationPackageJsonFile`|Application package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-cache-manager/package.json```|
+|`applicationPackageJsonFile`|Application package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-keyv/package.json```|
 |`packageJsonFile`|Root package.json-file|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/package.json```|
 |`envFile`|Dot-env file with environment variables|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/.env```|
 
@@ -183,25 +177,26 @@ Default NestJS application initializer.
 ## Core modules
 Core modules necessary for the operation of feature and integration modules (examples: main module with connection to the database, main module for connecting to aws, etc.). NestJS and NestJS-mod compatible modules.
 
-### CacheManagerModule
-A cache module for nodejs that allows easy wrapping of functions in cache, tiered caches, and a consistent interface for NestJS-mod (Wrapper for https://www.npmjs.com/package/cache-manager)
+### KeyvModule
+Simple key-value storage with support for multiple backends, and a consistent interface for NestJS-mod (Wrapper for https://www.npmjs.com/package/keyv)
 
 #### Shared providers
-`CacheManagerService`
+`KeyvService`
 
 #### Environments
 Variables with primitive types used in the module, the values of which can be obtained from various sources, such as: process.env or consul key value.
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`redisUrl`|Connection string for Redis, if it empty memoryStore use for store data (example: redis://:redis_password@localhost:6379)|`obj['redisUrl']`, `process.env['EXAMPLE_CACHE_MANAGER_CACHE_MANAGER_USER_REDIS_URL']`|**optional**|-|```redis://:redis_password@localhost:6379```|
+|`url`|Connection string for store data (example: redis://:redis_password@localhost:6379)|`obj['url']`, `process.env['EXAMPLE_KEYV_KEYV_USER_URL']`|**optional**|-|```redis://:pass@localhost:6379```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|```cache-manager-user```|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|```keyv-user```|
+|`storeFactoryByEnvironmentUrl`|Function for create storage adapter instance to be used by Keyv by environment url.|**optional**|-|```storeFactoryByEnvironmentUrl```|
 
 ## Feature modules
 Feature modules with business logic of the application. NestJS and NestJS-mod compatible modules.
@@ -218,8 +213,8 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`port`|The port on which to run the server.|`obj['port']`, `process.env['EXAMPLE_CACHE_MANAGER_PORT']`|**optional**|```3000```|```3004```|
-|`hostname`|Hostname on which to listen for incoming packets.|`obj['hostname']`, `process.env['EXAMPLE_CACHE_MANAGER_HOSTNAME']`|**optional**|-|-|
+|`port`|The port on which to run the server.|`obj['port']`, `process.env['EXAMPLE_KEYV_PORT']`|**optional**|```3000```|```40011```|
+|`hostname`|Hostname on which to listen for incoming packets.|`obj['hostname']`, `process.env['EXAMPLE_KEYV_HOSTNAME']`|**optional**|-|-|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
@@ -242,17 +237,17 @@ Variables of primitive and complex types that are used in the module; values for
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-cache-manager/docker-compose.yml```|
+|`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-keyv/docker-compose.yml```|
 
 #### Modules that use feature configuration
-##### Feature module name: EXAMPLE_CACHE_MANAGER_REDIS
+##### Feature module name: EXAMPLE_KEYV_REDIS
 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-cache-manager-redis":{"image":"bitnami/redis:7.2","container_name":"example-cache-manager-redis","volumes":["example-cache-manager-redis-volume:/bitnami/redis/data"],"ports":["6379:6379"],"networks":["example-cache-manager-network"],"environment":{"REDIS_DATABASE":"0","REDIS_PASSWORD":"redis_password","REDIS_DISABLE_COMMANDS":"FLUSHDB,FLUSHALL","REDIS_IO_THREADS":2,"REDIS_IO_THREADS_DO_READS":"yes"},"keysOfEnvironmentsWithStaticValue":["disableCommands","featureName","image","ioThreads","ioThreadsDoReads","networks"],"healthcheck":{"test":["CMD-SHELL","redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
-|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-cache-manager-network":{"driver":"bridge"}}```|
-|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"example-cache-manager-redis-volume":{"name":"example-cache-manager-redis-volume"}}```|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"example-keyv-redis":{"image":"bitnami/redis:7.2","container_name":"example-keyv-redis","volumes":["example-keyv-redis-volume:/bitnami/redis/data"],"ports":["6379:6379"],"networks":["example-keyv-network"],"environment":{"REDIS_DATABASE":"0","REDIS_PASSWORD":"pass","REDIS_DISABLE_COMMANDS":"FLUSHDB,FLUSHALL","REDIS_IO_THREADS":2,"REDIS_IO_THREADS_DO_READS":"yes"},"keysOfEnvironmentsWithStaticValue":["disableCommands","featureName","image","ioThreads","ioThreadsDoReads","networks"],"healthcheck":{"test":["CMD-SHELL","redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"],"interval":"5s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"example-keyv-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"example-keyv-redis-volume":{"name":"example-keyv-redis-volume"}}```|
 
 ### InfrastructureMarkdownReportGenerator
 Infrastructure markdown report generator.
@@ -265,7 +260,7 @@ Static variables of primitive and complex types that are used in the module and 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`markdownFile`|Name of the markdown-file in which to save the infrastructure report|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-cache-manager/INFRASTRUCTURE.MD```|
+|`markdownFile`|Name of the markdown-file in which to save the infrastructure report|**optional**|-|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-keyv/INFRASTRUCTURE.MD```|
 |`skipEmptySettings`|Skip empty values of env and config models|**optional**|-|```true```|
 
 ### DockerComposeRedis
@@ -276,14 +271,14 @@ Static variables with primitive types used in the module and can be used at the 
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`redisUrl`|Connection string for Redis (example: redis://:redis_password@localhost:6379)|`obj['redisUrl']`, `process.env['EXAMPLE_CACHE_MANAGER_CACHE_MANAGER_USER_REDIS_URL']`|**isNotEmpty** (redisUrl should not be empty)|-|```redis://:redis_password@localhost:6379```|
+|`redisUrl`|Connection string for Redis (example: redis://:redis_password@localhost:6379)|`obj['redisUrl']`, `process.env['EXAMPLE_KEYV_KEYV_USER_REDIS_URL']`|**isNotEmpty** (redisUrl should not be empty)|-|```redis://:pass@localhost:6379```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|```cache-manager-user```|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|```keyv-user```|
 
 
 ## Maintainers
