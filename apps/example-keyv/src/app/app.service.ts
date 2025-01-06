@@ -14,6 +14,6 @@ export class AppService {
   }
 
   async getCache() {
-    return await this.keyvService.get('cache', { raw: true });
+    return await this.keyvService.get('cache');
   }
 }

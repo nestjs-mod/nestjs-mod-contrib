@@ -159,6 +159,19 @@ bootstrapNestApplication({
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
+      NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'keyv',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord:'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/core/keyv/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/keyv/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/keyv'),
+          utilsFolders: [join(rootFolder, 'libs/core/keyv/src/lib')],
+          modules: [import('@nestjs-mod/keyv')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
     ],
   },
 });

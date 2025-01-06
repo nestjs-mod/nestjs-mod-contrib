@@ -188,7 +188,7 @@ Variables with primitive types used in the module, the values of which can be ob
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`url`|Connection string for store data (example: redis://:redis_password@localhost:6379)|`obj['url']`, `process.env['EXAMPLE_KEYV_KEYV_USER_URL']`|**optional**|-|```redis://:pass@localhost:6379```|
+|`url`|Connection string for store data (example: redis://:redis_password@localhost:6379)|`obj['url']`, `process.env['EXAMPLE_KEYV_KEYV_KEYV_USER_URL']`|**optional**|-|```redis://:pass@localhost:6379```|
 
 #### Static configuration
 Static variables of primitive and complex types that are used in the module and can be used at the time of generating module metadata (import, controllers); values for them must be passed when connecting the module to the application.

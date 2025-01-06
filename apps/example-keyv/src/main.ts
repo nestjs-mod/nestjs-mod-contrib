@@ -41,9 +41,7 @@ bootstrapNestApplication({
       KeyvModule.forRoot({
         staticConfiguration: {
           storeFactoryByEnvironmentUrl: (url) => {
-            console.log({ env: process.env });
-            console.log({ url, isInfrastructureMode: isInfrastructureMode() });
-            return isInfrastructureMode() ? undefined : new KeyvRedis(createClient({ url }));
+            return isInfrastructureMode() ? undefined : [new KeyvRedis(createClient({ url }))];
           },
           featureName: userFeatureName,
         },
