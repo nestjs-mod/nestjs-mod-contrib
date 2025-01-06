@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/keyv",
   "description": "Simple key-value storage with support for multiple backends, and a consistent interface for NestJS-mod (Wrapper for https://www.npmjs.com/package/keyv)",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "keywords": [
     "nestjs",
     "nestjs-mod",

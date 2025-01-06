@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.0.1...keyv-v1.0.2) (2025-01-06)
+
+
+### Bug Fixes
+
+* update default serialize and deserialize, add support return array of args from storeFactoryByEnvironmentUrl ([8f3e912](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8f3e912e0a450c5ca3889cfdb39109f4f4386e10))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.0.0...keyv-v1.0.1) (2025-01-05)
 
 
