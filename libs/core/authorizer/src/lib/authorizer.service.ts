@@ -29,12 +29,13 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
 
   async onModuleInit() {
     if (!this.config.clientID) {
-      const authEnvs: { CLIENT_ID: string } =
-        (await this.graphqlQuery({
+      const authEnvs: { CLIENT_ID: string } = (
+        await this.graphqlQuery({
           query: '{_env{CLIENT_ID}}',
           variables: {},
           headers: this.config.extraHeaders,
-        }))?.data?._env;
+        })
+      )?.data?._env;
 
       this.config.clientID = authEnvs?.['CLIENT_ID'];
     }
@@ -43,7 +44,7 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getUserFromRequest(ctx: ExecutionContext, checkAccess = true): Promise<AuthorizerUser | undefined> {
     const req = this.authorizerConfiguration.getRequestFromContext?.(ctx) || {};
-    
+
     const allowEmptyUserMetadata =
       (typeof ctx.getHandler === 'function' && this.reflector.get(AllowEmptyUser, ctx.getHandler())) ||
       (typeof ctx.getClass === 'function' && this.reflector.get(AllowEmptyUser, ctx.getClass())) ||
@@ -83,17 +84,19 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
           req.authorizerUser = {
             id: req.externalUserId
               ? (
-                await this.authorizerConfiguration.getAuthorizerUserFromExternalUserId!(
-                  req.externalUserId,
-                  req.externalAppId,
-                  ctx
-                )
-              )?.id
+                  await this.authorizerConfiguration.getAuthorizerUserFromExternalUserId!(
+                    req.externalUserId,
+                    req.externalAppId,
+                    ctx
+                  )
+                )?.id
               : undefined,
           };
         }
       }
     }
+
+    req.authorizerUser = req.authorizerUser || { id: undefined };
 
     if (checkAccess) {
       // check access by custom logic
@@ -102,12 +105,8 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
         : false;
 
       // check access by roles
-      if (allowEmptyUserMetadata) {
-        req.authorizerUser = req.authorizerUser || { id: undefined };
-      } else {
-        if (!checkAccessValidatorResult && !req.authorizerUser?.id) {
-          throw new AuthorizerError('Unauthorized');
-        }
+      if (!allowEmptyUserMetadata && !checkAccessValidatorResult && !req.authorizerUser?.id) {
+        throw new AuthorizerError('Unauthorized');
       }
     }
 
