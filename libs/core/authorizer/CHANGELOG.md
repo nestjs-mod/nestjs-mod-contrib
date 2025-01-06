@@ -1,3 +1,10 @@
+## [1.4.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.4.2...authorizer-v1.4.3) (2025-01-06)
+
+
+### Bug Fixes
+
+* move set authorizerUser to request before run checkAccessValidator ([30b618a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/30b618a92fd129a8177ebac94a9e1a7a9e7e79ac))
+
 ## [1.4.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.4.1...authorizer-v1.4.2) (2024-12-30)
 
 
