@@ -29,13 +29,15 @@ export class KeyvConfiguration implements KeyvOptions {
 
   @ConfigModelProperty({
     description: 'A custom serialization function.',
-    default: (data: DeserializedData<any>) => data.value,
+    default: (params: DeserializedData<unknown>) => JSON.stringify(params.value),
   })
   serialize?: Serialize;
 
   @ConfigModelProperty({
     description: 'A custom deserialization function.',
-    default: (data: DeserializedData<any>) => data,
+    default: (params: string) => {
+      return { value: typeof params === 'string' ? JSON.parse(params) : params };
+    },
   })
   deserialize?: Deserialize;
 
@@ -47,7 +49,7 @@ export class KeyvConfiguration implements KeyvOptions {
   @ConfigModelProperty({
     description: 'Function for create storage adapter instance to be used by Keyv by environment url.',
   })
-  storeFactoryByEnvironmentUrl?: (url: string) => KeyvStoreAdapter | Map<any, any> | any;
+  storeFactoryByEnvironmentUrl?: (url: string) => KeyvStoreAdapter | Map<any, any> | any | any[];
 
   @ConfigModelProperty({
     description: 'Default TTL. Can be overridden by specifying a TTL on `.set()`.',

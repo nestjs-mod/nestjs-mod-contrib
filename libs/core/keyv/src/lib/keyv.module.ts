@@ -24,12 +24,17 @@ export const { KeyvModule } = createNestModule({
         keyvConfiguration: KeyvConfiguration,
         keyvEnvironments: KeyvEnvironments
       ) => {
-        const keyvService = new Keyv({
-          ...keyvConfiguration,
-          ...(keyvConfiguration.storeFactoryByEnvironmentUrl && keyvEnvironments.url
-            ? { store: keyvConfiguration.storeFactoryByEnvironmentUrl(keyvEnvironments.url) }
-            : {}),
-        });
+        const store =
+          keyvConfiguration.storeFactoryByEnvironmentUrl && keyvEnvironments.url
+            ? keyvConfiguration.storeFactoryByEnvironmentUrl(keyvEnvironments.url)
+            : undefined;
+        const keyvService =
+          store && Array.isArray(store)
+            ? new Keyv(...store)
+            : new Keyv({
+                ...keyvConfiguration,
+                ...(store ? { store } : {}),
+              });
         Object.setPrototypeOf(emptyKeyvService, keyvService);
         Object.assign(emptyKeyvService, keyvService);
       },
