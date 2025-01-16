@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pg-flyway-v1.0.1...pg-flyway-v1.0.2) (2025-01-16)
+
+
+### Bug Fixes
+
+* disable create first migration after each call docgen ([dd92da4](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/dd92da4ff41653f6e39ca0c2c68b44419e01a26d))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pg-flyway-v1.0.0...pg-flyway-v1.0.1) (2025-01-16)
 
 
