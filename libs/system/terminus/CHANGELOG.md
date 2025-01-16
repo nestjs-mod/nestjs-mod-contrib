@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.13.4...terminus-v1.14.0) (2025-01-16)
+
+
+### Features
+
+* append new infrastructure module for work with pf-flyway ([9a6ba03](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9a6ba03c3c9267da0c436abfaa42d0efd89facbe))
+
 ## [1.13.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.13.3...terminus-v1.13.4) (2024-12-30)
 
 
