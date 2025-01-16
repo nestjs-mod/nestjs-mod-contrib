@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.14.4...pino-v1.15.0) (2025-01-16)
+
+
+### Features
+
+* append new infrastructure module for work with pf-flyway ([9a6ba03](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9a6ba03c3c9267da0c436abfaa42d0efd89facbe))
+
 ## [1.14.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pino-v1.14.3...pino-v1.14.4) (2024-12-30)
 
 
