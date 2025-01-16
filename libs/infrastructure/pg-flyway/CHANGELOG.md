@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pg-flyway-v1.0.0...pg-flyway-v1.0.1) (2025-01-16)
+
+
+### Bug Fixes
+
+* epdate description and readme of module ([13dcb1b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/13dcb1b7812845b1acc2757f84f13cb7a6db117b))
+
 # 1.0.0 (2025-01-16)
 
 
