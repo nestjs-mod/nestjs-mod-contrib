@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.3.5...minio-v1.4.0) (2025-01-16)
+
+
+### Features
+
+* append new infrastructure module for work with pf-flyway ([9a6ba03](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9a6ba03c3c9267da0c436abfaa42d0efd89facbe))
+
 ## [1.3.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.3.4...minio-v1.3.5) (2025-01-05)
 
 
