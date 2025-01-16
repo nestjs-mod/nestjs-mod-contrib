@@ -53,6 +53,7 @@ bootstrapNestApplication({
         staticConfiguration: {
           markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
           skipEmptySettings: true,
+          style: 'pretty',
         },
       }),
       DockerCompose.forRoot({

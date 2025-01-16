@@ -11,6 +11,7 @@
     "db:create",
     "flyway:migrate:example-prisma-flyway",
     "prisma:pull:example-prisma-flyway",
+    "prisma:generate",
     "serve:dev:example-prisma-flyway"
   ],
   "prodScripts": [
@@ -19,6 +20,7 @@
     "db:create",
     "flyway:migrate:example-prisma-flyway",
     "prisma:pull:example-prisma-flyway",
+    "prisma:generate",
     "start:prod:example-prisma-flyway"
   ],
   "testsScripts": [

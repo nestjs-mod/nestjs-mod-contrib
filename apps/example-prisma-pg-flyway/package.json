@@ -1,0 +1,29 @@
+{
+  "name": "example-prisma-pg-flyway",
+  "scripts": {},
+  "dependencies": {
+    "pm2": ">=5.3.0",
+    "dotenv": ">=16.3.1"
+  },
+  "devScripts": [
+    "manual:prepare",
+    "docker-compose:start:example-prisma-pg-flyway",
+    "db:create",
+    "pg-flyway:migrate:example-prisma-pg-flyway",
+    "prisma:pull:example-prisma-pg-flyway",
+    "prisma:generate",
+    "serve:dev:example-prisma-pg-flyway"
+  ],
+  "prodScripts": [
+    "manual:prepare",
+    "docker-compose:start:example-prisma-pg-flyway",
+    "db:create",
+    "pg-flyway:migrate:example-prisma-pg-flyway",
+    "prisma:pull:example-prisma-pg-flyway",
+    "prisma:generate",
+    "start:prod:example-prisma-pg-flyway"
+  ],
+  "testsScripts": [
+    "test:example-prisma-pg-flyway"
+  ]
+}

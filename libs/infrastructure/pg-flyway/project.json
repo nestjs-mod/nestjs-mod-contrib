@@ -1,0 +1,41 @@
+{
+  "name": "pg-flyway",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/infrastructure/pg-flyway/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/infrastructure/pg-flyway",
+        "tsConfig": "libs/infrastructure/pg-flyway/tsconfig.lib.json",
+        "packageJson": "libs/infrastructure/pg-flyway/package.json",
+        "main": "libs/infrastructure/pg-flyway/src/index.ts",
+        "assets": ["libs/infrastructure/pg-flyway/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs pg-flyway {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/infrastructure/pg-flyway/jest.config.ts"
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/libs/infrastructure/pg-flyway"
+      }
+    }
+  }
+}

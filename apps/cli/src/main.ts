@@ -172,6 +172,19 @@ bootstrapNestApplication({
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
+      NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'pg-flyway',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord:'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/infrastructure/pg-flyway/package.json'),
+          markdownFile: join(rootFolder, 'libs/infrastructure/pg-flyway/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/pg-flyway'),
+          utilsFolders: [join(rootFolder, 'libs/infrastructure/pg-flyway/src/lib')],
+          modules: [import('@nestjs-mod/pg-flyway')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
     ],
   },
 });

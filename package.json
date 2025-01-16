@@ -40,6 +40,7 @@
     "serve:dev:example-nats-microservice": "./node_modules/.bin/nx serve example-nats-microservice --host=0.0.0.0",
     "serve:dev:example-redis-microservice": "./node_modules/.bin/nx serve example-redis-microservice --host=0.0.0.0",
     "serve:dev:example-keyv": "./node_modules/.bin/nx serve example-keyv --host=0.0.0.0",
+    "serve:dev:example-prisma-pg-flyway": "./node_modules/.bin/nx serve example-prisma-pg-flyway --host=0.0.0.0",
     "_____angular dev infra_____": "_____angular dev infra_____",
     "serve:dev:example-minio-angular": "./node_modules/.bin/nx serve example-minio-angular --disable-host-check",
     "serve:dev:example-minio-angular-ssr": "./node_modules/.bin/nx serve-ssr example-minio-angular",
@@ -62,12 +63,14 @@
     "start:prod:example-nats-microservice": "./node_modules/.bin/nx start example-nats-microservice",
     "start:prod:example-redis-microservice": "./node_modules/.bin/nx start example-redis-microservice",
     "start:prod:example-keyv": "./node_modules/.bin/nx start example-keyv",
+    "start:prod:example-prisma-pg-flyway": "./node_modules/.bin/nx start example-prisma-pg-flyway",
     "_____docs_____": "_____docs_____",
     "docs:infrastructure": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx run-many --exclude=example-minio-angular -t=serve --parallel=1 -- --watch=false --inspect=false",
     "docs:infrastructure:example-minio": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-minio --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-prisma --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-terminus": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-terminus --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-keyv": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-keyv --host=0.0.0.0 --watch=false --inspect=false",
+    "docs:infrastructure:example-prisma-pg-flyway": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-prisma-pg-flyway --host=0.0.0.0 --watch=false --inspect=false",
     "_____docker-compose infra_____": "_____docker-compose infra_____",
     "docker-compose:start:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose.yml down",
@@ -85,6 +88,8 @@
     "docker-compose:stop:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose.yml down",
     "docker-compose:start:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-keyv/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-keyv/docker-compose.yml down",
+    "docker-compose:start:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose.yml down",
     "_____docker-compose prod-infra_____": "_____docker-compose prod-infra_____",
     "docker-compose:start-prod:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose-prod.yml --env-file ./apps/example-prisma/docker-compose-prod.env --compatibility up -d",
     "docker-compose:stop-prod:prisma": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma/docker-compose-prod.yml --env-file ./apps/example-prisma/docker-compose-prod.env down",
@@ -102,6 +107,8 @@
     "docker-compose:stop-prod:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose-prod.yml --env-file ./apps/example-minio/docker-compose-prod.env down",
     "docker-compose:start-prod:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-keyv/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env --compatibility up -d",
     "docker-compose:stop-prod:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-keyv/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env down",
     "_____tests_____": "_____tests_____",
     "test": "./node_modules/.bin/nx run-many -t=test --passWithNoTests --skip-nx-cache=true --output-style=stream-without-prefixes",
     "test:example-pino-logger": "./node_modules/.bin/nx test example-pino-logger --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
@@ -115,6 +122,7 @@
     "e2e:example-nats-microservice": "./node_modules/.bin/nx e2e-test example-nats-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-redis-microservice": "./node_modules/.bin/nx test example-redis-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-keyv": "./node_modules/.bin/nx test example-keyv --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-prisma-pg-flyway": "./node_modules/.bin/nx test example-prisma-pg-flyway --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && ./node_modules/.bin/nx run-many -t=lint",
     "lint:fix": "npm run tsc:lint && ./node_modules/.bin/nx run-many -t=lint --fix",
@@ -133,10 +141,15 @@
     "prisma:migrate-dev-new:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:prisma-migrate-dev --create-only --name=new",
     "prisma:migrate-dev:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:prisma-migrate-dev --create-only",
     "prisma:migrate-deploy:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:prisma-migrate-deploy",
+    "prisma:pull:example-prisma-pg-flyway": "./node_modules/.bin/nx run example-prisma-pg-flyway:prisma-pull",
     "_____flyway_____": "_____flyway_____",
     "flyway:create:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:flyway-create-migration",
     "flyway:migrate:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:flyway-migrate",
     "flyway:migrate": "./node_modules/.bin/nx run-many -t=flyway-migrate",
+    "_____pg-flyway_____": "_____pg-flyway_____",
+    "pg-flyway:create:example-prisma-pg-flyway": "./node_modules/.bin/nx run example-prisma-pg-flyway:pg-flyway-create-migration",
+    "pg-flyway:migrate:example-prisma-pg-flyway": "./node_modules/.bin/nx run example-prisma-pg-flyway:pg-flyway-migrate",
+    "pg-flyway:migrate": "./node_modules/.bin/nx run-many -t=pg-flyway-migrate",
     "_____utils_____": "_____utils_____",
     "generate": "./node_modules/.bin/nx run-many -t=generate --skip-nx-cache=true && npm run make-ts-list && npm run lint:fix",
     "nx": "nx",
@@ -150,6 +163,7 @@
   },
   "private": true,
   "devDependencies": {
+    "pg": "8.8.0",
     "@angular-devkit/build-angular": "19.0.6",
     "@angular-devkit/core": "19.0.6",
     "@angular-devkit/schematics": "19.0.6",
@@ -161,7 +175,7 @@
     "@angular/language-service": "19.0.5",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.12.1",
+    "@nestjs-mod/schematics": "2.12.2",
     "@nestjs/schematics": "^10.2.3",
     "@nestjs/testing": "^10.4.15",
     "@nx/eslint": "20.3.0",
@@ -202,6 +216,7 @@
     "jsonc-eslint-parser": "^2.1.0",
     "lint-staged": "^15.2.0",
     "node-flywaydb": "^3.0.7",
+    "pg-flyway": "1.0.0",
     "nx": "20.3.0",
     "prettier": "^2.6.2",
     "prisma": "^5.22.0",
@@ -231,14 +246,14 @@
     "@authorizerdev/authorizer-js": "2.0.3",
     "@graphql-tools/utils": "^10.0.13",
     "@keyv/redis": "^4.2.0",
-    "@nestjs-mod/common": "2.17.0",
-    "@nestjs-mod/fastify": "1.9.0",
-    "@nestjs-mod/microservices": "1.8.0",
+    "@nestjs-mod/common": "2.17.2",
+    "@nestjs-mod/fastify": "1.9.2",
+    "@nestjs-mod/microservices": "1.8.2",
     "@nestjs-mod/pino": "1.14.4",
     "@nestjs-mod/pm2": "1.12.4",
-    "@nestjs-mod/reports": "2.17.0",
+    "@nestjs-mod/reports": "2.17.2",
     "@nestjs-mod/terminus": "1.13.4",
-    "@nestjs-mod/testing": "2.17.0",
+    "@nestjs-mod/testing": "2.17.2",
     "@nestjs/apollo": "^12.2.2",
     "@nestjs/common": "^10.4.15",
     "@nestjs/core": "^10.4.15",
@@ -324,6 +339,9 @@
     "serve:dev:example-keyv": [
       "Running example-keyv source code in watch mode"
     ],
+    "serve:dev:example-prisma-pg-flyway": [
+      "Running example-prisma-pg-flyway source code in watch mode"
+    ],
     "serve:dev:example-minio-angular": [
       "Running frontend application for example-minio in watch mode"
     ],
@@ -379,6 +397,9 @@
     "start:prod:example-keyv": [
       "Launching a built example-keyv (you must first build it using the build command)"
     ],
+    "start:prod:example-prisma-pg-flyway": [
+      "Launching a built example-prisma-pg-flyway (you must first build it using the build command)"
+    ],
     "docs:infrastructure": [
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure"
     ],
@@ -390,6 +411,7 @@
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus"
     ],
     "docs:infrastructure:example-keyv": [],
+    "docs:infrastructure:example-prisma-pg-flyway": [],
     "docker-compose:start:prisma": [
       "Running the docker-compose infrastructure for prisma"
     ],
@@ -437,6 +459,12 @@
     ],
     "docker-compose:stop:example-keyv": [
       "Stopping the docker-compose infrastructure for example-keyv"
+    ],
+    "docker-compose:start:example-prisma-pg-flyway": [
+      "Running the docker-compose infrastructure for example-prisma-pg-flyway"
+    ],
+    "docker-compose:stop:example-prisma-pg-flyway": [
+      "Stopping the docker-compose infrastructure for example-prisma-pg-flyway"
     ],
     "docker-compose:start-prod:prisma": [
       "Running the main docker-compose prod infrastructure for prisma"
@@ -486,6 +514,12 @@
     "docker-compose:stop-prod:example-keyv": [
       "Stopping the main docker-compose prod infrastructure for example-keyv"
     ],
+    "docker-compose:start-prod:example-prisma-pg-flyway": [
+      "Running the main docker-compose prod infrastructure for example-prisma-pg-flyway"
+    ],
+    "docker-compose:stop-prod:example-prisma-pg-flyway": [
+      "Stopping the main docker-compose prod infrastructure for example-prisma-pg-flyway"
+    ],
     "test": [
       "Running tests across the entire project"
     ],
@@ -521,6 +555,9 @@
     ],
     "test:example-keyv": [
       "Running tests for example-keyv"
+    ],
+    "test:example-prisma-pg-flyway": [
+      "Running tests for example-prisma-pg-flyway"
     ],
     "lint": [
       "Checking the typescript code for the entire project"
@@ -567,6 +604,9 @@
     "prisma:migrate-deploy:example-prisma-flyway": [
       "Applying migrations for example-prisma-flyway"
     ],
+    "prisma:pull:example-prisma-pg-flyway": [
+      "Generating a prisma schema based on a database for example-prisma-pg-flyway"
+    ],
     "flyway:create:example-prisma-flyway": [
       "Command to create new empty migration for example-prisma-flyway, for set name pass name to --args, example: npm run flyway:create:appname --args=Init"
     ],
@@ -574,6 +614,15 @@
       "Applying migrations for example-prisma-flyway"
     ],
     "flyway:migrate": [
+      "Applying migrations of all applications and modules"
+    ],
+    "pg-flyway:create:example-prisma-pg-flyway": [
+      "Command to create new empty migration for example-prisma-pg-flyway, for set name pass name to --args, example: npm run pg-flyway:create:appname --args=Init"
+    ],
+    "pg-flyway:migrate:example-prisma-pg-flyway": [
+      "Applying migrations for example-prisma-pg-flyway"
+    ],
+    "pg-flyway:migrate": [
       "Applying migrations of all applications and modules"
     ],
     "generate": [

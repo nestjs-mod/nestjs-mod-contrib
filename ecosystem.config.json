@@ -44,6 +44,16 @@
       "name": "example-redis-microservice",
       "script": "node ./dist/apps/example-redis-microservice/main.js",
       "node_args": "-r dotenv/config"
+    },
+    {
+      "name": "example-prisma-pg-flyway",
+      "script": "node ./dist/apps/example-prisma-pg-flyway/main.js",
+      "node_args": "-r dotenv/config"
+    },
+    {
+      "name": "example-prisma-pg-flyway",
+      "script": "node ./dist/apps/example-prisma-pg-flyway/main.js",
+      "node_args": "-r dotenv/config"
     }
   ]
 }

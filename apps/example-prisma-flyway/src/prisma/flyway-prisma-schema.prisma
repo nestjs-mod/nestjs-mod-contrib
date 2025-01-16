@@ -18,8 +18,8 @@ model FlywayPrismaUser {
   updatedAt      DateTime @default(now()) @db.Timestamp(6)
 }
 
-model migrations {
-  installed_rank Int      @id(map: "__migrations_pk")
+model migrations_example_prisma_flyway {
+  installed_rank Int      @id(map: "__migrations_example-prisma-flyway_pk")
   version        String?  @db.VarChar(50)
   description    String   @db.VarChar(200)
   type           String   @db.VarChar(20)
@@ -30,6 +30,6 @@ model migrations {
   execution_time Int
   success        Boolean
 
-  @@index([success], map: "__migrations_s_idx")
-  @@map("__migrations")
+  @@index([success], map: "__migrations_example-prisma-flyway_s_idx")
+  @@map("__migrations_example-prisma-flyway")
 }

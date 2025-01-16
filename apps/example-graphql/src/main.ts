@@ -68,6 +68,7 @@ bootstrapNestApplication({
         staticConfiguration: {
           markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
           skipEmptySettings: true,
+          style: 'pretty',
         },
       }),
       Pm2.forRoot({

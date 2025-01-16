@@ -33,6 +33,7 @@
       "@nestjs-mod/graphql": ["libs/system/graphql/src/index.ts"],
       "@nestjs-mod/keyv": ["libs/core/keyv/src/index.ts"],
       "@nestjs-mod/minio": ["libs/core/minio/src/index.ts"],
+      "@nestjs-mod/pg-flyway": ["libs/infrastructure/pg-flyway/src/index.ts"],
       "@nestjs-mod/pino": ["libs/system/nestjs-pino/src/index.ts"],
       "@nestjs-mod/pm2": ["libs/infrastructure/pm2/src/index.ts"],
       "@nestjs-mod/prisma": ["libs/core/prisma/src/index.ts"],

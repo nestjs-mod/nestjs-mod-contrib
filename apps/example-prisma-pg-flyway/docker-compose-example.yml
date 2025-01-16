@@ -1,0 +1,31 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-prisma-pg-flyway-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-prisma-pg-flyway-postgre-sql"
+    volumes:
+      - "example-prisma-pg-flyway-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-prisma-pg-flyway-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: ""
+      POSTGRESQL_PASSWORD: ""
+      POSTGRESQL_DATABASE: ""
+networks:
+  example-prisma-pg-flyway-network:
+    driver: "bridge"
+volumes:
+  example-prisma-pg-flyway-postgre-sql-volume:
+    name: "example-prisma-pg-flyway-postgre-sql-volume"
