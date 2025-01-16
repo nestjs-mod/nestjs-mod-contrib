@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.0.2...keyv-v1.1.0) (2025-01-16)
+
+
+### Features
+
+* append new infrastructure module for work with pf-flyway ([9a6ba03](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9a6ba03c3c9267da0c436abfaa42d0efd89facbe))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.0.1...keyv-v1.0.2) (2025-01-06)
 
 
