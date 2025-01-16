@@ -1,14 +1,14 @@
 
 # @nestjs-mod/pg-flyway
 
-PgFlyway - utility for working with database migrations (official site: https://pg-flywaydb.org, preview version only for Postgres)
+PgFlyway - utility for working with database migrations (site: https://www.npmjs.com/package/pg-flyway, preview version only for Postgres)
 
 [![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
 ## Installation
 
 ```bash
-npm i --save-dev node-pg-flywaydb@3.0.7
+npm i --save-dev pg-flyway@1.0.0
 npm i --save @nestjs-mod/pg-flyway
 ```
 
