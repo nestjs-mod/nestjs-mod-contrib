@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.8.0...flyway-v1.9.0) (2025-01-16)
+
+
+### Features
+
+* append new infrastructure module for work with pf-flyway ([9a6ba03](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9a6ba03c3c9267da0c436abfaa42d0efd89facbe))
+
 # [1.8.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.7.3...flyway-v1.8.0) (2025-01-04)
 
 
