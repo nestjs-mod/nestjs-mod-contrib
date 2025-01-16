@@ -170,8 +170,8 @@ export class PgFlywayInfrastructureUpdaterService implements OnModuleInit {
         if (fileDir) {
           if (!existsSync(fileDir)) {
             mkdirSync(fileDir, { recursive: true });
+            writeFileSync(firstMigrationFilePath, firstMigration);
           }
-          writeFileSync(firstMigrationFilePath, firstMigration);
         }
       } catch (err) {
         //
