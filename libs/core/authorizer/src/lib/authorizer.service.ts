@@ -5,7 +5,7 @@ import { AuthorizerConfiguration } from './authorizer.configuration';
 import { AllowEmptyUser, CheckAccess } from './authorizer.decorators';
 import { AuthorizerEnvironments } from './authorizer.environments';
 import { AuthorizerError } from './authorizer.errors';
-import { AuthorizerUser } from './authorizer.types';
+import { AuthorizerRequest, AuthorizerUser } from './authorizer.types';
 
 @Injectable()
 export class AuthorizerService extends Authorizer implements OnModuleInit {
@@ -41,19 +41,53 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async getUserFromRequest(ctx: ExecutionContext, checkAccess = true): Promise<AuthorizerUser | undefined> {
-    const req = this.authorizerConfiguration.getRequestFromContext?.(ctx) || {};
+    await this.tryGetOrCreateCurrentUserWithExternalUserId(ctx);
 
-    const allowEmptyUserMetadata =
-      (typeof ctx.getHandler === 'function' && this.reflector.get(AllowEmptyUser, ctx.getHandler())) ||
-      (typeof ctx.getClass === 'function' && this.reflector.get(AllowEmptyUser, ctx.getClass())) ||
-      undefined;
+    await this.checkAccessValidator(checkAccess, ctx);
 
-    const checkAccessMetadata =
-      (typeof ctx.getHandler === 'function' && this.reflector.get(CheckAccess, ctx.getHandler())) ||
-      (typeof ctx.getClass === 'function' && this.reflector.get(CheckAccess, ctx.getClass())) ||
-      undefined;
+    const req = this.getRequestFromExecutionContext(ctx);
+
+    this.setInfoOfExternalUserIdToRequest(req);
+
+    this.setSkippedByAuthorizerIfUserIsEmpty(req);
+
+    return req.authorizerUser;
+  }
+
+  private setSkippedByAuthorizerIfUserIsEmpty(req: AuthorizerRequest) {
+    req.skippedByAuthorizer = req.authorizerUser === undefined || req.authorizerUser?.id === undefined;
+  }
+
+  private setInfoOfExternalUserIdToRequest(req: AuthorizerRequest) {
+    if (
+      this.authorizerConfiguration.externalUserIdHeaderName &&
+      req.authorizerUser?.id &&
+      !req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName]
+    ) {
+      req.headers[this.authorizerConfiguration.externalUserIdHeaderName] = req.authorizerUser?.id;
+      req.externalUserId = req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName];
+    }
+  }
+
+  private async checkAccessValidator(checkAccess: boolean, ctx: ExecutionContext) {
+    const req = this.getRequestFromExecutionContext(ctx);
+    const { checkAccessMetadata, allowEmptyUserMetadata } = this.getHandlersReflectMetadata(ctx);
+    if (checkAccess) {
+      // check access by custom logic
+      const checkAccessValidatorResult = this.authorizerConfiguration.checkAccessValidator
+        ? await this.authorizerConfiguration.checkAccessValidator(req.authorizerUser, checkAccessMetadata, ctx)
+        : false;
+
+      // check access by roles
+      if (!allowEmptyUserMetadata && !checkAccessValidatorResult && !req.authorizerUser?.id) {
+        throw new AuthorizerError('Unauthorized');
+      }
+    }
+  }
+
+  private async tryGetOrCreateCurrentUserWithExternalUserId(ctx: ExecutionContext) {
+    const req = this.getRequestFromExecutionContext(ctx);
 
     if (!req.authorizerUser?.id) {
       const token = req.headers?.authorization?.split(' ')[1];
@@ -77,45 +111,47 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
 
       // check external user id
       if (!req.authorizerUser) {
-        req.externalUserId = req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName!];
-        req.externalAppId = req?.headers?.[this.authorizerConfiguration.externalAppIdHeaderName!];
+        if (this.authorizerConfiguration.externalUserIdHeaderName) {
+          req.externalUserId = req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName];
+        }
+        if (this.authorizerConfiguration.externalAppIdHeaderName) {
+          req.externalAppId = req?.headers?.[this.authorizerConfiguration.externalAppIdHeaderName];
+        }
 
         if (req.externalAppId && !this.authorizerEnvironments.allowedExternalAppIds?.includes(req.externalAppId)) {
           req.authorizerUser = {
-            id: req.externalUserId
-              ? (
-                  await this.authorizerConfiguration.getAuthorizerUserFromExternalUserId!(
-                    req.externalUserId,
-                    req.externalAppId,
-                    ctx
-                  )
-                )?.id
-              : undefined,
+            id:
+              req.externalUserId && this.authorizerConfiguration.getAuthorizerUserFromExternalUserId
+                ? (
+                    await this.authorizerConfiguration.getAuthorizerUserFromExternalUserId(
+                      req.externalUserId,
+                      req.externalAppId,
+                      ctx
+                    )
+                  )?.id
+                : undefined,
           };
         }
       }
     }
 
     req.authorizerUser = req.authorizerUser || { id: undefined };
+  }
 
-    if (checkAccess) {
-      // check access by custom logic
-      const checkAccessValidatorResult = this.authorizerConfiguration.checkAccessValidator
-        ? await this.authorizerConfiguration.checkAccessValidator(req.authorizerUser, checkAccessMetadata, ctx)
-        : false;
+  private getRequestFromExecutionContext(ctx: ExecutionContext) {
+    return this.authorizerConfiguration.getRequestFromContext?.(ctx) || {};
+  }
 
-      // check access by roles
-      if (!allowEmptyUserMetadata && !checkAccessValidatorResult && !req.authorizerUser?.id) {
-        throw new AuthorizerError('Unauthorized');
-      }
-    }
+  private getHandlersReflectMetadata(ctx: ExecutionContext) {
+    const allowEmptyUserMetadata =
+      (typeof ctx.getHandler === 'function' && this.reflector.get(AllowEmptyUser, ctx.getHandler())) ||
+      (typeof ctx.getClass === 'function' && this.reflector.get(AllowEmptyUser, ctx.getClass())) ||
+      undefined;
 
-    if (req.authorizerUser?.id && !req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName!]) {
-      req.headers[this.authorizerConfiguration.externalUserIdHeaderName!] = req.authorizerUser?.id;
-      req.externalUserId = req?.headers?.[this.authorizerConfiguration.externalUserIdHeaderName!];
-    }
-
-    req.skippedByAuthorizer = req.authorizerUser === undefined || req.authorizerUser?.id === undefined;
-    return req.authorizerUser;
+    const checkAccessMetadata =
+      (typeof ctx.getHandler === 'function' && this.reflector.get(CheckAccess, ctx.getHandler())) ||
+      (typeof ctx.getClass === 'function' && this.reflector.get(CheckAccess, ctx.getClass())) ||
+      undefined;
+    return { checkAccessMetadata, allowEmptyUserMetadata };
   }
 }

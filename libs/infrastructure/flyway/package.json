@@ -36,8 +36,8 @@
   ],
   "dependencies": {
     "tslib": "^2.3.0",
-    "case-anything": "^2.1.13",
-    "connection-string": "^4.3.5"
+    "case-anything": "2.1.13",
+    "connection-string": "4.3.5"
   },
   "peerDependencies": {
     "@nestjs-mod/common": "*",
