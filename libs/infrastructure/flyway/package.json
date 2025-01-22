@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/flyway",
   "description": "Flyway - utility for working with database migrations (official site: https://flywaydb.org, preview version only for Postgres)",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "keywords": [
     "nestjs",
     "nestjs-mod",
@@ -37,7 +37,7 @@
   "dependencies": {
     "tslib": "^2.3.0",
     "case-anything": "2.1.13",
-    "connection-string": "4.3.5"
+    "connection-string": "^4.3.5"
   },
   "peerDependencies": {
     "@nestjs-mod/common": "*",
