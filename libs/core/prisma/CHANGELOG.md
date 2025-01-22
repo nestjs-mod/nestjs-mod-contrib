@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.0...prisma-v1.11.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* lock version of case-anything ([511d86b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/511d86bec4dad6bf0a4f6985c5dbe197fbdb7983))
+
 # [1.11.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.10.4...prisma-v1.11.0) (2025-01-16)
 
 
