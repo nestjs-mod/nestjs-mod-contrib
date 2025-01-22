@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.14.0...terminus-v1.14.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* lock version of case-anything ([511d86b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/511d86bec4dad6bf0a4f6985c5dbe197fbdb7983))
+
 # [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.13.4...terminus-v1.14.0) (2025-01-16)
 
 
