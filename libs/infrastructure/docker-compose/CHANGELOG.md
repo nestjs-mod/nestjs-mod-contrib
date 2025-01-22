@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.17.0...docker-compose-v1.17.1) (2025-01-22)
+
+
+### Bug Fixes
+
+* lock version of case-anything ([511d86b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/511d86bec4dad6bf0a4f6985c5dbe197fbdb7983))
+
 # [1.17.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.16.2...docker-compose-v1.17.0) (2025-01-16)
 
 

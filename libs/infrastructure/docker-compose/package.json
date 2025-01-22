@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/docker-compose",
   "description": "Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose)",
-  "version": "1.17.0",
+  "version": "1.17.1",
   "keywords": [
     "nestjs",
     "nestjs-mod",
@@ -38,8 +38,8 @@
     "tslib": "^2.3.0",
     "compose-spec-schema": "1.0.0",
     "case-anything": "2.1.13",
-    "yaml": "2.3.4",
-    "connection-string": "4.3.5"
+    "yaml": "^2.3.4",
+    "connection-string": "^4.3.5"
   },
   "peerDependencies": {
     "class-validator": "*",
