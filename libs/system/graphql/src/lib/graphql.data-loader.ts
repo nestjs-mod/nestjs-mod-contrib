@@ -14,7 +14,7 @@ export interface GraphqlDataLoader<ID, Type> {
   /**
    * Should return a new instance of dataloader each time
    */
-  generateDataLoader(): DataLoader<ID, Type>;
+  generateDataLoader(context?: ExecutionContext): DataLoader<ID, Type>;
 }
 
 /**
@@ -45,10 +45,14 @@ export class GraphqlDataLoaderInterceptor implements NestInterceptor {
             try {
               ctx[type] = (async () => {
                 return (
-                  await this.moduleRef.resolve<GraphqlDataLoader<any, any>>(type, ctx[NEST_LOADER_CONTEXT_KEY].contextId, {
-                    strict: false,
-                  })
-                ).generateDataLoader();
+                  await this.moduleRef.resolve<GraphqlDataLoader<any, any>>(
+                    type,
+                    ctx[NEST_LOADER_CONTEXT_KEY].contextId,
+                    {
+                      strict: false,
+                    }
+                  )
+                ).generateDataLoader(context);
               })();
             } catch (e) {
               throw new GraphqlError(`The loader ${type} is not provided` + e);
@@ -74,5 +78,17 @@ export const Loader = createParamDecorator(
             `);
     }
     return await ctx[NEST_LOADER_CONTEXT_KEY].getLoader(data);
+  }
+);
+
+/**
+ * The decorator to be used within your graphql method.
+ */
+export const InlineLoader = createParamDecorator(
+  (
+    generateDataLoader: <ID, Type>(context?: ExecutionContext) => DataLoader<ID, Type>,
+    context: ExecutionContext & { [key: string]: any }
+  ) => {
+    return generateDataLoader(context);
   }
 );
