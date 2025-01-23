@@ -1,3 +1,10 @@
+## [1.5.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.1...graphql-v1.5.2) (2025-01-23)
+
+
+### Bug Fixes
+
+* add context argument to generateDataLoader function ([b6607a2](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b6607a212e894a498a92c7165618bc0ffc3a591b))
+
 ## [1.5.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.0...graphql-v1.5.1) (2025-01-22)
 
 
