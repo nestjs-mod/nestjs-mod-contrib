@@ -38,8 +38,8 @@
     "tslib": "^2.3.0",
     "compose-spec-schema": "1.0.0",
     "case-anything": "2.1.13",
-    "yaml": "^2.3.4",
-    "connection-string": "^4.3.5"
+    "yaml": "2.3.4",
+    "connection-string": "4.3.5"
   },
   "peerDependencies": {
     "class-validator": "*",
