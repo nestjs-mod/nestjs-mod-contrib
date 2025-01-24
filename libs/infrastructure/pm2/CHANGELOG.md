@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.1...pm2-v1.13.2) (2025-01-24)
+
+
+### Bug Fixes
+
+* lock some dependencies ([b01694e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b01694e6366a135b7dec051b31ac6d7b608c0bb1))
+
 ## [1.13.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.0...pm2-v1.13.1) (2025-01-22)
 
 
