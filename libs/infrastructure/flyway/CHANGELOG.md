@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.9.1...flyway-v1.9.2) (2025-01-24)
+
+
+### Bug Fixes
+
+* lock some dependencies ([b01694e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b01694e6366a135b7dec051b31ac6d7b608c0bb1))
+
 ## [1.9.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.9.0...flyway-v1.9.1) (2025-01-22)
 
 
