@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.3...graphql-v1.5.4) (2025-01-24)
+
+
+### Bug Fixes
+
+* make @nestjs-mod/graphql dependencies as optional ([8b5ae57](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8b5ae575dfde0f222383416ccb9eb5ca592cfc02))
+
 ## [1.5.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.2...graphql-v1.5.3) (2025-01-24)
 
 
