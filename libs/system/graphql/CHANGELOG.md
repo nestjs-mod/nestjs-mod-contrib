@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.2...graphql-v1.5.3) (2025-01-24)
+
+
+### Bug Fixes
+
+* downgrade dataloader to v2.0.0 ([248df9b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/248df9b97380b8a3df00a80d1bf2ceed2e34fee6))
+
 ## [1.5.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.1...graphql-v1.5.2) (2025-01-23)
 
 
