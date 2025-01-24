@@ -35,11 +35,7 @@
     }
   ],
   "dependencies": {
-    "tslib": "^2.3.0",
-    "graphql-type-json": "^0.3.2",
-    "@graphql-tools/utils": "^10.0.13",
-    "dataloader": "^2.0.0",
-    "graphql": "^16.8.1"
+    "tslib": "^2.3.0"
   },
   "dependenciesInfo": {
     "@nestjs/apollo": {
@@ -53,6 +49,18 @@
     },
     "@as-integrations/fastify": {
       "docs": true
+    },
+    "graphql-type-json@0.3.2": {
+      "docs": true
+    },
+    "@graphql-tools/utils@10.0.13": {
+      "docs": true
+    },
+    "dataloader@2.0.0": {
+      "docs": true
+    },
+    "graphql@16.8.1": {
+      "docs": true
     }
   },
   "peerDependencies": {
@@ -61,7 +69,11 @@
     "@nestjs-mod/common": "*",
     "@nestjs/apollo": "*",
     "@nestjs/graphql": "*",
-    "rxjs": "*"
+    "rxjs": "*",
+    "graphql-type-json": "*",
+    "@graphql-tools/utils": "*",
+    "dataloader": "*",
+    "graphql": "*"
   },
   "peerDependenciesMeta": {
     "@nestjs/core": {
@@ -83,6 +95,18 @@
       "optional": true
     },
     "rxjs": {
+      "optional": true
+    },
+    "graphql-type-json": {
+      "optional": true
+    },
+    "@graphql-tools/utils": {
+      "optional": true
+    },
+    "dataloader": {
+      "optional": true
+    },
+    "graphql": {
       "optional": true
     }
   },

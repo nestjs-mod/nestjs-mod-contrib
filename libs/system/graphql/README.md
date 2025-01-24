@@ -8,7 +8,7 @@ GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, inte
 ## Installation
 
 ```bash
-npm i --save @nestjs/apollo @apollo/server @nestjs/graphql @as-integrations/fastify @nestjs-mod/graphql
+npm i --save @nestjs/apollo @apollo/server @nestjs/graphql @as-integrations/fastify graphql-type-json@0.3.2 @graphql-tools/utils@10.0.13 dataloader@2.0.0 graphql@16.8.1 @nestjs-mod/graphql
 ```
 
 
