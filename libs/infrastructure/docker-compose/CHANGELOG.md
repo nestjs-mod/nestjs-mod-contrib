@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.17.1...docker-compose-v1.17.2) (2025-01-24)
+
+
+### Bug Fixes
+
+* lock some dependencies ([b01694e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b01694e6366a135b7dec051b31ac6d7b608c0bb1))
+
 ## [1.17.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.17.0...docker-compose-v1.17.1) (2025-01-22)
 
 
