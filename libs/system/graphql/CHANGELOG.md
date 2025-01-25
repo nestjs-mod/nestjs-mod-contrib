@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.4...graphql-v1.5.5) (2025-01-25)
+
+
+### Bug Fixes
+
+* move InlineLoadersStorage from global to context scope ([86f464d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/86f464d72bfde81b85adffdc1ebb06b001370fb9))
+
 ## [1.5.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.3...graphql-v1.5.4) (2025-01-24)
 
 
