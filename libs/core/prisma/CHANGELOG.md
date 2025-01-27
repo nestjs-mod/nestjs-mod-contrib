@@ -1,3 +1,10 @@
+## [1.11.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.2...prisma-v1.11.3) (2025-01-27)
+
+
+### Bug Fixes
+
+* add options for change engineType ([f849783](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/f849783e05cb703f36687aea1407ba1f7212d264))
+
 ## [1.11.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.1...prisma-v1.11.2) (2025-01-24)
 
 
