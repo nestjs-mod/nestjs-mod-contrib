@@ -198,7 +198,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
 
       prismaSchema = `generator client {
   provider = "prisma-client-js"
-  engineType = "binary"
+  ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
   output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0
@@ -249,7 +249,7 @@ model ${prismaFeatureName}User {
 
     const newGenerator = `generator client {
   provider = "prisma-client-js"
-  engineType = "binary"
+  ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
   output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/${clientNodeJSModuleName}"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0

@@ -67,6 +67,11 @@ export class PrismaConfiguration {
   binaryTargets?: string[];
 
   @ConfigModelProperty({
+    description: 'Binary engine type (binary and library)',
+  })
+  engineType?: 'binary' | 'library';
+
+  @ConfigModelProperty({
     description: 'Preview features (infrastructure)',
   })
   previewFeatures?: string[];
