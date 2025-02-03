@@ -44,9 +44,9 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
   async getUserFromRequest(ctx: ExecutionContext, checkAccess = true): Promise<AuthorizerUser | undefined> {
     await this.tryGetOrCreateCurrentUserWithExternalUserId(ctx);
 
-    await this.checkAccessValidator(checkAccess, ctx);
-
     const req = this.getRequestFromExecutionContext(ctx);
+
+    await this.checkAccessValidator(checkAccess, ctx);
 
     this.setInfoOfExternalUserIdToRequest(req);
 
@@ -73,6 +73,11 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
   private async checkAccessValidator(checkAccess: boolean, ctx: ExecutionContext) {
     const req = this.getRequestFromExecutionContext(ctx);
     const { checkAccessMetadata, allowEmptyUserMetadata } = this.getHandlersReflectMetadata(ctx);
+
+    if (allowEmptyUserMetadata) {
+      req.skipEmptyAuthorizerUser = true;
+    }
+
     if (checkAccess) {
       // check access by custom logic
       const checkAccessValidatorResult = this.authorizerConfiguration.checkAccessValidator
@@ -80,7 +85,7 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
         : false;
 
       // check access by roles
-      if (!allowEmptyUserMetadata && !checkAccessValidatorResult && !req.authorizerUser?.id) {
+      if (req.skipEmptyAuthorizerUser && !checkAccessValidatorResult && !req.authorizerUser?.id) {
         throw new AuthorizerError('Unauthorized');
       }
     }
