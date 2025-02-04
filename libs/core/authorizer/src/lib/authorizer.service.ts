@@ -85,7 +85,7 @@ export class AuthorizerService extends Authorizer implements OnModuleInit {
         : false;
 
       // check access by roles
-      if (req.skipEmptyAuthorizerUser && !checkAccessValidatorResult && !req.authorizerUser?.id) {
+      if (!req.skipEmptyAuthorizerUser && !checkAccessValidatorResult && !req.authorizerUser?.id) {
         throw new AuthorizerError('Unauthorized');
       }
     }
