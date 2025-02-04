@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.5.2...authorizer-v1.5.3) (2025-02-04)
+
+
+### Bug Fixes
+
+* add check skipEmptyAuthorizerUser options before throw new AuthorizerError('Unauthorized') ([efb1785](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/efb1785c578c0dfaa68fd6cf56a2c157ffe83e13))
+
 ## [1.5.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.5.1...authorizer-v1.5.2) (2025-02-03)
 
 
