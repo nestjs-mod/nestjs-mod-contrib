@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.6.1...cache-manager-v1.6.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.6.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.6.0...cache-manager-v1.6.1) (2025-01-22)
 
 
