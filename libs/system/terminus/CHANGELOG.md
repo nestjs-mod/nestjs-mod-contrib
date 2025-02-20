@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.14.1...terminus-v1.14.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.14.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.14.0...terminus-v1.14.1) (2025-01-22)
 
 
