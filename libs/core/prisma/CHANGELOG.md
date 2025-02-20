@@ -1,3 +1,10 @@
+## [1.11.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.3...prisma-v1.11.4) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.11.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.2...prisma-v1.11.3) (2025-01-27)
 
 
