@@ -8,7 +8,7 @@ PgFlyway - utility for working with database migrations (site: https://www.npmjs
 ## Installation
 
 ```bash
-npm i --save-dev pg-flyway@1.0.1
+npm i --save-dev pg-flyway@1.0.2
 npm i --save @nestjs-mod/pg-flyway
 ```
 

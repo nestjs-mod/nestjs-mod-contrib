@@ -55,7 +55,7 @@
     }
   },
   "devDependenciesInfo": {
-    "pg-flyway@1.0.1": {
+    "pg-flyway@1.0.2": {
       "docs": true
     }
   },
