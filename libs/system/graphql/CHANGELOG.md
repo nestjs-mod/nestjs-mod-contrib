@@ -1,3 +1,10 @@
+## [1.5.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.5...graphql-v1.5.6) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.5.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/graphql-v1.5.4...graphql-v1.5.5) (2025-01-25)
 
 
