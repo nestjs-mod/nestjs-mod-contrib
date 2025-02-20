@@ -1,3 +1,10 @@
+## [1.13.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.2...pm2-v1.13.3) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.13.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.1...pm2-v1.13.2) (2025-01-24)
 
 
