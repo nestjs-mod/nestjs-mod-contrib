@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.1.1...keyv-v1.1.2) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.1.0...keyv-v1.1.1) (2025-01-22)
 
 
