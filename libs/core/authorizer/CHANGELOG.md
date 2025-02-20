@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.5.3...authorizer-v1.5.4) (2025-02-20)
+
+
+### Bug Fixes
+
+* update pg-flyway version ([91f058d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/91f058d7325f604825f310041bc120a647a6d24a))
+
 ## [1.5.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.5.2...authorizer-v1.5.3) (2025-02-04)
 
 
