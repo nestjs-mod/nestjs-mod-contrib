@@ -94,7 +94,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * Extra resolvers to be registered.
    */
   @ConfigModelProperty({
-    description: 'Extra resolvers to be registered.',
+    description: 'Extra resolvers to be registered',
   })
   resolvers?: IResolvers | Array<IResolvers>;
 
@@ -158,7 +158,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * Resolver validation options.
    */
   @ConfigModelProperty({
-    description: 'Resolver validation options.',
+    description: 'Resolver validation options',
   })
   resolverValidationOptions?: IResolverValidationOptions;
 
@@ -166,7 +166,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * Inherit missing resolvers from their interface types defined in the resolvers object.
    */
   @ConfigModelProperty({
-    description: 'Inherit missing resolvers from their interface types defined in the resolvers object.',
+    description: 'Inherit missing resolvers from their interface types defined in the resolvers object',
   })
   inheritResolversFromInterfaces?: boolean;
 
@@ -174,7 +174,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * Function to be applied to the schema letting you register custom transformations.
    */
   @ConfigModelProperty({
-    description: 'Function to be applied to the schema letting you register custom transformations.',
+    description: 'Function to be applied to the schema letting you register custom transformations',
   })
   transformSchema?: (schema: GraphQLSchema) => GraphQLSchema | Promise<GraphQLSchema>;
 
@@ -207,7 +207,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * If enabled, "subscriptions-transport-ws" will be automatically registered.
    */
   @ConfigModelProperty({
-    description: 'If enabled, "subscriptions-transport-ws" will be automatically registered.',
+    description: 'If enabled, "subscriptions-transport-ws" will be automatically registered',
     default: true,
   })
   installSubscriptionHandlers?: boolean;
@@ -216,7 +216,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * Subscriptions configuration.
    */
   @ConfigModelProperty({
-    description: 'Subscriptions configuration.',
+    description: 'Subscriptions configuration',
     default: {
       'graphql-ws': {
         path: '/graphql',
@@ -229,7 +229,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    * GraphQL playground options.
    */
   @ConfigModelProperty({
-    description: 'GraphQL playground options.',
+    description: 'GraphQL playground options',
     default: {
       settings: {
         // 'editor.theme': 'light', // use value dark if you want a dark theme in the playground
@@ -246,7 +246,7 @@ export class GraphqlConfiguration<TDriver extends GraphQLDriver = any> implement
    */
   @ConfigModelProperty({
     description:
-      'If enabled, will register a global interceptor that automatically maps "HttpException" class instances to corresponding Apollo errors.',
+      'If enabled, will register a global interceptor that automatically maps "HttpException" class instances to corresponding Apollo errors',
   })
   autoTransformHttpErrors?: boolean;
 }

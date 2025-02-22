@@ -28,7 +28,7 @@ export class AuthorizerEnvironments implements Omit<ConfigType, 'extraHeaders' |
 
   @EnvModelProperty({
     description:
-      'Allowed identifiers of external applications, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing.',
+      'Allowed identifiers of external applications, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing',
     transform: new ArrayOfStringTransformer(),
   })
   allowedExternalAppIds?: string[];

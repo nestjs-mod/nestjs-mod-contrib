@@ -6,25 +6,25 @@ import { DockerComposeFeatureConfiguration } from './docker-compose.feature-conf
 export class DockerComposeConfiguration {
   @ConfigModelProperty({
     description:
-      'Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.',
+      'Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications',
   })
   @IsNotEmpty()
   dockerComposeFile!: string;
 
   @ConfigModelProperty({
     description:
-      'Main file for prod docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.',
+      'Main file for prod docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications',
   })
   prodDockerComposeFile?: string;
 
   @ConfigModelProperty({
     description:
-      'Example file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.',
+      'Example file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications',
   })
   exampleDockerComposeFile?: string;
 
   @ConfigModelProperty({
-    description: 'Dotenv file for prod docker-compose file.',
+    description: 'Dotenv file for prod docker-compose file',
   })
   prodDockerComposeEnvFile?: string;
 
@@ -36,7 +36,7 @@ export class DockerComposeConfiguration {
   dockerComposeFileVersion!: string;
 
   @ConfigModelProperty({
-    description: 'Before save file for example docker-compose.',
+    description: 'Before save file for example docker-compose',
   })
   beforeSaveExampleDockerComposeFile?: ({
     data,
@@ -50,7 +50,7 @@ export class DockerComposeConfiguration {
   }>;
 
   @ConfigModelProperty({
-    description: 'Before save main file for docker-compose.',
+    description: 'Before save main file for docker-compose',
   })
   beforeSaveDockerComposeFile?: ({
     data,
@@ -64,7 +64,7 @@ export class DockerComposeConfiguration {
   }>;
 
   @ConfigModelProperty({
-    description: 'Before save main file for prod docker-compose.',
+    description: 'Before save main file for prod docker-compose',
   })
   beforeSaveProdDockerComposeFile?: ({
     data,
@@ -78,14 +78,14 @@ export class DockerComposeConfiguration {
   }>;
 
   @ConfigModelProperty({
-    description: 'Method before save dotenv file for docker-compose file.',
+    description: 'Method before save dotenv file for docker-compose file',
   })
   beforeSaveDockerComposeEnvFile?: (
     data: Record<string, string | undefined>
   ) => Promise<Record<string, string | undefined>>;
 
   @ConfigModelProperty({
-    description: 'Method before save dotenv file for prod docker-compose file.',
+    description: 'Method before save dotenv file for prod docker-compose file',
   })
   beforeSaveProdDockerComposeEnvFile?: (
     data: Record<string, string | undefined>
