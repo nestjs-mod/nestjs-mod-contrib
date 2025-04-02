@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.4...prisma-v1.12.0) (2025-04-02)
+
+
+### Features
+
+* add prismaClientFactory for can use custom driver as https://www.prisma.io/docs/orm/overview/databases/postgresql#using-the-node-postgres-driver, example project https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-pg-prisma-pg-flyway ([26d915a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/26d915aa1644648c09f1cbcad5b83a91a21a62b6))
+
 ## [1.11.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.3...prisma-v1.11.4) (2025-02-20)
 
 
