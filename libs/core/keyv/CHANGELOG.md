@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.1.2...keyv-v1.1.3) (2025-04-02)
+
+
+### Bug Fixes
+
+* update types ([22336c4](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/22336c435e1947fcc00b317e0b0160071c304bca))
+
 ## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/keyv-v1.1.1...keyv-v1.1.2) (2025-02-20)
 
 
