@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.17.3...docker-compose-v1.18.0) (2025-04-02)
+
+
+### Features
+
+* change command for create database from rucken to pg-create-db ([75b6c62](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/75b6c62e37fbc25d70f911ef1b39fd27cae9ba12))
+
 ## [1.17.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.17.2...docker-compose-v1.17.3) (2025-02-20)
 
 
