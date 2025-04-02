@@ -41,14 +41,14 @@ Simple key-value storage with support for multiple backends, and a consistent in
 | ------ | ----------- | ----------- | ------- | ----- |
 |`defaultLogger`|Default logger|**optional**|-|-|
 |`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
-|`emitErrors`|Emit errors.|**optional**|```true```|-|
-|`namespace`|Namespace for the current instance.|**optional**|-|-|
-|`serialize`|A custom serialization function.|**optional**|```default```|-|
-|`deserialize`|A custom deserialization function.|**optional**|```default```|-|
-|`store`|The storage adapter instance to be used by Keyv.|**optional**|-|-|
-|`storeFactoryByEnvironmentUrl`|Function for create storage adapter instance to be used by Keyv by environment url.|**optional**|-|-|
-|`ttl`|Default TTL. Can be overridden by specifying a TTL on `.set()`.|**optional**|-|-|
-|`compression`|Enable compression option.|**optional**|-|-|
+|`emitErrors`|Emit errors|**optional**|```true```|-|
+|`namespace`|Namespace for the current instance|**optional**|-|-|
+|`serialize`|A custom serialization function|**optional**|```default```|-|
+|`deserialize`|A custom deserialization function|**optional**|```default```|-|
+|`store`|The storage adapter instance to be used by Keyv|**optional**|-|-|
+|`storeFactoryByEnvironmentUrl`|Function for create storage adapter instance to be used by Keyv by environment url|**optional**|-|-|
+|`ttl`|Default TTL. Can be overridden by specifying a TTL on `.set()`|**optional**|-|-|
+|`compression`|Enable compression option|**optional**|-|-|
 |`stats`|Enable or disable statistics (default is false)|**optional**|```false```|-|
 |`useKeyPrefix`|Enable or disable key prefixing (default is true)|**optional**|```true```|-|
 

@@ -5,6 +5,7 @@ import Keyv, {
   CompressionAdapter,
   Deserialize,
   DeserializedData,
+  KeyvEntry,
   KeyvStoreAdapter,
   Serialize,
   StoredDataNoRaw,
@@ -15,6 +16,18 @@ import Keyv, {
 export class KeyvService<GenericValue = any>
   implements Omit<Keyv<GenericValue>, 'opts' | 'hooks' | 'stats' | 'get' | '_eventListeners' | '_maxListeners'>
 {
+  getMany(keys: unknown, options?: unknown): Promise<StoredDataNoRaw<any>[]> | Promise<StoredDataRaw<any>[]> {
+    throw new Error('Method not implemented.');
+  }
+  setMany<Value = GenericValue>(entries: KeyvEntry[]): Promise<boolean[]> {
+    throw new Error('Method not implemented.');
+  }
+  deleteMany(keys: string[]): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
+  hasMany(keys: string[]): Promise<boolean[]> {
+    throw new Error('Method not implemented.');
+  }
   get<Value = GenericValue>(
     key: unknown,
     options?: unknown
@@ -97,7 +110,7 @@ export class KeyvService<GenericValue = any>
   clear(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  has(key: string): Promise<boolean> {
+  has(key: any): Promise<any> {
     throw new Error('Method not implemented.');
   }
   disconnect(): Promise<void> {
