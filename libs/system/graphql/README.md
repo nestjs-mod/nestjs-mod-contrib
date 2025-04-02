@@ -280,23 +280,23 @@ bootstrapNestApplication({
 |`include`|An array of modules to scan when searching for resolvers|**optional**|-|-|
 |`directiveResolvers`|Directive resolvers|**optional**|-|-|
 |`schema`|Optional GraphQL schema (to be used or to be merged)|**optional**|-|-|
-|`resolvers`|Extra resolvers to be registered.|**optional**|-|-|
+|`resolvers`|Extra resolvers to be registered|**optional**|-|-|
 |`definitions`|TypeScript definitions generator options|**optional**|-|-|
 |`autoSchemaFile`|If enabled, GraphQL schema will be generated automatically|**optional**|```schema.gql```|-|
 |`sortSchema`|Sort the schema lexicographically|**optional**|-|-|
 |`buildSchemaOptions`|Options to be passed to the schema generator, only applicable if "autoSchemaFile" = true|**optional**|-|-|
 |`useGlobalPrefix`|Prepends the global prefix to the url @see [faq/global-prefix](Global Prefix)|**optional**|-|-|
 |`fieldResolverEnhancers`|Enable/disable enhancers for @ResolveField()|**optional**|[ ```interceptors```, ```guards```, ```filters``` ]|-|
-|`resolverValidationOptions`|Resolver validation options.|**optional**|-|-|
-|`inheritResolversFromInterfaces`|Inherit missing resolvers from their interface types defined in the resolvers object.|**optional**|-|-|
-|`transformSchema`|Function to be applied to the schema letting you register custom transformations.|**optional**|-|-|
+|`resolverValidationOptions`|Resolver validation options|**optional**|-|-|
+|`inheritResolversFromInterfaces`|Inherit missing resolvers from their interface types defined in the resolvers object|**optional**|-|-|
+|`transformSchema`|Function to be applied to the schema letting you register custom transformations|**optional**|-|-|
 |`transformAutoSchemaFile`|Apply `transformSchema` to the `autoSchemaFile`|**optional**|-|-|
 |`context`|Context function|**optional**|```defaultContextFunction```|-|
 |`metadata`|Extra static metadata to be loaded into the specification|**optional**|-|-|
-|`installSubscriptionHandlers`|If enabled, "subscriptions-transport-ws" will be automatically registered.|**optional**|```true```|-|
-|`subscriptions`|Subscriptions configuration.|**optional**|```{"graphql-ws":{"path":"/graphql"}}```|-|
-|`playground`|GraphQL playground options.|**optional**|```{"settings":{"request.credentials":"include"}}```|-|
-|`autoTransformHttpErrors`|If enabled, will register a global interceptor that automatically maps "HttpException" class instances to corresponding Apollo errors.|**optional**|-|-|
+|`installSubscriptionHandlers`|If enabled, "subscriptions-transport-ws" will be automatically registered|**optional**|```true```|-|
+|`subscriptions`|Subscriptions configuration|**optional**|```{"graphql-ws":{"path":"/graphql"}}```|-|
+|`playground`|GraphQL playground options|**optional**|```{"settings":{"request.credentials":"include"}}```|-|
+|`autoTransformHttpErrors`|If enabled, will register a global interceptor that automatically maps "HttpException" class instances to corresponding Apollo errors|**optional**|-|-|
 
 [Back to Top](#modules)
 
