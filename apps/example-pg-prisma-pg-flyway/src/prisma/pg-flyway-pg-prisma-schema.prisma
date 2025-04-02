@@ -1,0 +1,33 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../../../../node_modules/@prisma/pg-flyway-pg-prisma-client"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL")
+}
+
+model migrations_example_prisma_pg_flyway {
+  installed_rank Int      @id(map: "__migrations_example_prisma_pg_flyway_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "__migrations_example_prisma_pg_flyway_s_idx")
+  @@map("__migrations_example_prisma_pg_flyway")
+}
+
+model PgFlywayPrismaUser {
+  id             String   @id(map: "PK_PG_FLYWAY_PRISMA_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  externalUserId String   @unique(map: "UQ_PG_FLYWAY_PRISMA_USER") @db.Uuid
+  createdAt      DateTime @default(now()) @db.Timestamp(6)
+  updatedAt      DateTime @default(now()) @db.Timestamp(6)
+}
