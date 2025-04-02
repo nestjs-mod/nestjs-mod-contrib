@@ -51,8 +51,8 @@
       "node_args": "-r dotenv/config"
     },
     {
-      "name": "example-prisma-pg-flyway",
-      "script": "node ./dist/apps/example-prisma-pg-flyway/main.js",
+      "name": "example-pg-prisma-pg-flyway",
+      "script": "node ./dist/apps/example-pg-prisma-pg-flyway/main.js",
       "node_args": "-r dotenv/config"
     }
   ]

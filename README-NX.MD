@@ -6,6 +6,8 @@
 ./node_modules/.bin/nx g @nestjs-mod/schematics:library --buildable --publishable --directory=libs/infrastructure/docker-compose --simpleName=true --strict=true
 
 ./node_modules/.bin/nx g @nestjs-mod/schematics:library --buildable --publishable --directory=libs/core/keyv --simpleName=true --strict=true
+
+./node_modules/.bin/nx g @nx/angular:library --directory=libs/core/sso-angular
 ```
 
 ## Create application

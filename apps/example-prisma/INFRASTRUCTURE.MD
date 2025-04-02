@@ -108,7 +108,7 @@ Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only 
 
 | Key    | Constraints | Value |
 | ------ | ----------- | ----- |
-|`prismaModule`|**isNotEmpty** (prismaModule should not be empty)|```{}```|
+|`prismaModule`|**optional**|```{}```|
 |`featureName`|**optional**|```prisma-user```|
 |`schemaFile`|**optional**|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma/src/prisma/prisma-user-schema.prisma```|
 |`binaryTargets`|**optional**|[ ```native```, ```linux-musl-openssl-3.0.x```, ```linux-musl-openssl-3.0.x``` ]|

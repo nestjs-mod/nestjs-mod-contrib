@@ -120,7 +120,7 @@ Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only 
 
 | Key    | Constraints | Value |
 | ------ | ----------- | ----- |
-|`prismaModule`|**isNotEmpty** (prismaModule should not be empty)|```{}```|
+|`prismaModule`|**optional**|```{}```|
 |`featureName`|**optional**|```pg-flyway-prisma```|
 |`schemaFile`|**optional**|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-pg-flyway/src/prisma/pg-flyway-prisma-schema.prisma```|
 |`addMigrationScripts`|**optional**|```false```|
