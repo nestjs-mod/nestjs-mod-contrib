@@ -18,6 +18,24 @@ export class PrismaClientFactoryService implements OnModuleInit, OnModuleDestroy
   ) {}
 
   async createPrismaClient() {
+    if (this.prismaConfiguration?.prismaClientFactory) {
+      const prismaClient = this.prismaConfiguration?.prismaClientFactory({
+        url: this.prismaEnvironments.databaseUrl,
+        log: [
+          {
+            emit: 'event',
+            level: 'query',
+          },
+          {
+            emit: 'event',
+            level: 'error',
+          },
+        ],
+      });
+      this.prismaClients.push(prismaClient);
+      return prismaClient;
+    }
+
     if (!this.prismaConfiguration?.prismaModule) {
       throw new PrismaError(`prismaModule not set`);
     }

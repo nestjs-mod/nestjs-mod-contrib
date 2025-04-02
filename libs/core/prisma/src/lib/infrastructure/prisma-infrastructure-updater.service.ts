@@ -133,7 +133,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
 
         const commands = (projectJson.targets?.['db-create']?.options?.['commands'] || []) as string[];
         for (const command of commands) {
-          // "./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=${PRISMA_ROOT_DATABASE_URL} --app-database-url=${PRISMA_PRISMA_USER_DATABASE_URL}"
+          // "./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=${PRISMA_ROOT_DATABASE_URL} --app-database-url=${PRISMA_PRISMA_USER_DATABASE_URL}"
           const rootDatabaseName = command.split('--root-database-url=${')[1].split('}')[0];
           const appDatabaseName = command.split('--app-database-url=${')[1].split('}')[0];
 
@@ -142,7 +142,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
             const SHADOW_DATABASE_URL = appDatabaseName.replace('_DATABASE_URL', '_SHADOW_DATABASE_URL');
             this.nxProjectJsonService.addRunCommands(
               [
-                `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseName}} --app-database-url=\${${SHADOW_DATABASE_URL}}`,
+                `./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseName}} --app-database-url=\${${SHADOW_DATABASE_URL}}`,
               ],
               'db-create',
               undefined,

@@ -13,9 +13,8 @@ export class PrismaConfiguration {
     description: 'NodeJS module with Prisma modules',
     hideValueFromOutputs: true,
   })
-  @IsNotEmpty()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  prismaModule: any;
+  prismaModule?: any;
 
   @ConfigModelProperty({
     description: 'Logging types (all_queries or long_queries)',
@@ -80,4 +79,11 @@ export class PrismaConfiguration {
     description: 'Application or library project.json-file (nx)',
   })
   nxProjectJsonFile?: string;
+
+  @ConfigModelProperty({
+    description:
+      'PrismaClient factory function (example use for https://www.prisma.io/docs/orm/overview/databases/postgresql#using-the-node-postgres-driver)',
+  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  prismaClientFactory?: <T extends { url: string }>(options: T) => any;
 }
