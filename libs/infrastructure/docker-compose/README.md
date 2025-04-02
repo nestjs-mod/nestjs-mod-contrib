@@ -114,16 +114,16 @@ version: '3'
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**isNotEmpty** (dockerComposeFile should not be empty)|-|-|
-|`prodDockerComposeFile`|Main file for prod docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**optional**|-|-|
-|`exampleDockerComposeFile`|Example file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications.|**optional**|-|-|
-|`prodDockerComposeEnvFile`|Dotenv file for prod docker-compose file.|**optional**|-|-|
+|`dockerComposeFile`|Main file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications|**isNotEmpty** (dockerComposeFile should not be empty)|-|-|
+|`prodDockerComposeFile`|Main file for prod docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications|**optional**|-|-|
+|`exampleDockerComposeFile`|Example file for docker-compose, the Compose specification establishes a standard for the definition of multi-container platform-agnostic applications|**optional**|-|-|
+|`prodDockerComposeEnvFile`|Dotenv file for prod docker-compose file|**optional**|-|-|
 |`dockerComposeFileVersion`|Docker-compose file version. @see https://docs.docker.com/compose/compose-file/compose-versioning|**isNotEmpty** (dockerComposeFileVersion should not be empty)|```3```|-|
-|`beforeSaveExampleDockerComposeFile`|Before save file for example docker-compose.|**optional**|-|-|
-|`beforeSaveDockerComposeFile`|Before save main file for docker-compose.|**optional**|-|-|
-|`beforeSaveProdDockerComposeFile`|Before save main file for prod docker-compose.|**optional**|-|-|
-|`beforeSaveDockerComposeEnvFile`|Method before save dotenv file for docker-compose file.|**optional**|-|-|
-|`beforeSaveProdDockerComposeEnvFile`|Method before save dotenv file for prod docker-compose file.|**optional**|-|-|
+|`beforeSaveExampleDockerComposeFile`|Before save file for example docker-compose|**optional**|-|-|
+|`beforeSaveDockerComposeFile`|Before save main file for docker-compose|**optional**|-|-|
+|`beforeSaveProdDockerComposeFile`|Before save main file for prod docker-compose|**optional**|-|-|
+|`beforeSaveDockerComposeEnvFile`|Method before save dotenv file for docker-compose file|**optional**|-|-|
+|`beforeSaveProdDockerComposeEnvFile`|Method before save dotenv file for prod docker-compose file|**optional**|-|-|
 
 #### Feature configuration
 
@@ -328,46 +328,46 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Sources | Constraints | Default | Value |
 | ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`adminSecret`|Super admin secret used to access the master data.|`obj['adminSecret']`, `process.env['ADMIN_SECRET']`|**isNotEmpty** (adminSecret should not be empty)|-|-|
-|`databaseType`|Which database you are using. Supported database types are postgres, mysql, planetscale, sqlite, sqlserver, mongodb, arangodb, yugabyte, mariadb, cassandradb, scylladb, couchbase, dynamodb.|`obj['databaseType']`, `process.env['DATABASE_TYPE']`|**isNotEmpty** (databaseType should not be empty)|-|-|
-|`databaseUrl`|Database connection string. In case of cluster url eg. for cassandra db, you can use comma separated IPs.|`obj['databaseUrl']`, `process.env['DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
-|`databaseName`|Name of database to connect to. This is useful in case of arangodb and mongodb. If not set, default value will be used.|`obj['databaseName']`, `process.env['DATABASE_NAME']`|**optional**|```authorizer```|```authorizer```|
-|`redisUrl`|Redis URL where sessions can be persisted	false	sessions will be stored in memory.|`obj['redisUrl']`, `process.env['REDIS_URL']`|**optional**|-|-|
-|`databasePort`|Port on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb.|`obj['databasePort']`, `process.env['DATABASE_PORT']`|**optional**|-|-|
-|`databaseHost`|Host/IP on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb type.|`obj['databaseHost']`, `process.env['DATABASE_HOST']`|**optional**|-|-|
-|`databaseUsername`|Username for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|`obj['databaseUsername']`, `process.env['DATABASE_USERNAME']`|**optional**|-|-|
-|`databasePassword`|Password for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type.|`obj['databasePassword']`, `process.env['DATABASE_PASSWORD']`|**optional**|-|-|
-|`databaseCert`|Base64 encoded certificate string used to make SSL connection. At the moment supported by cassandradb,scylladb type.|`obj['databaseCert']`, `process.env['DATABASE_CERT']`|**optional**|-|-|
+|`adminSecret`|Super admin secret used to access the master data|`obj['adminSecret']`, `process.env['ADMIN_SECRET']`|**isNotEmpty** (adminSecret should not be empty)|-|-|
+|`databaseType`|Which database you are using. Supported database types are postgres, mysql, planetscale, sqlite, sqlserver, mongodb, arangodb, yugabyte, mariadb, cassandradb, scylladb, couchbase, dynamodb|`obj['databaseType']`, `process.env['DATABASE_TYPE']`|**isNotEmpty** (databaseType should not be empty)|-|-|
+|`databaseUrl`|Database connection string. In case of cluster url eg. for cassandra db, you can use comma separated IPs|`obj['databaseUrl']`, `process.env['DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
+|`databaseName`|Name of database to connect to. This is useful in case of arangodb and mongodb. If not set, default value will be used|`obj['databaseName']`, `process.env['DATABASE_NAME']`|**optional**|```authorizer```|```authorizer```|
+|`redisUrl`|Redis URL where sessions can be persisted	false	sessions will be stored in memory|`obj['redisUrl']`, `process.env['REDIS_URL']`|**optional**|-|-|
+|`databasePort`|Port on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb|`obj['databasePort']`, `process.env['DATABASE_PORT']`|**optional**|-|-|
+|`databaseHost`|Host/IP on which database connection should be made. This is used when DATABASE_URL is not mentioned. At the moment supported by cassandradb type|`obj['databaseHost']`, `process.env['DATABASE_HOST']`|**optional**|-|-|
+|`databaseUsername`|Username for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type|`obj['databaseUsername']`, `process.env['DATABASE_USERNAME']`|**optional**|-|-|
+|`databasePassword`|Password for the database access with permission to create tables and records. At the moment supported by cassandradb, scylladb type|`obj['databasePassword']`, `process.env['DATABASE_PASSWORD']`|**optional**|-|-|
+|`databaseCert`|Base64 encoded certificate string used to make SSL connection. At the moment supported by cassandradb,scylladb type|`obj['databaseCert']`, `process.env['DATABASE_CERT']`|**optional**|-|-|
 |`databaseCertKey`|Base64 encoded key string used to make SSL connection. At the moment supported by cassandradb,scylladb type|`obj['databaseCertKey']`, `process.env['DATABASE_CERT_KEY']`|**optional**|-|-|
-|`databaseCaCert`|Base64 encoded CA certificate string used to make SSL connection. At the moment supported by cassandradb, scylladb type.|`obj['databaseCaCert']`, `process.env['DATABASE_CA_CERT']`|**optional**|-|-|
-|`port`|Port on which server should be running.|`obj['port']`, `process.env['PORT']`|**optional**|```8080```|```8080```|
-|`authorizerUrl`|Domain name of the server, eg https://authorizer.herokuapp.com.|`obj['authorizerUrl']`, `process.env['AUTHORIZER_URL']`|**optional**|-|-|
-|`cookieName`|Name of cookie to be set by server.|`obj['cookieName']`, `process.env['COOKIE_NAME']`|**optional**|```authorizer```|```authorizer```|
-|`smtpHost`|SMTP host is used to send email verification emails and forgot password emails	false	If not set email sending can fail.|`obj['smtpHost']`, `process.env['SMTP_HOST']`|**optional**|-|-|
-|`smtpPort`|SMTP Port is used along with SMTP host.|`obj['smtpPort']`, `process.env['SMTP_PORT']`|**optional**|-|-|
-|`smtpUsername`|Username for your smtp provider.|`obj['smtpUsername']`, `process.env['SMTP_USERNAME']`|**optional**|-|-|
+|`databaseCaCert`|Base64 encoded CA certificate string used to make SSL connection. At the moment supported by cassandradb, scylladb type|`obj['databaseCaCert']`, `process.env['DATABASE_CA_CERT']`|**optional**|-|-|
+|`port`|Port on which server should be running|`obj['port']`, `process.env['PORT']`|**optional**|```8080```|```8080```|
+|`authorizerUrl`|Domain name of the server, eg https://authorizer.herokuapp.com|`obj['authorizerUrl']`, `process.env['AUTHORIZER_URL']`|**optional**|-|-|
+|`cookieName`|Name of cookie to be set by server|`obj['cookieName']`, `process.env['COOKIE_NAME']`|**optional**|```authorizer```|```authorizer```|
+|`smtpHost`|SMTP host is used to send email verification emails and forgot password emails	false	If not set email sending can fail|`obj['smtpHost']`, `process.env['SMTP_HOST']`|**optional**|-|-|
+|`smtpPort`|SMTP Port is used along with SMTP host|`obj['smtpPort']`, `process.env['SMTP_PORT']`|**optional**|-|-|
+|`smtpUsername`|Username for your smtp provider|`obj['smtpUsername']`, `process.env['SMTP_USERNAME']`|**optional**|-|-|
 |`smtpPassword`|Password for your smt provider|`obj['smtpPassword']`, `process.env['SMTP_PASSWORD']`|**optional**|-|-|
-|`senderEmail`|Email to be used in From section while sending emails.|`obj['senderEmail']`, `process.env['SENDER_EMAIL']`|**optional**|-|-|
-|`senderName`|Email sender name that is displayed in the inbox instead of just showing the email address.|`obj['senderName']`, `process.env['SENDER_NAME']`|**optional**|-|-|
+|`senderEmail`|Email to be used in From section while sending emails|`obj['senderEmail']`, `process.env['SENDER_EMAIL']`|**optional**|-|-|
+|`senderName`|Email sender name that is displayed in the inbox instead of just showing the email address|`obj['senderName']`, `process.env['SENDER_NAME']`|**optional**|-|-|
 |`disablePlayground`|To disable playground|`obj['disablePlayground']`, `process.env['DISABLE_PLAYGROUND']`|**optional**|```true```|```true```|
-|`accessTokenExpiryTime`|Time interval for how long access token will be expired in 1h15m15s format.|`obj['accessTokenExpiryTime']`, `process.env['ACCESS_TOKEN_EXPIRY_TIME']`|**optional**|```30m```|```30m```|
-|`awsAccessKeyId`|AWS access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|`obj['awsAccessKeyId']`, `process.env['AWS_ACCESS_KEY_ID']`|**optional**|-|-|
-|`awsSecretAccessKey`|AWS secret access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb.|`obj['awsSecretAccessKey']`, `process.env['AWS_SECRET_ACCESS_KEY']`|**optional**|-|-|
-|`googleClientId`|OAuth Google login client id.|`obj['googleClientId']`, `process.env['GOOGLE_CLIENT_ID']`|**optional**|-|-|
-|`googleClientSecret`|OAuth Google login client secret.|`obj['googleClientSecret']`, `process.env['GOOGLE_CLIENT_SECRET']`|**optional**|-|-|
-|`githubClientId`|OAuth Github login client id.|`obj['githubClientId']`, `process.env['GITHUB_CLIENT_ID']`|**optional**|-|-|
-|`githubClientSecret`|OAuth Github login client secret.|`obj['githubClientSecret']`, `process.env['GITHUB_CLIENT_SECRET']`|**optional**|-|-|
-|`facebookClientId`|OAuth Facebook login client id.|`obj['facebookClientId']`, `process.env['FACEBOOK_CLIENT_ID']`|**optional**|-|-|
-|`facebookClientSecret`|OAuth Facebook login client secret.|`obj['facebookClientSecret']`, `process.env['FACEBOOK_CLIENT_SECRET']`|**optional**|-|-|
-|`linkedinClientId`|OAuth LinkedIn login client id.|`obj['linkedinClientId']`, `process.env['LINKEDIN_CLIENT_ID']`|**optional**|-|-|
-|`linkedinClientSecret`|OAuth LinkedIn login client secret.|`obj['linkedinClientSecret']`, `process.env['LINKEDIN_CLIENT_SECRET']`|**optional**|-|-|
-|`appleClientId`|OAuth Apple login client id.|`obj['appleClientId']`, `process.env['APPLE_CLIENT_ID']`|**optional**|-|-|
-|`appleClientSecret`|OAuth Apple login client secret.|`obj['appleClientSecret']`, `process.env['APPLE_CLIENT_SECRET']`|**optional**|-|-|
-|`twitterClientId`|OAuth Twitter login client id.|`obj['twitterClientId']`, `process.env['TWITTER_CLIENT_ID']`|**optional**|-|-|
-|`twitterClientSecret`|OAuth Twitter login client secret.|`obj['twitterClientSecret']`, `process.env['TWITTER_CLIENT_SECRET']`|**optional**|-|-|
-|`microsoftClientId`|OAuth Microsoft login client id.|`obj['microsoftClientId']`, `process.env['MICROSOFT_CLIENT_ID']`|**optional**|-|-|
-|`microsoftClientSecret`|OAuth Microsoft login client secret.|`obj['microsoftClientSecret']`, `process.env['MICROSOFT_CLIENT_SECRET']`|**optional**|-|-|
-|`microsoftActiveDirectoryTenantId`|Microsoft Active Directory Tenant ID obtained from azure portal.|`obj['microsoftActiveDirectoryTenantId']`, `process.env['MICROSOFT_ACTIVE_DIRECTORY_TENANT_ID']`|**optional**|-|-|
+|`accessTokenExpiryTime`|Time interval for how long access token will be expired in 1h15m15s format|`obj['accessTokenExpiryTime']`, `process.env['ACCESS_TOKEN_EXPIRY_TIME']`|**optional**|```30m```|```30m```|
+|`awsAccessKeyId`|AWS access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb|`obj['awsAccessKeyId']`, `process.env['AWS_ACCESS_KEY_ID']`|**optional**|-|-|
+|`awsSecretAccessKey`|AWS secret access key used for connecting to dynamodb. Make sure access credentials has rights for dynamodb. Used with DATABASE_TYPE=dynamodb|`obj['awsSecretAccessKey']`, `process.env['AWS_SECRET_ACCESS_KEY']`|**optional**|-|-|
+|`googleClientId`|OAuth Google login client id|`obj['googleClientId']`, `process.env['GOOGLE_CLIENT_ID']`|**optional**|-|-|
+|`googleClientSecret`|OAuth Google login client secret|`obj['googleClientSecret']`, `process.env['GOOGLE_CLIENT_SECRET']`|**optional**|-|-|
+|`githubClientId`|OAuth Github login client id|`obj['githubClientId']`, `process.env['GITHUB_CLIENT_ID']`|**optional**|-|-|
+|`githubClientSecret`|OAuth Github login client secret|`obj['githubClientSecret']`, `process.env['GITHUB_CLIENT_SECRET']`|**optional**|-|-|
+|`facebookClientId`|OAuth Facebook login client id|`obj['facebookClientId']`, `process.env['FACEBOOK_CLIENT_ID']`|**optional**|-|-|
+|`facebookClientSecret`|OAuth Facebook login client secret|`obj['facebookClientSecret']`, `process.env['FACEBOOK_CLIENT_SECRET']`|**optional**|-|-|
+|`linkedinClientId`|OAuth LinkedIn login client id|`obj['linkedinClientId']`, `process.env['LINKEDIN_CLIENT_ID']`|**optional**|-|-|
+|`linkedinClientSecret`|OAuth LinkedIn login client secret|`obj['linkedinClientSecret']`, `process.env['LINKEDIN_CLIENT_SECRET']`|**optional**|-|-|
+|`appleClientId`|OAuth Apple login client id|`obj['appleClientId']`, `process.env['APPLE_CLIENT_ID']`|**optional**|-|-|
+|`appleClientSecret`|OAuth Apple login client secret|`obj['appleClientSecret']`, `process.env['APPLE_CLIENT_SECRET']`|**optional**|-|-|
+|`twitterClientId`|OAuth Twitter login client id|`obj['twitterClientId']`, `process.env['TWITTER_CLIENT_ID']`|**optional**|-|-|
+|`twitterClientSecret`|OAuth Twitter login client secret|`obj['twitterClientSecret']`, `process.env['TWITTER_CLIENT_SECRET']`|**optional**|-|-|
+|`microsoftClientId`|OAuth Microsoft login client id|`obj['microsoftClientId']`, `process.env['MICROSOFT_CLIENT_ID']`|**optional**|-|-|
+|`microsoftClientSecret`|OAuth Microsoft login client secret|`obj['microsoftClientSecret']`, `process.env['MICROSOFT_CLIENT_SECRET']`|**optional**|-|-|
+|`microsoftActiveDirectoryTenantId`|Microsoft Active Directory Tenant ID obtained from azure portal|`obj['microsoftActiveDirectoryTenantId']`, `process.env['MICROSOFT_ACTIVE_DIRECTORY_TENANT_ID']`|**optional**|-|-|
 |`smtpLocalName`|-|`obj['smtpLocalName']`, `process.env['SMTP_LOCAL_NAME']`|**optional**|-|-|
 |`jwtSecret`|-|`obj['jwtSecret']`, `process.env['JWT_SECRET']`|**optional**|-|-|
 |`jwtPrivateKey`|-|`obj['jwtPrivateKey']`, `process.env['JWT_PRIVATE_KEY']`|**optional**|-|-|
@@ -392,29 +392,29 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`image`|Docker image name.|**optional**|```lakhansamani/authorizer:1.3.8```|-|
-|`featureName`|Feature name for generate prefix to environments keys.|**optional**|-|-|
-|`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
-|`externalClientPort`|External port for sharing container.|**optional**|```8080```|-|
+|`image`|Docker image name|**optional**|```lakhansamani/authorizer:1.3.8```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`networks`|Network, if not set networkNames have project name and driver=bridge|**optional**|-|-|
+|`externalClientPort`|External port for sharing container|**optional**|```8080```|-|
 |`dependsOnServiceNames`|Depends on services|**optional**|-|-|
-|`env`|Which env you are running your server in. Supported envs production, development.|**optional**|```production```|-|
-|`resetPasswordUrl`|Reset password link, that can be used to send the correct forgot password link.|**optional**|```/reset-password```|-|
-|`disableBasicAuthentication`|Used to explicitly disable email and password based authentication.|**optional**|-|-|
-|`disableEmailVerification`|Used to disable the email verification while signing up.|**optional**|-|-|
-|`disableMagicLinkLogin`|Used to disable the password less login up.|**optional**|-|-|
-|`disableLoginPage`|Used to disable the default login page that comes with authorizer instance. This is helpful when user is building their custom login page.|**optional**|-|-|
-|`disableSignUp`|Used to disable the sign up feature. It is useful when you want to have beta release of your product and invite only limited users.|**optional**|-|-|
-|`roles`|Comma separated list of roles that your platform supports.|**optional**|```user,admin```|-|
-|`defaultRoles`|Comma separated list of roles that acts as Default roles which you would like to assign to users while they signup /login.|**optional**|```user```|-|
-|`protectedRoles`|Comma separated list of roles for which signup should be disabled. Example admin roles. This roles can only assigned manually via super admin like adminUpdateProfile.|**optional**|-|-|
-|`jwtRoleClaim`|Claim key that will be part of JWT token.|**optional**|```role```|-|
-|`organizationName`|Name of organization that you want on default login page.|**optional**|```Authorizer```|-|
-|`organizationLogo`|Logo of organization that you want on default login page.|**optional**|```Authorizer Logo```|-|
-|`customAccessTokenScript`|Javascript function to add extra keys to your JWT id token. This feature is developed using otto and only supports writing function in ES5. Check the sample here.|**optional**|-|-|
-|`awsRegion`|AWS, region id, where dynamod db tables are to be created. Used with DATABASE_TYPE=dynamodb.|**optional**|-|-|
-|`couchbaseBucket`|Bucket used for couchbase database. Used with DATABASE_TYPE=couchbase.|**optional**|```authorizer```|-|
-|`couchbaseBucketRamQuota`|RAM Quota for the bucket used for couchbase database. It has to be numeric value only. Used with DATABASE_TYPE=couchbase.|**optional**|```1000```|-|
-|`couchbaseScope`|Scope in which bucket is created. Used with DATABASE_TYPE=couchbase.|**optional**|```_default```|-|
+|`env`|Which env you are running your server in. Supported envs production, development|**optional**|```production```|-|
+|`resetPasswordUrl`|Reset password link, that can be used to send the correct forgot password link|**optional**|```/reset-password```|-|
+|`disableBasicAuthentication`|Used to explicitly disable email and password based authentication|**optional**|-|-|
+|`disableEmailVerification`|Used to disable the email verification while signing up|**optional**|-|-|
+|`disableMagicLinkLogin`|Used to disable the password less login up|**optional**|-|-|
+|`disableLoginPage`|Used to disable the default login page that comes with authorizer instance. This is helpful when user is building their custom login page|**optional**|-|-|
+|`disableSignUp`|Used to disable the sign up feature. It is useful when you want to have beta release of your product and invite only limited users|**optional**|-|-|
+|`roles`|Comma separated list of roles that your platform supports|**optional**|```user,admin```|-|
+|`defaultRoles`|Comma separated list of roles that acts as Default roles which you would like to assign to users while they signup /login|**optional**|```user```|-|
+|`protectedRoles`|Comma separated list of roles for which signup should be disabled. Example admin roles. This roles can only assigned manually via super admin like adminUpdateProfile|**optional**|-|-|
+|`jwtRoleClaim`|Claim key that will be part of JWT token|**optional**|```role```|-|
+|`organizationName`|Name of organization that you want on default login page|**optional**|```Authorizer```|-|
+|`organizationLogo`|Logo of organization that you want on default login page|**optional**|```Authorizer Logo```|-|
+|`customAccessTokenScript`|Javascript function to add extra keys to your JWT id token. This feature is developed using otto and only supports writing function in ES5. Check the sample here|**optional**|-|-|
+|`awsRegion`|AWS, region id, where dynamod db tables are to be created. Used with DATABASE_TYPE=dynamodb|**optional**|-|-|
+|`couchbaseBucket`|Bucket used for couchbase database. Used with DATABASE_TYPE=couchbase|**optional**|```authorizer```|-|
+|`couchbaseBucketRamQuota`|RAM Quota for the bucket used for couchbase database. It has to be numeric value only. Used with DATABASE_TYPE=couchbase|**optional**|```1000```|-|
+|`couchbaseScope`|Scope in which bucket is created. Used with DATABASE_TYPE=couchbase|**optional**|```_default```|-|
 |`test`|-|**optional**|-|-|
 |`envPath`|-|**optional**|-|-|
 |`isEmailServiceEnabled`|-|**optional**|-|-|
@@ -779,7 +779,7 @@ Additional commands in the nx application `project.json`
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=${EXAMPLE_PRISMA_FLYWAY_ROOT_DATABASE_URL} --app-database-url=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL}"
+          "./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=${EXAMPLE_PRISMA_FLYWAY_ROOT_DATABASE_URL} --app-database-url=${EXAMPLE_PRISMA_FLYWAY_FLYWAY_PRISMA_DATABASE_URL}"
         ],
         "parallel": false,
         "envFile": "./.env",

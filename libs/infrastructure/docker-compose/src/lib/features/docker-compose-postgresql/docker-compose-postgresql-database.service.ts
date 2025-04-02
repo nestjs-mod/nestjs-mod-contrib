@@ -56,7 +56,7 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
         featureDatabaseUrlEnvKey.databaseUrlEnvKeys
           .map(
             (databaseUrlEnvKey) =>
-              `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseUrlEnvKey}} --app-database-url=\${${databaseUrlEnvKey}}`
+              `./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseUrlEnvKey}} --app-database-url=\${${databaseUrlEnvKey}}`
           )
           .flat(),
         'db-create',
@@ -71,7 +71,7 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
         .map((featureDatabaseUrlEnvKey) =>
           featureDatabaseUrlEnvKey.databaseUrlEnvKeys.map(
             (databaseUrlEnvKey) =>
-              `./node_modules/.bin/rucken postgres --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseUrlEnvKey}} --app-database-url=\${${databaseUrlEnvKey}}`
+              `./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=\${${rootDatabaseUrlEnvKey}} --app-database-url=\${${databaseUrlEnvKey}}`
           )
         )
         .flat(),
@@ -115,6 +115,10 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
         },
         packageJson
       );
+      if (!packageJson.devDependencies) {
+        packageJson.devDependencies = {};
+      }
+      packageJson.devDependencies['pg-create-db'] = '^1.1.1';
       this.packageJsonService.write(packageJson);
     }
   }
