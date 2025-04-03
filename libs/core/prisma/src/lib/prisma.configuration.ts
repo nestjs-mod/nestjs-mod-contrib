@@ -1,6 +1,5 @@
 import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod/common';
 import { Logger } from '@nestjs/common';
-import { IsNotEmpty } from 'class-validator';
 
 @ConfigModel()
 export class PrismaConfiguration {
@@ -85,5 +84,5 @@ export class PrismaConfiguration {
       'PrismaClient factory function (example use for https://www.prisma.io/docs/orm/overview/databases/postgresql#using-the-node-postgres-driver)',
   })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  prismaClientFactory?: <T extends { url: string }>(options: T) => any;
+  prismaClientFactory?: <T extends { url: string }>(options: T) => Promise<any> | any;
 }

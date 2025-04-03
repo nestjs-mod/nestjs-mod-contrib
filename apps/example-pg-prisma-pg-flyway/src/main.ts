@@ -57,7 +57,7 @@ bootstrapNestApplication({
         staticConfiguration: {
           schemaFile: join(appFolder, 'src', 'prisma', `${flywayPrismaFeatureName}-${PRISMA_SCHEMA_FILE}`),
           featureName: flywayPrismaFeatureName,
-          prismaClientFactory: (options) => {
+          prismaClientFactory: async (options) => {
             const { url, ...otherOoptions } = options;
             const pool = new Pool({ connectionString: url });
             const adapter = new PrismaPg(pool);

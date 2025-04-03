@@ -1,13 +1,15 @@
 generator client {
-  provider        = "prisma-client-js"
-  output          = "../../../../node_modules/@prisma/pg-flyway-pg-prisma-client"
+  provider = "prisma-client-js"
+  
+  output   = "../../../../node_modules/@prisma/pg-flyway-pg-prisma-client"
+  
   previewFeatures = ["driverAdapters"]
 }
-
 datasource db {
-  provider = "postgres"
-  url      = env("EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL")
+  provider          = "postgres"
+  url               = env("EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL")
 }
+
 
 model migrations_example_prisma_pg_flyway {
   installed_rank Int      @id(map: "__migrations_example_prisma_pg_flyway_pk")

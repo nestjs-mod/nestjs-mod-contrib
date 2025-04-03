@@ -19,7 +19,7 @@ export class PrismaClientFactoryService implements OnModuleInit, OnModuleDestroy
 
   async createPrismaClient() {
     if (this.prismaConfiguration?.prismaClientFactory) {
-      const prismaClient = this.prismaConfiguration?.prismaClientFactory({
+      const prismaClientAsPromise = this.prismaConfiguration?.prismaClientFactory({
         url: this.prismaEnvironments.databaseUrl,
         log: [
           {
@@ -32,8 +32,13 @@ export class PrismaClientFactoryService implements OnModuleInit, OnModuleDestroy
           },
         ],
       });
-      this.prismaClients.push(prismaClient);
-      return prismaClient;
+      if (prismaClientAsPromise && prismaClientAsPromise.then) {
+        const prismaClient = await prismaClientAsPromise;
+        this.prismaClients.push(prismaClient);
+        return prismaClient;
+      }
+      this.prismaClients.push(prismaClientAsPromise);
+      return prismaClientAsPromise;
     }
 
     if (!this.prismaConfiguration?.prismaModule) {
