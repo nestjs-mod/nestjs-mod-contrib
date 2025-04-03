@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.12.0...prisma-v1.12.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* add support use promise based function for prismaClientFactory ([5c89a63](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5c89a63be2823e3d5f355c9d075cf22fbb9baeab))
+
 # [1.12.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.11.4...prisma-v1.12.0) (2025-04-02)
 
 
