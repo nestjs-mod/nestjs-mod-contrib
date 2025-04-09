@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.18.0...docker-compose-v1.18.1) (2025-04-09)
+
+
+### Bug Fixes
+
+* add support use promise based function for prismaClientFactory ([83501e0](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/83501e0bfd861fb2c8a2715efcac64a9b8e11d41))
+
 # [1.18.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.17.3...docker-compose-v1.18.0) (2025-04-02)
 
 
