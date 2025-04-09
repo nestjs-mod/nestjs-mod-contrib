@@ -13,6 +13,11 @@ export * from './lib/features/docker-compose-authorizer/docker-compose-authorize
 export * from './lib/features/docker-compose-authorizer/docker-compose-authorizer.decorators';
 export * from './lib/features/docker-compose-authorizer/docker-compose-authorizer.environments';
 export * from './lib/features/docker-compose-authorizer/docker-compose-authorizer.module';
+export * from './lib/features/docker-compose-maildev/docker-compose-maildev-errors';
+export * from './lib/features/docker-compose-maildev/docker-compose-maildev.constants';
+export * from './lib/features/docker-compose-maildev/docker-compose-maildev.decorators';
+export * from './lib/features/docker-compose-maildev/docker-compose-maildev.module';
+export * from './lib/features/docker-compose-maildev/docker-compose-maildev.settings';
 export * from './lib/features/docker-compose-minio/docker-compose-minio-errors';
 export * from './lib/features/docker-compose-minio/docker-compose-minio.constants';
 export * from './lib/features/docker-compose-minio/docker-compose-minio.decorators';

@@ -18,6 +18,7 @@ npm i --save @nestjs-mod/docker-compose
 | ---- | -------- | ----------- |
 | [DockerCompose](#dockercompose) | infrastructure | Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose) |
 | [DockerComposeAuthorizer](#dockercomposeauthorizer) | infrastructure | Authorizer is an open-source authentication and authorization solution for your applications. Bring your database and have complete control over the user information. You can self-host authorizer instances and connect to supported databases. (Generator for https://authorizer.dev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
+| [DockerComposeMaildev](#dockercomposemaildev) | infrastructure | MailDev is a simple way to test your projects generated email during development, with an easy to use web interface that runs on your machine. (Generator for maildev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeMinio](#dockercomposeminio) | infrastructure | MinIO is a high-performance, S3 compatible object storage. (Generator for minio in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeNats](#dockercomposenats) | infrastructure | NATS is an open source, lightweight and high-performance messaging system. It is ideal for distributed systems and supports modern cloud architectures and pub-sub, request-reply and queuing models. (Generator for nats in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposeNginx](#dockercomposenginx) | infrastructure | Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
@@ -145,6 +146,19 @@ version: '3'
 | ------ | ----------- | ----------- | ------- | ----- |
 |`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
 |`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"authorizer":{"image":"lakhansamani/authorizer:1.3.8","container_name":"authorizer","ports":["8080:8080"],"networks":["default-network"],"environment":{"DATABASE_NAME":"authorizer","PORT":8080,"COOKIE_NAME":"authorizer","DISABLE_PLAYGROUND":true,"ACCESS_TOKEN_EXPIRY_TIME":"30m","IMAGE":"lakhansamani/authorizer:1.3.8","EXTERNAL_CLIENT_PORT":8080,"ENV":"production","RESET_PASSWORD_URL":"/reset-password","ROLES":"user,admin","DEFAULT_ROLES":"user","JWT_ROLE_CLAIM":"role","ORGANIZATION_NAME":"Authorizer","ORGANIZATION_LOGO":"Authorizer Logo","COUCHBASE_BUCKET":"authorizer","COUCHBASE_BUCKET_RAM_QUOTA":1000,"COUCHBASE_SCOPE":"_default"},"keysOfEnvironmentsWithStaticValue":["featureName","image","networks","dependsOnServiceNames","env"],"tty":true,"restart":"always","depends_on":{}}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|-|
+|`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
+|`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
+#### Modules that use feature configuration
+##### Feature module name: MAILDEV
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"maildev":{"image":"maildev/maildev:2.2.1","container_name":"maildev","ports":["1025:1025","1080:1080"],"networks":["default-network"],"environment":{"MAILDEV_SMTP_PORT":1025,"MAILDEV_WEB_PORT":1080},"keysOfEnvironmentsWithStaticValue":["featureName","image","networks","smtpPort","webPort"],"healthcheck":{"test":"wget -O - http://localhost:${MAILDEV_WEB_PORT}${MAILDEV_BASE_PATHNAME}/healthz || exit 1","interval":"10s","timeout":"5s","retries":5},"tty":true,"restart":"always"}}```|
 |`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
 |`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|-|
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
@@ -433,6 +447,158 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`disablePhoneVerification`|-|**optional**|-|-|
 |`defaultAuthorizeResponseType`|-|**optional**|-|-|
 |`defaultAuthorizeResponseMode`|-|**optional**|-|-|
+
+[Back to Top](#modules)
+
+---
+### DockerComposeMaildev
+MailDev is a simple way to test your projects generated email during development, with an easy to use web interface that runs on your machine. (Generator for maildev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Use in NestJS-mod
+An example of using Maildev, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-maildev.
+
+```typescript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  InfrastructureMarkdownReportGenerator,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+  bootstrapNestApplication,
+  isInfrastructureMode,
+} from '@nestjs-mod/common';
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeMaildev } from '@nestjs-mod/docker-compose';
+import { join } from 'path';
+import { AppModule } from './app/app.module';
+
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-maildev');
+
+bootstrapNestApplication({
+  globalConfigurationOptions: { debug: true },
+  globalEnvironmentsOptions: { debug: true },
+  modules: {
+    system: [
+      ProjectUtils.forRoot({
+        staticConfiguration: {
+          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps/example-maildev', PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
+        },
+      }),
+    ],
+    feature: [AppModule.forRoot()],
+    infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+          style: 'pretty',
+        },
+      }),
+      DockerCompose.forRoot({
+        configuration: {
+          dockerComposeFileVersion: '3',
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
+        },
+      }),
+      DockerComposeMaildev.forRoot(),
+    ],
+  },
+});
+```
+
+After connecting the module to the application and `npm run build` and starting generation of documentation through `npm run docs:infrastructure`, you will have new files and scripts to run.
+
+New scripts mostly `package.json`
+
+Add database options to docker-compose file for application `docker-compose.yml` with real credenionals and add it to `.gitignore` file
+
+```yaml
+version: '3'
+services:
+  example-maildev-maildev:
+    image: 'maildev/maildev:2.2.1'
+    container_name: 'example-maildev-maildev'
+    ports:
+      - '1025:1025'
+      - '1080:1080'
+    networks:
+      - 'example-maildev-network'
+    environment:
+      MAILDEV_SMTP_PORT: '1025'
+      MAILDEV_WEB_PORT: '1080'
+    healthcheck:
+      test: 'wget -O - http://localhost:${MAILDEV_WEB_PORT}${MAILDEV_BASE_PATHNAME}/healthz || exit 1'
+      interval: '10s'
+      timeout: '5s'
+      retries: 5
+    tty: true
+    restart: 'always'
+networks:
+  example-maildev-network:
+    driver: 'bridge'
+```
+
+New environment variable
+
+```bash
+# example-maildev-maildev (generated)
+EXAMPLE_MAILDEV_MAILDEV_MAILDEV_SMTP_PORT=1025
+EXAMPLE_MAILDEV_MAILDEV_MAILDEV_WEB_PORT=1080
+```
+
+When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
+
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`maildevMailDirectory`|Directory for persisting mail.|`obj['maildevMailDirectory']`, `process.env['MAILDEV_MAIL_DIRECTORY']`|**optional**|-|-|
+|`maildevHttps`|Switch from http to https protocol.|`obj['maildevHttps']`, `process.env['MAILDEV_HTTPS']`|**optional**|-|-|
+|`maildevHttpsKey`|The file path to the ssl private key.|`obj['maildevHttpsKey']`, `process.env['MAILDEV_HTTPS_KEY']`|**optional**|-|-|
+|`maildevHttpsCert`|The file path to the ssl cert file.|`obj['maildevHttpsCert']`, `process.env['MAILDEV_HTTPS_CERT']`|**optional**|-|-|
+|`maildevIp`|IP Address to bind SMTP service to, defaults to :: (any IPv4/v6).|`obj['maildevIp']`, `process.env['MAILDEV_IP']`|**optional**|-|-|
+|`maildevOutgoingHost`|SMTP host for outgoing mail.|`obj['maildevOutgoingHost']`, `process.env['MAILDEV_OUTGOING_HOST']`|**optional**|-|-|
+|`maildevOutgoingPort`|SMTP port for outgoing mail.|`obj['maildevOutgoingPort']`, `process.env['MAILDEV_OUTGOING_PORT']`|**optional**|-|-|
+|`maildevOutgoingUser`|SMTP user for outgoing mail.|`obj['maildevOutgoingUser']`, `process.env['MAILDEV_OUTGOING_USER']`|**optional**|-|-|
+|`maildevOutgoingPass`|SMTP password for outgoing mail.|`obj['maildevOutgoingPass']`, `process.env['MAILDEV_OUTGOING_PASS']`|**optional**|-|**hidden**|
+|`maildevOutgoingSecure`|Use SMTP SSL for outgoing mail.|`obj['maildevOutgoingSecure']`, `process.env['MAILDEV_OUTGOING_SECURE']`|**optional**|-|-|
+|`maildevAutoRelay`|Use auto-relay mode. Optional relay email address.|`obj['maildevAutoRelay']`, `process.env['MAILDEV_AUTO_RELAY']`|**optional**|-|-|
+|`maildevAutoRelayRules`|Filter rules for auto relay mode.|`obj['maildevAutoRelayRules']`, `process.env['MAILDEV_AUTO_RELAY_RULES']`|**optional**|-|-|
+|`maildevIncomingUser`|SMTP user for incoming mail.|`obj['maildevIncomingUser']`, `process.env['MAILDEV_INCOMING_USER']`|**optional**|-|-|
+|`maildevIncomingPass`|SMTP password for incoming mail.|`obj['maildevIncomingPass']`, `process.env['MAILDEV_INCOMING_PASS']`|**optional**|-|**hidden**|
+|`maildevIncomingSecure`|Use SMTP SSL for incoming emails.|`obj['maildevIncomingSecure']`, `process.env['MAILDEV_INCOMING_SECURE']`|**optional**|-|-|
+|`maildevIncomingCert`|Cert file location for incoming SSL.|`obj['maildevIncomingCert']`, `process.env['MAILDEV_INCOMING_CERT']`|**optional**|-|-|
+|`maildevIncomingKey`|Key file location for incoming SSL.|`obj['maildevIncomingKey']`, `process.env['MAILDEV_INCOMING_KEY']`|**optional**|-|-|
+|`maildevWebIp`|IP Address to bind HTTP service to, defaults to --ip.|`obj['maildevWebIp']`, `process.env['MAILDEV_WEB_IP']`|**optional**|-|-|
+|`maildevWebUser`|HTTP user for GUI.|`obj['maildevWebUser']`, `process.env['MAILDEV_WEB_USER']`|**optional**|-|-|
+|`maildevWebPass`|HTTP password for GUI.|`obj['maildevWebPass']`, `process.env['MAILDEV_WEB_PASS']`|**optional**|-|**hidden**|
+|`maildevBasePathname`|Base path for URLs.|`obj['maildevBasePathname']`, `process.env['MAILDEV_BASE_PATHNAME']`|**optional**|-|-|
+|`maildevDisableWeb`|Disable the use of the web interface. Useful for unit testing.|`obj['maildevDisableWeb']`, `process.env['MAILDEV_DISABLE_WEB']`|**optional**|-|-|
+|`maildevHideExtensions`|Comma separated list of SMTP extensions to NOT advertise (SMTPUTF8, PIPELINING, 8BITMIME).|`obj['maildevHideExtensions']`, `process.env['MAILDEV_HIDE_EXTENSIONS']`|**optional**|-|-|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name|**optional**|```maildev/maildev:2.2.1```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`networks`|Network, if not set networkNames have project name and driver=bridge.|**optional**|-|-|
+|`smtpPort`|SMTP port to catch mail|**optional**|```1025```|-|
+|`webPort`|Port to run the Web GUI.|**optional**|```1080```|-|
 
 [Back to Top](#modules)
 

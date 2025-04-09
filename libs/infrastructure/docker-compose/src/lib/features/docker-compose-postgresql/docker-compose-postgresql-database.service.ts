@@ -118,7 +118,9 @@ export class DockerComposePostgresDatabaseService implements OnModuleInit {
       if (!packageJson.devDependencies) {
         packageJson.devDependencies = {};
       }
-      packageJson.devDependencies['pg-create-db'] = '^1.1.1';
+      if (!packageJson.devDependencies['pg-create-db'] && !packageJson.dependencies?.['pg-create-db']) {
+        packageJson.devDependencies['pg-create-db'] = '^1.1.3';
+      }
       this.packageJsonService.write(packageJson);
     }
   }

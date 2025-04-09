@@ -7,6 +7,7 @@ export enum DockerComposeServiceType {
   'Nats' = 'Nats',
   'Nginx' = 'Nginx',
   'Authorizer' = 'Authorizer',
+  'Maildev'='Maildev'
 }
 
 export const getDockerComposeServiceName = (projectName?: string, serviceType?: DockerComposeServiceType | string) =>
