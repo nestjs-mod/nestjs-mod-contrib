@@ -1,0 +1,24 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-maildev-maildev:
+    image: "maildev/maildev:2.2.1"
+    container_name: "example-maildev-maildev"
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+    networks:
+      - "example-maildev-network"
+    environment:
+      MAILDEV_SMTP_PORT: ""
+      MAILDEV_WEB_PORT: ""
+    healthcheck:
+      test: "wget -O - http://localhost:${MAILDEV_WEB_PORT}${MAILDEV_BASE_PATHNAME}/healthz || exit 1"
+      interval: "10s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+networks:
+  example-maildev-network:
+    driver: "bridge"

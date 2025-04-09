@@ -40,6 +40,7 @@
     "serve:dev:example-nats-microservice": "./node_modules/.bin/nx serve example-nats-microservice --host=0.0.0.0",
     "serve:dev:example-redis-microservice": "./node_modules/.bin/nx serve example-redis-microservice --host=0.0.0.0",
     "serve:dev:example-keyv": "./node_modules/.bin/nx serve example-keyv --host=0.0.0.0",
+    "serve:dev:example-maildev": "./node_modules/.bin/nx serve example-maildev --host=0.0.0.0",
     "serve:dev:example-prisma-pg-flyway": "./node_modules/.bin/nx serve example-prisma-pg-flyway --host=0.0.0.0",
     "serve:dev:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx serve example-pg-prisma-pg-flyway --host=0.0.0.0",
     "_____angular dev infra_____": "_____angular dev infra_____",
@@ -64,6 +65,7 @@
     "start:prod:example-nats-microservice": "./node_modules/.bin/nx start example-nats-microservice",
     "start:prod:example-redis-microservice": "./node_modules/.bin/nx start example-redis-microservice",
     "start:prod:example-keyv": "./node_modules/.bin/nx start example-keyv",
+    "start:prod:example-maildev": "./node_modules/.bin/nx start example-maildev",
     "start:prod:example-prisma-pg-flyway": "./node_modules/.bin/nx start example-prisma-pg-flyway",
     "start:prod:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx start example-pg-prisma-pg-flyway",
     "_____docs_____": "_____docs_____",
@@ -72,6 +74,7 @@
     "docs:infrastructure:example-prisma": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-prisma --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-terminus": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-terminus --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-keyv": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-keyv --host=0.0.0.0 --watch=false --inspect=false",
+    "docs:infrastructure:example-maildev": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-maildev --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-prisma-pg-flyway": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-prisma-pg-flyway --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-pg-prisma-pg-flyway": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-pg-prisma-pg-flyway --host=0.0.0.0 --watch=false --inspect=false",
     "_____docker-compose infra_____": "_____docker-compose infra_____",
@@ -91,6 +94,8 @@
     "docker-compose:stop:example-redis-microservice": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-redis-microservice/docker-compose.yml down",
     "docker-compose:start:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-keyv/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-keyv/docker-compose.yml down",
+    "docker-compose:start:example-maildev": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-maildev/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-maildev": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-maildev/docker-compose.yml down",
     "docker-compose:start:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose.yml down",
     "docker-compose:start:example-pg-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-pg-prisma-pg-flyway/docker-compose.yml --compatibility up -d",
@@ -113,6 +118,8 @@
     "docker-compose:stop-prod:example-minio": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-minio/docker-compose-prod.yml --env-file ./apps/example-minio/docker-compose-prod.env down",
     "docker-compose:start-prod:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-keyv/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env --compatibility up -d",
     "docker-compose:stop-prod:example-keyv": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-keyv/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-maildev": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-maildev/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-maildev": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-maildev/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env down",
     "docker-compose:start-prod:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env --compatibility up -d",
     "docker-compose:stop-prod:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env down",
     "docker-compose:start-prod:example-pg-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-pg-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env --compatibility up -d",
@@ -130,6 +137,7 @@
     "e2e:example-nats-microservice": "./node_modules/.bin/nx e2e-test example-nats-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-redis-microservice": "./node_modules/.bin/nx test example-redis-microservice --skip-nx-cache=true --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-keyv": "./node_modules/.bin/nx test example-keyv --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-maildev": "./node_modules/.bin/nx test example-maildev --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-prisma-pg-flyway": "./node_modules/.bin/nx test example-prisma-pg-flyway --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx test example-pg-prisma-pg-flyway --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
@@ -175,6 +183,7 @@
   },
   "private": true,
   "devDependencies": {
+    "@types/nodemailer": "6.4.17",
     "@prisma/adapter-pg": "^5.22.0",
     "@types/pg": "8.11.11",
     "pg": "8.14.1",
@@ -245,6 +254,8 @@
     "pg-create-db": "^1.1.1"
   },
   "dependencies": {
+    "@nestjs/axios": "3.0.0",
+    "nodemailer": "6.10.0",
     "@angular/animations": "19.0.5",
     "@angular/common": "19.0.5",
     "@angular/compiler": "19.0.5",
@@ -350,6 +361,7 @@
     "serve:dev:example-keyv": [
       "Running example-keyv source code in watch mode"
     ],
+    "serve:dev:example-maildev": [],
     "serve:dev:example-prisma-pg-flyway": [
       "Running example-prisma-pg-flyway source code in watch mode"
     ],
@@ -409,6 +421,7 @@
     "start:prod:example-keyv": [
       "Launching a built example-keyv (you must first build it using the build command)"
     ],
+    "start:prod:example-maildev": [],
     "start:prod:example-prisma-pg-flyway": [
       "Launching a built example-prisma-pg-flyway (you must first build it using the build command)"
     ],
@@ -424,6 +437,7 @@
       "Creation of documentation for the entire infrastructure and creation of files necessary to launch the infrastructure for example-terminus"
     ],
     "docs:infrastructure:example-keyv": [],
+    "docs:infrastructure:example-maildev": [],
     "docs:infrastructure:example-prisma-pg-flyway": [],
     "docs:infrastructure:example-pg-prisma-pg-flyway": [],
     "docker-compose:start:prisma": [
@@ -473,6 +487,12 @@
     ],
     "docker-compose:stop:example-keyv": [
       "Stopping the docker-compose infrastructure for example-keyv"
+    ],
+    "docker-compose:start:example-maildev": [
+      "Running the docker-compose infrastructure for example-maildev"
+    ],
+    "docker-compose:stop:example-maildev": [
+      "Stopping the docker-compose infrastructure for example-maildev"
     ],
     "docker-compose:start:example-prisma-pg-flyway": [
       "Running the docker-compose infrastructure for example-prisma-pg-flyway"
@@ -535,6 +555,12 @@
     "docker-compose:stop-prod:example-keyv": [
       "Stopping the main docker-compose prod infrastructure for example-keyv"
     ],
+    "docker-compose:start-prod:example-maildev": [
+      "Running the main docker-compose prod infrastructure for example-maildev"
+    ],
+    "docker-compose:stop-prod:example-maildev": [
+      "Stopping the main docker-compose prod infrastructure for example-maildev"
+    ],
     "docker-compose:start-prod:example-prisma-pg-flyway": [
       "Running the main docker-compose prod infrastructure for example-prisma-pg-flyway"
     ],
@@ -583,6 +609,7 @@
     "test:example-keyv": [
       "Running tests for example-keyv"
     ],
+    "test:example-maildev": [],
     "test:example-prisma-pg-flyway": [
       "Running tests for example-prisma-pg-flyway"
     ],

@@ -10,7 +10,10 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "allowJs": true,
@@ -26,19 +29,49 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
-      "@nestjs-mod/authorizer": ["libs/core/authorizer/src/index.ts"],
-      "@nestjs-mod/cache-manager": ["libs/core/cache-manager/src/index.ts"],
-      "@nestjs-mod/docker-compose": ["libs/infrastructure/docker-compose/src/index.ts"],
-      "@nestjs-mod/flyway": ["libs/infrastructure/flyway/src/index.ts"],
-      "@nestjs-mod/graphql": ["libs/system/graphql/src/index.ts"],
-      "@nestjs-mod/keyv": ["libs/core/keyv/src/index.ts"],
-      "@nestjs-mod/minio": ["libs/core/minio/src/index.ts"],
-      "@nestjs-mod/pg-flyway": ["libs/infrastructure/pg-flyway/src/index.ts"],
-      "@nestjs-mod/pino": ["libs/system/nestjs-pino/src/index.ts"],
-      "@nestjs-mod/pm2": ["libs/infrastructure/pm2/src/index.ts"],
-      "@nestjs-mod/prisma": ["libs/core/prisma/src/index.ts"],
-      "@nestjs-mod/terminus": ["libs/system/terminus/src/index.ts"]
+      "@nestjs-mod/authorizer": [
+        "libs/core/authorizer/src/index.ts"
+      ],
+      "@nestjs-mod/cache-manager": [
+        "libs/core/cache-manager/src/index.ts"
+      ],
+      "@nestjs-mod/docker-compose": [
+        "libs/infrastructure/docker-compose/src/index.ts"
+      ],
+      "@nestjs-mod/flyway": [
+        "libs/infrastructure/flyway/src/index.ts"
+      ],
+      "@nestjs-mod/graphql": [
+        "libs/system/graphql/src/index.ts"
+      ],
+      "@nestjs-mod/keyv": [
+        "libs/core/keyv/src/index.ts"
+      ],
+      "@nestjs-mod/minio": [
+        "libs/core/minio/src/index.ts"
+      ],
+      "@nestjs-mod/pg-flyway": [
+        "libs/infrastructure/pg-flyway/src/index.ts"
+      ],
+      "@nestjs-mod/pino": [
+        "libs/system/nestjs-pino/src/index.ts"
+      ],
+      "@nestjs-mod/pm2": [
+        "libs/infrastructure/pm2/src/index.ts"
+      ],
+      "@nestjs-mod/prisma": [
+        "libs/core/prisma/src/index.ts"
+      ],
+      "@nestjs-mod/terminus": [
+        "libs/system/terminus/src/index.ts"
+      ],
+      "@nestjs-mod/maildev": [
+        "libs/system/maildev/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

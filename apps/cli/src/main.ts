@@ -33,7 +33,7 @@ bootstrapNestApplication({
         contextName: 'authorizer',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/core/authorizer/package.json'),
           markdownFile: join(rootFolder, 'libs/core/authorizer/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/authorizer'),
@@ -46,7 +46,7 @@ bootstrapNestApplication({
         contextName: 'minio',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/core/minio/package.json'),
           markdownFile: join(rootFolder, 'libs/core/minio/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/minio'),
@@ -59,7 +59,7 @@ bootstrapNestApplication({
         contextName: 'graphql',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/system/graphql/package.json'),
           markdownFile: join(rootFolder, 'libs/system/graphql/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/system/graphql'),
@@ -72,7 +72,7 @@ bootstrapNestApplication({
         contextName: 'prisma',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/core/prisma/package.json'),
           markdownFile: join(rootFolder, 'libs/core/prisma/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/prisma'),
@@ -85,7 +85,7 @@ bootstrapNestApplication({
         contextName: 'cache-manager',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/core/cache-manager/package.json'),
           markdownFile: join(rootFolder, 'libs/core/cache-manager/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/cache-manager'),
@@ -98,7 +98,7 @@ bootstrapNestApplication({
         contextName: 'nestjs-pino',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/system/nestjs-pino/package.json'),
           markdownFile: join(rootFolder, 'libs/system/nestjs-pino/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/system/nestjs-pino'),
@@ -111,7 +111,7 @@ bootstrapNestApplication({
         contextName: 'terminus',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/system/terminus/package.json'),
           markdownFile: join(rootFolder, 'libs/system/terminus/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/system/terminus'),
@@ -124,7 +124,7 @@ bootstrapNestApplication({
         contextName: 'pm2',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/infrastructure/pm2/package.json'),
           markdownFile: join(rootFolder, 'libs/infrastructure/pm2/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/pm2'),
@@ -137,7 +137,7 @@ bootstrapNestApplication({
         contextName: 'docker-compose',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/infrastructure/docker-compose/package.json'),
           markdownFile: join(rootFolder, 'libs/infrastructure/docker-compose/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/docker-compose'),
@@ -150,7 +150,7 @@ bootstrapNestApplication({
         contextName: 'flyway',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/infrastructure/flyway/package.json'),
           markdownFile: join(rootFolder, 'libs/infrastructure/flyway/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/flyway'),
@@ -163,7 +163,7 @@ bootstrapNestApplication({
         contextName: 'keyv',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/core/keyv/package.json'),
           markdownFile: join(rootFolder, 'libs/core/keyv/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/keyv'),
@@ -176,7 +176,7 @@ bootstrapNestApplication({
         contextName: 'pg-flyway',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
-          discord:'https://discord.gg/meY7UXaG',
+          discord: 'https://discord.gg/meY7UXaG',
           packageFile: join(rootFolder, 'libs/infrastructure/pg-flyway/package.json'),
           markdownFile: join(rootFolder, 'libs/infrastructure/pg-flyway/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/infrastructure/pg-flyway'),

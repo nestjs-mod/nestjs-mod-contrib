@@ -1,0 +1,57 @@
+{
+  "name": "example-maildev",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-maildev/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-maildev",
+        "main": "apps/example-maildev/src/main.ts",
+        "tsConfig": "apps/example-maildev/tsconfig.app.json",
+        "assets": ["apps/example-maildev/src/assets"],
+        "webpackConfig": "apps/example-maildev/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["build"],
+      "options": {
+        "buildTarget": "example-maildev:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-maildev:build:development"
+        },
+        "production": {
+          "buildTarget": "example-maildev:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["node dist/apps/example-maildev/main.js"],
+        "parallel": false
+      }
+    }
+  }
+}
