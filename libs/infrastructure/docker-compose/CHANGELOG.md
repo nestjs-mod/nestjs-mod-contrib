@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.18.1...docker-compose-v1.18.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* update version of pg-create-db in generated code section devDependencies ([dbab05b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/dbab05b5a41b0d566517356d308b65531f57a6a5))
+
 ## [1.18.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.18.0...docker-compose-v1.18.1) (2025-04-09)
 
 
