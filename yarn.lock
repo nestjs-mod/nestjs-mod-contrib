@@ -2726,10 +2726,10 @@
     "markdown-it" "^14.0.0"
     "tslib" "^2.3.0"
 
-"@nestjs-mod/schematics@2.12.6":
-  "integrity" "sha512-NTz4BPkzqK17gtgND4l5C8C0eWBEJtkz6s0KHlKZplnmsSFj8uBk+UM1znr/i6yRVE9arUst2YlnIqnaWB/yqg=="
-  "resolved" "https://registry.npmjs.org/@nestjs-mod/schematics/-/schematics-2.12.6.tgz"
-  "version" "2.12.6"
+"@nestjs-mod/schematics@2.12.7":
+  "integrity" "sha512-Uc+0G4VGs21cEAjIyctJ6NUerbkiOIPAbBCtA2q8l7hdeWiv0Eqz42HmUIvy5YkUFZXvxNB3ORKXj4XtSG4hXg=="
+  "resolved" "https://registry.npmjs.org/@nestjs-mod/schematics/-/schematics-2.12.7.tgz"
+  "version" "2.12.7"
   dependencies:
     "@nx/devkit" "20.3.0"
     "@nx/eslint" "20.3.0"
