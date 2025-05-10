@@ -1,3 +1,10 @@
+# [1.19.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.18.2...docker-compose-v1.19.0) (2025-05-10)
+
+
+### Features
+
+* append docker-compose feature module with sso, nestjs module for work with sso ([9525f4b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/9525f4beb3b83225f7137151fb9f556a2c1b389b))
+
 ## [1.18.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.18.1...docker-compose-v1.18.2) (2025-04-24)
 
 
