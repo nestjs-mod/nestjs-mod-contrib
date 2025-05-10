@@ -1,3 +1,10 @@
+## [1.19.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.19.0...docker-compose-v1.19.1) (2025-05-10)
+
+
+### Bug Fixes
+
+* update readme of library ([8aa0114](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8aa0114cf4f1138151b183d958edb5c26c566c02))
+
 # [1.19.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.18.2...docker-compose-v1.19.0) (2025-05-10)
 
 
