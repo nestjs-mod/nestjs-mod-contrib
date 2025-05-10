@@ -120,9 +120,6 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           delete lines[fullEnvKey];
         }
       }
-      if (bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName) {
-        delete bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName
-      }
     }
 
     for (const [key] of Object.entries(lines)) {

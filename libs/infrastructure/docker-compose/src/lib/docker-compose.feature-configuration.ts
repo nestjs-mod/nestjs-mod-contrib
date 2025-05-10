@@ -26,6 +26,7 @@ export class DockerComposeFeatureConfiguration implements Compose {
        * Since not all properties for services need to be selected from environment variables, in this property we will list the names of properties that will not be taken from environment variables and inserted as is (by default, all properties are taken from environment variables)
        */
       keysOfEnvironmentsWithStaticValue?: string[];
+      excludeContainerNameFromEnvironmentName?: boolean;
     };
   };
 

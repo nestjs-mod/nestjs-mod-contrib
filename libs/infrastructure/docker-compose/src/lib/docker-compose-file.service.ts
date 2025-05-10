@@ -7,7 +7,7 @@ import { DockerComposeFeatureConfiguration } from './docker-compose.feature-conf
 
 @Injectable()
 export class DockerComposeFileService {
-  constructor(protected readonly dockerComposeConfiguration: DockerComposeConfiguration) {}
+  constructor(protected readonly dockerComposeConfiguration: DockerComposeConfiguration) { }
 
   getDockerComposeFilePath() {
     return this.dockerComposeConfiguration.dockerComposeFile;
@@ -35,6 +35,7 @@ export class DockerComposeFileService {
       }
 
       for (const serviceName of Object.keys(data.services || {})) {
+        delete data.services![serviceName].excludeContainerNameFromEnvironmentName;
         delete data.services![serviceName].keysOfEnvironmentsWithStaticValue;
       }
 
