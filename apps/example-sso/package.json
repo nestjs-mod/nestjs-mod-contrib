@@ -1,0 +1,23 @@
+{
+  "name": "example-sso",
+  "scripts": {},
+  "dependencies": {
+    "pm2": ">=5.3.0",
+    "dotenv": ">=16.3.1"
+  },
+  "devScripts": [
+    "manual:prepare",
+    "docs:infrastructure:example-sso",
+    "docker-compose:start:example-sso",
+    "serve:dev:example-sso"
+  ],
+  "prodScripts": [
+    "manual:prepare",
+    "docs:infrastructure:example-sso",
+    "docker-compose:start:example-sso",
+    "start:prod:example-sso"
+  ],
+  "testsScripts": [
+    "test:example-sso"
+  ]
+}

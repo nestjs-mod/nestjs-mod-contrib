@@ -1,0 +1,23 @@
+{
+  "name": "example-authorizer",
+  "scripts": {},
+  "dependencies": {
+    "pm2": ">=5.3.0",
+    "dotenv": ">=16.3.1"
+  },
+  "devScripts": [
+    "manual:prepare",
+    "docs:infrastructure:example-authorizer",
+    "docker-compose:start:example-authorizer",
+    "serve:dev:example-authorizer"
+  ],
+  "prodScripts": [
+    "manual:prepare",
+    "docs:infrastructure:example-authorizer",
+    "docker-compose:start:example-authorizer",
+    "start:prod:example-authorizer"
+  ],
+  "testsScripts": [
+    "test:example-authorizer"
+  ]
+}

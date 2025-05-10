@@ -1,0 +1,119 @@
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-sso-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-sso-postgre-sql"
+    volumes:
+      - "example-sso-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-sso-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: ""
+      POSTGRESQL_PASSWORD: ""
+      POSTGRESQL_DATABASE: ""
+  example-sso-minio:
+    image: "bitnami/minio:2024.2.9"
+    container_name: "example-sso-minio"
+    volumes:
+      - "example-sso-minio-volume:/bitnami/minio/data"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - "example-sso-network"
+    environment:
+      MINIO_ROOT_USER: ""
+      MINIO_ROOT_PASSWORD: ""
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "mc"
+        - "ready"
+        - "local"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-sso-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-sso-redis"
+    volumes:
+      - "example-sso-redis-volume:/bitnami/redis/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - "example-sso-network"
+    environment:
+      REDIS_DATABASE: ""
+      REDIS_PASSWORD: ""
+      REDIS_DISABLE_COMMANDS: ""
+      REDIS_IO_THREADS: ""
+      REDIS_IO_THREADS_DO_READS: ""
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-sso-single-sign-on:
+    image: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.5.5"
+    container_name: "example-sso-single-sign-on"
+    ports:
+      - "8080:8080"
+    networks:
+      - "example-sso-network"
+    environment:
+      DATABASE_URL: ""
+      SINGLE_SIGN_ON_SSO_ADMIN_SECRET: ""
+      SINGLE_SIGN_ON_SSO_ADMIN_EMAIL: ""
+      SINGLE_SIGN_ON_SSO_ADMIN_USERNAME: ""
+      SINGLE_SIGN_ON_SSO_ADMIN_PASSWORD: ""
+      SINGLE_SIGN_ON_MINIO_SERVER_HOST: ""
+      SINGLE_SIGN_ON_MINIO_ACCESS_KEY: ""
+      SINGLE_SIGN_ON_MINIO_SECRET_KEY: ""
+      SINGLE_SIGN_ON_KEYV_URL: ""
+      SINGLE_SIGN_ON_SSO_DEFAULT_PUBLIC_PROJECTS: ""
+      SINGLE_SIGN_ON_SSO_DEFAULT_PROJECT: ""
+      SINGLE_SIGN_ON_SSO_DISABLE_EMAIL_VERIFICATION: ""
+      SINGLE_SIGN_ON_SSO_SERVER_URL: ""
+      SINGLE_SIGN_ON_SSO_CLIENT_URL: ""
+      SINGLE_SIGN_ON_PORT: ""
+      SINGLE_SIGN_ON_SSO_USER_AVAILABLE_ROLES: ""
+      SINGLE_SIGN_ON_SSO_USER_DEFAULT_ROLES: ""
+      SINGLE_SIGN_ON_SSO_ADMIN_DEFAULT_ROLES: ""
+      SINGLE_SIGN_ON_SSO_MANAGER_DEFAULT_ROLES: ""
+      SINGLE_SIGN_ON_SSO_JWT_SECRET_KEY: ""
+      SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN: ""
+      SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN: ""
+      SINGLE_SIGN_ON_SSO_CACHE_TTL: ""
+      IMAGE: ""
+      EXTERNAL_CLIENT_PORT: ""
+    tty: true
+    restart: "always"
+    depends_on: {}
+networks:
+  example-sso-network:
+    driver: "bridge"
+volumes:
+  example-sso-postgre-sql-volume:
+    name: "example-sso-postgre-sql-volume"
+  example-sso-minio-volume:
+    name: "example-sso-minio-volume"
+  example-sso-redis-volume:
+    name: "example-sso-redis-volume"

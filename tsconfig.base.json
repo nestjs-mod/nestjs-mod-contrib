@@ -32,6 +32,9 @@
       "@nestjs-mod/authorizer": [
         "libs/core/authorizer/src/index.ts"
       ],
+      "@nestjs-mod/sso": [
+        "libs/core/sso/src/index.ts"
+      ],
       "@nestjs-mod/cache-manager": [
         "libs/core/cache-manager/src/index.ts"
       ],

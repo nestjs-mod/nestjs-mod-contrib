@@ -1,0 +1,74 @@
+{
+  "name": "example-authorizer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-authorizer/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-authorizer",
+        "main": "apps/example-authorizer/src/main.ts",
+        "tsConfig": "apps/example-authorizer/tsconfig.app.json",
+        "assets": [
+          "apps/example-authorizer/src/assets"
+        ],
+        "webpackConfig": "apps/example-authorizer/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "example-authorizer:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-authorizer:build:development"
+        },
+        "production": {
+          "buildTarget": "example-authorizer:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-authorizer/main.js"
+        ],
+        "parallel": false
+      }
+    },
+    "db-create": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [],
+        "parallel": false,
+        "envFile": "./apps/example-authorizer/.env",
+        "color": true
+      }
+    }
+  }
+}

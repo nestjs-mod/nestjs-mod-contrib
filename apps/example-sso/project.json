@@ -1,0 +1,74 @@
+{
+  "name": "example-sso",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-sso/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-sso",
+        "main": "apps/example-sso/src/main.ts",
+        "tsConfig": "apps/example-sso/tsconfig.app.json",
+        "assets": [
+          "apps/example-sso/src/assets"
+        ],
+        "webpackConfig": "apps/example-sso/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "example-sso:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-sso:build:development"
+        },
+        "production": {
+          "buildTarget": "example-sso:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-sso/main.js"
+        ],
+        "parallel": false
+      }
+    },
+    "db-create": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [],
+        "parallel": false,
+        "envFile": "./apps/example-sso/.env",
+        "color": true
+      }
+    }
+  }
+}
