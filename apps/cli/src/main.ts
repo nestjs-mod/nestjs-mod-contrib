@@ -30,6 +30,19 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'sso',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord: 'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/core/sso/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/sso/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/sso'),
+          utilsFolders: [join(rootFolder, 'libs/core/sso/src/lib')],
+          modules: [import('@nestjs-mod/sso')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'authorizer',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
