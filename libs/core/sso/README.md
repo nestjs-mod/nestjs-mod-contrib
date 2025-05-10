@@ -1,14 +1,14 @@
 
 # @nestjs-mod/sso
 
-Universal javaScript SDK for Sso API (Wrapper for https://www.npmjs.com/package/@ssodev/sso-js)
+NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social authorization (Wrapper for https://www.npmjs.com/package/@nestjs-mod/sso-rest-sdk)
 
 [![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
 ## Installation
 
 ```bash
-npm i --save @ssodev/sso-js@2.0.0 @nestjs-mod/sso
+npm i --save @nestjs-mod/sso-rest-sdk@1.0.5 @nestjs-mod/sso
 ```
 
 
@@ -16,167 +16,221 @@ npm i --save @ssodev/sso-js@2.0.0 @nestjs-mod/sso
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [SsoModule](#ssomodule) | core | Universal javaScript SDK for Sso API |
+| [SsoModule](#ssomodule) | core | NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social authorization (Wrapper for https://www.npmjs.com/package/@nestjs-mod/sso-rest-sdk) |
 
 
 ## Modules descriptions
 
 ### SsoModule
-Universal javaScript SDK for Sso API
+NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social authorization (Wrapper for https://www.npmjs.com/package/@nestjs-mod/sso-rest-sdk)
 
 #### Use in NestJS-mod
-An approximate description of how to connect, an extended description with an example application will be next time (todo: right now I have a lot of work and don’t have time to arrange everything properly 😉)
+An example of using Single Sign-On, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-sso/INFRASTRUCTURE.MD.
 
+**AppService**
 ```typescript
-@Controller()
-export class AppController {
-  constructor(private readonly ssoService: SsoService) {}
+import { SsoService } from '@nestjs-mod/sso';
+import { SsoErrorEnum, SsoRole } from '@nestjs-mod/sso-rest-sdk';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { isAxiosError } from 'axios';
 
-  @Get('get-sso-client-id')
-  @AllowEmptyUser()
-  getSsoClientID(@CurrentSsoUser() ssoUser: SsoUser) {
-    console.log(ssoUser);
-    return this.ssoService.config.clientID;
+@Injectable()
+export class AppService {
+  private logger = new Logger(AppService.name);
+
+  constructor(private readonly ssoService: SsoService) { }
+
+  getData(): { message: string } {
+    return { message: 'Hello API' };
+  }
+
+  async getProfile(headers?: Record<string, string>) {
+    try {
+      const profileResult = await this.ssoService.getSsoClient().getSsoApi().ssoControllerProfile({ headers })
+      return profileResult.data
+    } catch (err) {
+      if (isAxiosError(err)) {
+        this.logger.debug(err.response?.data);
+        this.logger.debug(err, err.stack);
+        if (err.response?.data?.message) {
+          throw new HttpException(err.response?.data?.message, HttpStatus.BAD_REQUEST);
+        }
+      }
+      throw new HttpException('Unhandled error', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+
+  async signIn(user: {
+    username?: string;
+    password: string;
+    email: string;
+  }): Promise<string | undefined> {
+    try {
+      const signupUserResult = await this.ssoService.getSsoClient().getSsoApi().ssoControllerSignIn({
+        password: user.password,
+        email: user.email.toLowerCase(),
+        fingerprint: 'fingerprint'
+      });
+      return signupUserResult.data?.accessToken;
+    } catch (err) {
+      if (isAxiosError(err)) {
+        this.logger.debug(err.response?.data);
+        this.logger.debug(err, err.stack);
+        if (err.response?.data?.message) {
+          throw new HttpException(err.response?.data?.message, HttpStatus.BAD_REQUEST);
+        }
+      }
+      throw new HttpException('Unhandled error', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async signUp(user: {
+    username?: string;
+    password: string;
+    email: string;
+  }): Promise<void | null> {
+    try {
+      const signupUserResult = await this.ssoService.getSsoClient().getSsoApi().ssoControllerSignUp({
+        username: user.username,
+        password: user.password,
+        confirmPassword: user.password,
+        email: user.email.toLowerCase(),
+        fingerprint: 'fingerprint'
+      });
+      await this.ssoService
+        .getSsoClient(true)
+        .getSsoApi()
+        .ssoUsersControllerUpdateOne(signupUserResult.data.user.id, {
+          roles: SsoRole.User.toLowerCase(),
+        });
+
+      await this.verifyUser({
+        externalUserId: signupUserResult.data.user.id,
+        email: signupUserResult.data.user.email,
+      });
+
+      this.logger.debug(
+        `User with email: ${signupUserResult.data.user.email} successfully created!`
+      );
+    } catch (err) {
+      if (isAxiosError(err)) {
+        if (err.response?.data?.code !== SsoErrorEnum.Sso011 && err.response?.data?.code !== SsoErrorEnum.Sso003) {
+          this.logger.debug(err.response?.data);
+          this.logger.debug(err, err.stack);
+          if (err.response?.data?.message) {
+            throw new HttpException(err.response?.data?.message, HttpStatus.BAD_REQUEST);
+          }
+        }
+      }
+      throw new HttpException('Failed to create a user', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async verifyUser({
+    externalUserId,
+    email,
+  }: {
+    externalUserId: string;
+    email: string;
+  }) {
+    await this.ssoService
+      .getSsoClient(true)
+      .getSsoApi()
+      .ssoUsersControllerUpdateOne(externalUserId, {
+        emailVerifiedAt: new Date().toISOString(),
+        email,
+      });
+    return this;
   }
 }
 
-const { AppModule } = createNestModule({
+```
+
+**AppController**
+```typescript
+import { Controller, Get, Param } from '@nestjs/common';
+
+import { AllowEmptySsoUser } from '@nestjs-mod/sso';
+import { AppService } from './app.service';
+
+@AllowEmptySsoUser()
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) { }
+
+  @Get()
+  getData() {
+    return this.appService.getData();
+  }
+
+  @Get('/sign-up/:email/:password')
+  async signUp(@Param('email') email: string, @Param('password') password: string) {
+    await this.appService.signUp({
+      email, password
+    });
+    return { status: 'OK' };
+  }
+
+  @Get('/sign-in/:email/:password')
+  async signIn(@Param('email') email: string, @Param('password') password: string) {
+    const token = await this.appService.signIn({
+      email, password
+    });
+    return { token };
+  }
+
+  @Get('/prifile/:token')
+  async profile(@Param('token') token: string) {
+    return this.appService.getProfile({ Authorization: `Bearer ${token}` });
+  }
+}
+
+```
+
+**AppModule**
+```typescript
+import { SsoModule } from '@nestjs-mod/sso';
+import { createNestModule, NestModuleCategory } from '@nestjs-mod/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
+export const { AppModule } = createNestModule({
   moduleName: 'AppModule',
-  imports: [
-    SsoModule.forFeature({
-      featureModuleName: 'AppModule',
-    }),
-  ],
+  imports: [SsoModule.forFeature()],
+  moduleCategory: NestModuleCategory.feature,
   controllers: [AppController],
+  providers: [AppService],
 });
 
-bootstrapNestApplication({
-  globalConfigurationOptions: { debug: true },
-  globalEnvironmentsOptions: { debug: true },
-  modules: {
-    system: [
-      ProjectUtils.forRoot({
-        staticConfiguration: {
-          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
-          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
-          envFile: join(rootFolder, '.env'),
-        },
-      }),
-      DefaultNestApplicationInitializer.forRoot({
-        staticConfiguration: {
-          bufferLogs: true,
-        },
-      }),
-      DefaultNestApplicationListener.forRoot({
-        staticConfiguration: {
-          // When running in infrastructure mode, the backend server does not start.
-          mode: isInfrastructureMode() ? 'silent' : 'listen',
-        },
-      }),
-    ],
-    core: [
-      SsoModule.forRoot({
-        staticConfiguration: {
-          checkAccessValidator: async (
-            ssoUser?: SsoUser,
-            options?: CheckAccessOptions,
-            ctx?: ExecutionContext
-          ) => {
-            if (
-              typeof ctx?.getClass === 'function' &&
-              typeof ctx?.getHandler === 'function' &&
-              ctx?.getClass().name === 'TerminusHealthCheckController' &&
-              ctx?.getHandler().name === 'check'
-            ) {
-              return true;
-            }
-
-            return defaultSsoCheckAccessValidator(ssoUser, options);
-          },
-        },
-      }),
-    ],
-    feature: [AppModule.forRoot()],
-    infrastructure: [
-      InfrastructureMarkdownReportGenerator.forRoot({
-        staticConfiguration: {
-          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
-          skipEmptySettings: true,
-        },
-      }),
-      DockerCompose.forRoot({
-        configuration: {
-          dockerComposeFileVersion: '3',
-          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
-        },
-      }),
-      DockerComposePostgreSQL.forFeature({
-        featureModuleName: ssoFeatureName,
-      }),
-      DockerComposeRedis.forRoot(),
-      DockerComposeSso.forRoot({
-        staticEnvironments: {
-          redisUrl: '%SERVER_SSO_INTERNAL_REDIS_URL%',
-          databaseUrl: '%SERVER_SSO_INTERNAL_DATABASE_URL%',
-        },
-        staticConfiguration: {
-          featureName: ssoFeatureName,
-          organizationName: 'OrganizationName',
-          dependsOnServiceNames: {
-            'postgre-sql-migrations': 'service_completed_successfully',
-            redis: 'service_healthy',
-          },
-        },
-      }),
-    ],
-  },
-});
 ```
-
-New environment variable
-
-```bash
-SERVER_SSO_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/sso?schema=public
-SERVER_SSO_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-SERVER_SSO_INTERNAL_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/sso
-SERVER_SSO_INTERNAL_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-```
-
-When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
 
 
 #### Shared providers
 `SsoService`
-
-#### Environments
-
-
-| Key    | Description | Sources | Constraints | Default | Value |
-| ------ | ----------- | ------- | ----------- | ------- | ----- |
-|`clientId`|Client ID|`obj['clientId']`, `process.env['SSO_CLIENT_ID']`|**optional**|-|-|
-|`ssoURL`|Sso URL|`obj['ssoURL']`, `process.env['SSO_SSO_URL']`|**isNotEmpty** (ssoURL should not be empty)|-|-|
-|`redirectURL`|Redirect URL|`obj['redirectURL']`, `process.env['SSO_REDIRECT_URL']`|**isNotEmpty** (redirectURL should not be empty)|-|-|
-|`adminSecret`|Admin secret|`obj['adminSecret']`, `process.env['SSO_ADMIN_SECRET']`|**optional**|-|-|
-|`allowedExternalAppIds`|Allowed identifiers of external applications, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing|`obj['allowedExternalAppIds']`, `process.env['SSO_ALLOWED_EXTERNAL_APP_IDS']`|**optional**|-|-|
 
 #### Configuration
 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`extraHeaders`|Extra headers|**optional**|-|-|
-|`getRequestFromContext`|Function for resolve request from execution context|**optional**|```getRequestFromExecutionContext```|-|
 |`checkAccessValidator`|External function for validate permissions|**optional**|```defaultSsoCheckAccessValidator```|-|
-|`externalUserIdHeaderName`|A header for searching for an external user ID, if you have logged in previously and do not need to log in again in the authorization service, can be used during testing|**optional**|```x-external-user-id```|-|
-|`externalAppIdHeaderName`|Header for searching for external application identifiers, if you have logged in previously and do not need to log in again in the authorization service, these identifiers must be private and can be used for testing|**optional**|```x-external-app-id```|-|
-|`getSsoUserFromExternalUserId`|Function for resolve sso user by externalUserId|**optional**|```defaultSsoGetSsoUserFromExternalUserId```|-|
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`url`|Sso URL|`obj['url']`, `process.env['SSO_URL']`|**isNotEmpty** (url should not be empty)|-|-|
+|`adminSecret`|Sso admin secret|`obj['adminSecret']`, `process.env['SSO_ADMIN_SECRET']`|**isNotEmpty** (adminSecret should not be empty)|-|-|
+|`useGuards`|Use guards|`obj['useGuards']`, `process.env['SSO_USE_GUARDS']`|**optional**|```true```|```true```|
+|`useFilters`|Use filters|`obj['useFilters']`, `process.env['SSO_USE_FILTERS']`|**optional**|```true```|```true```|
 
 #### Static configuration
 
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 
 [Back to Top](#modules)
 
