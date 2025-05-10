@@ -1,15 +1,14 @@
 {
-  "name": "@nestjs-mod/docker-compose",
-  "description": "Docker Compose is a tool for defining and running multi-container applications. It is the key to unlocking a streamlined and efficient development and deployment experience. (Generator docker-compose.yml for https://docs.docker.com/compose)",
-  "version": "1.18.2",
+  "name": "@nestjs-mod/sso",
+  "version": "1.5.4",
+  "description": "NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social authorization (Wrapper for https://www.npmjs.com/package/@nestjs-mod/sso-rest-sdk)",
   "keywords": [
     "nestjs",
     "nestjs-mod",
     "modules",
     "mod",
-    "docker-compose",
-    "docker",
-    "infrastructure"
+    "single-sign-on",
+    "sso-rest-sdk"
   ],
   "license": "MIT",
   "author": "EndyKaufman <admin@site15.ru>",
@@ -31,22 +30,19 @@
   "maintainers": [
     {
       "name": "EndyKaufman",
-      "email": "admin@site15.ru" 
+      "email": "admin@site15.ru"
     }
   ],
   "dependencies": {
-    "tslib": "^2.3.0",
-    "compose-spec-schema": "1.0.0",
-    "case-anything": "2.1.13",
-    "yaml": "2.3.4",
-    "connection-string": "4.3.5",
-    "ms":"2.1.3"
+    "tslib": "^2.3.0"
   },
   "peerDependencies": {
     "class-validator": "*",
     "@nestjs/common": "*",
+    "@nestjs/core": "*",
+    "@nestjs-mod/misc": "*",
     "@nestjs-mod/common": "*",
-    "rxjs": "*"
+    "@nestjs-mod/sso-rest-sdk": "*"
   },
   "peerDependenciesMeta": {
     "class-validator": {
@@ -55,11 +51,22 @@
     "@nestjs/common": {
       "optional": true
     },
+    "@nestjs/core": {
+      "optional": true
+    },
+    "@nestjs-mod/misc": {
+      "optional": true
+    },
     "@nestjs-mod/common": {
       "optional": true
     },
-    "rxjs": {
+    "@nestjs-mod/sso-rest-sdk": {
       "optional": true
+    }
+  },
+  "dependenciesInfo": {
+    "@nestjs-mod/sso-rest-sdk@1.0.5": {
+      "docs": true
     }
   },
   "type": "commonjs",

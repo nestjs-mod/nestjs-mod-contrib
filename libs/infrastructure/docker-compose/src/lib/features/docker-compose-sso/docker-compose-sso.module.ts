@@ -8,18 +8,18 @@ import {
 import { constantCase, kebabCase } from 'case-anything';
 import { DockerCompose } from '../../docker-compose.module';
 import { DockerComposeServiceType, getDockerComposeServiceName } from '../../docker-compose.utils';
-import { DockerComposeAuthorizerConfiguration } from './docker-compose-authorizer.configuration';
-import { DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME } from './docker-compose-authorizer.constants';
-import { DockerComposeAuthorizerEnvironments } from './docker-compose-authorizer.environments';
+import { DockerComposeSsoConfiguration } from './docker-compose-sso.configuration';
+import { DOCKER_COMPOSE_SSO_MODULE_NAME } from './docker-compose-sso.constants';
+import { DockerComposeSsoEnvironments } from './docker-compose-sso.environments';
 
-export const { DockerComposeAuthorizer } = createNestModule({
-  moduleName: DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME,
+export const { DockerComposeSso } = createNestModule({
+  moduleName: DOCKER_COMPOSE_SSO_MODULE_NAME,
   moduleDescription:
-    'Authorizer is an open-source authentication and authorization solution for your applications. Bring your database and have complete control over the user information. You can self-host authorizer instances and connect to supported databases. (Generator for https://authorizer.dev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
+    'Single Sign-On on NestJS and Angular with webhooks and social authorization. (Generator for https://github.com/nestjs-mod/nestjs-mod-sso in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
   globalEnvironmentsOptions: { skipValidation: true },
   globalConfigurationOptions: { skipValidation: true },
-  staticConfigurationModel: DockerComposeAuthorizerConfiguration,
-  staticEnvironmentsModel: DockerComposeAuthorizerEnvironments,
+  staticConfigurationModel: DockerComposeSsoConfiguration,
+  staticEnvironmentsModel: DockerComposeSsoEnvironments,
   wrapForRootAsync: (asyncModuleOptions) => {
     if (!asyncModuleOptions) {
       asyncModuleOptions = {};
@@ -39,11 +39,11 @@ export const { DockerComposeAuthorizer } = createNestModule({
     if (!modules[NestModuleCategory.infrastructure]) {
       modules[NestModuleCategory.infrastructure] = [];
     }
-    const dockerComposeAuthorizerModule = createNestModule({
+    const dockerComposeSsoModule = createNestModule({
       project,
-      moduleName: DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME,
+      moduleName: DOCKER_COMPOSE_SSO_MODULE_NAME,
       moduleDescription:
-        'Authorizer is an open-source authentication and authorization solution for your applications. Bring your database and have complete control over the user information. You can self-host authorizer instances and connect to supported databases. (Generator for https://authorizer.dev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
+        'Single Sign-On on NestJS and Angular with webhooks and social authorization. (Generator for https://github.com/nestjs-mod/nestjs-mod-sso in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)',
       moduleCategory: NestModuleCategory.infrastructure,
       globalEnvironmentsOptions: {
         name: project?.name,
@@ -53,8 +53,8 @@ export const { DockerComposeAuthorizer } = createNestModule({
         name: project?.name,
         skipValidation: isInfrastructureMode(),
       },
-      staticConfigurationModel: DockerComposeAuthorizerConfiguration,
-      staticEnvironmentsModel: DockerComposeAuthorizerEnvironments,
+      staticConfigurationModel: DockerComposeSsoConfiguration,
+      staticEnvironmentsModel: DockerComposeSsoEnvironments,
       wrapForRootAsync: (asyncModuleOptions) => {
         if (!asyncModuleOptions) {
           asyncModuleOptions = {};
@@ -90,11 +90,11 @@ export const { DockerComposeAuthorizer } = createNestModule({
           networks.push({ name: 'default-network', driver: 'bridge' });
         }
         const networkNames = networks?.map((n) => n.name);
-        const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.Authorizer);
+        const serviceName = getDockerComposeServiceName(project?.name, DockerComposeServiceType.SingleSignOn);
 
         return [
           ProjectUtils.forFeature({
-            featureModuleName: DOCKER_COMPOSE_AUTHORIZER_MODULE_NAME,
+            featureModuleName: DOCKER_COMPOSE_SSO_MODULE_NAME,
             contextName,
           }),
           DockerCompose.forFeature({
@@ -105,8 +105,9 @@ export const { DockerComposeAuthorizer } = createNestModule({
                 [serviceName]: {
                   image: staticConfiguration?.image,
                   container_name: serviceName,
-                  ports: [`${staticConfiguration?.externalClientPort}:${staticEnvironments?.port}`],
+                  ports: [`${staticConfiguration?.externalClientPort}:${staticEnvironments?.singleSignOnPort}`],
                   networks: networkNames,
+                  excludeContainerNameFromEnvironmentName: true,
                   environment: {
                     ...Object.entries({ ...staticEnvironments, ...staticConfiguration }).reduce(
                       (all, [key, value]) => ({
@@ -122,7 +123,7 @@ export const { DockerComposeAuthorizer } = createNestModule({
                     'networks',
                     'dependsOnServiceNames',
                     'env',
-                  ] as (keyof DockerComposeAuthorizerConfiguration)[],
+                  ] as (keyof DockerComposeSsoConfiguration)[],
                   tty: true,
                   restart: 'always',
                   depends_on: Object.entries(staticConfiguration.dependsOnServiceNames || {})
@@ -152,10 +153,10 @@ export const { DockerComposeAuthorizer } = createNestModule({
           }),
         ];
       },
-    }).DockerComposeAuthorizer;
+    }).DockerComposeSso;
 
     modules[NestModuleCategory.infrastructure]!.push(
-      dockerComposeAuthorizerModule.forRootAsync(current.asyncModuleOptions)
+      dockerComposeSsoModule.forRootAsync(current.asyncModuleOptions)
     );
   },
 });

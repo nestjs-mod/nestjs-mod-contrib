@@ -7,6 +7,7 @@ export enum DockerComposeServiceType {
   'Nats' = 'Nats',
   'Nginx' = 'Nginx',
   'Authorizer' = 'Authorizer',
+  'SingleSignOn' = 'SingleSignOn',
   'Maildev'='Maildev'
 }
 

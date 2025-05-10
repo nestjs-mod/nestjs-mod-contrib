@@ -45,3 +45,9 @@ export * from './lib/features/docker-compose-redis/docker-compose-redis.decorato
 export * from './lib/features/docker-compose-redis/docker-compose-redis.module';
 export * from './lib/features/docker-compose-redis/docker-compose-redis.settings';
 export * from './lib/features/docker-compose-redis/docker-compose-redis.utils';
+export * from './lib/features/docker-compose-sso/docker-compose-sso-errors';
+export * from './lib/features/docker-compose-sso/docker-compose-sso.configuration';
+export * from './lib/features/docker-compose-sso/docker-compose-sso.constants';
+export * from './lib/features/docker-compose-sso/docker-compose-sso.decorators';
+export * from './lib/features/docker-compose-sso/docker-compose-sso.environments';
+export * from './lib/features/docker-compose-sso/docker-compose-sso.module';

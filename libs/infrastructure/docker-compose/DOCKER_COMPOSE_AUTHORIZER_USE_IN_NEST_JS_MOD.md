@@ -1,6 +1,26 @@
-An approximate description of how to connect, an extended description with an example application will be next time (todo: right now I have a lot of work and don’t have time to arrange everything properly 😉)
+An example of using Maildev, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-authorizer/INFRASTRUCTURE.MD.
 
 ```typescript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+import { AuthorizerModule } from '@nestjs-mod/authorizer';
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  InfrastructureMarkdownReportGenerator,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+  bootstrapNestApplication,
+  isInfrastructureMode,
+} from '@nestjs-mod/common';
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeAuthorizer, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
+import { join } from 'path';
+import { adminSecret } from './app/app.constants';
+import { AppModule } from './app/app.module';
+
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-authorizer');
+
 bootstrapNestApplication({
   globalConfigurationOptions: { debug: true },
   globalEnvironmentsOptions: { debug: true },
@@ -8,9 +28,9 @@ bootstrapNestApplication({
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps/example-authorizer', PACKAGE_JSON_FILE),
           packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
-          envFile: join(rootFolder, '.env'),
+          envFile: join(rootFolder, 'apps', 'example-authorizer', '.env'),
         },
       }),
       DefaultNestApplicationInitializer.forRoot(),
@@ -21,118 +41,149 @@ bootstrapNestApplication({
         },
       }),
     ],
+    feature: [
+      AuthorizerModule.forRootAsync({
+        environments: {
+          authorizerURL: 'http://localhost:8080',
+          redirectURL: 'http://localhost:3000'
+        }
+      }),
+      AppModule.forRoot()
+    ],
     infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+          style: 'pretty',
+        },
+      }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
           dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
-      DockerComposePostgreSQL.forFeature({
-        featureModuleName: authorizerFeatureName,
+      DockerComposePostgreSQL.forRoot({
+        staticEnvironments: {
+          rootDatabaseUrl: 'postgres://postgres:postgres_password@localhost:5432/postgres?schema=public'
+        }
       }),
-      DockerComposeRedis.forRoot(),
       DockerComposeAuthorizer.forRoot({
         staticEnvironments: {
-          redisUrl: '%SERVER_AUTHORIZER_INTERNAL_REDIS_URL%',
-          databaseUrl: '%SERVER_AUTHORIZER_INTERNAL_DATABASE_URL%',
-        },
-        staticConfiguration: {
-          featureName: authorizerFeatureName,
-          organizationName: 'OrganizationName',
-          dependsOnServiceNames: {
-            'postgre-sql-migrations': 'service_completed_successfully',
-            redis: 'service_healthy',
-          },
-        },
+          databaseType: 'postgres',
+          databaseUrl: 'postgres://postgres:postgres_password@example-authorizer-postgre-sql:5432/postgres',
+          databaseName: 'authorizer',
+          adminSecret
+        }
       }),
     ],
   },
 });
+
 ```
 
-After connecting the module to the application and `npm run build` and starting generation of documentation through `npm run docs:infrastructure`, you will have new files and scripts to run.
+After connecting the module to the application and `npm run manual:prepare` and starting generation of documentation through `npm run docs:infrastructure:example-authorizer`, you will have new files and scripts to run.
 
 New scripts mostly `package.json`
 
 Add database options to docker-compose file for application `docker-compose.yml` with real credenionals and add it to `.gitignore` file
 
 ```yaml
-version: '3'
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
 services:
-  server-authorizer:
+  example-authorizer-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-authorizer-postgre-sql"
+    volumes:
+      - "example-authorizer-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-authorizer-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: "${EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_USERNAME}"
+      POSTGRESQL_PASSWORD: "${EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_PASSWORD}"
+      POSTGRESQL_DATABASE: "${EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_DATABASE}"
+  example-authorizer-authorizer:
     image: "lakhansamani/authorizer:1.3.8"
-    container_name: "server-authorizer"
+    container_name: "example-authorizer-authorizer"
     ports:
       - "8080:8080"
     networks:
-      - "server-network"
+      - "example-authorizer-network"
     environment:
-      REDIS_URL: "redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379"
-      DATABASE_URL: "postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer"
-      ADMIN_SECRET: "VfKSfPPljhHBXCEohnitursmgDxfAyiD"
-      DATABASE_TYPE: "postgres"
-      DATABASE_NAME: "authorizer"
-      FEATURE_NAME: "authorizer"
-      ORGANIZATION_NAME: "OrganizationName"
-      DEPENDS_ON_SERVICE_NAMES: "[object Object]"
-      IMAGE: "lakhansamani/authorizer:1.3.8"
-      EXTERNAL_CLIENT_PORT: "8080"
-      ENV: "production"
-      PORT: "8080"
-      COOKIE_NAME: "authorizer"
-      RESET_PASSWORD_URL: "/reset-password"
-      DISABLE_PLAYGROUND: "true"
-      ROLES: "user,admin"
-      DEFAULT_ROLES: "user"
-      JWT_ROLE_CLAIM: "role"
-      ORGANIZATION_LOGO: "Authorizer Logo"
-      ACCESS_TOKEN_EXPIRY_TIME: "30m"
-      COUCHBASE_BUCKET: "authorizer"
-      COUCHBASE_BUCKET_RAM_QUOTA: "1000"
-      COUCHBASE_SCOPE: "_default"
+      DATABASE_TYPE: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_TYPE}"
+      DATABASE_URL: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL}"
+      DATABASE_NAME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_NAME}"
+      ADMIN_SECRET: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ADMIN_SECRET}"
+      PORT: "${EXAMPLE_AUTHORIZER_AUTHORIZER_PORT}"
+      COOKIE_NAME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COOKIE_NAME}"
+      DISABLE_PLAYGROUND: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DISABLE_PLAYGROUND}"
+      ACCESS_TOKEN_EXPIRY_TIME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ACCESS_TOKEN_EXPIRY_TIME}"
+      IMAGE: "${EXAMPLE_AUTHORIZER_AUTHORIZER_IMAGE}"
+      EXTERNAL_CLIENT_PORT: "${EXAMPLE_AUTHORIZER_AUTHORIZER_EXTERNAL_CLIENT_PORT}"
+      ENV: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ENV}"
+      RESET_PASSWORD_URL: "${EXAMPLE_AUTHORIZER_AUTHORIZER_RESET_PASSWORD_URL}"
+      ROLES: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ROLES}"
+      DEFAULT_ROLES: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DEFAULT_ROLES}"
+      JWT_ROLE_CLAIM: "${EXAMPLE_AUTHORIZER_AUTHORIZER_JWT_ROLE_CLAIM}"
+      ORGANIZATION_NAME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_NAME}"
+      ORGANIZATION_LOGO: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_LOGO}"
+      COUCHBASE_BUCKET: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET}"
+      COUCHBASE_BUCKET_RAM_QUOTA: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET_RAM_QUOTA}"
+      COUCHBASE_SCOPE: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_SCOPE}"
     tty: true
     restart: "always"
-    depends_on:
-      server-postgre-sql-migrations:
-        condition: "service_completed_successfully"
-      server-redis:
-        condition: "service_healthy"
+    depends_on: {}
 networks:
-  server-network:
-    driver: 'bridge'
+  example-authorizer-network:
+    driver: "bridge"
+volumes:
+  example-authorizer-postgre-sql-volume:
+    name: "example-authorizer-postgre-sql-volume"
 ```
 
 New environment variable
 
 ```bash
-SERVER_AUTHORIZER_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer?schema=public
-SERVER_AUTHORIZER_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-SERVER_AUTHORIZER_INTERNAL_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer
-SERVER_AUTHORIZER_INTERNAL_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-# server-authorizer (generated)
-REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer
-ADMIN_SECRET=VfKSfPPljhHBXCEohnitursmgDxfAyiD
-DATABASE_TYPE=postgres
-DATABASE_NAME=authorizer
-FEATURE_NAME=authorizer
-ORGANIZATION_NAME='OrganizationName'
-IMAGE=lakhansamani/authorizer:1.3.8
-EXTERNAL_CLIENT_PORT=8080
-ENV=production
-PORT=8080
-COOKIE_NAME=authorizer
-RESET_PASSWORD_URL=/reset-password
-DISABLE_PLAYGROUND=true
-ROLES=user,admin
-DEFAULT_ROLES=user
-JWT_ROLE_CLAIM=role
-ORGANIZATION_LOGO='Authorizer Logo'
-ACCESS_TOKEN_EXPIRY_TIME=30m
-COUCHBASE_BUCKET=authorizer
-COUCHBASE_BUCKET_RAM_QUOTA=1000
-COUCHBASE_SCOPE=_default
+# example-authorizer-postgre-sql (generated)
+EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_USERNAME=postgres
+EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_PASSWORD=postgres_password
+EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_DATABASE=postgres
+# example-authorizer-authorizer (generated)
+EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_TYPE=postgres
+EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL=postgres://postgres:postgres_password@example-authorizer-postgre-sql:5432/postgres
+EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_NAME=authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_ADMIN_SECRET=adminSecret
+EXAMPLE_AUTHORIZER_AUTHORIZER_PORT=8080
+EXAMPLE_AUTHORIZER_AUTHORIZER_COOKIE_NAME=authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_DISABLE_PLAYGROUND=true
+EXAMPLE_AUTHORIZER_AUTHORIZER_ACCESS_TOKEN_EXPIRY_TIME=30m
+EXAMPLE_AUTHORIZER_AUTHORIZER_IMAGE=
+EXAMPLE_AUTHORIZER_AUTHORIZER_EXTERNAL_CLIENT_PORT=8080
+EXAMPLE_AUTHORIZER_AUTHORIZER_ENV=
+EXAMPLE_AUTHORIZER_AUTHORIZER_RESET_PASSWORD_URL=/reset-password
+EXAMPLE_AUTHORIZER_AUTHORIZER_ROLES=user,admin
+EXAMPLE_AUTHORIZER_AUTHORIZER_DEFAULT_ROLES=user
+EXAMPLE_AUTHORIZER_AUTHORIZER_JWT_ROLE_CLAIM=role
+EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_NAME=Authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_LOGO='Authorizer Logo'
+EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET=authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET_RAM_QUOTA=1000
+EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_SCOPE=_default
+# EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL (generated)
+LOCALHOST_EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL=postgres://postgres:postgres_password@localhost:5432/postgres
 ```
 
 When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.

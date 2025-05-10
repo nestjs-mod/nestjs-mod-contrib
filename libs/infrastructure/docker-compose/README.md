@@ -24,6 +24,7 @@ npm i --save @nestjs-mod/docker-compose
 | [DockerComposeNginx](#dockercomposenginx) | infrastructure | Nginx is a web server that can also be used as a reverse proxy, load balancer, mail proxy and HTTP cache. (Generator for nginx in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 | [DockerComposePostgreSQL](#dockercomposepostgresql) | infrastructure | PostgreSQL (Postgres) is an open source object-relational database known for reliability and data integrity. ACID-compliant, it supports foreign keys, joins, views, triggers and stored procedures. (Generator for databases in docker-compose.yml for https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/libs/infrastructure/docker-compose) |
 | [DockerComposeRedis](#dockercomposeredis) | infrastructure | The open-source, in-memory data store used by millions of developers as a cache, vector database, document database, streaming engine, and message broker. (Generator for redis in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
+| [DockerComposeSso](#dockercomposesso) | infrastructure | Single Sign-On on NestJS and Angular with webhooks and social authorization. (Generator for https://github.com/nestjs-mod/nestjs-mod-sso in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose) |
 
 
 ## Modules descriptions
@@ -190,6 +191,32 @@ version: '3'
 |`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
 |`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
 
+#### Modules that use feature configuration
+##### Feature module name: NGINX
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"nginx":{"image":"nginx:alpine","container_name":"nginx","volumes":[],"ports":[],"networks":["default-network"],"tty":true,"restart":"always","depends_on":{}}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|-|
+|`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
+|`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
+#### Modules that use feature configuration
+##### Feature module name: NATS
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`version`|The top-level version property is defined by the Compose Specification for backward compatibility. It is only informative. @see https://github.com/compose-spec/compose-spec/blob/master/04-version-and-name.md|**optional**|-|-|
+|`services`|A service is an abstract definition of a computing resource within an application which can be scaled or replaced independently from other components. @see https://github.com/compose-spec/compose-spec/blob/master/05-services.md|**optional**|-|```{"nats":{"image":"bitnami/nats:2.10.5","container_name":"nats","volumes":["nats-volume:/bitnami/nats/data"],"ports":["8222:8222","4222:4222"],"networks":["default-network"],"environment":{"NATS_EXTRA_ARGS":"-js"},"keysOfEnvironmentsWithStaticValue":["featureName","image","extraArgs","networks"],"tty":true,"restart":"always"}}```|
+|`networks`|Networks are the layer that allow services to communicate with each other. @see https://github.com/compose-spec/compose-spec/blob/master/06-networks.md|**optional**|-|```{"default-network":{"driver":"bridge"}}```|
+|`volumes`|Volumes are persistent data stores implemented by the container engine. @see https://github.com/compose-spec/compose-spec/blob/master/07-volumes.md|**optional**|-|```{"nats-volume":{"name":"nats-volume"}}```|
+|`secrets`|Secrets are a flavor of Configs focusing on sensitive data, with specific constraint for this usage. @see https://github.com/compose-spec/compose-spec/blob/master/09-secrets.md|**optional**|-|-|
+|`configs`|Configs allow services to adapt their behaviour without the need to rebuild a Docker image. @see https://github.com/compose-spec/compose-spec/blob/master/08-configs.md|**optional**|-|-|
+
 [Back to Top](#modules)
 
 ---
@@ -197,9 +224,29 @@ version: '3'
 Authorizer is an open-source authentication and authorization solution for your applications. Bring your database and have complete control over the user information. You can self-host authorizer instances and connect to supported databases. (Generator for https://authorizer.dev in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
 
 #### Use in NestJS-mod
-An approximate description of how to connect, an extended description with an example application will be next time (todo: right now I have a lot of work and don’t have time to arrange everything properly 😉)
+An example of using Maildev, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-authorizer/INFRASTRUCTURE.MD.
 
 ```typescript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+import { AuthorizerModule } from '@nestjs-mod/authorizer';
+import {
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  InfrastructureMarkdownReportGenerator,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+  bootstrapNestApplication,
+  isInfrastructureMode,
+} from '@nestjs-mod/common';
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeAuthorizer, DockerComposePostgreSQL } from '@nestjs-mod/docker-compose';
+import { join } from 'path';
+import { adminSecret } from './app/app.constants';
+import { AppModule } from './app/app.module';
+
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-authorizer');
+
 bootstrapNestApplication({
   globalConfigurationOptions: { debug: true },
   globalEnvironmentsOptions: { debug: true },
@@ -207,9 +254,9 @@ bootstrapNestApplication({
     system: [
       ProjectUtils.forRoot({
         staticConfiguration: {
-          applicationPackageJsonFile: join(appFolder, PACKAGE_JSON_FILE),
+          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps/example-authorizer', PACKAGE_JSON_FILE),
           packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
-          envFile: join(rootFolder, '.env'),
+          envFile: join(rootFolder, 'apps', 'example-authorizer', '.env'),
         },
       }),
       DefaultNestApplicationInitializer.forRoot(),
@@ -220,118 +267,153 @@ bootstrapNestApplication({
         },
       }),
     ],
+    feature: [
+      AuthorizerModule.forRootAsync({
+        environments: {
+          authorizerURL: 'http://localhost:8080',
+          redirectURL: 'http://localhost:3000'
+        }
+      }), AppModule.forRoot()],
     infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+          style: 'pretty',
+        },
+      }),
       DockerCompose.forRoot({
         configuration: {
           dockerComposeFileVersion: '3',
           dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
         },
       }),
-      DockerComposePostgreSQL.forFeature({
-        featureModuleName: authorizerFeatureName,
+      DockerComposePostgreSQL.forRoot({
+        staticEnvironments: {
+          rootDatabaseUrl: 'postgres://postgres:postgres_password@localhost:5432/postgres?schema=public'
+        }
       }),
-      DockerComposeRedis.forRoot(),
       DockerComposeAuthorizer.forRoot({
         staticEnvironments: {
-          redisUrl: '%SERVER_AUTHORIZER_INTERNAL_REDIS_URL%',
-          databaseUrl: '%SERVER_AUTHORIZER_INTERNAL_DATABASE_URL%',
-        },
-        staticConfiguration: {
-          featureName: authorizerFeatureName,
-          organizationName: 'OrganizationName',
-          dependsOnServiceNames: {
-            'postgre-sql-migrations': 'service_completed_successfully',
-            redis: 'service_healthy',
-          },
-        },
+          databaseType: 'postgres',
+          databaseUrl: 'postgres://postgres:postgres_password@example-authorizer-postgre-sql:5432/postgres',
+          databaseName: 'authorizer',
+          adminSecret
+        }
       }),
     ],
   },
 });
+
 ```
 
-After connecting the module to the application and `npm run build` and starting generation of documentation through `npm run docs:infrastructure`, you will have new files and scripts to run.
+After connecting the module to the application and `npm run manual:prepare` and starting generation of documentation through `npm run docs:infrastructure:example-authorizer`, you will have new files and scripts to run.
 
 New scripts mostly `package.json`
 
 Add database options to docker-compose file for application `docker-compose.yml` with real credenionals and add it to `.gitignore` file
 
 ```yaml
-version: '3'
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
 services:
-  server-authorizer:
+  example-authorizer-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-authorizer-postgre-sql"
+    volumes:
+      - "example-authorizer-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-authorizer-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: "${EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_USERNAME}"
+      POSTGRESQL_PASSWORD: "${EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_PASSWORD}"
+      POSTGRESQL_DATABASE: "${EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_DATABASE}"
+  example-authorizer-authorizer:
     image: "lakhansamani/authorizer:1.3.8"
-    container_name: "server-authorizer"
+    container_name: "example-authorizer-authorizer"
     ports:
       - "8080:8080"
     networks:
-      - "server-network"
+      - "example-authorizer-network"
     environment:
-      REDIS_URL: "redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379"
-      DATABASE_URL: "postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer"
-      ADMIN_SECRET: "VfKSfPPljhHBXCEohnitursmgDxfAyiD"
-      DATABASE_TYPE: "postgres"
-      DATABASE_NAME: "authorizer"
-      FEATURE_NAME: "authorizer"
-      ORGANIZATION_NAME: "OrganizationName"
-      DEPENDS_ON_SERVICE_NAMES: "[object Object]"
-      IMAGE: "lakhansamani/authorizer:1.3.8"
-      EXTERNAL_CLIENT_PORT: "8080"
-      ENV: "production"
-      PORT: "8080"
-      COOKIE_NAME: "authorizer"
-      RESET_PASSWORD_URL: "/reset-password"
-      DISABLE_PLAYGROUND: "true"
-      ROLES: "user,admin"
-      DEFAULT_ROLES: "user"
-      JWT_ROLE_CLAIM: "role"
-      ORGANIZATION_LOGO: "Authorizer Logo"
-      ACCESS_TOKEN_EXPIRY_TIME: "30m"
-      COUCHBASE_BUCKET: "authorizer"
-      COUCHBASE_BUCKET_RAM_QUOTA: "1000"
-      COUCHBASE_SCOPE: "_default"
+      DATABASE_TYPE: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_TYPE}"
+      DATABASE_URL: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL}"
+      DATABASE_NAME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_NAME}"
+      PORT: "${EXAMPLE_AUTHORIZER_AUTHORIZER_PORT}"
+      COOKIE_NAME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COOKIE_NAME}"
+      DISABLE_PLAYGROUND: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DISABLE_PLAYGROUND}"
+      ACCESS_TOKEN_EXPIRY_TIME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ACCESS_TOKEN_EXPIRY_TIME}"
+      IMAGE: "${EXAMPLE_AUTHORIZER_AUTHORIZER_IMAGE}"
+      EXTERNAL_CLIENT_PORT: "${EXAMPLE_AUTHORIZER_AUTHORIZER_EXTERNAL_CLIENT_PORT}"
+      ENV: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ENV}"
+      RESET_PASSWORD_URL: "${EXAMPLE_AUTHORIZER_AUTHORIZER_RESET_PASSWORD_URL}"
+      ROLES: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ROLES}"
+      DEFAULT_ROLES: "${EXAMPLE_AUTHORIZER_AUTHORIZER_DEFAULT_ROLES}"
+      JWT_ROLE_CLAIM: "${EXAMPLE_AUTHORIZER_AUTHORIZER_JWT_ROLE_CLAIM}"
+      ORGANIZATION_NAME: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_NAME}"
+      ORGANIZATION_LOGO: "${EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_LOGO}"
+      COUCHBASE_BUCKET: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET}"
+      COUCHBASE_BUCKET_RAM_QUOTA: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET_RAM_QUOTA}"
+      COUCHBASE_SCOPE: "${EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_SCOPE}"
     tty: true
     restart: "always"
-    depends_on:
-      server-postgre-sql-migrations:
-        condition: "service_completed_successfully"
-      server-redis:
-        condition: "service_healthy"
+    depends_on: {}
 networks:
-  server-network:
-    driver: 'bridge'
+  example-authorizer-network:
+    driver: "bridge"
+volumes:
+  example-authorizer-postgre-sql-volume:
+    name: "example-authorizer-postgre-sql-volume"
+
 ```
 
 New environment variable
 
 ```bash
-SERVER_AUTHORIZER_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer?schema=public
-SERVER_AUTHORIZER_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-SERVER_AUTHORIZER_INTERNAL_DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer
-SERVER_AUTHORIZER_INTERNAL_REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-# server-authorizer (generated)
-REDIS_URL=redis://:cgSOXCMczzNFkxAmDJAsoujJYpoMDuTT@server-redis:6379
-DATABASE_URL=postgres://Yk42KA4sOb:B7Ep2MwlRR6fAx0frXGWVTGP850qAxM6@server-postgre-sql:5432/authorizer
-ADMIN_SECRET=VfKSfPPljhHBXCEohnitursmgDxfAyiD
-DATABASE_TYPE=postgres
-DATABASE_NAME=authorizer
-FEATURE_NAME=authorizer
-ORGANIZATION_NAME='OrganizationName'
-IMAGE=lakhansamani/authorizer:1.3.8
-EXTERNAL_CLIENT_PORT=8080
-ENV=production
-PORT=8080
-COOKIE_NAME=authorizer
-RESET_PASSWORD_URL=/reset-password
-DISABLE_PLAYGROUND=true
-ROLES=user,admin
-DEFAULT_ROLES=user
-JWT_ROLE_CLAIM=role
-ORGANIZATION_LOGO='Authorizer Logo'
-ACCESS_TOKEN_EXPIRY_TIME=30m
-COUCHBASE_BUCKET=authorizer
-COUCHBASE_BUCKET_RAM_QUOTA=1000
-COUCHBASE_SCOPE=_default
+EXAMPLE_AUTHORIZER_ADMIN_SECRET=
+EXAMPLE_AUTHORIZER_DATABASE_TYPE=
+EXAMPLE_AUTHORIZER_DATABASE_URL=
+EXAMPLE_AUTHORIZER_DATABASE_NAME=
+EXAMPLE_AUTHORIZER_REDIS_URL=
+EXAMPLE_AUTHORIZER_PORT=
+EXAMPLE_AUTHORIZER_ROOT_DATABASE_URL=
+EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_USERNAME=postgres
+EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_PASSWORD=postgres_password
+EXAMPLE_AUTHORIZER_POSTGRE_SQL_POSTGRESQL_DATABASE=postgres
+EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_TYPE=postgres
+EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL=postgres://postgres:postgres_password@example-authorizer-postgre-sql:5432/postgres
+EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_NAME=authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_PORT=8080
+EXAMPLE_AUTHORIZER_AUTHORIZER_COOKIE_NAME=authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_DISABLE_PLAYGROUND=true
+EXAMPLE_AUTHORIZER_AUTHORIZER_ACCESS_TOKEN_EXPIRY_TIME=30m
+EXAMPLE_AUTHORIZER_AUTHORIZER_EXTERNAL_CLIENT_PORT=8080
+EXAMPLE_AUTHORIZER_AUTHORIZER_RESET_PASSWORD_URL=/reset-password
+EXAMPLE_AUTHORIZER_AUTHORIZER_ROLES=user,admin
+EXAMPLE_AUTHORIZER_AUTHORIZER_DEFAULT_ROLES=user
+EXAMPLE_AUTHORIZER_AUTHORIZER_JWT_ROLE_CLAIM=role
+EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_NAME=Authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_ORGANIZATION_LOGO='Authorizer Logo'
+EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET=authorizer
+EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_BUCKET_RAM_QUOTA=1000
+EXAMPLE_AUTHORIZER_AUTHORIZER_COUCHBASE_SCOPE=_default
+LOCALHOST_EXAMPLE_AUTHORIZER_AUTHORIZER_DATABASE_URL=postgres://postgres:postgres_password@localhost:5432/postgres?schema=public
+EXAMPLE_AUTHORIZER_AUTHORIZER_CLIENT_ID=
+EXAMPLE_AUTHORIZER_AUTHORIZER_AUTHORIZER_URL=
+EXAMPLE_AUTHORIZER_AUTHORIZER_REDIRECT_URL=
+EXAMPLE_AUTHORIZER_AUTHORIZER_ADMIN_SECRET=
+EXAMPLE_AUTHORIZER_AUTHORIZER_ALLOWED_EXTERNAL_APP_IDS=
 ```
 
 When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
@@ -1237,6 +1319,334 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`disableCommands`|Redis disable commands.|**optional**|```FLUSHDB,FLUSHALL```|-|
 |`ioThreads`|Redis IO threads.|**optional**|```2```|-|
 |`ioThreadsDoReads`|Redis IO threads.|**optional**|```yes```|-|
+
+[Back to Top](#modules)
+
+---
+### DockerComposeSso
+Single Sign-On on NestJS and Angular with webhooks and social authorization. (Generator for https://github.com/nestjs-mod/nestjs-mod-sso in docker-compose.yml for https://www.npmjs.com/package/@nestjs-mod/docker-compose)
+
+#### Use in NestJS-mod
+An example of using Single Sign-On, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-sso/INFRASTRUCTURE.MD.
+
+
+```typescript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+import {
+  bootstrapNestApplication,
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  InfrastructureMarkdownReportGenerator,
+  isInfrastructureMode,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+} from '@nestjs-mod/common';
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeMinio, DockerComposePostgreSQL, DockerComposeRedis, DockerComposeSso } from '@nestjs-mod/docker-compose';
+import { SsoModule } from '@nestjs-mod/sso';
+import { join } from 'path';
+import { adminSecret } from './app/app.constants';
+import { AppModule } from './app/app.module';
+
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-sso');
+
+bootstrapNestApplication({
+  globalConfigurationOptions: { debug: true },
+  globalEnvironmentsOptions: { debug: true },
+  modules: {
+    system: [
+      ProjectUtils.forRoot({
+        staticConfiguration: {
+          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps/example-sso', PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, 'apps', 'example-sso', '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
+        },
+      }),
+    ],
+    feature: [
+      SsoModule.forRootAsync({
+        staticEnvironments: {
+          url: 'http://localhost:8080',
+          adminSecret
+        }
+      }),
+      AppModule.forRoot()
+    ],
+    infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+          style: 'pretty',
+        },
+      }),
+      DockerCompose.forRoot({
+        configuration: {
+          dockerComposeFileVersion: '3',
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
+        },
+      }),
+      DockerComposeMinio.forRoot({
+        staticEnvironments: { minioRootUser: 'FWGmrAGaeMKM', minioRootPassword: 'QatVJuLoZRARlJguoZMpoKvZMJHzvuOR' }
+      }),
+      DockerComposePostgreSQL.forRoot({
+        staticEnvironments: {
+          rootDatabaseUrl: 'postgres://postgres:postgres_password@localhost:5432/postgres?schema=public'
+        }
+      }),
+      DockerComposeRedis.forRoot({ staticEnvironments: { redisUrl: 'redis://:CHmeOQrZWUHwgahrfzsrzuREOxgAENsC@localhost:6379' } }),
+      DockerComposeSso.forRoot({
+        staticEnvironments: {
+          databaseUrl: 'postgres://postgres:postgres_password@example-sso-postgre-sql:5432/postgres?schema=public',
+          singleSignOnSsoAdminSecret: adminSecret,
+          singleSignOnSsoAdminEmail: 'nestjs-mod-sso@site15.ru',
+          singleSignOnSsoAdminUsername: 'admin',
+          singleSignOnSsoAdminPassword: 'SbxcbII7RUvCOe9TDXnKhfRrLJW5cGDA',
+          singleSignOnMinioServerHost: 'example-sso-minio',
+          singleSignOnMinioAccessKey: 'FWGmrAGaeMKM',
+          singleSignOnMinioSecretKey: 'QatVJuLoZRARlJguoZMpoKvZMJHzvuOR',
+          singleSignOnKeyvUrl: 'redis://:CHmeOQrZWUHwgahrfzsrzuREOxgAENsC@example-sso-redis:6379',
+          singleSignOnSsoDefaultPublicProjects: 'Beijing:ru=Пекин,Jq6GQ6Rzz6x8HNOD4x2Hc2eM0cfiCVUzGfsi,X6nk0OZXQJboSEfugnH35e9oSeg5RFlV0DQprtYyYDQjNli9mA;Moscow:ru=Москва,OceX08HGZ89PTkPpg9KDk5ErY1uMfDcfFKkw,VJztpDIwvqG6IkTVEIDEw1Ed2Wu5oHu6zfBe7CCJFrCtyWO2Yv;New York:ru=Нью-Йорк,4OGD25Rmn3W3MP0kMd7c90rGP1WwK8u4wL1w,qm8nc9MgKyvd6Hgl3jY5BjgDFSBqNvxcu6o52kDjIC168OsM1R;',
+          singleSignOnSsoDefaultProject: 'default:ru=по умолчанию,KzMRNEZTetzatIgQPVSDYfeGyaZrbLzkcxNc,qaHkVpAtUVIpDdLXMlAOzsBfMRJblWoHpXguYQRBuSEBpGKbWt',
+          singleSignOnSsoDisableEmailVerification: false,
+          singleSignOnSsoServerUrl: 'http://localhost:8080',
+          singleSignOnSsoClientUrl: 'http://localhost:8080'
+        }
+      }),
+    ],
+  },
+});
+
+```
+
+After connecting the module to the application and `npm run manual:prepare` and starting generation of documentation through `npm run docs:infrastructure:example-sso`, you will have new files and scripts to run.
+
+New scripts mostly `package.json`
+
+Add database options to docker-compose file for application `docker-compose.yml` with real credenionals and add it to `.gitignore` file
+
+```yaml
+# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.
+version: "3"
+services:
+  example-sso-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-sso-postgre-sql"
+    volumes:
+      - "example-sso-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-sso-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: "${EXAMPLE_SSO_POSTGRE_SQL_POSTGRESQL_USERNAME}"
+      POSTGRESQL_PASSWORD: "${EXAMPLE_SSO_POSTGRE_SQL_POSTGRESQL_PASSWORD}"
+      POSTGRESQL_DATABASE: "${EXAMPLE_SSO_POSTGRE_SQL_POSTGRESQL_DATABASE}"
+  example-sso-minio:
+    image: "bitnami/minio:2024.2.9"
+    container_name: "example-sso-minio"
+    volumes:
+      - "example-sso-minio-volume:/bitnami/minio/data"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - "example-sso-network"
+    environment:
+      MINIO_ROOT_USER: "${EXAMPLE_SSO_MINIO_MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${EXAMPLE_SSO_MINIO_MINIO_ROOT_PASSWORD}"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "mc"
+        - "ready"
+        - "local"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-sso-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-sso-redis"
+    volumes:
+      - "example-sso-redis-volume:/bitnami/redis/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - "example-sso-network"
+    environment:
+      REDIS_DATABASE: "${EXAMPLE_SSO_REDIS_REDIS_DATABASE}"
+      REDIS_PASSWORD: "${EXAMPLE_SSO_REDIS_REDIS_PASSWORD}"
+      REDIS_DISABLE_COMMANDS: "${EXAMPLE_SSO_REDIS_REDIS_DISABLE_COMMANDS}"
+      REDIS_IO_THREADS: "${EXAMPLE_SSO_REDIS_REDIS_IO_THREADS}"
+      REDIS_IO_THREADS_DO_READS: "${EXAMPLE_SSO_REDIS_REDIS_IO_THREADS_DO_READS}"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-sso-single-sign-on:
+    image: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.5.5"
+    container_name: "example-sso-single-sign-on"
+    ports:
+      - "8080:8080"
+    networks:
+      - "example-sso-network"
+    environment:
+      DATABASE_URL: "${EXAMPLE_SSO_SINGLE_SIGN_ON_DATABASE_URL}"
+      SINGLE_SIGN_ON_SSO_ADMIN_SECRET: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_SECRET}"
+      SINGLE_SIGN_ON_SSO_ADMIN_EMAIL: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_EMAIL}"
+      SINGLE_SIGN_ON_SSO_ADMIN_USERNAME: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_USERNAME}"
+      SINGLE_SIGN_ON_SSO_ADMIN_PASSWORD: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_PASSWORD}"
+      SINGLE_SIGN_ON_MINIO_SERVER_HOST: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_MINIO_SERVER_HOST}"
+      SINGLE_SIGN_ON_MINIO_ACCESS_KEY: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_MINIO_ACCESS_KEY}"
+      SINGLE_SIGN_ON_MINIO_SECRET_KEY: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_MINIO_SECRET_KEY}"
+      SINGLE_SIGN_ON_KEYV_URL: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_KEYV_URL}"
+      SINGLE_SIGN_ON_SSO_DEFAULT_PUBLIC_PROJECTS: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_DEFAULT_PUBLIC_PROJECTS}"
+      SINGLE_SIGN_ON_SSO_DEFAULT_PROJECT: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_DEFAULT_PROJECT}"
+      SINGLE_SIGN_ON_SSO_DISABLE_EMAIL_VERIFICATION: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_DISABLE_EMAIL_VERIFICATION}"
+      SINGLE_SIGN_ON_SSO_SERVER_URL: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_SERVER_URL}"
+      SINGLE_SIGN_ON_SSO_CLIENT_URL: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_CLIENT_URL}"
+      SINGLE_SIGN_ON_PORT: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_PORT}"
+      SINGLE_SIGN_ON_SSO_USER_AVAILABLE_ROLES: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_USER_AVAILABLE_ROLES}"
+      SINGLE_SIGN_ON_SSO_USER_DEFAULT_ROLES: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_USER_DEFAULT_ROLES}"
+      SINGLE_SIGN_ON_SSO_ADMIN_DEFAULT_ROLES: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_DEFAULT_ROLES}"
+      SINGLE_SIGN_ON_SSO_MANAGER_DEFAULT_ROLES: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_MANAGER_DEFAULT_ROLES}"
+      SINGLE_SIGN_ON_SSO_JWT_SECRET_KEY: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_JWT_SECRET_KEY}"
+      SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN}"
+      SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN}"
+      SINGLE_SIGN_ON_SSO_CACHE_TTL: "${EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_CACHE_TTL}"
+      IMAGE: "${EXAMPLE_SSO_SINGLE_SIGN_ON_IMAGE}"
+      EXTERNAL_CLIENT_PORT: "${EXAMPLE_SSO_SINGLE_SIGN_ON_EXTERNAL_CLIENT_PORT}"
+    tty: true
+    restart: "always"
+    depends_on: {}
+networks:
+  example-sso-network:
+    driver: "bridge"
+volumes:
+  example-sso-postgre-sql-volume:
+    name: "example-sso-postgre-sql-volume"
+  example-sso-minio-volume:
+    name: "example-sso-minio-volume"
+  example-sso-redis-volume:
+    name: "example-sso-redis-volume"
+
+```
+
+New environment variable
+
+```bash
+# example-sso-postgre-sql (generated)
+EXAMPLE_SSO_POSTGRE_SQL_POSTGRESQL_USERNAME=postgres
+EXAMPLE_SSO_POSTGRE_SQL_POSTGRESQL_PASSWORD=postgres_password
+EXAMPLE_SSO_POSTGRE_SQL_POSTGRESQL_DATABASE=postgres
+# example-sso-minio (generated)
+EXAMPLE_SSO_MINIO_MINIO_ROOT_USER=FWGmrAGaeMKM
+EXAMPLE_SSO_MINIO_MINIO_ROOT_PASSWORD=QatVJuLoZRARlJguoZMpoKvZMJHzvuOR
+# example-sso-redis (generated)
+EXAMPLE_SSO_REDIS_REDIS_DATABASE=0
+EXAMPLE_SSO_REDIS_REDIS_PASSWORD=CHmeOQrZWUHwgahrfzsrzuREOxgAENsC
+EXAMPLE_SSO_REDIS_REDIS_DISABLE_COMMANDS=
+EXAMPLE_SSO_REDIS_REDIS_IO_THREADS=
+EXAMPLE_SSO_REDIS_REDIS_IO_THREADS_DO_READS=
+# example-sso-single-sign-on (generated)
+EXAMPLE_SSO_SINGLE_SIGN_ON_DATABASE_URL=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_SECRET=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_EMAIL=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_USERNAME=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_PASSWORD=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_MINIO_SERVER_HOST=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_MINIO_ACCESS_KEY=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_MINIO_SECRET_KEY=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_KEYV_URL=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_DEFAULT_PUBLIC_PROJECTS=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_DEFAULT_PROJECT=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_DISABLE_EMAIL_VERIFICATION=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_SERVER_URL=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_CLIENT_URL=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_PORT=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_USER_AVAILABLE_ROLES=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_USER_DEFAULT_ROLES=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_ADMIN_DEFAULT_ROLES=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_MANAGER_DEFAULT_ROLES=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_JWT_SECRET_KEY=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN=
+EXAMPLE_SSO_SINGLE_SIGN_ON_SINGLE_SIGN_ON_SSO_CACHE_TTL=
+EXAMPLE_SSO_SINGLE_SIGN_ON_IMAGE=
+EXAMPLE_SSO_SINGLE_SIGN_ON_EXTERNAL_CLIENT_PORT=
+```
+
+When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
+
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`databaseUrl`|Postgres database connection string|`obj['databaseUrl']`, `process.env['DATABASE_URL']`|**isNotEmpty** (databaseUrl should not be empty)|-|-|
+|`singleSignOnPort`|Port on which server should be running|`obj['singleSignOnPort']`, `process.env['SINGLE_SIGN_ON_PORT']`|**optional**|```8080```|```8080```|
+|`singleSignOnKeyvUrl`|Storage for cache|`obj['singleSignOnKeyvUrl']`, `process.env['SINGLE_SIGN_ON_KEYV_URL']`|**isNotEmpty** (singleSignOnKeyvUrl should not be empty)|-|-|
+|`singleSignOnMinioServerHost`|Minio host (for store profile picture)|`obj['singleSignOnMinioServerHost']`, `process.env['SINGLE_SIGN_ON_MINIO_SERVER_HOST']`|**isNotEmpty** (singleSignOnMinioServerHost should not be empty)|-|-|
+|`singleSignOnMinioAccessKey`|Minio access key (for store profile picture)|`obj['singleSignOnMinioAccessKey']`, `process.env['SINGLE_SIGN_ON_MINIO_ACCESS_KEY']`|**isNotEmpty** (singleSignOnMinioAccessKey should not be empty)|-|-|
+|`singleSignOnMinioSecretKey`|Minio secret key (for store profile picture)|`obj['singleSignOnMinioSecretKey']`, `process.env['SINGLE_SIGN_ON_MINIO_SECRET_KEY']`|**isNotEmpty** (singleSignOnMinioSecretKey should not be empty)|-|-|
+|`singleSignOnNotificationsMailTransport`|Mail transport (example: smtps://username@domain.com:password@smtp.domain.com)|`obj['singleSignOnNotificationsMailTransport']`, `process.env['SINGLE_SIGN_ON_NOTIFICATIONS_MAIL_TRANSPORT']`|**optional**|-|-|
+|`singleSignOnNotificationsMailDefaultSenderName`|Default sender name (example: Username)|`obj['singleSignOnNotificationsMailDefaultSenderName']`, `process.env['SINGLE_SIGN_ON_NOTIFICATIONS_MAIL_DEFAULT_SENDER_NAME']`|**optional**|-|-|
+|`singleSignOnNotificationsMailDefaultSenderEmail`|Default sender email (example: username@domain.com)|`obj['singleSignOnNotificationsMailDefaultSenderEmail']`, `process.env['SINGLE_SIGN_ON_NOTIFICATIONS_MAIL_DEFAULT_SENDER_EMAIL']`|**optional**|-|-|
+|`singleSignOnSsoServerUrl`|Server URL|`obj['singleSignOnSsoServerUrl']`, `process.env['SINGLE_SIGN_ON_SSO_SERVER_URL']`|**isNotEmpty** (singleSignOnSsoServerUrl should not be empty)|-|-|
+|`singleSignOnSsoClientUrl`|Client URL|`obj['singleSignOnSsoClientUrl']`, `process.env['SINGLE_SIGN_ON_SSO_CLIENT_URL']`|**isNotEmpty** (singleSignOnSsoClientUrl should not be empty)|-|-|
+|`singleSignOnSsoAdminSecret`|Admin secret key|`obj['singleSignOnSsoAdminSecret']`, `process.env['SINGLE_SIGN_ON_SSO_ADMIN_SECRET']`|**optional**|-|-|
+|`singleSignOnSsoAdminEmail`|Global admin username|`obj['singleSignOnSsoAdminEmail']`, `process.env['SINGLE_SIGN_ON_SSO_ADMIN_EMAIL']`|**optional**|```admin@example.com```|```admin@example.com```|
+|`singleSignOnSsoAdminUsername`|Global admin username|`obj['singleSignOnSsoAdminUsername']`, `process.env['SINGLE_SIGN_ON_SSO_ADMIN_USERNAME']`|**isNotEmpty** (singleSignOnSsoAdminUsername should not be empty)|```admin```|```admin```|
+|`singleSignOnSsoAdminPassword`|Global admin password|`obj['singleSignOnSsoAdminPassword']`, `process.env['SINGLE_SIGN_ON_SSO_ADMIN_PASSWORD']`|**optional**|-|-|
+|`singleSignOnSsoUserAvailableRoles`|Available user roles|`obj['singleSignOnSsoUserAvailableRoles']`, `process.env['SINGLE_SIGN_ON_SSO_USER_AVAILABLE_ROLES']`|**optional**|[ ```admin```, ```manager```, ```user``` ]|[ ```admin```, ```manager```, ```user``` ]|
+|`singleSignOnSsoUserDefaultRoles`|Default roles for new user|`obj['singleSignOnSsoUserDefaultRoles']`, `process.env['SINGLE_SIGN_ON_SSO_USER_DEFAULT_ROLES']`|**optional**|[ ```user``` ]|[ ```user``` ]|
+|`singleSignOnSsoAdminDefaultRoles`|Default roles for admin|`obj['singleSignOnSsoAdminDefaultRoles']`, `process.env['SINGLE_SIGN_ON_SSO_ADMIN_DEFAULT_ROLES']`|**optional**|[ ```admin``` ]|[ ```admin``` ]|
+|`singleSignOnSsoManagerDefaultRoles`|Default roles for manager|`obj['singleSignOnSsoManagerDefaultRoles']`, `process.env['SINGLE_SIGN_ON_SSO_MANAGER_DEFAULT_ROLES']`|**optional**|[ ```manager``` ]|[ ```manager``` ]|
+|`singleSignOnSsoJwtSecretKey`|Secret key for generate jwt keys|`obj['singleSignOnSsoJwtSecretKey']`, `process.env['SINGLE_SIGN_ON_SSO_JWT_SECRET_KEY']`|**optional**|```AcJwUY9AP6FPf8XnfwbSuW7ZjwoaPiFJ```|```AcJwUY9AP6FPf8XnfwbSuW7ZjwoaPiFJ```|
+|`singleSignOnSsoJwtAccessTokenExpiresIn`|Access token expires in|`obj['singleSignOnSsoJwtAccessTokenExpiresIn']`, `process.env['SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN']`|**optional**|```30m```|```30m```|
+|`singleSignOnSsoJwtRefreshTokenExpiresIn`|Refresh token expires in|`obj['singleSignOnSsoJwtRefreshTokenExpiresIn']`, `process.env['SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN']`|**optional**|```24h```|```24h```|
+|`singleSignOnSsoCacheTTL`|TTL for cached data|`obj['singleSignOnSsoCacheTTL']`, `process.env['SINGLE_SIGN_ON_SSO_CACHE_TTL']`|**optional**|```15000```|```15000```|
+|`singleSignOnSsoDefaultPublicProjects`|Default public projects (example: "name1:ru=название1:tt=исем1,clientId1,clientSecret1;name2:ru=название2:tt=исем2,clientId2,clientSecret2")|`obj['singleSignOnSsoDefaultPublicProjects']`, `process.env['SINGLE_SIGN_ON_SSO_DEFAULT_PUBLIC_PROJECTS']`|**optional**|-|-|
+|`singleSignOnSsoDefaultProject`|Default projects (example: "name3:ru=название3,clientId3,clientSecret3;name4:ru=название4,clientId4,clientSecret4")|`obj['singleSignOnSsoDefaultProject']`, `process.env['SINGLE_SIGN_ON_SSO_DEFAULT_PROJECT']`|**optional**|-|-|
+|`singleSignOnSsoDisableEmailVerification`|Used to disable the email verification while signing up|`obj['singleSignOnSsoDisableEmailVerification']`, `process.env['SINGLE_SIGN_ON_SSO_DISABLE_EMAIL_VERIFICATION']`|**optional**|```false```|```false```|
+|`singleSignOnSsoGoogleOauthClientId`|Client ID for Google application (https://console.cloud.google.com/apis/credentials)|`obj['singleSignOnSsoGoogleOauthClientId']`, `process.env['SINGLE_SIGN_ON_SSO_GOOGLE_OAUTH_CLIENT_ID']`|**optional**|-|-|
+|`singleSignOnSsoGoogleOauthClientSecretKey`|Client secret key for Google application (https://console.cloud.google.com/apis/credentials)|`obj['singleSignOnSsoGoogleOauthClientSecretKey']`, `process.env['SINGLE_SIGN_ON_SSO_GOOGLE_OAUTH_CLIENT_SECRET_KEY']`|**optional**|-|-|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`image`|Docker image name|**optional**|```ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.5.5```|-|
+|`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
+|`networks`|Network, if not set networkNames have project name and driver=bridge|**optional**|-|-|
+|`externalClientPort`|External port for sharing container|**optional**|```8080```|-|
+|`dependsOnServiceNames`|Depends on services|**optional**|-|-|
 
 [Back to Top](#modules)
 

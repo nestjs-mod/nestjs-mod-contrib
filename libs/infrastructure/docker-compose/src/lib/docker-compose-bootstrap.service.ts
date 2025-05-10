@@ -34,7 +34,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly gitignoreService: GitignoreService,
     private readonly dotEnvService: DotEnvService
-  ) {}
+  ) { }
 
   async onApplicationBootstrap() {
     await this.createDockerComposeFile();
@@ -74,8 +74,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     for (const serviceName of Object.keys(bothServicesWithEnvs.services || {})) {
       let writeTitle = true;
-      for (const envKey of Object.keys(bothServicesWithEnvs.services?.[serviceName].environment || {})) {
-        const fullEnvKey = [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
+      for (const eachEnvKey of Object.keys(bothServicesWithEnvs.services?.[serviceName].environment || {})) {
+        const envKey = constantCase(eachEnvKey);
+        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName ? envKey : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
           .filter(Boolean)
           .map((v) => constantCase(v || envKey))
           .join('_');
@@ -119,6 +120,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
           delete lines[fullEnvKey];
         }
       }
+      if (bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName) {
+        delete bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName
+      }
     }
 
     for (const [key] of Object.entries(lines)) {
@@ -136,11 +140,11 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     const mainData = this.dockerComposeConfiguration.beforeSaveDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveDockerComposeFile({
-          data: bothServicesWithEnvs,
-        })
+        data: bothServicesWithEnvs,
+      })
       : {
-          data: bothServicesWithEnvs,
-        };
+        data: bothServicesWithEnvs,
+      };
     this.dockerComposeFileService.write(mainData.data);
 
     if (envFilePath) {
@@ -160,8 +164,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     const sampleBothServices = { ...bothServices };
 
     for (const serviceName of Object.keys(sampleBothServices.services || {})) {
-      for (const envKey of Object.keys(sampleBothServices.services?.[serviceName].environment || {})) {
-        const fullEnvKey = [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
+      for (const eachEnvKey of Object.keys(sampleBothServices.services?.[serviceName].environment || {})) {
+        const envKey = constantCase(eachEnvKey);
+        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName ? envKey : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
           .filter(Boolean)
           .map((v) => constantCase(v || envKey))
           .join('_');
@@ -198,13 +203,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.';
     const sampleData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
-          data: sampleBothServices,
-          header,
-        })
+        data: sampleBothServices,
+        header,
+      })
       : {
-          data: sampleBothServices,
-          header,
-        };
+        data: sampleBothServices,
+        header,
+      };
     this.dockerComposeFileService.writeFile(dockerComposeExampleFilePath, sampleData.data, sampleData.header);
 
     // prod
@@ -215,8 +220,9 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     for (const serviceName of Object.keys(sampleBothProdServices.services || {})) {
       let writeTitle = true;
-      for (const envKey of Object.keys(sampleBothProdServices.services?.[serviceName].environment || {})) {
-        const fullEnvKey = [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
+      for (const eachEnvKey of Object.keys(sampleBothProdServices.services?.[serviceName].environment || {})) {
+        const envKey = constantCase(eachEnvKey);
+        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName ? envKey : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
           .filter(Boolean)
           .map((v) => constantCase(v || envKey))
           .join('_');
@@ -274,13 +280,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     const prodData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
-          data: sampleBothProdServices,
-          header,
-        })
+        data: sampleBothProdServices,
+        header,
+      })
       : {
-          data: sampleBothProdServices,
-          header,
-        };
+        data: sampleBothProdServices,
+        header,
+      };
     this.dockerComposeFileService.writeFile(dockerComposeProdFilePath, prodData.data, prodData.header);
 
     await this.dotEnvService.writeFile(
