@@ -1,7 +1,7 @@
 
 # @nestjs-mod/authorizer
 
-Universal javaScript SDK for Authorizer API (Wrapper for https://www.npmjs.com/package/@authorizerdev/authorizer-js)
+NestJS SDK for Authorizer API (Wrapper for https://www.npmjs.com/package/@authorizerdev/authorizer-js)
 
 [![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
@@ -16,13 +16,13 @@ npm i --save @authorizerdev/authorizer-js@2.0.0 @nestjs-mod/authorizer
 
 | Link | Category | Description |
 | ---- | -------- | ----------- |
-| [AuthorizerModule](#authorizermodule) | core | Universal javaScript SDK for Authorizer API |
+| [AuthorizerModule](#authorizermodule) | core | NestJS SDK for Authorizer API |
 
 
 ## Modules descriptions
 
 ### AuthorizerModule
-Universal javaScript SDK for Authorizer API
+NestJS SDK for Authorizer API
 
 #### Use in NestJS-mod
 An approximate description of how to connect, an extended description with an example application will be next time (todo: right now I have a lot of work and don’t have time to arrange everything properly 😉)

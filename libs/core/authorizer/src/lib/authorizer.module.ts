@@ -15,7 +15,7 @@ import { AuthorizerService } from './authorizer.service';
 export const { AuthorizerModule } = createNestModule({
   moduleName: AUTHORIZER_MODULE_NAME,
   moduleCategory: NestModuleCategory.core,
-  moduleDescription: 'Universal javaScript SDK for Authorizer API',
+  moduleDescription: 'NestJS SDK for Authorizer API',
   configurationModel: AuthorizerConfiguration,
   staticConfigurationModel: AuthorizerStaticConfiguration,
   environmentsModel: AuthorizerEnvironments,
