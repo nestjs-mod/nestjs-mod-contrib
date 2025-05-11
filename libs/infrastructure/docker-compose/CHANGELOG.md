@@ -1,3 +1,10 @@
+## [1.19.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.19.1...docker-compose-v1.19.2) (2025-05-11)
+
+
+### Bug Fixes
+
+* update docker compose command ([dc4c2c2](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/dc4c2c2b1b75bad743c445b20f6d9165092dfece))
+
 ## [1.19.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.19.0...docker-compose-v1.19.1) (2025-05-10)
 
 
