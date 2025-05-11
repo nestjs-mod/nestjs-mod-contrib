@@ -44,8 +44,8 @@ New scripts mostly `package.json`
 {
   "scripts": {
     "_____docker-compose infra_____": "_____docker-compose infra_____",
-    "docker-compose:start:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose.yml --compatibility up -d",
-    "docker-compose:stop:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f ./apps/example-prisma-flyway/docker-compose.yml down"
+    "docker-compose:start:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-flyway/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-prisma-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-flyway/docker-compose.yml down"
   },
   "scriptsComments": {
     "docker-compose:start:example-prisma-flyway": [

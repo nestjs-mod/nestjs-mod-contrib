@@ -340,12 +340,12 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
             {
               [`docker-compose:start`]: {
                 commands: [
-                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} --compatibility up -d`,
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f .${dockerComposeFilePath} --compatibility up -d`,
                 ],
                 comments: ['Running the main docker-compose infrastructure'],
               },
               [`docker-compose:stop`]: {
-                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeFilePath} down`],
+                commands: [`export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f .${dockerComposeFilePath} down`],
                 comments: ['Stopping the main docker-compose infrastructure'],
               },
             },
@@ -356,13 +356,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
             {
               [`docker-compose:start-prod`]: {
                 commands: [
-                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} --compatibility up -d`,
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} --compatibility up -d`,
                 ],
                 comments: ['Running the main docker-compose prod infrastructure'],
               },
               [`docker-compose:stop-prod`]: {
                 commands: [
-                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`,
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`,
                 ],
                 comments: ['Stopping the main docker-compose prod infrastructure'],
               },
@@ -392,13 +392,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
             {
               [`docker-compose:start-prod:${applicationPackageJson?.name}`]: {
                 commands: [
-                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} --compatibility up -d`,
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} --compatibility up -d`,
                 ],
                 comments: [`Running the main docker-compose prod infrastructure for ${applicationPackageJson?.name}`],
               },
               [`docker-compose:stop-prod:${applicationPackageJson?.name}`]: {
                 commands: [
-                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker-compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`,
+                  `export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f .${dockerComposeProdFilePath} --env-file .${dockerComposeProdEnvFilePath} down`,
                 ],
                 comments: [`Stopping the main docker-compose prod infrastructure for ${applicationPackageJson?.name}`],
               },
