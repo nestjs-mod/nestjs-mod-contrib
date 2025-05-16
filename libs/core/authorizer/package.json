@@ -1,6 +1,6 @@
 {
   "name": "@nestjs-mod/authorizer",
-  "version": "1.5.6",
+  "version": "1.5.7",
   "description": "NestJS SDK for Authorizer API (Wrapper for https://www.npmjs.com/package/@authorizerdev/authorizer-js)",
   "keywords": [
     "nestjs",

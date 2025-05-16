@@ -1,3 +1,10 @@
+## [1.5.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.5.6...authorizer-v1.5.7) (2025-05-16)
+
+
+### Bug Fixes
+
+* update readme ([36ec53a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/36ec53a69a130c08db96ebb3d4d0126727e8aaec))
+
 ## [1.5.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/authorizer-v1.5.5...authorizer-v1.5.6) (2025-05-16)
 
 
