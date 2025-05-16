@@ -27,6 +27,13 @@ NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social aut
 #### Use in NestJS-mod
 An example of using Single Sign-On, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-sso/INFRASTRUCTURE.MD.
 
+**Test urls**
+```
+// http://localhost:3000/api/sign-up/a1@email.com/A@@a12345678
+// http://localhost:3000/api/sign-in/a1@email.com/A@@a12345678
+// http://localhost:3000/api/prifile/eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGxvd2VkX3JvbGVzIjpbInVzZXIiXSwiYXVkIjoiYTJlZDA5ZTEtZmZkMS00YjQ3LWE1MjktZTUzYWU1NDVlZTY1IiwiZXhwIjoxNzQ2NzczODQ3LCJpYXQiOjE3NDY3NzIwNDcsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MCIsImxvZ2luX21ldGhvZCI6ImJhc2ljX2F1dGgiLCJub25jZSI6IjdhNzRkOTNhLTNjZDItNDgxMi1hZjY2LTZlMTZiYzZlYjljZCIsInJvbGVzIjpbInVzZXIiXSwic2NvcGUiOlsib3BlbmlkIiwiZW1haWwiLCJwcm9maWxlIl0sInN1YiI6ImEzYjYyZTUwLTQ2Y2MtNDZlNC1iYWRiLTkyYWUwYzhmNGE4ZSIsInRva2VuX3R5cGUiOiJhY2Nlc3NfdG9rZW4ifQ.KUVZ82-wI1V5OhFLF6xUp10b_T4947PMRpnvGlHVTm9A-EBHcl3OzXAxNl5pjbSLdHICVCpiG1zxDOlFoM1kHsTgeG7yBSc5CHFzlAGlPtgYW9wU6exQZ2sidifX3RGcD2nQ0yOaFv0YYURO7AHPP15CIvdsUPZ3016SwAM5JuGjqdriT-5aFHZFMkiHAdETYoGy2oyXQimMdyBxA1ciKKlykhLgEXTvgebqPguKEHj6Vxp3DEpNu3Y0Bm2K9Wog5dgci6rO8ojdsPoni_iyYVJIxdDhdBdax2824uVpgXDDueAKJ6nUQ9v50MlRSj6b5T3gjOETnar8U8bIH0hjZA
+```
+
 **AppService**
 ```typescript
 import { SsoService } from '@nestjs-mod/sso';
@@ -204,6 +211,105 @@ export const { AppModule } = createNestModule({
 });
 
 ```
+
+**main.ts**
+```typescript
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+import {
+  bootstrapNestApplication,
+  DefaultNestApplicationInitializer,
+  DefaultNestApplicationListener,
+  InfrastructureMarkdownReportGenerator,
+  isInfrastructureMode,
+  PACKAGE_JSON_FILE,
+  ProjectUtils,
+} from '@nestjs-mod/common';
+import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposeMinio, DockerComposePostgreSQL, DockerComposeRedis, DockerComposeSso } from '@nestjs-mod/docker-compose';
+import { SsoModule } from '@nestjs-mod/sso';
+import { join } from 'path';
+import { adminSecret } from './app/app.constants';
+import { AppModule } from './app/app.module';
+
+const rootFolder = join(__dirname, '..', '..', '..');
+const appFolder = join(rootFolder, 'apps', 'example-sso');
+
+bootstrapNestApplication({
+  globalConfigurationOptions: { debug: true },
+  globalEnvironmentsOptions: { debug: true },
+  modules: {
+    system: [
+      ProjectUtils.forRoot({
+        staticConfiguration: {
+          applicationPackageJsonFile: join(__dirname, '..', '..', '..', 'apps/example-sso', PACKAGE_JSON_FILE),
+          packageJsonFile: join(rootFolder, PACKAGE_JSON_FILE),
+          envFile: join(rootFolder, 'apps', 'example-sso', '.env'),
+        },
+      }),
+      DefaultNestApplicationInitializer.forRoot(),
+      DefaultNestApplicationListener.forRoot({
+        staticConfiguration: {
+          // When running in infrastructure mode, the backend server does not start.
+          mode: isInfrastructureMode() ? 'silent' : 'listen',
+        },
+      }),
+    ],
+    feature: [
+      SsoModule.forRootAsync({
+        staticEnvironments: {
+          url: 'http://localhost:8080',
+          adminSecret
+        }
+      }),
+      AppModule.forRoot()
+    ],
+    infrastructure: [
+      InfrastructureMarkdownReportGenerator.forRoot({
+        staticConfiguration: {
+          markdownFile: join(appFolder, 'INFRASTRUCTURE.MD'),
+          skipEmptySettings: true,
+          style: 'pretty',
+        },
+      }),
+      DockerCompose.forRoot({
+        configuration: {
+          dockerComposeFileVersion: '3',
+          dockerComposeFile: join(appFolder, DOCKER_COMPOSE_FILE),
+        },
+      }),
+      DockerComposeMinio.forRoot({
+        staticEnvironments: { minioRootUser: 'FWGmrAGaeMKM', minioRootPassword: 'QatVJuLoZRARlJguoZMpoKvZMJHzvuOR' }
+      }),
+      DockerComposePostgreSQL.forRoot({
+        staticEnvironments: {
+          rootDatabaseUrl: 'postgres://postgres:postgres_password@localhost:5432/postgres?schema=public'
+        }
+      }),
+      DockerComposeRedis.forRoot({ staticEnvironments: { redisUrl: 'redis://:CHmeOQrZWUHwgahrfzsrzuREOxgAENsC@localhost:6379' } }),
+      DockerComposeSso.forRoot({
+        staticEnvironments: {
+          databaseUrl: 'postgres://postgres:postgres_password@example-sso-postgre-sql:5432/postgres?schema=public',
+          singleSignOnSsoAdminSecret: adminSecret,
+          singleSignOnSsoAdminEmail: 'nestjs-mod-sso@site15.ru',
+          singleSignOnSsoAdminUsername: 'admin',
+          singleSignOnSsoAdminPassword: 'SbxcbII7RUvCOe9TDXnKhfRrLJW5cGDA',
+          singleSignOnMinioServerHost: 'example-sso-minio',
+          singleSignOnMinioAccessKey: 'FWGmrAGaeMKM',
+          singleSignOnMinioSecretKey: 'QatVJuLoZRARlJguoZMpoKvZMJHzvuOR',
+          singleSignOnKeyvUrl: 'redis://:CHmeOQrZWUHwgahrfzsrzuREOxgAENsC@example-sso-redis:6379',
+          singleSignOnSsoDefaultPublicProjects: 'Beijing:ru=Пекин,Jq6GQ6Rzz6x8HNOD4x2Hc2eM0cfiCVUzGfsi,X6nk0OZXQJboSEfugnH35e9oSeg5RFlV0DQprtYyYDQjNli9mA;Moscow:ru=Москва,OceX08HGZ89PTkPpg9KDk5ErY1uMfDcfFKkw,VJztpDIwvqG6IkTVEIDEw1Ed2Wu5oHu6zfBe7CCJFrCtyWO2Yv;New York:ru=Нью-Йорк,4OGD25Rmn3W3MP0kMd7c90rGP1WwK8u4wL1w,qm8nc9MgKyvd6Hgl3jY5BjgDFSBqNvxcu6o52kDjIC168OsM1R;',
+          singleSignOnSsoDefaultProject: 'default:ru=по умолчанию,KzMRNEZTetzatIgQPVSDYfeGyaZrbLzkcxNc,qaHkVpAtUVIpDdLXMlAOzsBfMRJblWoHpXguYQRBuSEBpGKbWt',
+          singleSignOnSsoDisableEmailVerification: false,
+          singleSignOnSsoServerUrl: 'http://localhost:8080',
+          singleSignOnSsoClientUrl: 'http://localhost:8080'
+        }
+      }),
+    ],
+  },
+});
+```
+
+When launched in the infrastructure documentation generation mode, the module creates an `.env` file with a list of all required variables, as well as an example `example.env`, where you can enter example variable values.
 
 
 #### Shared providers
