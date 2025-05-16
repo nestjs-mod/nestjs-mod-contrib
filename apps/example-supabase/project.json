@@ -1,0 +1,74 @@
+{
+  "name": "example-supabase",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/example-supabase/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/example-supabase",
+        "main": "apps/example-supabase/src/main.ts",
+        "tsConfig": "apps/example-supabase/tsconfig.app.json",
+        "assets": [
+          "apps/example-supabase/src/assets"
+        ],
+        "webpackConfig": "apps/example-supabase/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "buildTarget": "example-supabase:build",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "example-supabase:build:development"
+        },
+        "production": {
+          "buildTarget": "example-supabase:build:production"
+        }
+      }
+    },
+    "test": {
+      "options": {
+        "passWithNoTests": true
+      }
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "node dist/apps/example-supabase/main.js"
+        ],
+        "parallel": false
+      }
+    },
+    "db-create": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [],
+        "parallel": false,
+        "envFile": "./apps/example-supabase/.env",
+        "color": true
+      }
+    }
+  }
+}

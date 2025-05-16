@@ -35,6 +35,9 @@
       "@nestjs-mod/sso": [
         "libs/core/sso/src/index.ts"
       ],
+      "@nestjs-mod/supabase": [
+        "libs/core/supabase/src/index.ts"
+      ],
       "@nestjs-mod/cache-manager": [
         "libs/core/cache-manager/src/index.ts"
       ],

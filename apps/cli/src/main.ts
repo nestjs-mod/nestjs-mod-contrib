@@ -30,6 +30,19 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'supabase',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord: 'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/core/supabase/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/supabase/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/supabase'),
+          utilsFolders: [join(rootFolder, 'libs/core/supabase/src/lib')],
+          modules: [import('@nestjs-mod/supabase')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'sso',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',

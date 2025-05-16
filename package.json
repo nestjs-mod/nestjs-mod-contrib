@@ -43,6 +43,7 @@
     "serve:dev:example-maildev": "./node_modules/.bin/nx serve example-maildev --host=0.0.0.0",
     "serve:dev:example-authorizer": "./node_modules/.bin/nx serve example-authorizer --host=0.0.0.0",
     "serve:dev:example-sso": "./node_modules/.bin/nx serve example-sso --host=0.0.0.0",
+    "serve:dev:example-supabase": "./node_modules/.bin/nx serve example-supabase --host=0.0.0.0",
     "serve:dev:example-prisma-pg-flyway": "./node_modules/.bin/nx serve example-prisma-pg-flyway --host=0.0.0.0",
     "serve:dev:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx serve example-pg-prisma-pg-flyway --host=0.0.0.0",
     "_____angular dev infra_____": "_____angular dev infra_____",
@@ -70,6 +71,7 @@
     "start:prod:example-maildev": "./node_modules/.bin/nx start example-maildev",
     "start:prod:example-authorizer": "./node_modules/.bin/nx start example-authorizer",
     "start:prod:example-sso": "./node_modules/.bin/nx start example-sso",
+    "start:prod:example-supabase": "./node_modules/.bin/nx start example-supabase",
     "start:prod:example-prisma-pg-flyway": "./node_modules/.bin/nx start example-prisma-pg-flyway",
     "start:prod:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx start example-pg-prisma-pg-flyway",
     "_____docs_____": "_____docs_____",
@@ -81,6 +83,7 @@
     "docs:infrastructure:example-maildev": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-maildev --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-authorizer": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-authorizer --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-sso": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-sso --host=0.0.0.0 --watch=false --inspect=false",
+    "docs:infrastructure:example-supabase": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-supabase --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-prisma-pg-flyway": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-prisma-pg-flyway --host=0.0.0.0 --watch=false --inspect=false",
     "docs:infrastructure:example-pg-prisma-pg-flyway": "export NODE_ENV=infrastructure && ./node_modules/.bin/nx serve example-pg-prisma-pg-flyway --host=0.0.0.0 --watch=false --inspect=false",
     "_____docker-compose infra_____": "_____docker-compose infra_____",
@@ -106,6 +109,8 @@
     "docker-compose:stop:example-authorizer": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-authorizer/docker-compose.yml down",
     "docker-compose:start:example-sso": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-sso/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-sso": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-sso/docker-compose.yml down",
+    "docker-compose:start:example-supabase": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-supabase/docker-compose.yml --compatibility up -d",
+    "docker-compose:stop:example-supabase": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-supabase/docker-compose.yml down",
     "docker-compose:start:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose.yml --compatibility up -d",
     "docker-compose:stop:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose.yml down",
     "docker-compose:start:example-pg-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-pg-prisma-pg-flyway/docker-compose.yml --compatibility up -d",
@@ -134,6 +139,8 @@
     "docker-compose:stop-prod:example-authorizer": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-authorizer/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env down",
     "docker-compose:start-prod:example-sso": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-sso/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env --compatibility up -d",
     "docker-compose:stop-prod:example-sso": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-sso/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env down",
+    "docker-compose:start-prod:example-supabase": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-supabase/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env --compatibility up -d",
+    "docker-compose:stop-prod:example-supabase": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-supabase/docker-compose-prod.yml --env-file ./apps/example-keyv/docker-compose-prod.env down",
     "docker-compose:start-prod:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env --compatibility up -d",
     "docker-compose:stop-prod:example-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env down",
     "docker-compose:start-prod:example-pg-prisma-pg-flyway": "export COMPOSE_INTERACTIVE_NO_CLI=1 && docker compose -f ./apps/example-pg-prisma-pg-flyway/docker-compose-prod.yml --env-file ./apps/example-prisma-pg-flyway/docker-compose-prod.env --compatibility up -d",
@@ -154,6 +161,7 @@
     "test:example-maildev": "./node_modules/.bin/nx test example-maildev --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-authorizer": "./node_modules/.bin/nx test example-authorizer --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-sso": "./node_modules/.bin/nx test example-sso --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
+    "test:example-supabase": "./node_modules/.bin/nx test example-supabase --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-prisma-pg-flyway": "./node_modules/.bin/nx test example-prisma-pg-flyway --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "test:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx test example-pg-prisma-pg-flyway --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
@@ -272,6 +280,7 @@
     "pg-create-db": "^1.1.5"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.49.4",
     "@nestjs-mod/misc": "1.4.1",
     "@nestjs-mod/sso-rest-sdk": "1.0.5",
     "ms": "2.1.3",
@@ -292,11 +301,11 @@
     "@authorizerdev/authorizer-js": "2.0.3",
     "@graphql-tools/utils": "^10.0.13",
     "@keyv/redis": "^4.2.0",
-    "@nestjs-mod/common": "2.17.8",
-    "@nestjs-mod/fastify": "1.9.8",
-    "@nestjs-mod/microservices": "1.8.8",
-    "@nestjs-mod/reports": "2.17.8",
-    "@nestjs-mod/testing": "2.17.8",
+    "@nestjs-mod/common": "2.17.9",
+    "@nestjs-mod/fastify": "1.9.9",
+    "@nestjs-mod/microservices": "1.8.9",
+    "@nestjs-mod/reports": "2.17.9",
+    "@nestjs-mod/testing": "2.17.9",
     "@nestjs/apollo": "^12.2.2",
     "@nestjs/common": "^10.4.15",
     "@nestjs/core": "^10.4.15",
@@ -385,6 +394,7 @@
     "serve:dev:example-maildev": [],
     "serve:dev:example-authorizer": [],
     "serve:dev:example-sso": [],
+    "serve:dev:example-supabase": [],
     "serve:dev:example-prisma-pg-flyway": [
       "Running example-prisma-pg-flyway source code in watch mode"
     ],
@@ -447,6 +457,7 @@
     "start:prod:example-maildev": [],
     "start:prod:example-authorizer": [],
     "start:prod:example-sso": [],
+    "start:prod:example-supabase": [],
     "start:prod:example-prisma-pg-flyway": [
       "Launching a built example-prisma-pg-flyway (you must first build it using the build command)"
     ],
@@ -465,6 +476,7 @@
     "docs:infrastructure:example-maildev": [],
     "docs:infrastructure:example-authorizer": [],
     "docs:infrastructure:example-sso": [],
+    "docs:infrastructure:example-supabase": [],
     "docs:infrastructure:example-prisma-pg-flyway": [],
     "docs:infrastructure:example-pg-prisma-pg-flyway": [],
     "docker-compose:start:prisma": [
@@ -533,6 +545,8 @@
     "docker-compose:stop:example-sso": [
       "Stopping the docker-compose infrastructure for example-sso"
     ],
+    "docker-compose:start:example-supabase": [],
+    "docker-compose:stop:example-supabase": [],
     "docker-compose:start:example-prisma-pg-flyway": [
       "Running the docker-compose infrastructure for example-prisma-pg-flyway"
     ],
@@ -612,6 +626,8 @@
     "docker-compose:stop-prod:example-sso": [
       "Stopping the main docker-compose prod infrastructure for example-sso"
     ],
+    "docker-compose:start-prod:example-supabase": [],
+    "docker-compose:stop-prod:example-supabase": [],
     "docker-compose:start-prod:example-prisma-pg-flyway": [
       "Running the main docker-compose prod infrastructure for example-prisma-pg-flyway"
     ],
@@ -663,6 +679,7 @@
     "test:example-maildev": [],
     "test:example-authorizer": [],
     "test:example-sso": [],
+    "test:example-supabase": [],
     "test:example-prisma-pg-flyway": [
       "Running tests for example-prisma-pg-flyway"
     ],

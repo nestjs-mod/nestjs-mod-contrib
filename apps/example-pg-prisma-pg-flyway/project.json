@@ -98,7 +98,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=${EXAMPLE_PRISMA_PG_FLYWAY_ROOT_DATABASE_URL} --app-database-url=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL}"
+          "./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=${EXAMPLE_PRISMA_PG_FLYWAY_ROOT_DATABASE_URL} --app-database-url=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL}",
+          "./node_modules/.bin/pg-create-db --force-change-username=true --force-change-password=true --root-database-url=${EXAMPLE_PG_PRISMA_PG_FLYWAY_ROOT_DATABASE_URL} --app-database-url=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL}"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -109,7 +110,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway create --name=${npm_config_args:-NewMigration}"
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway create --name=${npm_config_args:-NewMigration}",
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_pg_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway create --name=${npm_config_args:-NewMigration}"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -120,7 +122,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway migrate"
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway migrate",
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_pg_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway migrate"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -131,7 +134,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway info"
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway info",
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_pg_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway info"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -142,7 +146,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway baseline"
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway baseline",
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_pg_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway baseline"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -153,7 +158,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway validate"
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway validate",
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_pg_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway validate"
         ],
         "parallel": false,
         "envFile": "./.env",
@@ -164,7 +170,8 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway repair"
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PRISMA_PG_FLYWAY_PG_FLYWAY_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway repair",
+          "export PG_FLYWAY_DATABASE_URL=${EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL} && export PG_FLYWAY_HISTORY_TABLE=__migrations_example_pg_prisma_pg_flyway && export PG_FLYWAY_LOCATIONS=./apps/example-pg-prisma-pg-flyway/src/migrations && ./node_modules/.bin/pg-flyway repair"
         ],
         "parallel": false,
         "envFile": "./.env",
