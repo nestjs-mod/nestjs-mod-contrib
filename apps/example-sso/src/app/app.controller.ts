@@ -29,7 +29,7 @@ export class AppController {
     return { token };
   }
 
-  @Get('/prifile/:token')
+  @Get('/profile/:token')
   async profile(@Param('token') token: string) {
     return this.appService.getProfile({ Authorization: `Bearer ${token}` });
   }
