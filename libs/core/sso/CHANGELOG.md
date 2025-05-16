@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/sso-v1.0.1...sso-v1.0.2) (2025-05-16)
+
+
+### Bug Fixes
+
+* update readme ([bfc340f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/bfc340fc132e70bcaa96060863b3acf97088d0ac))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/sso-v1.0.0...sso-v1.0.1) (2025-05-10)
 
 
