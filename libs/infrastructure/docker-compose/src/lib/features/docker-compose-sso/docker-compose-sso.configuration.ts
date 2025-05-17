@@ -4,7 +4,7 @@ import { ConfigModel, ConfigModelProperty, NumberTransformer } from '@nestjs-mod
 export class DockerComposeSsoConfiguration {
   @ConfigModelProperty({
     description: 'Docker image name',
-    default: 'ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.5.5',
+    default: 'ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.7.0',
   })
   image?: string;
 

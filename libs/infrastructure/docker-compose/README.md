@@ -1638,7 +1638,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
-|`image`|Docker image name|**optional**|```ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.5.5```|-|
+|`image`|Docker image name|**optional**|```ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.7.0```|-|
 |`featureName`|Feature name for generate prefix to environments keys|**optional**|-|-|
 |`networks`|Network, if not set networkNames have project name and driver=bridge|**optional**|-|-|
 |`externalClientPort`|External port for sharing container|**optional**|```8080```|-|
