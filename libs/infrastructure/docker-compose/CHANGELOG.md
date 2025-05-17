@@ -1,3 +1,10 @@
+## [1.19.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.19.2...docker-compose-v1.19.3) (2025-05-17)
+
+
+### Bug Fixes
+
+* update nestjs-mod-sso-server docker image version ([00cef69](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/00cef69ec6ebef4e86b98965c325d92741ac28db))
+
 ## [1.19.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.19.1...docker-compose-v1.19.2) (2025-05-11)
 
 
