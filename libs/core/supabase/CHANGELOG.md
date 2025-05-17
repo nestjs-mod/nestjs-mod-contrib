@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/supabase-v1.0.1...supabase-v1.0.2) (2025-05-17)
+
+
+### Bug Fixes
+
+* update readme ([e4e56d5](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e4e56d521bfff53547af3d322b8cee3c322e99c5))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/supabase-v1.0.0...supabase-v1.0.1) (2025-05-16)
 
 

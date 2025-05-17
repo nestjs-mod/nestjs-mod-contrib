@@ -1,6 +1,6 @@
 {
   "name": "@nestjs-mod/supabase",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "NestJS JavaScript Client for Supabase (Wrapper for https://www.npmjs.com/package/@supabase/supabase-js)",
   "keywords": [
     "nestjs",
