@@ -8,7 +8,7 @@ NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social aut
 ## Installation
 
 ```bash
-npm i --save @nestjs-mod/sso-rest-sdk@1.0.5 @nestjs-mod/sso
+npm i --save @nestjs-mod/sso-rest-sdk @nestjs-mod/sso
 ```
 
 

@@ -25,7 +25,7 @@ npm i --save @supabase/supabase-js@2.49.4 @nestjs-mod/supabase
 NestJS JavaScript Client for Supabase (Wrapper for https://www.npmjs.com/package/@supabase/supabase-js)
 
 #### Use in NestJS-mod
-An example of using Supabase, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-sso/INFRASTRUCTURE.MD.
+An example of using Supabase, you can see the full example here https://github.com/nestjs-mod/nestjs-mod-contrib/tree/master/apps/example-supabase/INFRASTRUCTURE.MD.
 
 **Test urls**
 ```

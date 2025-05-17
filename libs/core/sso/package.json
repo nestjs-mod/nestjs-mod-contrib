@@ -65,7 +65,7 @@
     }
   },
   "dependenciesInfo": {
-    "@nestjs-mod/sso-rest-sdk@1.0.5": {
+    "@nestjs-mod/sso-rest-sdk": {
       "docs": true
     }
   },
