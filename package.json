@@ -224,7 +224,7 @@
     "@angular/language-service": "19.0.5",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
-    "@nestjs-mod/schematics": "2.12.9",
+    "@nestjs-mod/schematics": "2.12.11",
     "@nestjs/schematics": "^10.2.3",
     "@nestjs/testing": "^10.4.15",
     "@nx/eslint": "20.3.0",
@@ -282,7 +282,7 @@
   "dependencies": {
     "@supabase/supabase-js": "2.49.4",
     "@nestjs-mod/misc": "1.4.1",
-    "@nestjs-mod/sso-rest-sdk": "1.0.6",
+    "@nestjs-mod/sso-rest-sdk": "1.0.7",
     "ms": "2.1.3",
     "@nestjs/axios": "3.0.0",
     "nodemailer": "6.10.0",
