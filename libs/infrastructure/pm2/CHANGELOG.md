@@ -1,3 +1,10 @@
+## [1.13.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.4...pm2-v1.13.5) (2025-05-20)
+
+
+### Bug Fixes
+
+* update scripts for run server application ([b47e4a7](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b47e4a7ea5ab2cca5be1484dd876bdf40dbf389c))
+
 ## [1.13.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.3...pm2-v1.13.4) (2025-05-20)
 
 
