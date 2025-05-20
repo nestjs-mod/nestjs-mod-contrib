@@ -1,4 +1,9 @@
-import { ApplicationPackageJsonService, PackageJsonService, WrapApplicationOptionsService } from '@nestjs-mod/common';
+import {
+  ApplicationPackageJsonService,
+  NxProjectJsonService,
+  PackageJsonService,
+  WrapApplicationOptionsService,
+} from '@nestjs-mod/common';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { dirname } from 'path';
 import { StartOptions } from 'pm2';
@@ -13,7 +18,8 @@ export class Pm2Service implements OnApplicationBootstrap {
     private readonly pm2EcosystemConfigFileService: Pm2EcosystemConfigFileService,
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly packageJsonService: PackageJsonService,
-    private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
+    private readonly wrapApplicationOptionsService: WrapApplicationOptionsService,
+    private readonly nxProjectJsonService: NxProjectJsonService
   ) {}
 
   onApplicationBootstrap() {
@@ -62,10 +68,7 @@ export class Pm2Service implements OnApplicationBootstrap {
         .filter(([key]) => key !== 'ecosystemConfigFile' && key !== 'applicationScriptFile')
         .reduce((all, [key, value]) => ({ ...all, [key]: value }), {}),
       name: appName,
-      script: `./node_modules/.bin/nx serve ${this.pm2Configuration.applicationScriptFile.replace(
-        dirname(packageJsonFilePath),
-        ''
-      )} --skip-nx-cache=true`,
+      script: `./node_modules/.bin/nx serve ${this.nxProjectJsonService.read()?.name} --skip-nx-cache=true`,
       // `node ./${this.pm2Configuration.applicationScriptFile.replace(dirname(packageJsonFilePath), '')}`,
     };
     currentConfig.apps = currentConfig.apps.map((app) => {
