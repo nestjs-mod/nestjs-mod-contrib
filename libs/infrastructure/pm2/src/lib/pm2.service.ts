@@ -14,7 +14,7 @@ export class Pm2Service implements OnApplicationBootstrap {
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly packageJsonService: PackageJsonService,
     private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
-  ) { }
+  ) {}
 
   onApplicationBootstrap() {
     this.updatePm2EcosystemConfigFile();
@@ -62,7 +62,11 @@ export class Pm2Service implements OnApplicationBootstrap {
         .filter(([key]) => key !== 'ecosystemConfigFile' && key !== 'applicationScriptFile')
         .reduce((all, [key, value]) => ({ ...all, [key]: value }), {}),
       name: appName,
-      script: `node ./${this.pm2Configuration.applicationScriptFile.replace(dirname(packageJsonFilePath), '')}`,
+      script: `./node_modules/.bin/nx serve ${this.pm2Configuration.applicationScriptFile.replace(
+        dirname(packageJsonFilePath),
+        ''
+      )} --skip-nx-cache=true`,
+      // `node ./${this.pm2Configuration.applicationScriptFile.replace(dirname(packageJsonFilePath), '')}`,
     };
     currentConfig.apps = currentConfig.apps.map((app) => {
       if (app.name === appName) {
