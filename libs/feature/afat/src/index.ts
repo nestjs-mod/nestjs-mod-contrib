@@ -1,4 +1,3 @@
-export * from './test-setup';
 export * from './lib/form-utils/ng-changes';
 export * from './lib/formly/button-input.component';
 export * from './lib/formly/date-input.component';
