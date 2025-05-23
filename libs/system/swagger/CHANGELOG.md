@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/swagger-v1.1.1...swagger-v1.1.2) (2025-05-23)
+
+
+### Bug Fixes
+
+* remove usage IsNumberString decorator in FindManyArgs ([8151b7e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8151b7e032bd79f41720f6cda6b681e9c2ecc2af))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/swagger-v1.1.0...swagger-v1.1.1) (2025-05-23)
 
 
