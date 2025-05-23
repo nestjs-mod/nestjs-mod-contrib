@@ -208,6 +208,7 @@
   },
   "private": true,
   "devDependencies": {
+    "class-transformer": "0.5.1",
     "ng-packagr": "19.2.1",
     "@jsverse/transloco": "^7.5.0",
     "@ngx-formly/core": "^6.3.12",
