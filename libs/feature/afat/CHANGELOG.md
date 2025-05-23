@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/afat-v1.0.0...afat-v1.0.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* remove link to node deps ([02d6817](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/02d6817ca98909fea207b758011c3fa2424ff990))
+
 # 1.0.0 (2025-05-23)
 
 
