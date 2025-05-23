@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/swagger-v1.1.0...swagger-v1.1.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* update release script ([8b2772d](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8b2772db82e890bcb9350be25ae93d95c552587a))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/swagger-v1.0.0...swagger-v1.1.0) (2025-05-23)
 
 
