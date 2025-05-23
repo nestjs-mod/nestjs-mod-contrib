@@ -6,8 +6,5 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-msgid "Unauthorized"
-msgstr "Unauthorized"
-
 msgid "field \"{{label}}\""
 msgstr "field \"{{label}}\""

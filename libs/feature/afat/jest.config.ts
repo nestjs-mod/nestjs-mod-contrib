@@ -2,7 +2,7 @@ export default {
   displayName: 'afat',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/afat',
+  coverageDirectory: '../../../coverage/libs/feature/afat',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
