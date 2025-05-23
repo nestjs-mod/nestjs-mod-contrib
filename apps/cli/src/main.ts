@@ -51,7 +51,7 @@ bootstrapNestApplication({
           markdownFile: join(rootFolder, 'libs/feature/afat/README.md'),
           folderWithMarkdownFilesToUse: join(rootFolder, 'libs/feature/afat'),
           utilsFolders: [join(rootFolder, 'libs/feature/afat/src/lib')],
-          modules: [import('@nestjs-mod/afat')],
+          modules: [],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
       }),
