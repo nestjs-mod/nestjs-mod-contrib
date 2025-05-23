@@ -31,6 +31,13 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint"
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "${PROJECT_NAME}:build",
+        "outputPath": "dist/libs/feature/afat"
+      }
     }
   }
 }
