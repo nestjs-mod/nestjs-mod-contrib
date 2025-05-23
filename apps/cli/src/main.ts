@@ -30,6 +30,19 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'afat',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord: 'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/feature/afat/package.json'),
+          markdownFile: join(rootFolder, 'libs/feature/afat/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/feature/afat'),
+          utilsFolders: [join(rootFolder, 'libs/feature/afat/src/lib')],
+          modules: [import('@nestjs-mod/afat')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'supabase',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',

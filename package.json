@@ -797,6 +797,7 @@
     "update:lib-versions": [
       "Script for update main libs used in project"
     ],
+    "translates": [],
     "tsc": [
       "Alias for running the tsc version locally, which is in the project (example: `npm run tsc -- --noEmit -p tsconfig.base.json`),",
       "in order not to install tsc globally in the operating system"

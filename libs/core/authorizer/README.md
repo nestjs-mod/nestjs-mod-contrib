@@ -8,7 +8,7 @@ NestJS SDK for Authorizer API (Wrapper for https://www.npmjs.com/package/@author
 ## Installation
 
 ```bash
-npm i --save @authorizerdev/authorizer-js@2.0.0 @nestjs-mod/authorizer
+npm i --save @authorizerdev/authorizer-js@2.0.3 @nestjs-mod/authorizer
 ```
 
 
