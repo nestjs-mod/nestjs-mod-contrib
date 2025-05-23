@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/swagger",
   "description": "Swagger functions and helpers used in NestJS mod modules.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "nestjs",
     "nestjs-mod",
@@ -20,12 +20,12 @@
     "access": "public"
   },
   "bugs": {
-    "url": "https://github.com/nestjs-mod/nestjs-mod/issues"
+    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
   },
-  "homepage": "https://github.com/nestjs-mod/nestjs-mod",
+  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nestjs-mod/nestjs-mod.git"
+    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
   },
   "maintainers": [
     {
