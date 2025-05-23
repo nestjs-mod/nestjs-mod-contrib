@@ -1,5 +1,7 @@
 {
-  "afat": {},
+  "afat": {
+    "field \"{{label}}\"": "field \"{{label}}\""
+  },
   "authorizer": {},
   "sso": {},
   "supabase": {},

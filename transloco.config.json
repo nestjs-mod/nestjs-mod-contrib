@@ -5,7 +5,7 @@
         "ru"
     ],
     "serverScopedLibs": [
-        "libs/afat",
+        "libs/feature/afat",
         "libs/core/authorizer",
         "libs/core/sso",
         "libs/core/supabase",
@@ -30,7 +30,7 @@
         "libs/infrastructure/pg-flyway",
         "libs/infrastructure/flyway",
         "libs/infrastructure/docker-compose",
-        "libs/afat",
+        "libs/feature/afat",
         "libs/core/supabase",
         "libs/core/sso",
         "libs/core/prisma",
@@ -41,7 +41,7 @@
     ],
     "rootTranslationsPath": "./apps/cli/src/assets/i18n/",
     "scopedLibs": [
-        "libs/afat",
+        "libs/feature/afat",
         "libs/core/authorizer",
         "libs/core/sso",
         "libs/core/supabase",
@@ -66,7 +66,7 @@
         "libs/infrastructure/pg-flyway",
         "libs/infrastructure/flyway",
         "libs/infrastructure/docker-compose",
-        "libs/afat",
+        "libs/feature/afat",
         "libs/core/supabase",
         "libs/core/sso",
         "libs/core/prisma",
@@ -77,7 +77,7 @@
     ],
     "clientRootTranslationsPath": "./apps/cli/src/assets/i18n/",
     "clientScopedLibs": [
-        "libs/afat",
+        "libs/feature/afat",
         "libs/core/authorizer",
         "libs/core/sso",
         "libs/core/supabase",
@@ -102,7 +102,7 @@
         "libs/infrastructure/pg-flyway",
         "libs/infrastructure/flyway",
         "libs/infrastructure/docker-compose",
-        "libs/afat",
+        "libs/feature/afat",
         "libs/core/supabase",
         "libs/core/sso",
         "libs/core/prisma",
