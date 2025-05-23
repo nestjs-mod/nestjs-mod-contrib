@@ -1,27 +1,27 @@
 {
-  "name": "terminus",
-  "description": "Example application with PM2, docker-compose, postgres and terminus",
-  "devScripts": [
-    "manual:prepare",
-    "docker-compose:start",
-    "db:create",
-    "prisma:migrate-deploy",
-    "serve:dev:example-terminus"
-  ],
-  "prodScripts": [
-    "manual:prepare",
-    "docker-compose:start",
-    "db:create",
-    "prisma:migrate-deploy",
-    "start:prod:example-terminus"
-  ],
-  "testsScripts": [
-    "test:example-terminus"
-  ],
-  "dependencies": {
-    "pm2": ">=5.3.0",
-    "dotenv": ">=16.3.1"
-  },
-  "scripts": {},
-  "scriptsComments": {}
+    "name": "terminus",
+    "description": "Example application with PM2, docker-compose, postgres and terminus",
+    "devScripts": [
+        "manual:prepare",
+        "docker-compose:start",
+        "db:create",
+        "prisma:migrate-deploy",
+        "serve:dev:example-terminus"
+    ],
+    "prodScripts": [
+        "manual:prepare",
+        "docker-compose:start",
+        "db:create",
+        "prisma:migrate-deploy",
+        "start:prod:example-terminus"
+    ],
+    "testsScripts": [
+        "test:example-terminus"
+    ],
+    "dependencies": {
+        "pm2": ">=5.3.0",
+        "dotenv": ">=16.3.1"
+    },
+    "scripts": {},
+    "scriptsComments": {}
 }

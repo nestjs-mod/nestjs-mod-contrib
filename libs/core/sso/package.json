@@ -1,75 +1,82 @@
 {
-  "name": "@nestjs-mod/sso",
-  "version": "1.0.4",
-  "description": "NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social authorization (Wrapper for https://www.npmjs.com/package/@nestjs-mod/sso-rest-sdk)",
-  "keywords": [
-    "nestjs",
-    "nestjs-mod",
-    "modules",
-    "mod",
-    "single-sign-on",
-    "sso-rest-sdk"
-  ],
-  "license": "MIT",
-  "author": "EndyKaufman <admin@site15.ru>",
-  "engines": {
-    "node": ">=14",
-    "npm": ">=6"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "bugs": {
-    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
-  },
-  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
-  },
-  "maintainers": [
-    {
-      "name": "EndyKaufman",
-      "email": "admin@site15.ru"
-    }
-  ],
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "peerDependencies": {
-    "class-validator": "*",
-    "@nestjs/common": "*",
-    "@nestjs/core": "*",
-    "@nestjs-mod/misc": "*",
-    "@nestjs-mod/common": "*",
-    "@nestjs-mod/sso-rest-sdk": "*"
-  },
-  "peerDependenciesMeta": {
-    "class-validator": {
-      "optional": true
+    "name": "@nestjs-mod/sso",
+    "version": "1.0.4",
+    "description": "NestJS SDK for Single Sign-On on NestJS and Angular with webhooks and social authorization (Wrapper for https://www.npmjs.com/package/@nestjs-mod/sso-rest-sdk)",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "modules",
+        "mod",
+        "single-sign-on",
+        "sso-rest-sdk"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
     },
-    "@nestjs/common": {
-      "optional": true
+    "publishConfig": {
+        "access": "public"
     },
-    "@nestjs/core": {
-      "optional": true
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
     },
-    "@nestjs-mod/misc": {
-      "optional": true
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
     },
-    "@nestjs-mod/common": {
-      "optional": true
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "dependencies": {
+        "tslib": "^2.3.0"
     },
-    "@nestjs-mod/sso-rest-sdk": {
-      "optional": true
-    }
-  },
-  "dependenciesInfo": {
-    "@nestjs-mod/sso-rest-sdk": {
-      "docs": true
-    }
-  },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+    "peerDependencies": {
+        "class-validator": "*",
+        "@nestjs/common": "*",
+        "@nestjs/core": "*",
+        "@nestjs-mod/misc": "*",
+        "@nestjs-mod/common": "*",
+        "@nestjs-mod/sso-rest-sdk": "*"
+    },
+    "peerDependenciesMeta": {
+        "class-validator": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        },
+        "@nestjs/core": {
+            "optional": true
+        },
+        "@nestjs-mod/misc": {
+            "optional": true
+        },
+        "@nestjs-mod/common": {
+            "optional": true
+        },
+        "@nestjs-mod/sso-rest-sdk": {
+            "optional": true
+        }
+    },
+    "dependenciesInfo": {
+        "@nestjs-mod/sso-rest-sdk": {
+            "docs": true
+        }
+    },
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "i18n": [
+        {
+            "scope": "sso",
+            "path": "src/i18n",
+            "strategy": "join"
+        }
+    ]
 }

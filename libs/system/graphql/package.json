@@ -1,116 +1,123 @@
 {
-  "name": "@nestjs-mod/graphql",
-  "description": "GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, integrated: dataloader, included support for pipes, filters and interceptors in resolver fields, works with Fastify (Wrapper for https://docs.nestjs.com/graphql/quick-start)",
-  "version": "1.5.6",
-  "keywords": [
-    "nestjs",
-    "nestjs-mod",
-    "modules",
-    "mod",
-    "graphql",
-    "apollo",
-    "system"
-  ],
-  "license": "MIT",
-  "author": "EndyKaufman <admin@site15.ru>",
-  "engines": {
-    "node": ">=14",
-    "npm": ">=6"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "bugs": {
-    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
-  },
-  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
-  },
-  "maintainers": [
-    {
-      "name": "EndyKaufman",
-      "email": "admin@site15.ru"
-    }
-  ],
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "dependenciesInfo": {
-    "@nestjs/apollo": {
-      "docs": true
+    "name": "@nestjs-mod/graphql",
+    "description": "GraphQL packages, providing an easy way to use GraphQL with the NestJS-mod, integrated: dataloader, included support for pipes, filters and interceptors in resolver fields, works with Fastify (Wrapper for https://docs.nestjs.com/graphql/quick-start)",
+    "version": "1.5.6",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "modules",
+        "mod",
+        "graphql",
+        "apollo",
+        "system"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
     },
-    "@apollo/server": {
-      "docs": true
+    "publishConfig": {
+        "access": "public"
     },
-    "@nestjs/graphql": {
-      "docs": true
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
     },
-    "@as-integrations/fastify": {
-      "docs": true
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
     },
-    "graphql-type-json@0.3.2": {
-      "docs": true
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "dependencies": {
+        "tslib": "^2.3.0"
     },
-    "@graphql-tools/utils@10.0.13": {
-      "docs": true
+    "dependenciesInfo": {
+        "@nestjs/apollo": {
+            "docs": true
+        },
+        "@apollo/server": {
+            "docs": true
+        },
+        "@nestjs/graphql": {
+            "docs": true
+        },
+        "@as-integrations/fastify": {
+            "docs": true
+        },
+        "graphql-type-json@0.3.2": {
+            "docs": true
+        },
+        "@graphql-tools/utils@10.0.13": {
+            "docs": true
+        },
+        "dataloader@2.0.0": {
+            "docs": true
+        },
+        "graphql@16.8.1": {
+            "docs": true
+        }
     },
-    "dataloader@2.0.0": {
-      "docs": true
+    "peerDependencies": {
+        "@nestjs/core": "*",
+        "@nestjs/common": "*",
+        "@nestjs-mod/common": "*",
+        "@nestjs/apollo": "*",
+        "@nestjs/graphql": "*",
+        "rxjs": "*",
+        "graphql-type-json": "*",
+        "@graphql-tools/utils": "*",
+        "dataloader": "*",
+        "graphql": "*"
     },
-    "graphql@16.8.1": {
-      "docs": true
-    }
-  },
-  "peerDependencies": {
-    "@nestjs/core": "*",
-    "@nestjs/common": "*",
-    "@nestjs-mod/common": "*",
-    "@nestjs/apollo": "*",
-    "@nestjs/graphql": "*",
-    "rxjs": "*",
-    "graphql-type-json": "*",
-    "@graphql-tools/utils": "*",
-    "dataloader": "*",
-    "graphql": "*"
-  },
-  "peerDependenciesMeta": {
-    "@nestjs/core": {
-      "optional": true
+    "peerDependenciesMeta": {
+        "@nestjs/core": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        },
+        "@nestjs-mod/common": {
+            "optional": true
+        },
+        "@nestjs-mod/apollo": {
+            "optional": true
+        },
+        "@apollo/server": {
+            "optional": true
+        },
+        "@nestjs/graphql": {
+            "optional": true
+        },
+        "rxjs": {
+            "optional": true
+        },
+        "graphql-type-json": {
+            "optional": true
+        },
+        "@graphql-tools/utils": {
+            "optional": true
+        },
+        "dataloader": {
+            "optional": true
+        },
+        "graphql": {
+            "optional": true
+        }
     },
-    "@nestjs/common": {
-      "optional": true
-    },
-    "@nestjs-mod/common": {
-      "optional": true
-    },
-    "@nestjs-mod/apollo": {
-      "optional": true
-    },
-    "@apollo/server": {
-      "optional": true
-    },
-    "@nestjs/graphql": {
-      "optional": true
-    },
-    "rxjs": {
-      "optional": true
-    },
-    "graphql-type-json": {
-      "optional": true
-    },
-    "@graphql-tools/utils": {
-      "optional": true
-    },
-    "dataloader": {
-      "optional": true
-    },
-    "graphql": {
-      "optional": true
-    }
-  },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "i18n": [
+        {
+            "scope": "graphql",
+            "path": "src/i18n",
+            "strategy": "join"
+        }
+    ]
 }

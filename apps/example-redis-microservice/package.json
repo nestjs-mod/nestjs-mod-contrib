@@ -1,21 +1,21 @@
 {
-  "name": "example-redis-microservice",
-  "scripts": {},
-  "dependencies": {
-    "pm2": ">=5.3.0",
-    "dotenv": ">=16.3.1"
-  },
-  "devScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-redis-microservice",
-    "serve:dev:example-redis-microservice"
-  ],
-  "prodScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-redis-microservice",
-    "start:prod:example-redis-microservice"
-  ],
-  "testsScripts": [
-    "test:example-redis-microservice"
-  ]
+    "name": "example-redis-microservice",
+    "scripts": {},
+    "dependencies": {
+        "pm2": ">=5.3.0",
+        "dotenv": ">=16.3.1"
+    },
+    "devScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-redis-microservice",
+        "serve:dev:example-redis-microservice"
+    ],
+    "prodScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-redis-microservice",
+        "start:prod:example-redis-microservice"
+    ],
+    "testsScripts": [
+        "test:example-redis-microservice"
+    ]
 }

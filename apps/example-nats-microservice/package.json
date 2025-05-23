@@ -1,21 +1,21 @@
 {
-  "name": "example-nats-microservice",
-  "scripts": {},
-  "dependencies": {
-    "pm2": ">=5.3.0",
-    "dotenv": ">=16.3.1"
-  },
-  "devScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-nats-microservice",
-    "serve:dev:example-nats-microservice"
-  ],
-  "prodScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-nats-microservice",
-    "start:prod:example-nats-microservice"
-  ],
-  "testsScripts": [
-    "test:example-nats-microservice"
-  ]
+    "name": "example-nats-microservice",
+    "scripts": {},
+    "dependencies": {
+        "pm2": ">=5.3.0",
+        "dotenv": ">=16.3.1"
+    },
+    "devScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-nats-microservice",
+        "serve:dev:example-nats-microservice"
+    ],
+    "prodScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-nats-microservice",
+        "start:prod:example-nats-microservice"
+    ],
+    "testsScripts": [
+        "test:example-nats-microservice"
+    ]
 }

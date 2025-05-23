@@ -1,0 +1,20 @@
+{
+  "afat": {},
+  "authorizer": {},
+  "sso": {},
+  "supabase": {},
+  "cache-manager": {},
+  "docker-compose": {},
+  "flyway": {},
+  "graphql": {},
+  "keyv": {},
+  "minio": {},
+  "pg-flyway": {},
+  "pino": {},
+  "prisma": {},
+  "terminus": {},
+  "runtime-tools": {},
+  "pm2": {},
+  "bridge-react-webpack-plugin": {},
+  "data-prefetch": {}
+}

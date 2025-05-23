@@ -63,5 +63,12 @@
     },
     "type": "commonjs",
     "main": "./src/index.js",
-    "typings": "./src/index.d.ts"
+    "typings": "./src/index.d.ts",
+    "i18n": [
+        {
+            "scope": "pm2",
+            "path": "src/i18n",
+            "strategy": "join"
+        }
+    ]
 }

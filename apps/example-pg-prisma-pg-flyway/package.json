@@ -1,31 +1,31 @@
 {
-  "name": "example-pg-prisma-pg-flyway",
-  "scripts": {},
-  "dependencies": {
-    "pm2": ">=5.3.0",
-    "dotenv": ">=16.3.1"
-  },
-  "devScripts": [
-    "manual:prepare",
-    "prisma:generate",
-    "docker-compose:start:example-pg-prisma-pg-flyway",
-    "db:create",
-    "pg-flyway:migrate:example-pg-prisma-pg-flyway",
-    "prisma:pull:example-pg-prisma-pg-flyway",
-    "prisma:generate",
-    "serve:dev:example-pg-prisma-pg-flyway"
-  ],
-  "prodScripts": [
-    "manual:prepare",
-    "prisma:generate",
-    "docker-compose:start:example-pg-prisma-pg-flyway",
-    "db:create",
-    "pg-flyway:migrate:example-pg-prisma-pg-flyway",
-    "prisma:pull:example-pg-prisma-pg-flyway",
-    "prisma:generate",
-    "start:prod:example-pg-prisma-pg-flyway"
-  ],
-  "testsScripts": [
-    "test:example-pg-prisma-pg-flyway"
-  ]
+    "name": "example-pg-prisma-pg-flyway",
+    "scripts": {},
+    "dependencies": {
+        "pm2": ">=5.3.0",
+        "dotenv": ">=16.3.1"
+    },
+    "devScripts": [
+        "manual:prepare",
+        "prisma:generate",
+        "docker-compose:start:example-pg-prisma-pg-flyway",
+        "db:create",
+        "pg-flyway:migrate:example-pg-prisma-pg-flyway",
+        "prisma:pull:example-pg-prisma-pg-flyway",
+        "prisma:generate",
+        "serve:dev:example-pg-prisma-pg-flyway"
+    ],
+    "prodScripts": [
+        "manual:prepare",
+        "prisma:generate",
+        "docker-compose:start:example-pg-prisma-pg-flyway",
+        "db:create",
+        "pg-flyway:migrate:example-pg-prisma-pg-flyway",
+        "prisma:pull:example-pg-prisma-pg-flyway",
+        "prisma:generate",
+        "start:prod:example-pg-prisma-pg-flyway"
+    ],
+    "testsScripts": [
+        "test:example-pg-prisma-pg-flyway"
+    ]
 }

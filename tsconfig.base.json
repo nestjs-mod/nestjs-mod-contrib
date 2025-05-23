@@ -29,6 +29,9 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
+      "@nestjs-mod/afat": [
+        "libs/feature/afat/src/index.ts"
+      ],
       "@nestjs-mod/authorizer": [
         "libs/core/authorizer/src/index.ts"
       ],

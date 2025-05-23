@@ -1,29 +1,29 @@
 {
-  "name": "example-prisma-flyway",
-  "scripts": {},
-  "dependencies": {
-    "pm2": ">=5.3.0",
-    "dotenv": ">=16.3.1"
-  },
-  "devScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-prisma-flyway",
-    "db:create",
-    "flyway:migrate:example-prisma-flyway",
-    "prisma:pull:example-prisma-flyway",
-    "prisma:generate",
-    "serve:dev:example-prisma-flyway"
-  ],
-  "prodScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-prisma-flyway",
-    "db:create",
-    "flyway:migrate:example-prisma-flyway",
-    "prisma:pull:example-prisma-flyway",
-    "prisma:generate",
-    "start:prod:example-prisma-flyway"
-  ],
-  "testsScripts": [
-    "test:example-prisma-flyway"
-  ]
+    "name": "example-prisma-flyway",
+    "scripts": {},
+    "dependencies": {
+        "pm2": ">=5.3.0",
+        "dotenv": ">=16.3.1"
+    },
+    "devScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-prisma-flyway",
+        "db:create",
+        "flyway:migrate:example-prisma-flyway",
+        "prisma:pull:example-prisma-flyway",
+        "prisma:generate",
+        "serve:dev:example-prisma-flyway"
+    ],
+    "prodScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-prisma-flyway",
+        "db:create",
+        "flyway:migrate:example-prisma-flyway",
+        "prisma:pull:example-prisma-flyway",
+        "prisma:generate",
+        "start:prod:example-prisma-flyway"
+    ],
+    "testsScripts": [
+        "test:example-prisma-flyway"
+    ]
 }

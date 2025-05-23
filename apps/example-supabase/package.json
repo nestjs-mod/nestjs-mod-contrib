@@ -1,21 +1,21 @@
 {
-  "name": "example-supabase",
-  "scripts": {},
-  "dependencies": {
-    "pm2": ">=5.3.0",
-    "dotenv": ">=16.3.1"
-  },
-  "devScripts": [
-    "manual:prepare",
-    "docker-compose:start:example-supabase",
-    "serve:dev:example-supabase"
-  ],
-  "prodScripts": [
-    "manual:prepare",
-    "docs:infrastructure:example-supabase",
-    "start:prod:example-supabase"
-  ],
-  "testsScripts": [
-    "test:example-supabase"
-  ]
+    "name": "example-supabase",
+    "scripts": {},
+    "dependencies": {
+        "pm2": ">=5.3.0",
+        "dotenv": ">=16.3.1"
+    },
+    "devScripts": [
+        "manual:prepare",
+        "docker-compose:start:example-supabase",
+        "serve:dev:example-supabase"
+    ],
+    "prodScripts": [
+        "manual:prepare",
+        "docs:infrastructure:example-supabase",
+        "start:prod:example-supabase"
+    ],
+    "testsScripts": [
+        "test:example-supabase"
+    ]
 }

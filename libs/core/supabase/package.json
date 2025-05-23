@@ -1,75 +1,82 @@
 {
-  "name": "@nestjs-mod/supabase",
-  "version": "1.0.2",
-  "description": "NestJS JavaScript Client for Supabase (Wrapper for https://www.npmjs.com/package/@supabase/supabase-js)",
-  "keywords": [
-    "nestjs",
-    "nestjs-mod",
-    "modules",
-    "mod",
-    "supabase",
-    "supabase-js"
-  ],
-  "license": "MIT",
-  "author": "EndyKaufman <admin@site15.ru>",
-  "engines": {
-    "node": ">=14",
-    "npm": ">=6"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "bugs": {
-    "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
-  },
-  "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
-  },
-  "maintainers": [
-    {
-      "name": "EndyKaufman",
-      "email": "admin@site15.ru"
-    }
-  ],
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "peerDependencies": {
-    "class-validator": "*",
-    "@nestjs/common": "*",
-    "@nestjs/core": "*",
-    "@nestjs-mod/misc": "*",
-    "@nestjs-mod/common": "*",
-    "@supabase/supabase-js": "*"
-  },
-  "peerDependenciesMeta": {
-    "class-validator": {
-      "optional": true
+    "name": "@nestjs-mod/supabase",
+    "version": "1.0.2",
+    "description": "NestJS JavaScript Client for Supabase (Wrapper for https://www.npmjs.com/package/@supabase/supabase-js)",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "modules",
+        "mod",
+        "supabase",
+        "supabase-js"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
     },
-    "@nestjs/common": {
-      "optional": true
+    "publishConfig": {
+        "access": "public"
     },
-    "@nestjs/core": {
-      "optional": true
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
     },
-    "@nestjs-mod/misc": {
-      "optional": true
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
     },
-    "@nestjs-mod/common": {
-      "optional": true
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "dependencies": {
+        "tslib": "^2.3.0"
     },
-    "@supabase/supabase-js": {
-      "optional": true
-    }
-  },
-  "dependenciesInfo": {
-    "@supabase/supabase-js@2.49.4": {
-      "docs": true
-    }
-  },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+    "peerDependencies": {
+        "class-validator": "*",
+        "@nestjs/common": "*",
+        "@nestjs/core": "*",
+        "@nestjs-mod/misc": "*",
+        "@nestjs-mod/common": "*",
+        "@supabase/supabase-js": "*"
+    },
+    "peerDependenciesMeta": {
+        "class-validator": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        },
+        "@nestjs/core": {
+            "optional": true
+        },
+        "@nestjs-mod/misc": {
+            "optional": true
+        },
+        "@nestjs-mod/common": {
+            "optional": true
+        },
+        "@supabase/supabase-js": {
+            "optional": true
+        }
+    },
+    "dependenciesInfo": {
+        "@supabase/supabase-js@2.49.4": {
+            "docs": true
+        }
+    },
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "i18n": [
+        {
+            "scope": "supabase",
+            "path": "src/i18n",
+            "strategy": "join"
+        }
+    ]
 }
