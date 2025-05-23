@@ -1,0 +1,94 @@
+{
+    "name": "@nestjs-mod/afat",
+    "description": "Common utilites for (AFAT): Angular, Formly, Antd, Transloco",
+    "version": "0.0.1",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "modules",
+        "mod",
+        "angular",
+        "formly",
+        "antd",
+        "transloco"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+    },
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+    },
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "peerDependencies": {
+        "@angular/common": "*",
+        "@angular/core": "*",
+        "@angular/forms": "*",
+        "@jsverse/transloco": "*",
+        "@ngx-formly/core": "*",
+        "ng-zorro-antd": "*",
+        "rxjs": "*",
+        "@jsverse/transloco-locale": "*",
+        "date-fns": "*",
+        "@ngneat/until-destroy": "*",
+        "@jsverse/transloco-keys-manager": "*"
+    },
+    "peerDependenciesMeta": {
+        "@angular/common": {
+            "optional": true
+        },
+        "@angular/core": {
+            "optional": true
+        },
+        "@angular/forms": {
+            "optional": true
+        },
+        "@jsverse/transloco": {
+            "optional": true
+        },
+        "@ngx-formly/core": {
+            "optional": true
+        },
+        "ng-zorro-antd": {
+            "optional": true
+        },
+        "rxjs": {
+            "optional": true
+        },
+        "@jsverse/transloco-locale": {
+            "optional": true
+        },
+        "date-fns": {
+            "optional": true
+        },
+        "@ngneat/until-destroy": {
+            "optional": true
+        },
+        "@jsverse/transloco-keys-manager": {
+            "optional": true
+        }
+    },
+    "sideEffects": false,
+    "i18n": [
+        {
+            "scope": "afat",
+            "path": "src/i18n",
+            "strategy": "join"
+        }
+    ]
+}
