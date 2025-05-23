@@ -29,6 +29,9 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
+      "@nestjs-mod/swagger": [
+        "libs/system/swagger/src/index.ts"
+      ],
       "@nestjs-mod/afat": [
         "libs/feature/afat/src/index.ts"
       ],

@@ -30,6 +30,19 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'swagger',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord: 'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/swagger/package.json'),
+          markdownFile: join(rootFolder, 'libs/swagger/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/swagger'),
+          utilsFolders: [join(rootFolder, 'libs/swagger/src/lib')],
+          modules: [import('@nestjs-mod/swagger')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'afat',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
