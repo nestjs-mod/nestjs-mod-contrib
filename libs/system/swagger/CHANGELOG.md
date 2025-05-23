@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/swagger-v1.0.0...swagger-v1.1.0) (2025-05-23)
+
+
+### Features
+
+* update link to repo in package json ([4df15bc](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/4df15bc71890fffe124389c790d2c02443719116))
+
 # 1.0.0 (2025-05-23)
 
 
