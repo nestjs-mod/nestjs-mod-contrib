@@ -24,13 +24,6 @@ npm i --save @nestjs-mod-sso/validation
 ### ValidationModule
 Validation module with an error filter and a pre-configured validation pipe
 
-#### Configuration
-
-
-| Key    | Description | Constraints | Default | Value |
-| ------ | ----------- | ----------- | ------- | ----- |
-|`pipeOptions`|Validation pipe options|**optional**|-|-|
-
 #### Static environments
 
 
@@ -44,6 +37,7 @@ Validation module with an error filter and a pre-configured validation pipe
 
 | Key    | Description | Constraints | Default | Value |
 | ------ | ----------- | ----------- | ------- | ----- |
+|`pipeOptions`|Validation pipe options|**optional**|-|-|
 
 [Back to Top](#modules)
 

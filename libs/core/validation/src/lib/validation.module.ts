@@ -1,8 +1,4 @@
-import {
-  createNestModule,
-  getFeatureDotEnvPropertyNameFormatter,
-  NestModuleCategory,
-} from '@nestjs-mod/common';
+import { createNestModule, getFeatureDotEnvPropertyNameFormatter, NestModuleCategory } from '@nestjs-mod/common';
 import { Provider, ValidationPipe } from '@nestjs/common';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ValidationConfiguration } from './validation.configuration';
@@ -13,12 +9,11 @@ import { ValidationError, ValidationErrorEnum } from './validation.errors';
 
 export const { ValidationModule } = createNestModule({
   moduleName: VALIDATION_MODULE,
-  moduleDescription:
-    'Validation module with an error filter and a pre-configured validation pipe',
+  moduleDescription: 'Validation module with an error filter and a pre-configured validation pipe',
   moduleCategory: NestModuleCategory.core,
-  configurationModel: ValidationConfiguration,
+  staticConfigurationModel: ValidationConfiguration,
   staticEnvironmentsModel: ValidationStaticEnvironments,
-  providers: ({ staticEnvironments }) => {
+  providers: ({ staticEnvironments, staticConfiguration }) => {
     const providers: Provider[] = [];
     if (staticEnvironments.usePipes) {
       providers.push({
@@ -30,8 +25,8 @@ export const { ValidationModule } = createNestModule({
             target: false,
             value: false,
           },
-          exceptionFactory: (errors) =>
-            new ValidationError(ValidationErrorEnum.COMMON, undefined, errors),
+          exceptionFactory: (errors) => new ValidationError(ValidationErrorEnum.COMMON, undefined, errors),
+          ...staticConfiguration.pipeOptions,
         }),
       });
     }
@@ -47,8 +42,7 @@ export const { ValidationModule } = createNestModule({
     if (!asyncModuleOptions) {
       asyncModuleOptions = {};
     }
-    const FomatterClass =
-      getFeatureDotEnvPropertyNameFormatter(VALIDATION_FEATURE);
+    const FomatterClass = getFeatureDotEnvPropertyNameFormatter(VALIDATION_FEATURE);
     Object.assign(asyncModuleOptions, {
       environmentsOptions: {
         propertyNameFormatters: [new FomatterClass()],
