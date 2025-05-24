@@ -29,6 +29,9 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
+      "@nestjs-mod/validation": [
+        "libs/core/validation/src/index.ts"
+      ],
       "@nestjs-mod/prisma-tools": [
         "libs/core/prisma-tools/src/index.ts"
       ],

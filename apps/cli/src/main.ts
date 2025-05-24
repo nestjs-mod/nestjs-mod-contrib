@@ -30,14 +30,27 @@ bootstrapNestApplication({
     ],
     infrastructure: [
       NestjsModAllReadmeGenerator.forRoot({
+        contextName: 'validation',
+        staticConfiguration: {
+          telegramGroup: 'https://t.me/nestjs_mod',
+          discord: 'https://discord.gg/meY7UXaG',
+          packageFile: join(rootFolder, 'libs/core/validation/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/validation/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/validation'),
+          utilsFolders: [join(rootFolder, 'libs/core/validation/src/lib')],
+          modules: [import('@nestjs-mod/validation')],
+          markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
+        },
+      }),
+      NestjsModAllReadmeGenerator.forRoot({
         contextName: 'prisma-tools',
         staticConfiguration: {
           telegramGroup: 'https://t.me/nestjs_mod',
           discord: 'https://discord.gg/meY7UXaG',
-          packageFile: join(rootFolder, 'libs/feature/prisma-tools/package.json'),
-          markdownFile: join(rootFolder, 'libs/feature/prisma-tools/README.md'),
-          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/feature/prisma-tools'),
-          utilsFolders: [join(rootFolder, 'libs/feature/prisma-tools/src/lib')],
+          packageFile: join(rootFolder, 'libs/core/prisma-tools/package.json'),
+          markdownFile: join(rootFolder, 'libs/core/prisma-tools/README.md'),
+          folderWithMarkdownFilesToUse: join(rootFolder, 'libs/core/prisma-tools'),
+          utilsFolders: [join(rootFolder, 'libs/core/prisma-tools/src/lib')],
           modules: [import('@nestjs-mod/prisma-tools')],
           markdownFooter: NESTJS_MOD_ALL_README_GENERATOR_FOOTER,
         },
