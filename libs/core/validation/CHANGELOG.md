@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/validation-v1.0.1...validation-v1.1.0) (2025-05-24)
+
+
+### Features
+
+* add new feature module validation ([2720733](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/27207339ea061c88401ce5233d187c239c76d1a1))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/validation-v1.0.0...validation-v1.0.1) (2025-05-24)
 
 
