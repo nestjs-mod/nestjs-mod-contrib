@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/validation-v1.0.0...validation-v1.0.1) (2025-05-24)
+
+
+### Bug Fixes
+
+* move pipeOptions to staticConfiguration ([3538a3f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/3538a3f294ea567e39f2d326eaac5bfb292348fa))
+
 # 1.0.0 (2025-05-24)
 
 
