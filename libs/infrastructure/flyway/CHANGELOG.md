@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.9.3...flyway-v1.10.0) (2025-05-24)
+
+
+### Features
+
+* add new feature module prisma-tools ([1470204](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/14702041c2ad290234260a57652cd03c6314dcc5))
+
 ## [1.9.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.9.2...flyway-v1.9.3) (2025-02-20)
 
 
