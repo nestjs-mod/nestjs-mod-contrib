@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.12.1...prisma-v1.13.0) (2025-05-24)
+
+
+### Features
+
+* add new feature module prisma-tools ([1470204](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/14702041c2ad290234260a57652cd03c6314dcc5))
+
 ## [1.12.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.12.0...prisma-v1.12.1) (2025-04-03)
 
 
