@@ -3,8 +3,16 @@
     "field \"{{label}}\"": "поле \"{{label}}\""
   },
   "authorizer": {},
-  "sso": {},
-  "supabase": {},
+  "sso": {
+    "Forbidden": "Запрещено",
+    "Sso error": "Ошибка SSO",
+    "Unauthorized": "Неавторизован"
+  },
+  "supabase": {
+    "Forbidden": "Запрещено",
+    "Supabase error": "Ошибка Supabase",
+    "Unauthorized": "Неавторизован"
+  },
   "cache-manager": {},
   "docker-compose": {},
   "flyway": {},
@@ -18,5 +26,16 @@
   "runtime-tools": {},
   "terminus": {},
   "data-prefetch": {},
-  "bridge-react-webpack-plugin": {}
+  "bridge-react-webpack-plugin": {},
+  "swagger": {},
+  "sso-getText": {
+    "Forbidden": "Запрещено",
+    "Sso error": "Ошибка SSO",
+    "Unauthorized": "Неавторизован"
+  },
+  "supabase-getText": {
+    "Forbidden": "Запрещено",
+    "Supabase error": "Ошибка Supabase",
+    "Unauthorized": "Неавторизован"
+  }
 }

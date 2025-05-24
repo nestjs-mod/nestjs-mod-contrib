@@ -5,6 +5,7 @@
         "ru"
     ],
     "serverScopedLibs": [
+        "libs/system/swagger",
         "libs/feature/afat",
         "libs/core/authorizer",
         "libs/core/sso",
@@ -24,6 +25,7 @@
         "packages/data-prefetch",
         "packages/bridge/bridge-react-webpack-plugin",
         "libs/system/terminus",
+        "libs/system/swagger",
         "libs/system/nestjs-pino",
         "libs/system/graphql",
         "libs/infrastructure/pm2",
@@ -41,6 +43,7 @@
     ],
     "rootTranslationsPath": "./apps/cli/src/assets/i18n/",
     "scopedLibs": [
+        "libs/system/swagger",
         "libs/feature/afat",
         "libs/core/authorizer",
         "libs/core/sso",
@@ -60,6 +63,7 @@
         "packages/data-prefetch",
         "packages/bridge/bridge-react-webpack-plugin",
         "libs/system/terminus",
+        "libs/system/swagger",
         "libs/system/nestjs-pino",
         "libs/system/graphql",
         "libs/infrastructure/pm2",
@@ -77,6 +81,7 @@
     ],
     "clientRootTranslationsPath": "./apps/cli/src/assets/i18n/",
     "clientScopedLibs": [
+        "libs/system/swagger",
         "libs/feature/afat",
         "libs/core/authorizer",
         "libs/core/sso",
@@ -96,6 +101,7 @@
         "packages/data-prefetch",
         "packages/bridge/bridge-react-webpack-plugin",
         "libs/system/terminus",
+        "libs/system/swagger",
         "libs/system/nestjs-pino",
         "libs/system/graphql",
         "libs/infrastructure/pm2",
