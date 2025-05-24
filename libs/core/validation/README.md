@@ -1,11 +1,72 @@
-# validation
 
-This library was generated with [Nx](https://nx.dev).
+# @nestjs-mod-sso/validation
 
-## Building
+Validation module with an error filter and a pre-configured validation pipe
 
-Run `nx build validation` to build the library.
+[![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
-## Running unit tests
+## Installation
 
-Run `nx test validation` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npm i --save @nestjs-mod-sso/validation
+```
+
+
+## Modules
+
+| Link | Category | Description |
+| ---- | -------- | ----------- |
+| [ValidationModule](#validationmodule) | core | Validation module with an error filter and a pre-configured validation pipe |
+
+
+## Modules descriptions
+
+### ValidationModule
+Validation module with an error filter and a pre-configured validation pipe
+
+#### Configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+|`pipeOptions`|Validation pipe options|**optional**|-|-|
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`usePipes`|Use pipes|`obj['usePipes']`, `process.env['VALIDATION_USE_PIPES']`|**optional**|```true```|```true```|
+|`useFilters`|Use filters|`obj['useFilters']`, `process.env['VALIDATION_USE_FILTERS']`|**optional**|```true```|```true```|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+
+[Back to Top](#modules)
+
+## Links
+
+* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+* https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/INFRASTRUCTURE.MD - A simple example of infrastructure documentation.
+* https://github.com/nestjs-mod/nestjs-mod-contrib/blob/master/apps/example-prisma/INFRASTRUCTURE.MD - An extended example of infrastructure documentation with a docker-compose file and a data base.
+* https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
+* https://habr.com/ru/articles/788916 - Коллекция утилит NestJS-mod для унификации приложений и модулей на NestJS
+
+
+## License
+
+MIT
+
+[npm-image]: https://badgen.net/npm/v/@nestjs-mod-sso/validation
+[npm-url]: https://npmjs.org/package/@nestjs-mod-sso/validation
+[telegram-image]: https://img.shields.io/badge/group-telegram-blue.svg?maxAge=2592000
+[telegram-url]: https://t.me/nestjs_mod
+[discord-image]: https://img.shields.io/badge/discord-online-brightgreen.svg
+[discord-url]: https://discord.gg/meY7UXaG
+[downloads-image]: https://badgen.net/npm/dm/@nestjs-mod-sso/validation
+[downloads-url]: https://npmjs.org/package/@nestjs-mod-sso/validation

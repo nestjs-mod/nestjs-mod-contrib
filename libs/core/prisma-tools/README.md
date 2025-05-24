@@ -1,11 +1,70 @@
-# prisma-tools
 
-This library was generated with [Nx](https://nx.dev).
+# @nestjs-mod/prisma-tools
 
-## Building
+Functions and helpers for work with prisma used in NestJS-mod modules
 
-Run `nx build prisma-tools` to build the library.
+[![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 
-## Running unit tests
+## Installation
 
-Run `nx test prisma-tools` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npm i --save @nestjs-mod/prisma-tools
+```
+
+
+## Modules
+
+| Link | Category | Description |
+| ---- | -------- | ----------- |
+| [PrismaToolsModule](#prismatoolsmodule) | core | Functions and helpers for work with prisma used in NestJS-mod modules |
+
+
+## Modules descriptions
+
+### PrismaToolsModule
+Functions and helpers for work with prisma used in NestJS-mod modules
+
+#### Shared providers
+`PrismaToolsService`
+
+#### Static environments
+
+
+| Key    | Description | Sources | Constraints | Default | Value |
+| ------ | ----------- | ------- | ----------- | ------- | ----- |
+|`useFilters`|Use filters|`obj['useFilters']`, `process.env['PRISMA_TOOLS_USE_FILTERS']`|**optional**|```true```|```true```|
+|`paginationInitialPage`|Pagination initial page|`obj['paginationInitialPage']`, `process.env['PRISMA_TOOLS_PAGINATION_INITIAL_PAGE']`|**optional**|```1```|```1```|
+|`paginationPerPageSteps`|Pagination per page steps|`obj['paginationPerPageSteps']`, `process.env['PRISMA_TOOLS_PAGINATION_PER_PAGE_STEPS']`|**optional**|-|-|
+|`paginationPerPage`|Pagination per page|`obj['paginationPerPage']`, `process.env['PRISMA_TOOLS_PAGINATION_PER_PAGE']`|**optional**|```5```|```5```|
+
+#### Static configuration
+
+
+| Key    | Description | Constraints | Default | Value |
+| ------ | ----------- | ----------- | ------- | ----- |
+
+[Back to Top](#modules)
+
+## Links
+
+* https://github.com/nestjs-mod/nestjs-mod - A collection of utilities for unifying NestJS applications and modules
+* https://github.com/nestjs-mod/nestjs-mod-contrib - Contrib repository for the NestJS-mod
+* https://github.com/nestjs-mod/nestjs-mod-example - Example application built with [@nestjs-mod/schematics](https://github.com/nestjs-mod/nestjs-mod/tree/master/libs/schematics)
+* https://github.com/nestjs-mod/nestjs-mod/blob/master/apps/example-basic/INFRASTRUCTURE.MD - A simple example of infrastructure documentation.
+* https://github.com/nestjs-mod/nestjs-mod-contrib/blob/master/apps/example-prisma/INFRASTRUCTURE.MD - An extended example of infrastructure documentation with a docker-compose file and a data base.
+* https://dev.to/endykaufman/collection-of-nestjs-mod-utilities-for-unifying-applications-and-modules-on-nestjs-5256 - Article about the project NestJS-mod
+* https://habr.com/ru/articles/788916 - Коллекция утилит NestJS-mod для унификации приложений и модулей на NestJS
+
+
+## License
+
+MIT
+
+[npm-image]: https://badgen.net/npm/v/@nestjs-mod/prisma-tools
+[npm-url]: https://npmjs.org/package/@nestjs-mod/prisma-tools
+[telegram-image]: https://img.shields.io/badge/group-telegram-blue.svg?maxAge=2592000
+[telegram-url]: https://t.me/nestjs_mod
+[discord-image]: https://img.shields.io/badge/discord-online-brightgreen.svg
+[discord-url]: https://discord.gg/meY7UXaG
+[downloads-image]: https://badgen.net/npm/dm/@nestjs-mod/prisma-tools
+[downloads-url]: https://npmjs.org/package/@nestjs-mod/prisma-tools
