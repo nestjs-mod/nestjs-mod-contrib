@@ -30,7 +30,7 @@
     "esModuleInterop": true,
     "paths": {
       "@nestjs-mod/prisma-tools": [
-        "libs/feature/prisma-tools/src/index.ts"
+        "libs/core/prisma-tools/src/index.ts"
       ],
       "@nestjs-mod/swagger": [
         "libs/system/swagger/src/index.ts"

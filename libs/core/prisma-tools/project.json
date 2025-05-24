@@ -1,7 +1,7 @@
 {
   "name": "prisma-tools",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/feature/prisma-tools/src",
+  "sourceRoot": "libs/core/prisma-tools/src",
   "projectType": "library",
   "release": {
     "version": {
@@ -19,15 +19,15 @@
         "{options.outputPath}"
       ],
       "options": {
-        "outputPath": "dist/libs/feature/prisma-tools",
-        "tsConfig": "libs/feature/prisma-tools/tsconfig.lib.json",
-        "packageJson": "libs/feature/prisma-tools/package.json",
-        "main": "libs/feature/prisma-tools/src/index.ts",
+        "outputPath": "dist/libs/core/prisma-tools",
+        "tsConfig": "libs/core/prisma-tools/tsconfig.lib.json",
+        "packageJson": "libs/core/prisma-tools/package.json",
+        "main": "libs/core/prisma-tools/src/index.ts",
         "assets": [
-          "libs/feature/prisma-tools/*.md",
+          "libs/core/prisma-tools/*.md",
           {
             "glob": "**/*.json",
-            "input": "./libs/feature/prisma-tools/src/i18n/getText/",
+            "input": "./libs/core/prisma-tools/src/i18n/getText/",
             "output": "i18n"
           }
         ]
@@ -44,14 +44,14 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "libs/feature/prisma-tools/jest.config.ts"
+        "jestConfig": "libs/core/prisma-tools/jest.config.ts"
       }
     },
     "semantic-release": {
       "executor": "@theunderscorer/nx-semantic-release:semantic-release",
       "options": {
         "buildTarget": "${PROJECT_NAME}:build",
-        "outputPath": "dist/libs/feature/prisma-tools"
+        "outputPath": "dist/libs/core/prisma-tools"
       }
     }
   }

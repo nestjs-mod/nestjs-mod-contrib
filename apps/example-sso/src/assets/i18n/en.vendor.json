@@ -37,5 +37,23 @@
     "Forbidden": "Forbidden",
     "Supabase error": "Supabase error",
     "Unauthorized": "Unauthorized"
+  },
+  "prisma-tools-getText": {
+    "Common db error": "Common db error",
+    "Database query error": "Database query error",
+    "Invalid identifier": "Invalid identifier",
+    "Invalid linked table identifier": "Invalid linked table identifier",
+    "Not found error": "Not found error",
+    "Unhandled error": "Unhandled error",
+    "Unique error": "Unique error"
+  },
+  "prisma-tools": {
+    "Common db error": "Common db error",
+    "Database query error": "Database query error",
+    "Invalid identifier": "Invalid identifier",
+    "Invalid linked table identifier": "Invalid linked table identifier",
+    "Not found error": "Not found error",
+    "Unhandled error": "Unhandled error",
+    "Unique error": "Unique error"
   }
 }
