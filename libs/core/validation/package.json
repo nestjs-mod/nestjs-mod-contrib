@@ -1,0 +1,83 @@
+{
+    "name": "@nestjs-mod-sso/validation",
+    "description": "Validation module with an error filter and a pre-configured validation pipe",
+    "version": "0.0.1",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "mod",
+        "validation",
+        "filter",
+        "pipe",
+        "pre-configured"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+    },
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+    },
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "peerDependencies": {
+        "@nestjs-mod/common": "*",
+        "@nestjs/common": "*",
+        "@nestjs/swagger": "*",
+        "@nestjs-mod/misc": "*",
+        "@nestjs/core": "*",
+        "class-validator": "*"
+    },
+    "peerDependenciesMeta": {
+        "@nestjs-mod/common": {
+            "optional": true
+        },
+        "@nestjs-mod/misc": {
+            "optional": true
+        },
+        "@nestjs/core": {
+            "optional": true
+        },
+        "@nestjs/swagger": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        },
+        "class-validator": {
+            "optional": true
+        }
+    },
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "i18n": [
+        {
+            "scope": "validation",
+            "path": "src/i18n",
+            "strategy": "join"
+        },
+        {
+            "scope": "validation-getText",
+            "path": "src/i18n/getText",
+            "strategy": "join"
+        }
+    ]
+}
