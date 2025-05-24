@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/validation-v1.1.0...validation-v1.1.1) (2025-05-24)
+
+
+### Bug Fixes
+
+* add translates to npm lib ([ee6bca1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/ee6bca107318416da3aedb02f4cccb3ae8bbd936))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/validation-v1.0.1...validation-v1.1.0) (2025-05-24)
 
 
