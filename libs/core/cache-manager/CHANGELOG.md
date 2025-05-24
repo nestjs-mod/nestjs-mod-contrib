@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.6.2...cache-manager-v1.7.0) (2025-05-24)
+
+
+### Features
+
+* add new feature module prisma-tools ([1470204](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/14702041c2ad290234260a57652cd03c6314dcc5))
+
 ## [1.6.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/cache-manager-v1.6.1...cache-manager-v1.6.2) (2025-02-20)
 
 
