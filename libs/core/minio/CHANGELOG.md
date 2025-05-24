@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.4.2...minio-v1.5.0) (2025-05-24)
+
+
+### Features
+
+* add new feature module prisma-tools ([1470204](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/14702041c2ad290234260a57652cd03c6314dcc5))
+
 ## [1.4.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/minio-v1.4.1...minio-v1.4.2) (2025-02-20)
 
 
