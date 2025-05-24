@@ -1,0 +1,79 @@
+{
+    "name": "@nestjs-mod/prisma-tools",
+    "description": "Functions and helpers for work with prisma used in NestJS-mod modules.",
+    "version": "0.0.1",
+    "keywords": [
+        "nestjs",
+        "nestjs-mod",
+        "prisma",
+        "prisma-tools",
+        "helpers",
+        "functions",
+        "mod"
+    ],
+    "license": "MIT",
+    "author": "EndyKaufman <admin@site15.ru>",
+    "engines": {
+        "node": ">=14",
+        "npm": ">=6"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "bugs": {
+        "url": "https://github.com/nestjs-mod/nestjs-mod-contrib/issues"
+    },
+    "homepage": "https://github.com/nestjs-mod/nestjs-mod-contrib",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nestjs-mod/nestjs-mod-contrib.git"
+    },
+    "maintainers": [
+        {
+            "name": "EndyKaufman",
+            "email": "admin@site15.ru"
+        }
+    ],
+    "dependencies": {
+        "tslib": "^2.3.0"
+    },
+    "peerDependencies": {
+        "@nestjs-mod/common": "*",
+        "@nestjs-mod/misc": "*",
+        "@nestjs/core": "*",
+        "@nestjs/swagger": "*",
+        "@nestjs/common": "*"
+    },
+    "peerDependenciesMeta": {
+        "@nestjs-mod/common": {
+            "optional": true
+        },
+        "@nestjs-mod/misc": {
+            "optional": true
+        },
+        "@nestjs/core": {
+            "optional": true
+        },
+        "@nestjs/swagger": {
+            "optional": true
+        },
+        "@nestjs/common": {
+            "optional": true
+        }
+    },
+    "type": "commonjs",
+    "main": "./src/index.js",
+    "typings": "./src/index.d.ts",
+    "i18n": [
+        {
+            "scope": "prisma-tools",
+            "path": "src/i18n",
+            "strategy": "join"
+        },
+        {
+            "scope": "prisma-tools-getText",
+            "path": "src/i18n/getText",
+            "strategy": "join"
+        }
+    ]
+}
