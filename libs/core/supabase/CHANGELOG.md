@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/supabase-v1.0.2...supabase-v1.1.0) (2025-05-24)
+
+
+### Bug Fixes
+
+* append translates for error messages ([521bf27](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/521bf276b4022fce4e805628266af743626c71da))
+
+
+### Features
+
+* add new feature module prisma-tools ([1470204](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/14702041c2ad290234260a57652cd03c6314dcc5))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/supabase-v1.0.1...supabase-v1.0.2) (2025-05-17)
 
 
