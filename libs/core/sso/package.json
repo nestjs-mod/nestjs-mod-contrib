@@ -77,6 +77,11 @@
             "scope": "sso",
             "path": "src/i18n",
             "strategy": "join"
+        },
+        {
+            "scope": "sso-getText",
+            "path": "src/i18n/getText",
+            "strategy": "join"
         }
     ]
 }

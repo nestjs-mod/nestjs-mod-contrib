@@ -1,3 +1,4 @@
+import { getText } from '@nestjs-mod/misc';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export enum SsoErrorEnum {
@@ -7,9 +8,9 @@ export enum SsoErrorEnum {
 }
 
 export const SSO_ERROR_ENUM_TITLES: Record<SsoErrorEnum, string> = {
-  [SsoErrorEnum.COMMON]: 'Sso error',
-  [SsoErrorEnum.FORBIDDEN]: 'Forbidden',
-  [SsoErrorEnum.UNAUTHORIZED]: 'Unauthorized',
+  [SsoErrorEnum.COMMON]: getText('Sso error'),
+  [SsoErrorEnum.FORBIDDEN]: getText('Forbidden'),
+  [SsoErrorEnum.UNAUTHORIZED]: getText('Unauthorized'),
 };
 
 export class SsoError<T = unknown> extends Error {
@@ -32,19 +33,10 @@ export class SsoError<T = unknown> extends Error {
   @ApiPropertyOptional({ type: Object })
   metadata?: T;
 
-  constructor(
-    message?: string | SsoErrorEnum,
-    code?: SsoErrorEnum,
-    metadata?: T
-  ) {
-    const messageAsCode = Boolean(
-      message && Object.values(SsoErrorEnum).includes(message as SsoErrorEnum)
-    );
+  constructor(message?: string | SsoErrorEnum, code?: SsoErrorEnum, metadata?: T) {
+    const messageAsCode = Boolean(message && Object.values(SsoErrorEnum).includes(message as SsoErrorEnum));
     const preparedCode = messageAsCode ? (message as SsoErrorEnum) : code;
-    const preparedMessage =
-      messageAsCode && preparedCode
-        ? SSO_ERROR_ENUM_TITLES[preparedCode]
-        : message;
+    const preparedMessage = messageAsCode && preparedCode ? SSO_ERROR_ENUM_TITLES[preparedCode] : message;
 
     code = preparedCode || SsoErrorEnum.COMMON;
     message = preparedMessage || SSO_ERROR_ENUM_TITLES[code];

@@ -1,3 +1,4 @@
+import { getText } from '@nestjs-mod/misc';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export enum SupabaseErrorEnum {
@@ -7,9 +8,9 @@ export enum SupabaseErrorEnum {
 }
 
 export const SUPABASE_ERROR_ENUM_TITLES: Record<SupabaseErrorEnum, string> = {
-  [SupabaseErrorEnum.COMMON]: 'Supabase error',
-  [SupabaseErrorEnum.FORBIDDEN]: 'Forbidden',
-  [SupabaseErrorEnum.UNAUTHORIZED]: 'Unauthorized',
+  [SupabaseErrorEnum.COMMON]: getText('Supabase error'),
+  [SupabaseErrorEnum.FORBIDDEN]: getText('Forbidden'),
+  [SupabaseErrorEnum.UNAUTHORIZED]: getText('Unauthorized'),
 };
 
 export class SupabaseError<T = unknown> extends Error {
@@ -32,20 +33,10 @@ export class SupabaseError<T = unknown> extends Error {
   @ApiPropertyOptional({ type: Object })
   metadata?: T;
 
-  constructor(
-    message?: string | SupabaseErrorEnum,
-    code?: SupabaseErrorEnum,
-    metadata?: T
-  ) {
-    const messageAsCode = Boolean(
-      message &&
-      Object.values(SupabaseErrorEnum).includes(message as SupabaseErrorEnum)
-    );
+  constructor(message?: string | SupabaseErrorEnum, code?: SupabaseErrorEnum, metadata?: T) {
+    const messageAsCode = Boolean(message && Object.values(SupabaseErrorEnum).includes(message as SupabaseErrorEnum));
     const preparedCode = messageAsCode ? (message as SupabaseErrorEnum) : code;
-    const preparedMessage =
-      messageAsCode && preparedCode
-        ? SUPABASE_ERROR_ENUM_TITLES[preparedCode]
-        : message;
+    const preparedMessage = messageAsCode && preparedCode ? SUPABASE_ERROR_ENUM_TITLES[preparedCode] : message;
 
     code = preparedCode || SupabaseErrorEnum.COMMON;
     message = preparedMessage || SUPABASE_ERROR_ENUM_TITLES[code];
