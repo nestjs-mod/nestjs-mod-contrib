@@ -1,5 +1,5 @@
 {
-    "name": "@nestjs-mod-sso/validation",
+    "name": "@nestjs-mod/validation",
     "description": "Validation module with an error filter and a pre-configured validation pipe",
     "version": "1.0.1",
     "keywords": [

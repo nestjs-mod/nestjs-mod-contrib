@@ -1,5 +1,5 @@
 
-# @nestjs-mod-sso/validation
+# @nestjs-mod/validation
 
 Validation module with an error filter and a pre-configured validation pipe
 
@@ -8,7 +8,7 @@ Validation module with an error filter and a pre-configured validation pipe
 ## Installation
 
 ```bash
-npm i --save @nestjs-mod-sso/validation
+npm i --save @nestjs-mod/validation
 ```
 
 
@@ -56,11 +56,11 @@ Validation module with an error filter and a pre-configured validation pipe
 
 MIT
 
-[npm-image]: https://badgen.net/npm/v/@nestjs-mod-sso/validation
-[npm-url]: https://npmjs.org/package/@nestjs-mod-sso/validation
+[npm-image]: https://badgen.net/npm/v/@nestjs-mod/validation
+[npm-url]: https://npmjs.org/package/@nestjs-mod/validation
 [telegram-image]: https://img.shields.io/badge/group-telegram-blue.svg?maxAge=2592000
 [telegram-url]: https://t.me/nestjs_mod
 [discord-image]: https://img.shields.io/badge/discord-online-brightgreen.svg
 [discord-url]: https://discord.gg/meY7UXaG
-[downloads-image]: https://badgen.net/npm/dm/@nestjs-mod-sso/validation
-[downloads-url]: https://npmjs.org/package/@nestjs-mod-sso/validation
+[downloads-image]: https://badgen.net/npm/dm/@nestjs-mod/validation
+[downloads-url]: https://npmjs.org/package/@nestjs-mod/validation
