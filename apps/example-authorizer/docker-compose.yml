@@ -1,0 +1,62 @@
+
+version: "3"
+services:
+  example-authorizer-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-authorizer-postgre-sql"
+    volumes:
+      - "example-authorizer-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-authorizer-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: "postgres"
+      POSTGRESQL_PASSWORD: "postgres_password"
+      POSTGRESQL_DATABASE: "postgres"
+  example-authorizer-authorizer:
+    image: "lakhansamani/authorizer:1.3.8"
+    container_name: "example-authorizer-authorizer"
+    ports:
+      - "8080:8080"
+    networks:
+      - "example-authorizer-network"
+    environment:
+      DATABASE_TYPE: "postgres"
+      DATABASE_URL: "postgres://postgres:postgres_password@example-authorizer-postgre-sql:5432/postgres"
+      DATABASE_NAME: "authorizer"
+      ADMIN_SECRET: "adminSecret"
+      PORT: "8080"
+      COOKIE_NAME: "authorizer"
+      DISABLE_PLAYGROUND: "true"
+      ACCESS_TOKEN_EXPIRY_TIME: "30m"
+      IMAGE: "lakhansamani/authorizer:1.3.8"
+      EXTERNAL_CLIENT_PORT: "8080"
+      ENV: "production"
+      RESET_PASSWORD_URL: "/reset-password"
+      ROLES: "user,admin"
+      DEFAULT_ROLES: "user"
+      JWT_ROLE_CLAIM: "role"
+      ORGANIZATION_NAME: "Authorizer"
+      ORGANIZATION_LOGO: "Authorizer Logo"
+      COUCHBASE_BUCKET: "authorizer"
+      COUCHBASE_BUCKET_RAM_QUOTA: "1000"
+      COUCHBASE_SCOPE: "_default"
+    tty: true
+    restart: "always"
+    depends_on: {}
+networks:
+  example-authorizer-network:
+    driver: "bridge"
+volumes:
+  example-authorizer-postgre-sql-volume:
+    name: "example-authorizer-postgre-sql-volume"

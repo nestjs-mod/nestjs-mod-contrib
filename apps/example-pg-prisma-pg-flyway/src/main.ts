@@ -12,15 +12,14 @@ import { DOCKER_COMPOSE_FILE, DockerCompose, DockerComposePostgreSQL } from '@ne
 import { PgFlyway } from '@nestjs-mod/pg-flyway';
 import { NestjsPinoLoggerModule } from '@nestjs-mod/pino';
 import { ECOSYSTEM_CONFIG_FILE, Pm2 } from '@nestjs-mod/pm2';
-import { PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
+import { FakePrismaClient, PRISMA_SCHEMA_FILE, PrismaModule } from '@nestjs-mod/prisma';
 import { TerminusHealthCheckModule } from '@nestjs-mod/terminus';
 import { MemoryHealthIndicator } from '@nestjs/terminus';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { PrismaClient } from '@prisma/pg-flyway-pg-prisma-client';
 import { join } from 'path';
-import { Pool } from 'pg';
 import { flywayPrismaFeatureName } from './app/app.constants';
 import { AppModule } from './app/app.module';
+import { PrismaClient } from './prisma-client';
 
 const rootFolder = join(__dirname, '..', '..', '..');
 const appFolder = join(rootFolder, 'apps', 'example-pg-prisma-pg-flyway');
@@ -59,12 +58,12 @@ bootstrapNestApplication({
           featureName: flywayPrismaFeatureName,
           prismaClientFactory: async (options) => {
             const { url, ...otherOoptions } = options;
-            const pool = new Pool({ connectionString: url });
-            const adapter = new PrismaPg(pool);
+            const adapter = new PrismaPg({ connectionString: url });
             return new PrismaClient({ adapter, ...otherOoptions });
           },
           addMigrationScripts: false,
-          previewFeatures: ['driverAdapters'],
+          previewFeatures: ['queryCompiler', 'driverAdapters'],
+          output: join(appFolder, 'src', 'prisma-client'),
         },
       }),
     ],

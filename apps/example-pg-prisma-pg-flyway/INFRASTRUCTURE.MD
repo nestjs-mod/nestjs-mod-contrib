@@ -126,7 +126,8 @@ Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only 
 |`featureName`|**optional**|```pg-flyway-pg-prisma```|
 |`schemaFile`|**optional**|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-pg-prisma-pg-flyway/src/prisma/pg-flyway-pg-prisma-schema.prisma```|
 |`addMigrationScripts`|**optional**|```false```|
-|`previewFeatures`|**optional**|[ ```driverAdapters``` ]|
+|`output`|**optional**|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-pg-prisma-pg-flyway/src/prisma-client```|
+|`previewFeatures`|**optional**|[ ```queryCompiler```, ```driverAdapters``` ]|
 |`prismaClientFactory`|**optional**|```prismaClientFactory```|
 
 ## Feature modules

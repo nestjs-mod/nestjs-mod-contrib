@@ -1,7 +1,7 @@
 //import { InjectPrismaClient, FakePrismaClient as PrismaClient } from '@nestjs-mod/prisma';
 import { InjectPrismaClient } from '@nestjs-mod/prisma';
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/pg-flyway-pg-prisma-client';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class AppService {

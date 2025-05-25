@@ -1,0 +1,119 @@
+
+version: "3"
+services:
+  example-sso-postgre-sql:
+    image: "bitnami/postgresql:15.5.0"
+    container_name: "example-sso-postgre-sql"
+    volumes:
+      - "example-sso-postgre-sql-volume:/bitnami/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - "example-sso-network"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "pg_isready -U postgres"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+    environment:
+      POSTGRESQL_USERNAME: "postgres"
+      POSTGRESQL_PASSWORD: "postgres_password"
+      POSTGRESQL_DATABASE: "postgres"
+  example-sso-minio:
+    image: "bitnami/minio:2024.2.9"
+    container_name: "example-sso-minio"
+    volumes:
+      - "example-sso-minio-volume:/bitnami/minio/data"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    networks:
+      - "example-sso-network"
+    environment:
+      MINIO_ROOT_USER: "FWGmrAGaeMKM"
+      MINIO_ROOT_PASSWORD: "QatVJuLoZRARlJguoZMpoKvZMJHzvuOR"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "mc"
+        - "ready"
+        - "local"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-sso-redis:
+    image: "bitnami/redis:7.2"
+    container_name: "example-sso-redis"
+    volumes:
+      - "example-sso-redis-volume:/bitnami/redis/data"
+    ports:
+      - "6379:6379"
+    networks:
+      - "example-sso-network"
+    environment:
+      REDIS_DATABASE: "0"
+      REDIS_PASSWORD: "CHmeOQrZWUHwgahrfzsrzuREOxgAENsC"
+      REDIS_DISABLE_COMMANDS: "FLUSHDB,FLUSHALL"
+      REDIS_IO_THREADS: "2"
+      REDIS_IO_THREADS_DO_READS: "yes"
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping | grep PONG"
+      interval: "5s"
+      timeout: "5s"
+      retries: 5
+    tty: true
+    restart: "always"
+  example-sso-single-sign-on:
+    image: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.7.0"
+    container_name: "example-sso-single-sign-on"
+    ports:
+      - "8080:8080"
+    networks:
+      - "example-sso-network"
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres_password@example-sso-postgre-sql:5432/postgres?schema=public"
+      SINGLE_SIGN_ON_SSO_ADMIN_SECRET: "adminSecret"
+      SINGLE_SIGN_ON_SSO_ADMIN_EMAIL: "nestjs-mod-sso@site15.ru"
+      SINGLE_SIGN_ON_SSO_ADMIN_USERNAME: "admin"
+      SINGLE_SIGN_ON_SSO_ADMIN_PASSWORD: "SbxcbII7RUvCOe9TDXnKhfRrLJW5cGDA"
+      SINGLE_SIGN_ON_MINIO_SERVER_HOST: "example-sso-minio"
+      SINGLE_SIGN_ON_MINIO_ACCESS_KEY: "FWGmrAGaeMKM"
+      SINGLE_SIGN_ON_MINIO_SECRET_KEY: "QatVJuLoZRARlJguoZMpoKvZMJHzvuOR"
+      SINGLE_SIGN_ON_KEYV_URL: "redis://:CHmeOQrZWUHwgahrfzsrzuREOxgAENsC@example-sso-redis:6379"
+      SINGLE_SIGN_ON_SSO_DEFAULT_PUBLIC_PROJECTS: "Beijing:ru=Пекин,Jq6GQ6Rzz6x8HNOD4x2Hc2eM0cfiCVUzGfsi,X6nk0OZXQJboSEfugnH35e9oSeg5RFlV0DQprtYyYDQjNli9mA;Moscow:ru=Москва,OceX08HGZ89PTkPpg9KDk5ErY1uMfDcfFKkw,VJztpDIwvqG6IkTVEIDEw1Ed2Wu5oHu6zfBe7CCJFrCtyWO2Yv;New York:ru=Нью-Йорк,4OGD25Rmn3W3MP0kMd7c90rGP1WwK8u4wL1w,qm8nc9MgKyvd6Hgl3jY5BjgDFSBqNvxcu6o52kDjIC168OsM1R;"
+      SINGLE_SIGN_ON_SSO_DEFAULT_PROJECT: "default:ru=по умолчанию,KzMRNEZTetzatIgQPVSDYfeGyaZrbLzkcxNc,qaHkVpAtUVIpDdLXMlAOzsBfMRJblWoHpXguYQRBuSEBpGKbWt"
+      SINGLE_SIGN_ON_SSO_DISABLE_EMAIL_VERIFICATION: ""
+      SINGLE_SIGN_ON_SSO_SERVER_URL: "http://localhost:8080"
+      SINGLE_SIGN_ON_SSO_CLIENT_URL: "http://localhost:8080"
+      SINGLE_SIGN_ON_PORT: "8080"
+      SINGLE_SIGN_ON_SSO_USER_AVAILABLE_ROLES: "admin,manager,user"
+      SINGLE_SIGN_ON_SSO_USER_DEFAULT_ROLES: "user"
+      SINGLE_SIGN_ON_SSO_ADMIN_DEFAULT_ROLES: "admin"
+      SINGLE_SIGN_ON_SSO_MANAGER_DEFAULT_ROLES: "manager"
+      SINGLE_SIGN_ON_SSO_JWT_SECRET_KEY: "AcJwUY9AP6FPf8XnfwbSuW7ZjwoaPiFJ"
+      SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN: "30m"
+      SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN: "24h"
+      SINGLE_SIGN_ON_SSO_CACHE_TTL: "15000"
+      IMAGE: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.7.0"
+      EXTERNAL_CLIENT_PORT: "8080"
+    tty: true
+    restart: "always"
+    depends_on: {}
+networks:
+  example-sso-network:
+    driver: "bridge"
+volumes:
+  example-sso-postgre-sql-volume:
+    name: "example-sso-postgre-sql-volume"
+  example-sso-minio-volume:
+    name: "example-sso-minio-volume"
+  example-sso-redis-volume:
+    name: "example-sso-redis-volume"
