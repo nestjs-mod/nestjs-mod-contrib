@@ -185,6 +185,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   }
 
   private updatePrismaSchemaFile() {
+    const packageJsonFilePath = this.packageJsonService.getPackageJsonFilePath();
     let prismaSchema = this.prismaSchemaFileService.read();
 
     if (!prismaSchema) {
@@ -200,7 +201,12 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
   provider = "prisma-client-js"
   ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
   output   = "${
-    this.prismaConfiguration.output || `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client`
+    this.prismaConfiguration.output
+      ? this.prismaConfiguration.output.replace(
+          packageJsonFilePath ? dirname(packageJsonFilePath) : '',
+          this.getPathToRootFromPrismaSchemaFile()
+        )
+      : `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client`
   }"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0
@@ -252,7 +258,14 @@ model ${prismaFeatureName}User {
     const newGenerator = `generator client {
   provider = "prisma-client-js"
   ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
-  output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/${clientNodeJSModuleName}"
+  output   = "${
+    this.prismaConfiguration.output
+      ? this.prismaConfiguration.output.replace(
+          packageJsonFilePath ? dirname(packageJsonFilePath) : '',
+          this.getPathToRootFromPrismaSchemaFile()
+        )
+      : `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client`
+  }"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0
       ? `binaryTargets = ${JSON.stringify(this.prismaConfiguration.binaryTargets)}`
