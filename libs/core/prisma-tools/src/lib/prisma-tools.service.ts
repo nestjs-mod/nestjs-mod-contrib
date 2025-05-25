@@ -4,25 +4,19 @@ import { ConfigModel } from '@nestjs-mod/common';
 import { Logger } from '@nestjs/common';
 import { basename } from 'path';
 import { PrismaToolsStaticEnvironments } from './prisma-tools.environments';
-import {
-  DATABASE_ERROR_ENUM_TITLES,
-  DatabaseErrorEnum,
-} from './prisma-tools.errors';
+import { DATABASE_ERROR_ENUM_TITLES, DatabaseErrorEnum } from './prisma-tools.errors';
 
 const ERROR_CODE_P2002 = 'P2002';
 const ERROR_CODE_P2025 = 'P2025';
 const ERROR_SUBSTRING_RECORD_NOT_FOUND = 'NotFoundError';
-const ERROR_SUBSTRING_DELETE_RECORD_NOT_FOUND =
-  'Record to delete does not exist';
+const ERROR_SUBSTRING_DELETE_RECORD_NOT_FOUND = 'Record to delete does not exist';
 const ERROR_SUBSTRING_UPDATE_RECORD_NOT_FOUND = 'Record to update not found';
 
 @ConfigModel()
 export class PrismaToolsService {
   private logger = new Logger(PrismaToolsService.name);
 
-  constructor(
-    private readonly prismaToolsStaticEnvironments: PrismaToolsStaticEnvironments
-  ) {}
+  constructor(private readonly prismaToolsStaticEnvironments: PrismaToolsStaticEnvironments) {}
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   convertPrismaErrorToDbError(exception: any) {
@@ -32,10 +26,7 @@ export class PrismaToolsService {
         .join('');
       const originalError = Object.assign(new Error(), { stack: stacktrace });
 
-      if (
-        String(exception?.name).startsWith('PrismaClient') ||
-        String(exception?.code).startsWith('P')
-      ) {
+      if (String(exception?.name).startsWith('PrismaClient') || String(exception?.code).startsWith('P')) {
         if (exception?.code === 'P2002') {
           return {
             message: DATABASE_ERROR_ENUM_TITLES[DatabaseErrorEnum.UNIQUE_ERROR],
@@ -49,10 +40,7 @@ export class PrismaToolsService {
         if (exception?.code === 'P2025') {
           if (exception.meta?.['cause'] === 'Record to update not found.') {
             return {
-              message:
-                DATABASE_ERROR_ENUM_TITLES[
-                  DatabaseErrorEnum.INVALID_IDENTIFIER
-                ],
+              message: DATABASE_ERROR_ENUM_TITLES[DatabaseErrorEnum.INVALID_IDENTIFIER],
               stacktrace,
               code: DatabaseErrorEnum.INVALID_IDENTIFIER,
               metadata: exception?.meta,
@@ -68,10 +56,7 @@ export class PrismaToolsService {
           }
 
           return {
-            message:
-              DATABASE_ERROR_ENUM_TITLES[
-                DatabaseErrorEnum.INVALID_LINKED_TABLE_IDENTIFIER
-              ],
+            message: DATABASE_ERROR_ENUM_TITLES[DatabaseErrorEnum.INVALID_LINKED_TABLE_IDENTIFIER],
             stacktrace,
             code: DatabaseErrorEnum.INVALID_LINKED_TABLE_IDENTIFIER,
             metadata: exception?.meta,
@@ -82,8 +67,7 @@ export class PrismaToolsService {
         this.logger.error(exception, exception.stack);
 
         return {
-          message:
-            DATABASE_ERROR_ENUM_TITLES[DatabaseErrorEnum.DATABASE_QUERY_ERROR],
+          message: DATABASE_ERROR_ENUM_TITLES[DatabaseErrorEnum.DATABASE_QUERY_ERROR],
           stacktrace,
           code: DatabaseErrorEnum.DATABASE_QUERY_ERROR,
           metadata: exception?.meta,
@@ -132,11 +116,17 @@ export class PrismaToolsService {
   }
 
   isErrorOfRecordNotFound(err: Error): boolean {
+    let str: string;
+    try {
+      str = JSON.stringify(err);
+    } catch (error) {
+      str = String(err);
+    }
     return (
-      String(err).includes(ERROR_SUBSTRING_RECORD_NOT_FOUND) ||
-      String(err).includes(ERROR_CODE_P2025) ||
-      String(err).includes(ERROR_SUBSTRING_DELETE_RECORD_NOT_FOUND) ||
-      String(err).includes(ERROR_SUBSTRING_UPDATE_RECORD_NOT_FOUND)
+      String(str).includes(ERROR_SUBSTRING_RECORD_NOT_FOUND) ||
+      String(str).includes(ERROR_CODE_P2025) ||
+      String(str).includes(ERROR_SUBSTRING_DELETE_RECORD_NOT_FOUND) ||
+      String(str).includes(ERROR_SUBSTRING_UPDATE_RECORD_NOT_FOUND)
     );
   }
 
@@ -146,8 +136,7 @@ export class PrismaToolsService {
     error: any,
     defaultError: any = null
   ) {
-    return prismaError.code === ERROR_CODE_P2002 &&
-      prismaError.meta?.target.includes(field as string)
+    return prismaError.code === ERROR_CODE_P2002 && prismaError.meta?.target.includes(field as string)
       ? error
       : defaultError;
   }
@@ -159,9 +148,7 @@ export class PrismaToolsService {
     defaultError: any = null
   ) {
     return prismaError.code === ERROR_CODE_P2002 &&
-      fields.filter((field) =>
-        prismaError.meta?.target.includes(field as string)
-      ).length === fields.length
+      fields.filter((field) => prismaError.meta?.target.includes(field as string)).length === fields.length
       ? error
       : defaultError;
   }
@@ -173,16 +160,8 @@ export class PrismaToolsService {
       error: any;
     }[]
   ) {
-    const firstError = errors.find((error) =>
-      this.isErrorOfUniqueField<T>(prismaError, error.field, true)
-    );
+    const firstError = errors.find((error) => this.isErrorOfUniqueField<T>(prismaError, error.field, true));
 
-    return firstError
-      ? this.isErrorOfUniqueField<T>(
-          prismaError,
-          firstError.field,
-          firstError.error
-        )
-      : prismaError;
+    return firstError ? this.isErrorOfUniqueField<T>(prismaError, firstError.field, firstError.error) : prismaError;
   }
 }
