@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.0.0...prisma-tools-v1.0.1) (2025-05-25)
+
+
+### Bug Fixes
+
+* update logic for convert prisma errors to string ([136ca8f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/136ca8f3e0cffd02f538219676dc08b9e5c7faa3))
+
 # 1.0.0 (2025-05-24)
 
 
