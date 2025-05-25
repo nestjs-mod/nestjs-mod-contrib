@@ -199,7 +199,9 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       prismaSchema = `generator client {
   provider = "prisma-client-js"
   ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
-  output   = "${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client"
+  output   = "${
+    this.prismaConfiguration.output || `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client`
+  }"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0
       ? `binaryTargets = ${JSON.stringify(this.prismaConfiguration.binaryTargets)}`

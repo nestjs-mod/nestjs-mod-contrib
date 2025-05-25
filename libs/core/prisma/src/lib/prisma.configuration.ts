@@ -70,6 +70,11 @@ export class PrismaConfiguration {
   engineType?: 'binary' | 'library';
 
   @ConfigModelProperty({
+    description: 'Directory where Prisma Client is generated, e.g. ../src/generated/prisma',
+  })
+  output?: string;
+
+  @ConfigModelProperty({
     description: 'Preview features (infrastructure)',
   })
   previewFeatures?: string[];
