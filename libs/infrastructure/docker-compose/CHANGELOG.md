@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.20.0...docker-compose-v1.20.1) (2025-05-25)
+
+
+### Bug Fixes
+
+* update image name to ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.10.0 ([8257034](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/825703483741c8e4fa888be96f980f08c2ff35b7))
+
 # [1.20.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.19.3...docker-compose-v1.20.0) (2025-05-24)
 
 
