@@ -47,7 +47,7 @@ export class AppService {
         signupUserResult.errors[0].stack
       );
       if (
-        !signupUserResult.errors[0].message.includes('has already signed up')
+        !signupUserResult.errors[0].message?.includes('has already signed up')
       ) {
         throw new HttpException(signupUserResult.errors[0].message, HttpStatus.BAD_REQUEST);
       }
