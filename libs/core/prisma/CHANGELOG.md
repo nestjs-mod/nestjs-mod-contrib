@@ -1,3 +1,15 @@
+# [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.13.0...prisma-v1.14.0) (2025-05-25)
+
+
+### Bug Fixes
+
+* update logic for create path to output ([e3920d2](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/e3920d25b206a2c5394a1fc4a8f1c4c62665a4fa))
+
+
+### Features
+
+* add "output" optios for change directory where Prisma Client is generated ([89e6528](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/89e65282dd1abd799795983c88da8658e6a203f5))
+
 # [1.13.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.12.1...prisma-v1.13.0) (2025-05-24)
 
 
