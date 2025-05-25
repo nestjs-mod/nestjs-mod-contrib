@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.14.0...prisma-v1.14.1) (2025-05-25)
+
+
+### Bug Fixes
+
+* update for small pach names ([99055c9](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/99055c97d0d4a2a90d6174e93b6d28e1e4e37949))
+
 # [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.13.0...prisma-v1.14.0) (2025-05-25)
 
 
