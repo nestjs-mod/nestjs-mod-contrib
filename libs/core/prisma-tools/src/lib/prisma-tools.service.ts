@@ -136,7 +136,7 @@ export class PrismaToolsService {
     error: any,
     defaultError: any = null
   ) {
-    return prismaError.code === ERROR_CODE_P2002 && prismaError.meta?.target.includes(field as string)
+    return prismaError.code === ERROR_CODE_P2002 && prismaError.meta?.target?.includes(field as string)
       ? error
       : defaultError;
   }
@@ -148,7 +148,7 @@ export class PrismaToolsService {
     defaultError: any = null
   ) {
     return prismaError.code === ERROR_CODE_P2002 &&
-      fields.filter((field) => prismaError.meta?.target.includes(field as string)).length === fields.length
+      fields.filter((field) => prismaError.meta?.target?.includes(field as string)).length === fields.length
       ? error
       : defaultError;
   }

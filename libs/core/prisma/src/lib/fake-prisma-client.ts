@@ -1,6 +1,10 @@
 export class FakePrismaClient {
   fakeClient = true;
 
+  constructor(options: any) {
+    // null
+  }
+
   $on() {
     // null
   }
