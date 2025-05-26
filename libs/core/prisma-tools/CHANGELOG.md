@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.0.2...prisma-tools-v1.0.3) (2025-05-26)
+
+
+### Bug Fixes
+
+* update logic for isErrorOfUniqueField method ([7e0355f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/7e0355f45e257fd3f6b3cbfe729ff343e39cb616))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.0.1...prisma-tools-v1.0.2) (2025-05-25)
 
 
