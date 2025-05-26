@@ -131,14 +131,25 @@ export class PrismaToolsService {
   }
 
   isErrorOfUniqueField<T>(
-    prismaError: { code: string; meta: { target: string[] } },
+    prismaError: { code: string; meta: { target: string[] } } | { code: string; meta: { cause: { fields: string[] } } },
     field: keyof T,
     error: any,
     defaultError: any = null
   ) {
-    return prismaError.code === ERROR_CODE_P2002 && prismaError.meta?.target?.includes(field as string)
+    return prismaError.code === ERROR_CODE_P2002 && this.getErrorFields(prismaError).includes(field as string)
       ? error
       : defaultError;
+  }
+
+  private getErrorFields(
+    prismaError: { code: string; meta: { target: string[] } } | { code: string; meta: { cause: { fields: string[] } } }
+  ) {
+    // default behavior
+    if ('target' in prismaError.meta) {
+      return prismaError.meta?.target.map((field) => field.replace(new RegExp('"', 'ig'), '')) || [];
+    }
+    // previewFeatures: ['queryCompiler', 'driverAdapters']
+    return prismaError.meta?.cause?.fields.map((field) => field.replace(new RegExp('"', 'ig'), '')) || [];
   }
 
   isErrorOfUniqueFields<T>(
@@ -148,7 +159,7 @@ export class PrismaToolsService {
     defaultError: any = null
   ) {
     return prismaError.code === ERROR_CODE_P2002 &&
-      fields.filter((field) => prismaError.meta?.target?.includes(field as string)).length === fields.length
+      fields.filter((field) => this.getErrorFields(prismaError).includes(field as string)).length === fields.length
       ? error
       : defaultError;
   }
