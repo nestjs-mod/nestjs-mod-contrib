@@ -1,3 +1,10 @@
+## [1.14.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.14.1...prisma-v1.14.2) (2025-05-28)
+
+
+### Bug Fixes
+
+* add options for change main provider ([73eddbf](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/73eddbf387de804e985b79a8b3aa85824759a97a))
+
 ## [1.14.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.14.0...prisma-v1.14.1) (2025-05-25)
 
 
