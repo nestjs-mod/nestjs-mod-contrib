@@ -75,6 +75,12 @@ export class PrismaConfiguration {
   output?: string;
 
   @ConfigModelProperty({
+    description: 'Default provider',
+    default: 'prisma-client-js',
+  })
+  provider?: string;
+
+  @ConfigModelProperty({
     description: 'Preview features (infrastructure)',
   })
   previewFeatures?: string[];

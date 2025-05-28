@@ -365,6 +365,7 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`binaryTargets`|Binary targets (infrastructure)|**optional**|-|-|
 |`engineType`|Binary engine type (binary and library)|**optional**|-|-|
 |`output`|Directory where Prisma Client is generated, e.g. ../src/generated/prisma|**optional**|-|-|
+|`provider`|Default provider|**optional**|```prisma-client-js```|-|
 |`previewFeatures`|Preview features (infrastructure)|**optional**|-|-|
 |`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
 |`prismaClientFactory`|PrismaClient factory function (example use for https://www.prisma.io/docs/orm/overview/databases/postgresql#using-the-node-postgres-driver)|**optional**|-|-|

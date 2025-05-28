@@ -198,7 +198,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
         : '';
 
       prismaSchema = `generator client {
-  provider = "prisma-client-js"
+  provider = "${this.prismaConfiguration.provider}"
   ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
   output   = "${
     this.prismaConfiguration.output
@@ -256,7 +256,7 @@ model ${prismaFeatureName}User {
       : `@prisma/client`;
 
     const newGenerator = `generator client {
-  provider = "prisma-client-js"
+  provider = "${this.prismaConfiguration.provider}"
   ${this.prismaConfiguration.engineType ? `engineType = "${this.prismaConfiguration.engineType}"` : ''}
   output   = "${
     this.prismaConfiguration.output
