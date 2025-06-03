@@ -2,10 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import { Observable, finalize } from 'rxjs';
 
 import WebSocket from 'ws';
-import {
-  Configuration,
-  FilesApi,
-} from './rest-sdk';
+import { Configuration, FilesApi } from './rest-sdk';
 
 export class FilesRestSdkService {
   private filesApi?: FilesApi;
@@ -38,22 +35,11 @@ export class FilesRestSdkService {
     }
   }
 
-  webSocket<T>({
-    path,
-    eventName,
-    options,
-  }: {
-    path: string;
-    eventName: string;
-    options?: WebSocket.ClientOptions;
-  }) {
-    const wss = new WebSocket(
-      this.options?.serverUrl?.replace('/api', '').replace('http', 'ws') + path,
-      {
-        ...(options || {}),
-        headers: this.wsHeaders || {},
-      }
-    );
+  webSocket<T>({ path, eventName, options }: { path: string; eventName: string; options?: WebSocket.ClientOptions }) {
+    const wss = new WebSocket(this.options?.serverUrl?.replace('/api', '').replace('http', 'ws') + path, {
+      ...(options || {}),
+      headers: this.wsHeaders || {},
+    });
     return new Observable<{ data: T; event: string }>((observer) => {
       wss.on('open', () => {
         wss.on('message', (data) => {

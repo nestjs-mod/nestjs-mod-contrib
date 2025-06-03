@@ -3,6 +3,7 @@ import { Observable, map, mergeMap, of } from 'rxjs';
 import { FilesRestSdkAngularService } from '../generated/files-rest-sdk-angular.module';
 import { FilesPresignedUrlsInterface } from '../generated/rest-sdk';
 
+
 export const MINIO_URL = new InjectionToken<string>('MinioURL');
 
 @Injectable({ providedIn: 'root' })

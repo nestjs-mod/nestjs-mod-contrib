@@ -6,6 +6,7 @@ import { FilesStaticEnvironments } from './files.environments';
 import { WebhookModule } from '@nestjs-mod/webhook';
 import { FILES_WEBHOOK_EVENTS } from './types/files-webhooks';
 
+
 export const { FilesModule } = createNestModule({
   moduleName: FILES_MODULE,
   moduleDescription:
