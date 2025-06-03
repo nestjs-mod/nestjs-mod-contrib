@@ -27,23 +27,6 @@ if (process.env['GENERATE_SWAGGER_JSON'] === 'true') {
   process.env.TWO_FACTOR_DATABASE_URL = 'url';
   process.env.NOTIFICATIONS_DATABASE_URL = 'url';
 
-  const files2: string[] = [
-    'libs/feature/notifications/src/lib/generated/prisma-client/internal/class.ts',
-    'libs/feature/two-factor/src/lib/generated/prisma-client/internal/class.ts',
-    'libs/feature/webhook/src/lib/generated/prisma-client/internal/class.ts',
-  ];
-  for (let file of files2) {
-    writeFileSync(
-      file,
-      readFileSync(file)
-        .toString()
-        .split('("@prisma/client/runtime')
-        .join('("node_modules/@prisma/client/runtime')
-        .split('require.resolve(')
-        .join("(await import('node:path')).resolve(")
-    );
-  }
-
   const swaggerJsonGenerator = async (module: any, name: string, extraModels: any) => {
     spawnSync(
       join(rootFolder, 'node_modules/.bin/prisma'),
@@ -83,6 +66,7 @@ if (process.env['GENERATE_SWAGGER_JSON'] === 'true') {
           ' '
         )
       );
+      rmSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/rest-sdk/README.md`), { recursive: true });
       writeFileSync(
         join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest-sdk-angular.module.ts`),
         `import { NgModule, Injectable } from '@angular/core';
@@ -320,6 +304,23 @@ export class ${Name}RestSdkService {
       'notifications',
       NOTIFICATIONS_EXTRA_MODELS
     );
+
+  const files2: string[] = [
+    'libs/feature/notifications/src/lib/generated/prisma-client/internal/class.ts',
+    'libs/feature/two-factor/src/lib/generated/prisma-client/internal/class.ts',
+    'libs/feature/webhook/src/lib/generated/prisma-client/internal/class.ts',
+  ];
+  for (let file of files2) {
+    writeFileSync(
+      file,
+      readFileSync(file)
+        .toString()
+        .split('("@prisma/client/runtime')
+        .join('("node_modules/@prisma/client/runtime')
+        .split('require.resolve(')
+        .join("(await import('node:path')).resolve(")
+    );
+  }
 
     await swaggerSdkGenerator('files');
     await swaggerSdkGenerator('webhook');
