@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/webhook-afat",
   "description": "Webhook UI components and tools for AFAT (Angular, Formly, Antd, Transloco) and rest-sdk for work with backend of this module from Angular appliaction",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "keywords": [
     "feature",
     "nestjs",
