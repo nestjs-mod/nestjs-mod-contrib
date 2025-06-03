@@ -53,7 +53,7 @@
         "jestConfig": "libs/feature/files/jest.config.ts"
       }
     },
-    "skip-semantic-release": {
+    "semantic-release": {
       "executor": "@theunderscorer/nx-semantic-release:semantic-release",
       "options": {
         "buildTarget": "${PROJECT_NAME}:build",
