@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.0.0...two-factor-v1.0.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* update ci for release ([cca5996](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/cca59960020755f8dce31023c035a4289b7e8be0))
+
 # 1.0.0 (2025-06-03)
 
 
