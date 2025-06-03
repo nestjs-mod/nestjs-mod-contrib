@@ -6,6 +6,7 @@ export * from './lib/files.environments';
 export * from './lib/files.errors';
 export * from './lib/files.module';
 export * from './lib/controllers/files.controller';
+export * from './lib/generated/files-rest_sdk.module';
 export * from './lib/types/dto';
 export * from './lib/types/files-request';
 export * from './lib/types/files-role';

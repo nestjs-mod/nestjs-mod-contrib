@@ -1,5 +1,6 @@
 export * from './lib/forms/webhook-form/webhook-form.component';
 export * from './lib/forms/webhook-log-form/webhook-log-form.component';
+export * from './lib/generated/webhook-rest_sdk-angular.module';
 export * from './lib/grids/webhook-grid/webhook-grid.component';
 export * from './lib/grids/webhook-log-grid/webhook-log-grid.component';
 export * from './lib/services/webhook-auth.service';
