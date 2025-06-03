@@ -1,3 +1,10 @@
+# [1.15.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.14.2...prisma-v1.15.0) (2025-06-03)
+
+
+### Features
+
+* add feature modules from https://github.com/nestjs-mod/nestjs-mod-sso ([31a870f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/31a870fb40f20e9a8f03ecb14dd1a341c60551a5))
+
 ## [1.14.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.14.1...prisma-v1.14.2) (2025-05-28)
 
 
