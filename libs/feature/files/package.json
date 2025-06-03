@@ -1,7 +1,7 @@
 {
   "name": "@nestjs-mod/files",
   "description": "Files module with an error filter, controller and rest-sdk for work with module from other nodejs appliaction",
-  "version": "1.1.1",
+  "version": "1.0.0",
   "keywords": [
     "feature",
     "nestjs",
