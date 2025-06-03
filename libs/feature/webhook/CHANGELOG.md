@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-v1.0.0...webhook-v1.1.0) (2025-06-03)
+
+
+### Features
+
+* add sdk with module to index ([16103e5](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/16103e597841a86b9c02e2e927f565bf4169369b))
+
 # 1.0.0 (2025-06-03)
 
 
