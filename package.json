@@ -54,7 +54,7 @@
     "pm2:stop": "./node_modules/.bin/pm2 delete all",
     "_____prod infra_____": "_____prod infra_____",
     "start": "./node_modules/.bin/nx run-many -t=start",
-    "build": "npm run generate && npm run tsc:lint && ./node_modules/.bin/nx run-many -t=build --skip-nx-cache=true",
+    "build": "npm run generate && npm run tsc:lint && ./node_modules/.bin/nx run-many -t=build --skip-nx-cache=true && ./node_modules/.bin/ts-node fix-new-clients.ts",
     "start:prod:cli": "./node_modules/.bin/nx start cli --host=0.0.0.0",
     "start:prod:example-pino-logger": "./node_modules/.bin/nx start example-pino-logger",
     "start:prod:example-terminus": "./node_modules/.bin/nx start example-terminus",
