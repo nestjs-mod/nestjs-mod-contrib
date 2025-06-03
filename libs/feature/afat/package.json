@@ -1,8 +1,9 @@
 {
     "name": "@nestjs-mod/afat",
-    "description": "Common utilites for (AFAT): Angular, Formly, Antd, Transloco",
+    "description": "Common utilites for AFAT (Angular, Formly, Antd, Transloco)",
     "version": "1.1.0",
     "keywords": [
+        "feature",
         "nestjs",
         "nestjs-mod",
         "modules",

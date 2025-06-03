@@ -1,7 +1,7 @@
 
 # @nestjs-mod/afat
 
-Common utilites for (AFAT): Angular, Formly, Antd, Transloco
+Common utilites for AFAT (Angular, Formly, Antd, Transloco)
 
 [![NPM version][npm-image]][npm-url] [![monthly downloads][downloads-image]][downloads-url] [![Telegram][telegram-image]][telegram-url] [![Discord][discord-image]][discord-url]
 

@@ -1,0 +1,10 @@
+{
+  "Number of attempts of two factor code has been exhausted": "Количество попыток ввода двухфакторного кода исчерпано",
+  "recursive method recursiveGenTwoFactorCode has been run more than 10 times": "Рекурсивный метод recursiveGenTwoFactorCode был выполнен более 10 раз",
+  "Two factor code not set": "Двухфакторный код не установлен",
+  "Two factor error": "Ошибка двухфакторной аутентификации",
+  "Wrong two factor code": "Неправильный двухфакторный код",
+  "Two factor code is outdated": "Двухфакторный код устарел",
+  "Please wait 30 seconds": "Пожалуйста, подождите 30 секунд",
+  "Two-factor code has already been used": "Код двухфакторной аутентификации уже использован"
+}

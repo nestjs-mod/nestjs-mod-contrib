@@ -6,7 +6,7 @@ import {
 } from '@nestjs-mod/common';
 import { PrismaInfrastructureUpdaterService } from './infrastructure/prisma-infrastructure-updater.service';
 import { PrismaSchemaFileService } from './infrastructure/prisma-schema-file.service';
-import { PrismaClientFactoryService } from './prisma-client-factory.service';
+import { PrismaClientFactoryService } from './prisma_client-factory.service';
 import { PrismaConfiguration } from './prisma.configuration';
 import { PRISMA_MODULE_NAME } from './prisma.constants';
 import { PrismaEnvironments } from './prisma.environments';

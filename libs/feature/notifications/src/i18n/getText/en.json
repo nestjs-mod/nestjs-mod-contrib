@@ -1,0 +1,11 @@
+{
+  "Forbidden": "Forbidden",
+  "Notifications error": "Notifications error",
+  "Tenant ID not set": "Tenant ID not set",
+  "The letter was not sent because the transport parameters or the letter parameters were empty": "The letter was not sent because the transport parameters or the letter parameters were empty",
+  "User ID not set": "User ID not set",
+  "Event that fires after a notification is created": "Event that fires after a notification is created",
+  "Event that fires after a notification is sent": "Event that fires after a notification is sent",
+  "Event that fires after a notification is updated": "Event that fires after a notification is updated",
+  "Event that occurs when there is an error sending a notification": "Event that occurs when there is an error sending a notification"
+}

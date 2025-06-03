@@ -29,6 +29,16 @@
             "glob": "**/*.json",
             "input": "./libs/core/validation/src/i18n/getText/",
             "output": "i18n"
+          },
+          {
+            "glob": "**/*.po",
+            "input": "./libs/core/validation/src/i18n/getText/",
+            "output": "i18n"
+          },
+          {
+            "glob": "**/*.pot",
+            "input": "./libs/core/validation/src/i18n/getText/",
+            "output": "i18n"
           }
         ]
       }

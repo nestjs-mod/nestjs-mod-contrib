@@ -1,0 +1,11 @@
+{
+  "Forbidden": "Нет доступа",
+  "Notifications error": "Ошибка уведомлений",
+  "Tenant ID not set": "Идентификатор клиента не установлен",
+  "The letter was not sent because the transport parameters or the letter parameters were empty": "Письмо не было отправлено, потому что параметры транспорта или параметры письма были пустыми",
+  "User ID not set": "Идентификатор пользователя не установлен",
+  "Event that fires after a notification is created": "Событие которое срабатывает после создания уведомления",
+  "Event that fires after a notification is sent": "Событие которое срабатывает после отправки уведомления",
+  "Event that fires after a notification is updated": "Событие которое срабатывает после обновления уведомления",
+  "Event that occurs when there is an error sending a notification": "Событие, которое возникает при ошибке отправки уведомления"
+}

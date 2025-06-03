@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../../dist/libs/feature/webhook-afat",
+  "assets": [
+    {
+      "input": "src/i18n",
+      "glob": "**/*.json",
+      "output": "i18n"
+    },
+    {
+      "input": "src/i18n",
+      "glob": "**/*.po",
+      "output": "i18n"
+    },
+    {
+      "input": "src/i18n",
+      "glob": "**/*.pot",
+      "output": "i18n"
+    }
+  ],
+  "lib": {
+    "entryFile": "src/index.ts"
+  }
+}

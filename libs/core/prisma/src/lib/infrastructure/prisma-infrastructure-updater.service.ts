@@ -206,7 +206,7 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
           packageJsonFilePath ? dirname(packageJsonFilePath) : '',
           this.getPathToRootFromPrismaSchemaFile()
         )
-      : `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client`
+      : `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/.prisma/client`
   }"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0
@@ -264,7 +264,7 @@ model ${prismaFeatureName}User {
           packageJsonFilePath ? dirname(packageJsonFilePath) : '',
           this.getPathToRootFromPrismaSchemaFile()
         )
-      : `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/@prisma/client`
+      : `${this.getPathToRootFromPrismaSchemaFile()}/node_modules/.prisma/client`
   }"
   ${
     (this.prismaConfiguration.binaryTargets || []).length > 0

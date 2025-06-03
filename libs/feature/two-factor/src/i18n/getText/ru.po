@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+
+msgid "Number of attempts of two factor code has been exhausted"
+msgstr "Количество попыток ввода двухфакторного кода исчерпано"
+
+msgid "recursive method recursiveGenTwoFactorCode has been run more than 10 times"
+msgstr "Рекурсивный метод recursiveGenTwoFactorCode был выполнен более 10 раз"
+
+msgid "Two factor code not set"
+msgstr "Двухфакторный код не установлен"
+
+msgid "Two factor error"
+msgstr "Ошибка двухфакторной аутентификации"
+
+msgid "Wrong two factor code"
+msgstr "Неправильный двухфакторный код"
+
+msgid "Two factor code is outdated"
+msgstr "Двухфакторный код устарел"
+
+msgid "Please wait 30 seconds"
+msgstr "Пожалуйста, подождите 30 секунд"
+
+msgid "Two-factor code has already been used"
+msgstr "Код двухфакторной аутентификации уже использован"

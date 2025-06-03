@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client"
+  
+  output   = "../../../../../libs/feature/two-factor/src/lib/generated/prisma-client"
+  
+  previewFeatures = ["queryCompiler","driverAdapters"]
+}
+datasource db {
+  provider          = "postgres"
+  url               = env("SINGLE_SIGN_ON_TWO_FACTOR_DATABASE_URL")
+}
+generator prismaClassGenerator {
+  provider                        = "prisma-generator-nestjs-dto"
+  output                          = "../lib/generated/rest-dto"
+  annotateAllDtoProperties        = "true"
+  classValidation                 = "true"
+  createDtoPrefix                 = "Create"
+  definiteAssignmentAssertion     = "true"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  exportRelationModifierClasses   = "true"
+  fileNamingStyle                 = "kebab"
+  flatResourceStructure           = "false"
+  noDependencies                  = "false"
+  outputToNestJsResourceStructure = "false"
+  prettier                        = "true"
+  reExport                        = "false"
+  updateDtoPrefix                 = "Update"
+}
+
+model TwoFactorUser {
+  /// @DtoCreateHidden
+  id               String          @id(map: "PK_TWO_FACTOR_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  username         String?         @db.VarChar(255)
+  secret           String          @db.VarChar(100)
+  externalTenantId String          @db.Uuid
+  externalUserId   String          @db.Uuid
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  createdAt        DateTime        @default(now()) @db.Timestamp(6)
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  updatedAt        DateTime        @default(now()) @db.Timestamp(6)
+  TwoFactorCode    TwoFactorCode[]
+
+  @@unique([externalTenantId, externalUserId], map: "UQ_TWO_FACTOR_USER")
+  @@index([externalTenantId], map: "IDX_TWO_FACTOR_USER__EXTERNAL_TENANT_ID")
+}
+
+model TwoFactorCode {
+  /// @DtoCreateHidden
+  id               String        @id(map: "PK_TWO_FACTOR_CODES") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  type             String        @db.VarChar(512)
+  operationName    String        @db.VarChar(512)
+  code             String        @db.VarChar(100)
+  used             Boolean
+  outdated         Boolean
+  userId           String        @db.Uuid
+  externalTenantId String        @db.Uuid
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  createdAt        DateTime      @default(now()) @db.Timestamp(6)
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  updatedAt        DateTime      @default(now()) @db.Timestamp(6)
+  TwoFactorUser    TwoFactorUser @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_TWO_FACTOR_CODES__USER_ID")
+
+  @@unique([userId, operationName, type, code, externalTenantId], map: "UQ_TWO_FACTOR_CODES")
+  @@index([userId, externalTenantId], map: "IDX_TWO_FACTOR_CODES__USER_ID")
+  @@index([externalTenantId], map: "IDX_TWO_FACTOR_CODES__EXTERNAL_TENANT_ID")
+}
+
+model migrations_two_factor {
+  installed_rank Int      @id(map: "__migrations_two_factor_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "__migrations_two_factor_s_idx")
+  @@map("__migrations_two_factor")
+}

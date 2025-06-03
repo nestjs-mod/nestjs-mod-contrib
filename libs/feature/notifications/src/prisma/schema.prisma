@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client"
+  
+  output   = "../../../../../libs/feature/notifications/src/lib/generated/prisma-client"
+  
+  previewFeatures = ["queryCompiler","driverAdapters"]
+}
+datasource db {
+  provider          = "postgres"
+  url               = env("SINGLE_SIGN_ON_NOTIFICATIONS_DATABASE_URL")
+}
+generator prismaClassGenerator {
+  provider                        = "prisma-generator-nestjs-dto"
+  output                          = "../lib/generated/rest-dto"
+  annotateAllDtoProperties        = "true"
+  classValidation                 = "true"
+  createDtoPrefix                 = "Create"
+  definiteAssignmentAssertion     = "true"
+  dtoSuffix                       = "Dto"
+  entityPrefix                    = ""
+  entitySuffix                    = ""
+  exportRelationModifierClasses   = "true"
+  fileNamingStyle                 = "kebab"
+  flatResourceStructure           = "false"
+  noDependencies                  = "false"
+  outputToNestJsResourceStructure = "false"
+  prettier                        = "true"
+  reExport                        = "false"
+  updateDtoPrefix                 = "Update"
+}
+
+model NotificationsUser {
+  /// @DtoCreateHidden
+  id                                                                       String               @id(map: "PK_NOTIFICATIONS_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  externalTenantId                                                         String               @db.Uuid
+  externalUserId                                                           String               @db.Uuid
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  createdAt                                                                DateTime             @default(now()) @db.Timestamp(6)
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  updatedAt                                                                DateTime             @default(now()) @db.Timestamp(6)
+  NotificationsEvent_NotificationsEvent_recipientUserIdToNotificationsUser NotificationsEvent[] @relation("NotificationsEvent_recipientUserIdToNotificationsUser")
+  NotificationsEvent_NotificationsEvent_senderUserIdToNotificationsUser    NotificationsEvent[] @relation("NotificationsEvent_senderUserIdToNotificationsUser")
+
+  @@unique([externalTenantId, externalUserId], map: "UQ_NOTIFICATIONS_USER")
+  @@index([externalTenantId], map: "IDX_NOTIFICATIONS_USER__EXTERNAL_TENANT_ID")
+}
+
+model NotificationsEvent {
+  /// @DtoCreateHidden
+  id                                                                      String             @id(map: "PK_NOTIFICATIONS_EVENTS") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  type                                                                    String             @db.VarChar(512)
+  operationName                                                           String             @db.VarChar(512)
+  subject                                                                 String             @db.VarChar(512)
+  html                                                                    String
+  text                                                                    String?
+  attempt                                                                 Int
+  used                                                                    Boolean
+  error                                                                   Json?
+  senderUserId                                                            String?            @db.Uuid
+  senderData                                                              Json?
+  recipientGroupId                                                        String             @db.Uuid
+  recipientUserId                                                         String             @db.Uuid
+  recipientData                                                           Json?
+  externalTenantId                                                        String             @db.Uuid
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  createdAt                                                               DateTime           @default(now()) @db.Timestamp(6)
+  /// @DtoCreateHidden
+  /// @DtoUpdateHidden
+  updatedAt                                                               DateTime           @default(now()) @db.Timestamp(6)
+  NotificationsUser_NotificationsEvent_recipientUserIdToNotificationsUser NotificationsUser  @relation("NotificationsEvent_recipientUserIdToNotificationsUser", fields: [recipientUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_NOTIFICATIONS__RECIPIENT_USER_ID")
+  NotificationsUser_NotificationsEvent_senderUserIdToNotificationsUser    NotificationsUser? @relation("NotificationsEvent_senderUserIdToNotificationsUser", fields: [senderUserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_NOTIFICATIONS__SENDER_USER_ID")
+
+  @@unique([senderUserId, recipientUserId, operationName, type, html, subject, externalTenantId], map: "UQ_NOTIFICATIONS")
+  @@index([recipientGroupId, externalTenantId], map: "IDX_NOTIFICATIONS__RECIPIENT_GROUP_ID")
+  @@index([recipientUserId, externalTenantId], map: "IDX_NOTIFICATIONS__RECIPIENT_USER_ID")
+  @@index([senderUserId, externalTenantId], map: "IDX_NOTIFICATIONS__SENDER_USER_ID")
+  @@index([externalTenantId], map: "IDX_NOTIFICATIONS__EXTERNAL_TENANT_ID")
+}
+
+model migrations_notifications {
+  installed_rank Int      @id(map: "__migrations_notifications_pk")
+  version        String?  @db.VarChar(50)
+  description    String   @db.VarChar(200)
+  type           String   @db.VarChar(20)
+  script         String   @db.VarChar(1000)
+  checksum       Int?
+  installed_by   String   @db.VarChar(100)
+  installed_on   DateTime @default(now()) @db.Timestamp(6)
+  execution_time Int
+  success        Boolean
+
+  @@index([success], map: "__migrations_notifications_s_idx")
+  @@map("__migrations_notifications")
+}

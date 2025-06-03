@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "Number of attempts of two factor code has been exhausted"
+msgstr "Number of attempts of two factor code has been exhausted"
+
+msgid "recursive method recursiveGenTwoFactorCode has been run more than 10 times"
+msgstr "recursive method recursiveGenTwoFactorCode has been run more than 10 times"
+
+msgid "Two factor code not set"
+msgstr "Two factor code not set"
+
+msgid "Two factor error"
+msgstr "Two factor error"
+
+msgid "Wrong two factor code"
+msgstr "Wrong two factor code"
+
+msgid "Two factor code is outdated"
+msgstr "Two factor code is outdated"
+
+msgid "Please wait 30 seconds"
+msgstr "Please wait 30 seconds"
+
+msgid "Two-factor code has already been used"
+msgstr "Two-factor code has already been used"

@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"mime-version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "Forbidden"
+msgstr "Forbidden"
+
+msgid "Notifications error"
+msgstr "Notifications error"
+
+msgid "Tenant ID not set"
+msgstr "Tenant ID not set"
+
+msgid ""
+"The letter was not sent because the transport parameters or the letter "
+"parameters were empty"
+msgstr ""
+"The letter was not sent because the transport parameters or the letter "
+"parameters were empty"
+
+msgid "User ID not set"
+msgstr "User ID not set"
+
+msgid "Event that fires after a notification is created"
+msgstr "Event that fires after a notification is created"
+
+msgid "Event that fires after a notification is sent"
+msgstr "Event that fires after a notification is sent"
+
+msgid "Event that fires after a notification is updated"
+msgstr "Event that fires after a notification is updated"
+
+msgid "Event that occurs when there is an error sending a notification"
+msgstr "Event that occurs when there is an error sending a notification"

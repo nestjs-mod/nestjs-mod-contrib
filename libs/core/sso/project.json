@@ -20,6 +20,16 @@
             "glob": "**/*.json",
             "input": "./libs/core/sso/src/i18n/getText/",
             "output": "i18n"
+          },
+          {
+            "glob": "**/*.po",
+            "input": "./libs/core/sso/src/i18n/getText/",
+            "output": "i18n"
+          },
+          {
+            "glob": "**/*.pot",
+            "input": "./libs/core/sso/src/i18n/getText/",
+            "output": "i18n"
           }
         ]
       }
