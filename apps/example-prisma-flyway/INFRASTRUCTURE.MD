@@ -125,6 +125,7 @@ Next-generation Node.js and TypeScript ORM for NestJS-mod (preview version only 
 |`schemaFile`|**optional**|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/apps/example-prisma-flyway/src/prisma/flyway-prisma-schema.prisma```|
 |`addMigrationScripts`|**optional**|```false```|
 |`binaryTargets`|**optional**|[ ```native```, ```linux-musl-openssl-3.0.x```, ```linux-musl-openssl-3.0.x``` ]|
+|`output`|**optional**|```/home/endy/Projects/nestjs-mod/nestjs-mod-contrib/node_modules/@prisma/flyway-prisma-client```|
 
 ## Feature modules
 

@@ -1,7 +1,7 @@
 generator client {
   provider = "prisma-client-js"
   
-  output   = "../../../../node_modules/.prisma/client"
+  output   = "../../../../node_modules/@prisma/flyway-prisma-client"
   binaryTargets = ["native","linux-musl-openssl-3.0.x","linux-musl-openssl-3.0.x"]
   
 }

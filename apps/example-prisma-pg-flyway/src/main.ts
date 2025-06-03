@@ -62,6 +62,7 @@ bootstrapNestApplication({
               import(`@prisma/pg-flyway-prisma-client`),
           addMigrationScripts: false,
           binaryTargets: ['native', 'linux-musl-openssl-3.0.x', 'linux-musl-openssl-3.0.x'],
+          output: join(rootFolder, 'node_modules', '@prisma/pg-flyway-prisma-client'),
         },
       }),
     ],

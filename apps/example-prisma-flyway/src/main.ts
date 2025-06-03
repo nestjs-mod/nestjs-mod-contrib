@@ -66,6 +66,7 @@ bootstrapNestApplication({
             'linux-musl-openssl-3.0.x',
             'linux-musl-openssl-3.0.x',
           ],
+          output: join(rootFolder, 'node_modules', '@prisma/flyway-prisma-client'),
         },
       }),
     ],
