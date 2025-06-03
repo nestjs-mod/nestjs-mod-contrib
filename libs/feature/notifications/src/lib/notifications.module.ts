@@ -16,6 +16,8 @@ import { NOTIFICATIONS_WEBHOOK_EVENTS } from './types/notifications-webhooks';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { NotificationsPrismaSdk } from './notifications.prisma-sdk';
 
+// fake update
+
 export const { NotificationsModule } = createNestModule({
   moduleName: NOTIFICATIONS_MODULE,
   moduleDescription:
