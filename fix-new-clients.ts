@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 // source
 
@@ -27,5 +27,7 @@ const files3: string[] = [
   'dist/libs/feature/webhook/src/lib/generated/prisma-client/internal/class.js',
 ];
 for (let file of files3) {
-  writeFileSync(file, readFileSync(file).toString().split('require("node_modules/@prisma').join('require("@prisma'));
+  if (existsSync(file)) {
+    writeFileSync(file, readFileSync(file).toString().split('require("node_modules/@prisma').join('require("@prisma'));
+  }
 }
