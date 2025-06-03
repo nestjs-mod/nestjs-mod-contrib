@@ -29,6 +29,24 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "paths": {
+      "@nestjs-mod/files": [
+        "libs/feature/files/src/index.ts"
+      ],
+      "@nestjs-mod/files-afat": [
+        "libs/feature/files-afat/src/index.ts"
+      ],
+      "@nestjs-mod/notifications": [
+        "libs/feature/notifications/src/index.ts"
+      ],
+      "@nestjs-mod/two-factor": [
+        "libs/feature/two-factor/src/index.ts"
+      ],
+      "@nestjs-mod/webhook": [
+        "libs/feature/webhook/src/index.ts"
+      ],
+      "@nestjs-mod/webhook-afat": [
+        "libs/feature/webhook-afat/src/index.ts"
+      ],
       "@nestjs-mod/validation": [
         "libs/core/validation/src/index.ts"
       ],

@@ -1,13 +1,15 @@
 generator client {
-  provider        = "prisma-client-js"
-  output          = "../../../../apps/example-pg-prisma-pg-flyway/src/prisma-client"
-  previewFeatures = ["driverAdapters", "queryCompiler"]
+  provider = "prisma-client-js"
+  
+  output   = "../../../../apps/example-pg-prisma-pg-flyway/src/prisma-client"
+  
+  previewFeatures = ["queryCompiler","driverAdapters"]
+}
+datasource db {
+  provider          = "postgres"
+  url               = env("EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL")
 }
 
-datasource db {
-  provider = "postgres"
-  url      = env("EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL")
-}
 
 model PgFlywayPrismaUser {
   id             String   @id(map: "PK_PG_FLYWAY_PRISMA_USER") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid

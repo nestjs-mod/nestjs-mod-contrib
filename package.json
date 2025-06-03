@@ -176,7 +176,7 @@
     "prisma:migrate-deploy:example-prisma": "./node_modules/.bin/nx run example-prisma:prisma-migrate-deploy",
     "prisma:migrate-deploy": "./node_modules/.bin/nx run-many -t=prisma-migrate-deploy",
     "prisma:pull": "./node_modules/.bin/nx run-many -t=prisma-pull",
-    "prisma:generate": "./node_modules/.bin/nx run-many -t=prisma-generate",
+    "prisma:generate": "./node_modules/.bin/nx run-many -t=prisma-generate && ./node_modules/.bin/ts-node fix-new-clients.ts && npm run make-ts-list",
     "prisma:pull:example-prisma": "./node_modules/.bin/nx run example-prisma:prisma-pull",
     "prisma:pull:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:prisma-pull",
     "prisma:migrate-dev-new:example-prisma-flyway": "./node_modules/.bin/nx run example-prisma-flyway:prisma-migrate-dev --create-only --name=new",
@@ -195,12 +195,13 @@
     "pg-flyway:create:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx run example-pg-prisma-pg-flyway:pg-flyway-create-migration",
     "pg-flyway:migrate:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx run example-pg-prisma-pg-flyway:pg-flyway-migrate",
     "_____utils_____": "_____utils_____",
-    "generate": "./node_modules/.bin/nx run-many -t=generate --skip-nx-cache=true && npm run make-ts-list",
+    "swagger-sdk": "export GENERATE_SWAGGER_JSON=true && ./node_modules/.bin/nx serve cli --watch=false --inspect=false",
+    "generate": "./node_modules/.bin/nx run-many -t=generate --skip-nx-cache=true && ./node_modules/.bin/ts-node fix-new-clients.ts && npm run make-ts-list",
     "nx": "nx",
     "rucken": "rucken",
     "dep-graph": "./node_modules/.bin/nx dep-graph",
     "make-ts-list": "./node_modules/.bin/rucken make-ts-list",
-    "manual:prepare": "npm run generate && npm run docs:infrastructure && npm run test",
+    "manual:prepare": "npm run generate && npm run swagger-sdk && npm run docs:infrastructure && npm run test",
     "update:nestjs-mod-versions": "npx -y npm-check-updates @nestjs-mod/* rucken nestjs-mod -u && npm i",
     "update:lib-versions": "npx -y npm-check-updates @nestjs/* @theunderscorer/* rucken @angular* *authorizerdev* *prisma* *redis*** *nats* *minio* *pino* -u && npm i",
     "translates": "./node_modules/.bin/rucken prepare --locales=en,ru --update-package-version=false --update-dependencies-version=false",
@@ -208,6 +209,10 @@
   },
   "private": true,
   "devDependencies": {
+    "@types/lodash": "^4.17.10",
+    "@openapitools/openapi-generator-cli": "2.16.3",
+    "nestjs-translates": "2.2.5",
+    "tsx": "4.19.4",
     "ng-packagr": "19.2.1",
     "@jsverse/transloco": "^7.5.0",
     "@ngx-formly/core": "^6.3.12",
@@ -292,6 +297,9 @@
     "pg-create-db": "^1.1.5"
   },
   "dependencies": {
+    "otpauth": "9.4.0",
+    "lodash": "^4.17.21",
+    "@brakebein/prisma-generator-nestjs-dto": "^1.28.0",
     "@supabase/supabase-js": "2.49.4",
     "@nestjs-mod/misc": "1.4.2",
     "@nestjs-mod/sso-rest-sdk": "1.2.0",
@@ -770,6 +778,7 @@
     "pg-flyway:migrate:example-pg-prisma-pg-flyway": [
       "Applying migrations for example-pg-prisma-pg-flyway"
     ],
+    "swagger-sdk": [],
     "generate": [
       "Running the \"generate\" nx command in applications and libraries which can be customized at your discretion",
       "automatically generating an index.ts file for each library",

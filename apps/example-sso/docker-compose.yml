@@ -72,7 +72,7 @@ services:
     tty: true
     restart: "always"
   example-sso-single-sign-on:
-    image: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.7.0"
+    image: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.10.0"
     container_name: "example-sso-single-sign-on"
     ports:
       - "8080:8080"
@@ -102,7 +102,7 @@ services:
       SINGLE_SIGN_ON_SSO_JWT_ACCESS_TOKEN_EXPIRES_IN: "30m"
       SINGLE_SIGN_ON_SSO_JWT_REFRESH_TOKEN_EXPIRES_IN: "24h"
       SINGLE_SIGN_ON_SSO_CACHE_TTL: "15000"
-      IMAGE: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.7.0"
+      IMAGE: "ghcr.io/nestjs-mod/nestjs-mod-sso-server:1.10.0"
       EXTERNAL_CLIENT_PORT: "8080"
     tty: true
     restart: "always"

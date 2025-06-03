@@ -20,9 +20,9 @@ services:
     tty: true
     restart: "always"
     environment:
-      POSTGRESQL_USERNAME: "postgres"
-      POSTGRESQL_PASSWORD: "postgres_password"
-      POSTGRESQL_DATABASE: "postgres"
+      POSTGRESQL_USERNAME: ""
+      POSTGRESQL_PASSWORD: ""
+      POSTGRESQL_DATABASE: ""
 networks:
   example-pg-prisma-pg-flyway-network:
     driver: "bridge"
