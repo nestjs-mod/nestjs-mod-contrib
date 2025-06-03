@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/sso-v1.1.0...sso-v1.2.0) (2025-06-03)
+
+
+### Features
+
+* add feature modules from https://github.com/nestjs-mod/nestjs-mod-sso ([31a870f](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/31a870fb40f20e9a8f03ecb14dd1a341c60551a5))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/sso-v1.0.4...sso-v1.1.0) (2025-05-24)
 
 
