@@ -199,6 +199,7 @@ export class ${Name}RestSdkAngularModule {
           ' '
         )
       );
+      rmdirSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/rest-sdk/docs`), { recursive: true });
       writeFileSync(
         join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest-sdk.module.ts`),
         `import axios, { AxiosInstance } from 'axios';
