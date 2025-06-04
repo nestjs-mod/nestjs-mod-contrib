@@ -209,7 +209,6 @@
   },
   "private": true,
   "devDependencies": {
-    "@semantic-release/exec": "7.1.0",
     "@types/lodash": "^4.17.10",
     "@openapitools/openapi-generator-cli": "2.16.3",
     "nestjs-translates": "2.2.5",
