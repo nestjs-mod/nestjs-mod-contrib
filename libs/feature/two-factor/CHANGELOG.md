@@ -1,3 +1,11 @@
+## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.0.1...two-factor-v1.0.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* patch output dist files ([70f1da8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/70f1da83ae5cbda4532695cf2fca49aeb9914161))
+* update @semantic-release/exec options ([c3da67b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c3da67ba33bf2a5014ee61be5dcd5e4331996354))
+
 ## [1.0.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.0.0...two-factor-v1.0.1) (2025-06-03)
 
 
