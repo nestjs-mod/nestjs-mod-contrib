@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RequestMeta } from '@nestjs-mod/misc';
 import { map } from 'rxjs';
 import { CreateWebhookDtoInterface, UpdateWebhookDtoInterface, WebhookLogInterface } from '../generated/rest-sdk';
-import { WebhookRestSdkAngularService } from '../generated/webhook-rest-sdk-angular.module';
+import { WebhookRestSdkAngularService } from '../generated/webhook-rest_sdk-angular.module';
 import { WebhookLogMapperService } from './webhook-log-mapper.service';
 import { WebhookMapperService } from './webhook-mapper.service';
 

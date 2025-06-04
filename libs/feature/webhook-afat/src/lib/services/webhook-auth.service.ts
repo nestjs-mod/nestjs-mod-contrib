@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { BehaviorSubject, catchError, of, tap, throwError } from 'rxjs';
 import { WebhookErrorInterface, WebhookUserInterface } from '../generated/rest-sdk';
-import { WebhookRestSdkAngularService } from '../generated/webhook-rest-sdk-angular.module';
+import { WebhookRestSdkAngularService } from '../generated/webhook-rest_sdk-angular.module';
 
 @UntilDestroy()
 @Injectable({ providedIn: 'root' })

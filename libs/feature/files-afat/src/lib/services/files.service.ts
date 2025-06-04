@@ -1,6 +1,6 @@
 import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { Observable, map, mergeMap, of } from 'rxjs';
-import { FilesRestSdkAngularService } from '../generated/files-rest-sdk-angular.module';
+import { FilesRestSdkAngularService } from '../generated/files-rest_sdk-angular.module';
 import { FilesPresignedUrlsInterface } from '../generated/rest-sdk';
 
 
