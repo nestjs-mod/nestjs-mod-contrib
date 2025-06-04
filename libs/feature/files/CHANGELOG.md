@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/files-v1.1.2...files-v1.1.3) (2025-06-04)
+
+
+### Bug Fixes
+
+* patch output dist files ([70f1da8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/70f1da83ae5cbda4532695cf2fca49aeb9914161))
+
 ## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/files-v1.1.1...files-v1.1.2) (2025-06-04)
 
 
