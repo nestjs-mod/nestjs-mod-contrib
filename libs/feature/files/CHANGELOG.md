@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/files-v1.1.3...files-v1.1.4) (2025-06-04)
+
+
+### Bug Fixes
+
+* update @semantic-release/exec options ([c3da67b](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/c3da67ba33bf2a5014ee61be5dcd5e4331996354))
+
 ## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/files-v1.1.2...files-v1.1.3) (2025-06-04)
 
 
