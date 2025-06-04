@@ -53,9 +53,9 @@ if (process.env['GENERATE_SWAGGER_JSON'] === 'true') {
         rmdirSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/rest-sdk`), { recursive: true });
       }
       if (
-        existsSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest-sdk-angular.module.ts`))
+        existsSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest_sdk-angular.module.ts`))
       ) {
-        rmSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest-sdk-angular.module.ts`), {
+        rmSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest_sdk-angular.module.ts`), {
           recursive: true,
         });
       }
@@ -68,7 +68,7 @@ if (process.env['GENERATE_SWAGGER_JSON'] === 'true') {
       );
       rmSync(join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/rest-sdk/README.md`), { recursive: true });
       writeFileSync(
-        join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest-sdk-angular.module.ts`),
+        join(rootFolder, `./libs/feature/${name}-afat/src/lib/generated/${name}-rest_sdk-angular.module.ts`),
         `import { NgModule, Injectable } from '@angular/core';
 import {
   ${Name}RestClientApiModule,
@@ -171,8 +171,8 @@ export class ${Name}RestSdkAngularModule {
       if (existsSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/rest-sdk`))) {
         rmdirSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/rest-sdk`), { recursive: true });
       }
-      if (existsSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest-sdk.module.ts`))) {
-        rmSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest-sdk.module.ts`), {
+      if (existsSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest_sdk.module.ts`))) {
+        rmSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest_sdk.module.ts`), {
           recursive: true,
         });
       }
@@ -185,7 +185,7 @@ export class ${Name}RestSdkAngularModule {
       );
       rmdirSync(join(rootFolder, `./libs/feature/${name}/src/lib/generated/rest-sdk/docs`), { recursive: true });
       writeFileSync(
-        join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest-sdk.module.ts`),
+        join(rootFolder, `./libs/feature/${name}/src/lib/generated/${name}-rest_sdk.module.ts`),
         `import axios, { AxiosInstance } from 'axios';
 import { Observable, finalize } from 'rxjs';
 
