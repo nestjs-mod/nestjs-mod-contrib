@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/notifications-v1.1.1...notifications-v1.1.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* add check exists before create new index ([17f0933](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/17f0933310276b104b4b0a8c30aea804b9d7223d))
+* update imports with sdk file ([063c5e9](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/063c5e983efbcc64aaea30707092f35beeacc54f))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/notifications-v1.1.0...notifications-v1.1.1) (2025-06-03)
 
 
