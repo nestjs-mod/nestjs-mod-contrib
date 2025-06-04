@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-afat-v1.1.0...webhook-afat-v1.1.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* update imports with sdk file ([5ca69f9](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5ca69f9a7aadab6a8a4b782d14d8b165321033d9))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-afat-v1.0.0...webhook-afat-v1.1.0) (2025-06-03)
 
 
