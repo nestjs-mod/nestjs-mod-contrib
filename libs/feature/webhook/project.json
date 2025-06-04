@@ -68,11 +68,13 @@
         "buildTarget": "${PROJECT_NAME}:build",
         "outputPath": "dist/libs/feature/webhook",
         "plugins": [
-          "@semantic-release/exec",
-          {
-            "prepareCmd": "./node_modules/.bin/ts-node fix-new-clients.ts",
-            "execCwd": "${WORKSPACE_DIR}"
-          }
+          [
+            "@semantic-release/exec",
+            {
+              "prepareCmd": "./node_modules/.bin/ts-node fix-new-clients.ts",
+              "execCwd": "${WORKSPACE_DIR}"
+            }
+          ]
         ]
       }
     },
