@@ -75,9 +75,9 @@ CREATE TABLE IF NOT EXISTS "WebhookLog"(
     CONSTRAINT "PK_WEBHOOK_LOG" PRIMARY KEY ("id")
 );
 
-CREATE INDEX "IDX_WEBHOOK_LOG__EXTERNAL_TENANT_ID" ON "WebhookLog"("externalTenantId");
+CREATE INDEX IF NOT EXISTS "IDX_WEBHOOK_LOG__EXTERNAL_TENANT_ID" ON "WebhookLog"("externalTenantId");
 
-CREATE INDEX "IDX_WEBHOOK_LOG__WEBHOOK_ID" ON "WebhookLog"("externalTenantId", "webhookId");
+CREATE INDEX IF NOT EXISTS "IDX_WEBHOOK_LOG__WEBHOOK_ID" ON "WebhookLog"("externalTenantId", "webhookId");
 
-CREATE INDEX "IDX_WEBHOOK_LOG__WEBHOOK_STATUS" ON "WebhookLog"("externalTenantId", "webhookStatus");
+CREATE INDEX IF NOT EXISTS "IDX_WEBHOOK_LOG__WEBHOOK_STATUS" ON "WebhookLog"("externalTenantId", "webhookStatus");
 
