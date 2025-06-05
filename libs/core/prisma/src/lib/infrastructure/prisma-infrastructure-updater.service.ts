@@ -218,6 +218,10 @@ export class PrismaInfrastructureUpdaterService implements OnModuleInit {
       ? `previewFeatures = ${JSON.stringify(this.prismaConfiguration.previewFeatures)}`
       : ''
   }
+  ${this.prismaConfiguration.runtime ? `runtime = ${JSON.stringify(this.prismaConfiguration.runtime)}` : ''}
+  ${this.prismaConfiguration.moduleFormat ? `moduleFormat = ${JSON.stringify(this.prismaConfiguration.moduleFormat)}` : ''}
+  ${this.prismaConfiguration.generatedFileExtension ? `generatedFileExtension = ${JSON.stringify(this.prismaConfiguration.generatedFileExtension)}` : ''}
+  ${this.prismaConfiguration.importFileExtension ? `importFileExtension = ${JSON.stringify(this.prismaConfiguration.importFileExtension)}` : ''}
 }
 
 datasource db {
@@ -276,6 +280,10 @@ model ${prismaFeatureName}User {
       ? `previewFeatures = ${JSON.stringify(this.prismaConfiguration.previewFeatures)}`
       : ''
   }
+  ${this.prismaConfiguration.runtime ? `runtime = ${JSON.stringify(this.prismaConfiguration.runtime)}` : ''}
+  ${this.prismaConfiguration.moduleFormat ? `moduleFormat = ${JSON.stringify(this.prismaConfiguration.moduleFormat)}` : ''}
+  ${this.prismaConfiguration.generatedFileExtension ? `generatedFileExtension = ${JSON.stringify(this.prismaConfiguration.generatedFileExtension)}` : ''}
+  ${this.prismaConfiguration.importFileExtension ? `importFileExtension = ${JSON.stringify(this.prismaConfiguration.importFileExtension)}` : ''}
 }`;
 
     const { databaseName, shadowDatabaseName } = this.getDbConnectionEnvKeys();

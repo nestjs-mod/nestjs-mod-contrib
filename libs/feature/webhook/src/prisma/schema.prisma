@@ -4,6 +4,7 @@ generator client {
   output   = "../../../../../libs/feature/webhook/src/lib/generated/prisma-client"
   
   previewFeatures = ["queryCompiler","driverAdapters"]
+  moduleFormat = "cjs"
 }
 datasource db {
   provider          = "postgres"

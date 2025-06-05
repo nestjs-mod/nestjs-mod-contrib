@@ -366,6 +366,10 @@ When launched in the infrastructure documentation generation mode, the module cr
 |`engineType`|Binary engine type (binary and library)|**optional**|-|-|
 |`output`|Directory where Prisma Client is generated, e.g. ../src/generated/prisma|**optional**|-|-|
 |`provider`|Default provider|**optional**|```prisma-client-js```|-|
+|`runtime`|Target runtime environment. Supported values: nodejs (alias node), deno, bun, deno-deploy, workerd (alias cloudflare), edge-light (alias vercel), react-native|**optional**|-|-|
+|`moduleFormat`|Module format (esm or cjs). Determines whether import.meta.url or __dirname is used.|**optional**|-|-|
+|`generatedFileExtension`|File extension for generated TypeScript files (ts, mts, cts).|**optional**|-|-|
+|`importFileExtension`|File extension used in import statements. Can be ts, mts, cts, js, mjs, cjs, or empty (for bare imports).|**optional**|-|-|
 |`previewFeatures`|Preview features (infrastructure)|**optional**|-|-|
 |`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
 |`prismaClientFactory`|PrismaClient factory function (example use for https://www.prisma.io/docs/orm/overview/databases/postgresql#using-the-node-postgres-driver)|**optional**|-|-|

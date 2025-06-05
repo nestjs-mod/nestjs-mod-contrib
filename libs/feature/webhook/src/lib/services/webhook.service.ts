@@ -6,20 +6,13 @@ import { AxiosHeaders } from 'axios';
 import { firstValueFrom, Subject, timeout, TimeoutError } from 'rxjs';
 import { PrismaClient, WebhookStatus } from '../generated/prisma-client';
 import { WebhookEvent } from '../types/webhook-event';
-import {
-  WebhookConfiguration,
-  WebhookFeatureConfiguration,
-} from '../webhook.configuration';
+import { WebhookConfiguration, WebhookFeatureConfiguration } from '../webhook.configuration';
 import { WEBHOOK_FEATURE } from '../webhook.constants';
 import { InjectWebhookFeatures } from '../webhook.decorators';
 import { WebhookError, WebhookErrorEnum } from '../webhook.errors';
 
 @Injectable()
-export class WebhookService<
-  TEventName extends string = string,
-  TEventBody = object,
-  TEventHeaders = object
-> {
+export class WebhookService<TEventName extends string = string, TEventBody = object, TEventHeaders = object> {
   private readonly logger = new Logger(WebhookService.name);
 
   eventsStream$ = new Subject<{
@@ -80,9 +73,7 @@ export class WebhookService<
   getAllEvents() {
     return [
       ...(this.webhookConfiguration.events || []),
-      ...this.webhookFeatureConfigurations
-        .map(({ featureConfiguration }) => featureConfiguration.events)
-        .flat(),
+      ...this.webhookFeatureConfigurations.map(({ featureConfiguration }) => featureConfiguration.events).flat(),
     ] as WebhookEvent[];
   }
 
@@ -134,13 +125,12 @@ export class WebhookService<
         });
 
         try {
-          const { response, responseStatus, webhookStatus } =
-            await this.httpRequest({
-              endpoint: webhook.endpoint,
-              eventBody,
-              headers,
-              requestTimeout: webhook.requestTimeout || 5000,
-            });
+          const { response, responseStatus, webhookStatus } = await this.httpRequest({
+            endpoint: webhook.endpoint,
+            eventBody,
+            headers,
+            requestTimeout: webhook.requestTimeout || 5000,
+          });
 
           await this.prismaClient.webhookLog.update({
             where: { id: webhookLog.id },
@@ -168,9 +158,9 @@ export class WebhookService<
 
   private async getCurrentDatabaseDate() {
     try {
-      return [{ now: new Date() }];
+      // return [{ now: new Date() }];
       // todo: https://github.com/prisma/prisma/issues/27257, https://github.com/prisma/prisma/issues/27263
-      // return await this.prismaClient.$queryRaw<[{ now: Date }]>`SELECT NOW();`;
+      return await this.prismaClient.$queryRaw<[{ now: Date }]>`SELECT NOW() as now;`;
     } catch (error: any) {
       console.log({ ...error });
       throw error;
@@ -197,9 +187,7 @@ export class WebhookService<
       const request = await firstValueFrom(
         this.httpService
           .post(endpoint, eventBody, {
-            ...(Object.keys(headers || {})
-              ? { headers: new AxiosHeaders({ ...headers }) }
-              : {}),
+            ...(Object.keys(headers || {}) ? { headers: new AxiosHeaders({ ...headers }) } : {}),
           })
           .pipe(timeout(requestTimeout))
       );
@@ -228,10 +216,7 @@ export class WebhookService<
         response = String(err2.message);
         responseStatus = 'unhandled';
       }
-      webhookStatus =
-        err instanceof TimeoutError
-          ? WebhookStatus.Timeout
-          : WebhookStatus.Error;
+      webhookStatus = err instanceof TimeoutError ? WebhookStatus.Timeout : WebhookStatus.Error;
     }
     return {
       response,

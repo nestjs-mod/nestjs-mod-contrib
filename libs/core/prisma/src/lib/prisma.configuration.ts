@@ -81,6 +81,28 @@ export class PrismaConfiguration {
   provider?: string;
 
   @ConfigModelProperty({
+    description:
+      'Target runtime environment. Supported values: nodejs (alias node), deno, bun, deno-deploy, workerd (alias cloudflare), edge-light (alias vercel), react-native',
+  })
+  runtime?: string;
+
+  @ConfigModelProperty({
+    description: 'Module format (esm or cjs). Determines whether import.meta.url or __dirname is used.',
+  })
+  moduleFormat?: string;
+
+  @ConfigModelProperty({
+    description: 'File extension for generated TypeScript files (ts, mts, cts).',
+  })
+  generatedFileExtension?: string;
+
+  @ConfigModelProperty({
+    description:
+      'File extension used in import statements. Can be ts, mts, cts, js, mjs, cjs, or empty (for bare imports).',
+  })
+  importFileExtension?: string;
+
+  @ConfigModelProperty({
     description: 'Preview features (infrastructure)',
   })
   previewFeatures?: string[];
