@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.15.0...prisma-v1.16.0) (2025-06-05)
+
+
+### Features
+
+* add support new prisma options: runtime, moduleFormat, generatedFileExtension, importFileExtension and update prisma to 6.9.0 ([093493a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/093493ae5bd169b382522301243f128cc6066cb6))
+
 # [1.15.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-v1.14.2...prisma-v1.15.0) (2025-06-03)
 
 
