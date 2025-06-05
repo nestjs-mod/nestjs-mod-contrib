@@ -6,6 +6,11 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
+  @Get('/date')
+  getDate() {
+    return this.appService.getDate();
+  }
+
   @Get()
   getData() {
     return this.appService.getData();

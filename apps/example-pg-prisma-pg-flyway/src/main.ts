@@ -64,6 +64,7 @@ bootstrapNestApplication({
           addMigrationScripts: false,
           previewFeatures: ['queryCompiler', 'driverAdapters'],
           output: join(appFolder, 'src', 'prisma-client'),
+          moduleFormat: 'cjs',
         },
       }),
     ],

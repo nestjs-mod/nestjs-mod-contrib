@@ -4,6 +4,10 @@ generator client {
   output   = "../../../../apps/example-pg-prisma-pg-flyway/src/prisma-client"
   
   previewFeatures = ["queryCompiler","driverAdapters"]
+  
+  moduleFormat = "cjs"
+  
+  
 }
 datasource db {
   provider          = "postgres"

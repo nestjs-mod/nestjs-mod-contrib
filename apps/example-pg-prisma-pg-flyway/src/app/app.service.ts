@@ -1,7 +1,7 @@
 //import { InjectPrismaClient, FakePrismaClient as PrismaClient } from '@nestjs-mod/prisma';
 import { InjectPrismaClient } from '@nestjs-mod/prisma';
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../prisma-client';
 
 @Injectable()
 export class AppService {
@@ -9,6 +9,11 @@ export class AppService {
     @InjectPrismaClient()
     private readonly prismaService: PrismaClient
   ) {}
+
+  async getDate(): Promise<Date> {
+    const result = await this.prismaService.$queryRaw<[{ now: Date }]>`SELECT NOW() as now;`;
+    return result[0].now;
+  }
 
   getData(): { message: string } {
     return { message: 'Hello API' };

@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+ * Prisma Client JS version: 6.9.0
+ * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
+  client: "6.9.0",
+  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -161,6 +161,7 @@ const config = {
       "fromEnvVar": null
     },
     "config": {
+      "moduleFormat": "cjs",
       "engineType": "client"
     },
     "binaryTargets": [
@@ -182,8 +183,8 @@ const config = {
     "schemaEnvPath": "../../../../.env"
   },
   "relativePath": "../prisma",
-  "clientVersion": "6.8.2",
-  "engineVersion": "2060c79ba17c6bb9f5823312b6f6b7f4a845738e",
+  "clientVersion": "6.9.0",
+  "engineVersion": "81e4af48011447c3cc503a190e86995b66d2a28e",
   "datasourceNames": [
     "db"
   ],
@@ -197,8 +198,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n\n  output = \"../../../../apps/example-pg-prisma-pg-flyway/src/prisma-client\"\n\n  previewFeatures = [\"queryCompiler\", \"driverAdapters\"]\n}\n\ndatasource db {\n  provider = \"postgres\"\n  url      = env(\"EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL\")\n}\n\nmodel PgFlywayPrismaUser {\n  id             String   @id(map: \"PK_PG_FLYWAY_PRISMA_USER\") @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  externalUserId String   @unique(map: \"UQ_PG_FLYWAY_PRISMA_USER\") @db.Uuid\n  createdAt      DateTime @default(now()) @db.Timestamp(6)\n  updatedAt      DateTime @default(now()) @db.Timestamp(6)\n}\n\nmodel migrations_example_pg_prisma_pg_flyway {\n  installed_rank Int      @id(map: \"__migrations_example_pg_prisma_pg_flyway_pk\")\n  version        String?  @db.VarChar(50)\n  description    String   @db.VarChar(200)\n  type           String   @db.VarChar(20)\n  script         String   @db.VarChar(1000)\n  checksum       Int?\n  installed_by   String   @db.VarChar(100)\n  installed_on   DateTime @default(now()) @db.Timestamp(6)\n  execution_time Int\n  success        Boolean\n\n  @@index([success], map: \"__migrations_example_pg_prisma_pg_flyway_s_idx\")\n  @@map(\"__migrations_example_pg_prisma_pg_flyway\")\n}\n\nmodel migrations_example_prisma_pg_flyway {\n  installed_rank Int      @id(map: \"__migrations_example_prisma_pg_flyway_pk\")\n  version        String?  @db.VarChar(50)\n  description    String   @db.VarChar(200)\n  type           String   @db.VarChar(20)\n  script         String   @db.VarChar(1000)\n  checksum       Int?\n  installed_by   String   @db.VarChar(100)\n  installed_on   DateTime @default(now()) @db.Timestamp(6)\n  execution_time Int\n  success        Boolean\n\n  @@index([success], map: \"__migrations_example_prisma_pg_flyway_s_idx\")\n  @@map(\"__migrations_example_prisma_pg_flyway\")\n}\n",
-  "inlineSchemaHash": "3bc38fa3e003dbf99cd2ad8b7130a06653aed8a65e6859341b891002f92f0e6f",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n\n  output = \"../../../../apps/example-pg-prisma-pg-flyway/src/prisma-client\"\n\n  previewFeatures = [\"queryCompiler\", \"driverAdapters\"]\n\n  moduleFormat = \"cjs\"\n}\n\ndatasource db {\n  provider = \"postgres\"\n  url      = env(\"EXAMPLE_PG_PRISMA_PG_FLYWAY_PG_FLYWAY_PG_PRISMA_DATABASE_URL\")\n}\n\nmodel PgFlywayPrismaUser {\n  id             String   @id(map: \"PK_PG_FLYWAY_PRISMA_USER\") @default(dbgenerated(\"uuid_generate_v4()\")) @db.Uuid\n  externalUserId String   @unique(map: \"UQ_PG_FLYWAY_PRISMA_USER\") @db.Uuid\n  createdAt      DateTime @default(now()) @db.Timestamp(6)\n  updatedAt      DateTime @default(now()) @db.Timestamp(6)\n}\n\nmodel migrations_example_pg_prisma_pg_flyway {\n  installed_rank Int      @id(map: \"__migrations_example_pg_prisma_pg_flyway_pk\")\n  version        String?  @db.VarChar(50)\n  description    String   @db.VarChar(200)\n  type           String   @db.VarChar(20)\n  script         String   @db.VarChar(1000)\n  checksum       Int?\n  installed_by   String   @db.VarChar(100)\n  installed_on   DateTime @default(now()) @db.Timestamp(6)\n  execution_time Int\n  success        Boolean\n\n  @@index([success], map: \"__migrations_example_pg_prisma_pg_flyway_s_idx\")\n  @@map(\"__migrations_example_pg_prisma_pg_flyway\")\n}\n\nmodel migrations_example_prisma_pg_flyway {\n  installed_rank Int      @id(map: \"__migrations_example_prisma_pg_flyway_pk\")\n  version        String?  @db.VarChar(50)\n  description    String   @db.VarChar(200)\n  type           String   @db.VarChar(20)\n  script         String   @db.VarChar(1000)\n  checksum       Int?\n  installed_by   String   @db.VarChar(100)\n  installed_on   DateTime @default(now()) @db.Timestamp(6)\n  execution_time Int\n  success        Boolean\n\n  @@index([success], map: \"__migrations_example_prisma_pg_flyway_s_idx\")\n  @@map(\"__migrations_example_prisma_pg_flyway\")\n}\n",
+  "inlineSchemaHash": "2ec73ead9f7165b72a982982b4d1c4c19095495f5ed02ffe02000421cfcd3644",
   "copyEngine": true
 }
 config.dirname = '/'
