@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.0.2...two-factor-v1.1.0) (2025-06-05)
+
+
+### Features
+
+* add support new prisma options: runtime, moduleFormat, generatedFileExtension, importFileExtension and update prisma to 6.9.0 ([093493a](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/093493ae5bd169b382522301243f128cc6066cb6))
+
 ## [1.0.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.0.1...two-factor-v1.0.2) (2025-06-04)
 
 
