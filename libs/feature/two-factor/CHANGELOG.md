@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.0...two-factor-v1.1.1) (2025-06-08)
+
+
+### Bug Fixes
+
+* export enums ([0b85fc1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/0b85fc18c3dc83a04d388032b3d3351a7a68cfe8))
+
 # [1.1.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.0.2...two-factor-v1.1.0) (2025-06-05)
 
 
