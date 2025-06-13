@@ -196,7 +196,7 @@
     "pg-flyway:migrate:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx run example-pg-prisma-pg-flyway:pg-flyway-migrate",
     "_____utils_____": "_____utils_____",
     "swagger-sdk": "export GENERATE_SWAGGER_JSON=true && ./node_modules/.bin/nx serve cli --watch=false --inspect=false && export GENERATE_SWAGGER_JSON=false",
-    "generate": "./node_modules/.bin/nx run-many -t=generate --skip-nx-cache=true && npm run swagger-sdk && ./node_modules/.bin/ts-node fix-new-clients.ts && npm run make-ts-list",
+    "generate": "./node_modules/.bin/nx run-many --all -t=generate --parallel=1 --skip-nx-cache=true && npm run swagger-sdk && ./node_modules/.bin/ts-node fix-new-clients.ts && npm run make-ts-list",
     "nx": "nx",
     "rucken": "rucken",
     "dep-graph": "./node_modules/.bin/nx dep-graph",
