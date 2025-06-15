@@ -310,7 +310,7 @@ export class ${Name}RestSdkService {
     'libs/feature/two-factor/src/lib/generated/prisma-client/internal/class.ts',
     'libs/feature/webhook/src/lib/generated/prisma-client/internal/class.ts',
   ];
-  for (let file of files2) {
+  for (const file of files2) {
     writeFileSync(
       file,
       readFileSync(file)

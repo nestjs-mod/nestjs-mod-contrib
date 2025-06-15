@@ -166,7 +166,7 @@
     "test:example-pg-prisma-pg-flyway": "./node_modules/.bin/nx test example-pg-prisma-pg-flyway --parallel=false --passWithNoTests --output-style=stream-without-prefixes",
     "_____lint_____": "_____lint_____",
     "lint": "npm run tsc:lint && ./node_modules/.bin/nx run-many -t=lint",
-    "lint:fix": "npm run tsc:lint && ./node_modules/.bin/nx run-many -t=lint --fix",
+    "lint:fix": "npm run tsc:lint && ./node_modules/.bin/nx run-many -t=lint --fix && ./node_modules/.bin/nx format:write --all",
     "tsc:lint": "tsc --noEmit -p tsconfig.base.json",
     "_____db_____": "_____db_____",
     "db:create": "./node_modules/.bin/nx run-many -t=db-create",

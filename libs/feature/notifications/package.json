@@ -37,7 +37,25 @@
     }
   ],
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "axios": "1.7.2",
+    "rxjs": "^7.8.0",
+    "ws": "8.18.2",
+    "@prisma/client": "^6.9.0",
+    "@nestjs/swagger": "^8.1.1",
+    "class-validator": "^0.14.1",
+    "class-transformer": "^0.5.1",
+    "@nestjs-mod/common": "2.18.1",
+    "@nestjs/common": "^10.4.15",
+    "@nestjs-mod/swagger": "1.2.0",
+    "@nestjs-mod/prisma-tools": "1.1.0",
+    "@nestjs-mod/validation": "1.2.0",
+    "@nestjs-mod/webhook": "1.2.1",
+    "@nestjs-mod/prisma": "1.16.0",
+    "@nestjs/core": "^10.4.15",
+    "nestjs-translates": "2.2.5",
+    "@prisma/adapter-pg": "^6.9.0",
+    "nodemailer": "6.10.0"
   },
   "type": "commonjs",
   "main": "./src/index.js",

@@ -47,7 +47,7 @@
         "@jsverse/transloco-locale": "*",
         "date-fns": "*",
         "@ngneat/until-destroy": "*",
-        "@jsverse/transloco-keys-manager": "*"
+    "@nestjs-mod/misc": "1.4.2"
     },
     "peerDependenciesMeta": {
         "@angular/common": {
