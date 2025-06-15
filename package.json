@@ -284,7 +284,7 @@
     "node-flywaydb": "^3.0.7",
     "pg-flyway": "1.2.5",
     "nx": "20.3.0",
-    "prettier": "^2.6.2",
+    "prettier": "^3.5.3",
     "prisma": "^6.9.0",
     "react-refresh": "^0.10.0",
     "rucken": "^4.16.1",
