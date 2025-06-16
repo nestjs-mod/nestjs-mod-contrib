@@ -1,7 +1,7 @@
 {
     "name": "@nestjs-mod/prisma-tools",
     "description": "Functions and helpers for work with prisma used in NestJS-mod modules",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "keywords": [
         "nestjs",
         "nestjs-mod",
@@ -36,7 +36,7 @@
     ],
     "dependencies": {
         "tslib": "^2.3.0",
-    "@nestjs-mod/swagger": "1.2.0"
+        "@nestjs-mod/swagger": "1.2.0"
     },
     "peerDependencies": {
         "@nestjs-mod/common": "*",
