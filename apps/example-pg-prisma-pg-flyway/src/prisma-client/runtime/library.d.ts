@@ -1842,7 +1842,8 @@ declare type IndexType = 'id' | 'normal' | 'unique' | 'fulltext';
  * Matches a JSON array.
  * Unlike \`JsonArray\`, readonly arrays are assignable to this type.
  */
-export type InputJsonArray = ReadonlyArray<InputJsonValue | null>
+export declare interface InputJsonArray extends ReadonlyArray<InputJsonValue | null> {
+}
 
 /**
  * Matches a JSON object.
@@ -2002,7 +2003,8 @@ declare type JsonArgumentValue = number | string | boolean | null | RawTaggedVal
  * From https://github.com/sindresorhus/type-fest/
  * Matches a JSON array.
  */
-export type JsonArray = Array<JsonValue>
+export declare interface JsonArray extends Array<JsonValue> {
+}
 
 export declare type JsonBatchQuery = {
     batch: JsonQuery[];
@@ -3402,7 +3404,8 @@ declare type SqlQuery = {
     argTypes: Array<ArgType>;
 };
 
-type SqlQueryable = Queryable<SqlQuery, SqlResultSet>
+declare interface SqlQueryable extends Queryable<SqlQuery, SqlResultSet> {
+}
 
 declare interface SqlResultSet {
     /**

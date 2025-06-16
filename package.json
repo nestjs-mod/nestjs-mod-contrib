@@ -201,7 +201,7 @@
     "rucken": "rucken",
     "dep-graph": "./node_modules/.bin/nx dep-graph",
     "make-ts-list": "./node_modules/.bin/rucken make-ts-list",
-    "manual:prepare": "npm run generate && npm run docs:infrastructure && npm run test",
+    "manual:prepare": "npm run generate && npm run docs:infrastructure && npm run lint:fix && npm run test",
     "update:nestjs-mod-versions": "npx -y npm-check-updates @nestjs-mod/* rucken nestjs-mod -u && npm i",
     "update:lib-versions": "npx -y npm-check-updates @nestjs/* @theunderscorer/* rucken @angular* *authorizerdev* *prisma* *redis*** *nats* *minio* *pino* -u && npm i",
     "translates": "./node_modules/.bin/rucken prepare --locales=en,ru --update-package-version=false --update-dependencies-version=false",
