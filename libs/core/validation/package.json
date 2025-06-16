@@ -1,7 +1,7 @@
 {
     "name": "@nestjs-mod/validation",
     "description": "Validation module with an error filter and a pre-configured validation pipe",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "keywords": [
         "nestjs",
         "nestjs-mod",
