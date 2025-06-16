@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.15.0...terminus-v1.15.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* format code ([b8143a1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b8143a12fab1e4e0d31129ce087bc245ebeab435))
+
 # [1.15.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/terminus-v1.14.2...terminus-v1.15.0) (2025-05-24)
 
 
