@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.10.0...flyway-v1.10.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* format code ([b8143a1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b8143a12fab1e4e0d31129ce087bc245ebeab435))
+
 # [1.10.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/flyway-v1.9.3...flyway-v1.10.0) (2025-05-24)
 
 
