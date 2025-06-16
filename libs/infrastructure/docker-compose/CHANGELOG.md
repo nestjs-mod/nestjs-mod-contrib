@@ -1,3 +1,10 @@
+## [1.20.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.20.1...docker-compose-v1.20.2) (2025-06-16)
+
+
+### Bug Fixes
+
+* format code ([b8143a1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b8143a12fab1e4e0d31129ce087bc245ebeab435))
+
 ## [1.20.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.20.0...docker-compose-v1.20.1) (2025-05-25)
 
 
