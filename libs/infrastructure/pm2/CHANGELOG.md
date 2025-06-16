@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.14.0...pm2-v1.14.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* format code ([b8143a1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b8143a12fab1e4e0d31129ce087bc245ebeab435))
+
 # [1.14.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pm2-v1.13.5...pm2-v1.14.0) (2025-05-24)
 
 
