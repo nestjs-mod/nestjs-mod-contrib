@@ -45,7 +45,7 @@ export class FilesRestService extends BaseService {
     public filesControllerDeleteFile(downloadUrl: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<StatusResponseInterface>;
     public filesControllerDeleteFile(downloadUrl: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<StatusResponseInterface>>;
     public filesControllerDeleteFile(downloadUrl: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<StatusResponseInterface>>;
-    public filesControllerDeleteFile(downloadUrl: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public filesControllerDeleteFile(downloadUrl: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (downloadUrl === null || downloadUrl === undefined) {
             throw new Error('Required parameter downloadUrl was null or undefined when calling filesControllerDeleteFile.');
         }
@@ -79,7 +79,7 @@ export class FilesRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/files/delete-file`;
+        let localVarPath = `/api/files/delete-file`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<StatusResponseInterface>('post', `${basePath}${localVarPath}`,
             {
@@ -103,7 +103,7 @@ export class FilesRestService extends BaseService {
     public filesControllerGetPresignedUrl(ext: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<FilesPresignedUrlsInterface>;
     public filesControllerGetPresignedUrl(ext: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<FilesPresignedUrlsInterface>>;
     public filesControllerGetPresignedUrl(ext: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<FilesPresignedUrlsInterface>>;
-    public filesControllerGetPresignedUrl(ext: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public filesControllerGetPresignedUrl(ext: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (ext === null || ext === undefined) {
             throw new Error('Required parameter ext was null or undefined when calling filesControllerGetPresignedUrl.');
         }
@@ -137,7 +137,7 @@ export class FilesRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/files/get-presigned-url`;
+        let localVarPath = `/api/files/get-presigned-url`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<FilesPresignedUrlsInterface>('get', `${basePath}${localVarPath}`,
             {

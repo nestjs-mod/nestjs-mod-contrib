@@ -63,7 +63,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerCreateOne(createWebhookDtoInterface: CreateWebhookDtoInterface, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WebhookInterface>;
     public webhookControllerCreateOne(createWebhookDtoInterface: CreateWebhookDtoInterface, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WebhookInterface>>;
     public webhookControllerCreateOne(createWebhookDtoInterface: CreateWebhookDtoInterface, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WebhookInterface>>;
-    public webhookControllerCreateOne(createWebhookDtoInterface: CreateWebhookDtoInterface, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerCreateOne(createWebhookDtoInterface: CreateWebhookDtoInterface, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (createWebhookDtoInterface === null || createWebhookDtoInterface === undefined) {
             throw new Error('Required parameter createWebhookDtoInterface was null or undefined when calling webhookControllerCreateOne.');
         }
@@ -102,7 +102,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook`;
+        let localVarPath = `/api/webhook`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<WebhookInterface>('post', `${basePath}${localVarPath}`,
             {
@@ -126,7 +126,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerDeleteOne(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<StatusResponseInterface>;
     public webhookControllerDeleteOne(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<StatusResponseInterface>>;
     public webhookControllerDeleteOne(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<StatusResponseInterface>>;
-    public webhookControllerDeleteOne(id: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerDeleteOne(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling webhookControllerDeleteOne.');
         }
@@ -156,7 +156,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
+        let localVarPath = `/api/webhook/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<StatusResponseInterface>('delete', `${basePath}${localVarPath}`,
             {
@@ -178,7 +178,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerEvents(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<WebhookEventInterface>>;
     public webhookControllerEvents(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<WebhookEventInterface>>>;
     public webhookControllerEvents(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<WebhookEventInterface>>>;
-    public webhookControllerEvents(observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerEvents(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -205,7 +205,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/events`;
+        let localVarPath = `/api/webhook/events`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Array<WebhookEventInterface>>('get', `${basePath}${localVarPath}`,
             {
@@ -231,7 +231,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<FindManyWebhookResponseInterface>;
     public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<FindManyWebhookResponseInterface>>;
     public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<FindManyWebhookResponseInterface>>;
-    public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -268,7 +268,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook`;
+        let localVarPath = `/api/webhook`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<FindManyWebhookResponseInterface>('get', `${basePath}${localVarPath}`,
             {
@@ -292,7 +292,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerFindOne(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WebhookInterface>;
     public webhookControllerFindOne(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WebhookInterface>>;
     public webhookControllerFindOne(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WebhookInterface>>;
-    public webhookControllerFindOne(id: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerFindOne(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling webhookControllerFindOne.');
         }
@@ -322,7 +322,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
+        let localVarPath = `/api/webhook/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<WebhookInterface>('get', `${basePath}${localVarPath}`,
             {
@@ -344,7 +344,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerProfile(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WebhookUserInterface>;
     public webhookControllerProfile(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WebhookUserInterface>>;
     public webhookControllerProfile(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WebhookUserInterface>>;
-    public webhookControllerProfile(observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerProfile(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -371,7 +371,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/profile`;
+        let localVarPath = `/api/webhook/profile`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<WebhookUserInterface>('get', `${basePath}${localVarPath}`,
             {
@@ -394,7 +394,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerTestRequest(createWebhookDtoInterface: CreateWebhookDtoInterface, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WebhookTestRequestResponseInterface>;
     public webhookControllerTestRequest(createWebhookDtoInterface: CreateWebhookDtoInterface, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WebhookTestRequestResponseInterface>>;
     public webhookControllerTestRequest(createWebhookDtoInterface: CreateWebhookDtoInterface, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WebhookTestRequestResponseInterface>>;
-    public webhookControllerTestRequest(createWebhookDtoInterface: CreateWebhookDtoInterface, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerTestRequest(createWebhookDtoInterface: CreateWebhookDtoInterface, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (createWebhookDtoInterface === null || createWebhookDtoInterface === undefined) {
             throw new Error('Required parameter createWebhookDtoInterface was null or undefined when calling webhookControllerTestRequest.');
         }
@@ -433,7 +433,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/test-request`;
+        let localVarPath = `/api/webhook/test-request`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<WebhookTestRequestResponseInterface>('post', `${basePath}${localVarPath}`,
             {
@@ -458,7 +458,7 @@ export class WebhookRestService extends BaseService {
     public webhookControllerUpdateOne(id: string, updateWebhookDtoInterface: UpdateWebhookDtoInterface, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WebhookInterface>;
     public webhookControllerUpdateOne(id: string, updateWebhookDtoInterface: UpdateWebhookDtoInterface, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WebhookInterface>>;
     public webhookControllerUpdateOne(id: string, updateWebhookDtoInterface: UpdateWebhookDtoInterface, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WebhookInterface>>;
-    public webhookControllerUpdateOne(id: string, updateWebhookDtoInterface: UpdateWebhookDtoInterface, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookControllerUpdateOne(id: string, updateWebhookDtoInterface: UpdateWebhookDtoInterface, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling webhookControllerUpdateOne.');
         }
@@ -500,7 +500,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
+        let localVarPath = `/api/webhook/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<WebhookInterface>('put', `${basePath}${localVarPath}`,
             {
@@ -524,7 +524,7 @@ export class WebhookRestService extends BaseService {
     public webhookLogsControllerDeleteOne(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<StatusResponseInterface>;
     public webhookLogsControllerDeleteOne(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<StatusResponseInterface>>;
     public webhookLogsControllerDeleteOne(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<StatusResponseInterface>>;
-    public webhookLogsControllerDeleteOne(id: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookLogsControllerDeleteOne(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling webhookLogsControllerDeleteOne.');
         }
@@ -554,7 +554,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/logs/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
+        let localVarPath = `/api/webhook/logs/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<StatusResponseInterface>('delete', `${basePath}${localVarPath}`,
             {
@@ -581,7 +581,7 @@ export class WebhookRestService extends BaseService {
     public webhookLogsControllerFindManyLogs(webhookId: string, curPage?: number, perPage?: number, searchText?: string, sort?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<FindManyWebhookLogResponseInterface>;
     public webhookLogsControllerFindManyLogs(webhookId: string, curPage?: number, perPage?: number, searchText?: string, sort?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<FindManyWebhookLogResponseInterface>>;
     public webhookLogsControllerFindManyLogs(webhookId: string, curPage?: number, perPage?: number, searchText?: string, sort?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<FindManyWebhookLogResponseInterface>>;
-    public webhookLogsControllerFindManyLogs(webhookId: string, curPage?: number, perPage?: number, searchText?: string, sort?: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookLogsControllerFindManyLogs(webhookId: string, curPage?: number, perPage?: number, searchText?: string, sort?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (webhookId === null || webhookId === undefined) {
             throw new Error('Required parameter webhookId was null or undefined when calling webhookLogsControllerFindManyLogs.');
         }
@@ -623,7 +623,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/logs`;
+        let localVarPath = `/api/webhook/logs`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<FindManyWebhookLogResponseInterface>('get', `${basePath}${localVarPath}`,
             {
@@ -647,7 +647,7 @@ export class WebhookRestService extends BaseService {
     public webhookLogsControllerFindOne(id: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<WebhookLogInterface>;
     public webhookLogsControllerFindOne(id: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<WebhookLogInterface>>;
     public webhookLogsControllerFindOne(id: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<WebhookLogInterface>>;
-    public webhookLogsControllerFindOne(id: string, observe: any = 'body', reportProgress = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public webhookLogsControllerFindOne(id: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling webhookLogsControllerFindOne.');
         }
@@ -677,7 +677,7 @@ export class WebhookRestService extends BaseService {
             }
         }
 
-        const localVarPath = `/api/webhook/logs/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
+        let localVarPath = `/api/webhook/logs/${this.configuration.encodeParam({name: "id", value: id, in: "path", style: "simple", explode: false, dataType: "string", dataFormat: undefined})}`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<WebhookLogInterface>('get', `${basePath}${localVarPath}`,
             {

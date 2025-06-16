@@ -37,21 +37,65 @@
       "email": "admin@site15.ru"
     }
   ],
-  "dependencies": {
-    "tslib": "^2.3.0",
-    "@prisma/client": "^6.9.0",
-    "@nestjs/swagger": "^8.1.1",
-    "class-validator": "^0.14.1",
-    "class-transformer": "^0.5.1",
-    "@nestjs/common": "^10.4.15",
-    "rxjs": "^7.8.0",
-    "@nestjs-mod/common": "2.18.1",
-    "nestjs-translates": "2.2.5",
-    "@nestjs/core": "^10.4.15",
-    "@nestjs-mod/prisma-tools": "1.1.0",
-    "@nestjs-mod/prisma": "1.16.0",
-    "@prisma/adapter-pg": "^6.9.0",
-    "otpauth": "9.4.0"
+  "peerDependencies": {
+    "tslib": "*",
+    "@prisma/client": "*",
+    "@nestjs/swagger": "*",
+    "class-validator": "*",
+    "class-transformer": "*",
+    "@nestjs/common": "*",
+    "rxjs": "*",
+    "@nestjs-mod/common": "*",
+    "nestjs-translates": "*",
+    "@nestjs/core": "*",
+    "@nestjs-mod/prisma-tools": "*",
+    "@nestjs-mod/prisma": "*",
+    "@prisma/adapter-pg": "*",
+    "otpauth": "*"
+  },
+  "peerDependenciesMeta": {
+    "tslib": {
+      "optional": true
+    },
+    "@prisma/client": {
+      "optional": true
+    },
+    "@nestjs/swagger": {
+      "optional": true
+    },
+    "class-validator": {
+      "optional": true
+    },
+    "class-transformer": {
+      "optional": true
+    },
+    "@nestjs/common": {
+      "optional": true
+    },
+    "rxjs": {
+      "optional": true
+    },
+    "@nestjs-mod/common": {
+      "optional": true
+    },
+    "nestjs-translates": {
+      "optional": true
+    },
+    "@nestjs/core": {
+      "optional": true
+    },
+    "@nestjs-mod/prisma-tools": {
+      "optional": true
+    },
+    "@nestjs-mod/prisma": {
+      "optional": true
+    },
+    "@prisma/adapter-pg": {
+      "optional": true
+    },
+    "otpauth": {
+      "optional": true
+    }
   },
   "type": "commonjs",
   "main": "./src/index.js",

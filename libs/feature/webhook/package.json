@@ -36,28 +36,93 @@
       "email": "admin@site15.ru"
     }
   ],
-  "dependencies": {
-    "tslib": "^2.3.0",
-    "@nestjs-mod/swagger": "1.2.0",
-    "@nestjs-mod/prisma": "1.16.0",
-    "@nestjs-mod/prisma-tools": "1.1.0",
-    "@nestjs-mod/validation": "1.2.0",
-    "@nestjs/common": "^10.4.15",
-    "@nestjs/swagger": "^8.1.1",
-    "class-validator": "^0.14.1",
-    "nestjs-translates": "2.2.5",
-    "@prisma/client": "^6.9.0",
-    "class-transformer": "^0.5.1",
-    "axios": "1.7.2",
-    "rxjs": "^7.8.0",
-    "ws": "8.18.2",
-    "@nestjs-mod/common": "2.18.1",
-    "@nestjs-mod/keyv": "1.2.0",
-    "lodash": "^4.17.21",
-    "@nestjs/axios": "3.0.0",
-    "@nestjs/core": "^10.4.15",
-    "@nestjs-mod/misc": "1.4.2",
-    "@prisma/adapter-pg": "^6.9.0"
+  "peerDependencies": {
+    "tslib": "*",
+    "@nestjs-mod/swagger": "*",
+    "@nestjs-mod/prisma": "*",
+    "@nestjs-mod/prisma-tools": "*",
+    "@nestjs-mod/validation": "*",
+    "@nestjs/common": "*",
+    "@nestjs/swagger": "*",
+    "class-validator": "*",
+    "nestjs-translates": "*",
+    "@prisma/client": "*",
+    "class-transformer": "*",
+    "axios": "*",
+    "rxjs": "*",
+    "ws": "*",
+    "@nestjs-mod/common": "*",
+    "@nestjs-mod/keyv": "*",
+    "lodash": "*",
+    "@nestjs/axios": "*",
+    "@nestjs/core": "*",
+    "@nestjs-mod/misc": "*",
+    "@prisma/adapter-pg": "*"
+  },
+  "peerDependenciesMeta": {
+    "tslib": {
+      "optional": true
+    },
+    "@nestjs-mod/swagger": {
+      "optional": true
+    },
+    "@nestjs-mod/prisma": {
+      "optional": true
+    },
+    "@nestjs-mod/prisma-tools": {
+      "optional": true
+    },
+    "@nestjs-mod/validation": {
+      "optional": true
+    },
+    "@nestjs/common": {
+      "optional": true
+    },
+    "@nestjs/swagger": {
+      "optional": true
+    },
+    "class-validator": {
+      "optional": true
+    },
+    "nestjs-translates": {
+      "optional": true
+    },
+    "@prisma/client": {
+      "optional": true
+    },
+    "class-transformer": {
+      "optional": true
+    },
+    "axios": {
+      "optional": true
+    },
+    "rxjs": {
+      "optional": true
+    },
+    "ws": {
+      "optional": true
+    },
+    "@nestjs-mod/common": {
+      "optional": true
+    },
+    "@nestjs-mod/keyv": {
+      "optional": true
+    },
+    "lodash": {
+      "optional": true
+    },
+    "@nestjs/axios": {
+      "optional": true
+    },
+    "@nestjs/core": {
+      "optional": true
+    },
+    "@nestjs-mod/misc": {
+      "optional": true
+    },
+    "@prisma/adapter-pg": {
+      "optional": true
+    }
   },
   "type": "commonjs",
   "main": "./src/index.js",

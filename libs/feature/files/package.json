@@ -36,18 +36,53 @@
       "email": "admin@site15.ru"
     }
   ],
-  "dependencies": {
-    "tslib": "^2.3.0",
-    "@nestjs/common": "^10.4.15",
-    "@nestjs-mod/swagger": "1.2.0",
-    "@nestjs/swagger": "^8.1.1",
-    "nestjs-translates": "2.2.5",
-    "@nestjs-mod/common": "2.18.1",
-    "@nestjs-mod/webhook": "1.2.1",
-    "axios": "1.7.2",
-    "rxjs": "^7.8.0",
-    "ws": "8.18.2",
-    "class-validator": "^0.14.1"
+  "peerDependencies": {
+    "tslib": "*",
+    "@nestjs/common": "*",
+    "@nestjs-mod/swagger": "*",
+    "@nestjs/swagger": "*",
+    "nestjs-translates": "*",
+    "@nestjs-mod/common": "*",
+    "@nestjs-mod/webhook": "*",
+    "axios": "*",
+    "rxjs": "*",
+    "ws": "*",
+    "class-validator": "*"
+  },
+  "peerDependenciesMeta": {
+    "tslib": {
+      "optional": true
+    },
+    "@nestjs/common": {
+      "optional": true
+    },
+    "@nestjs-mod/swagger": {
+      "optional": true
+    },
+    "@nestjs/swagger": {
+      "optional": true
+    },
+    "nestjs-translates": {
+      "optional": true
+    },
+    "@nestjs-mod/common": {
+      "optional": true
+    },
+    "@nestjs-mod/webhook": {
+      "optional": true
+    },
+    "axios": {
+      "optional": true
+    },
+    "rxjs": {
+      "optional": true
+    },
+    "ws": {
+      "optional": true
+    },
+    "class-validator": {
+      "optional": true
+    }
   },
   "type": "commonjs",
   "main": "./src/index.js",
