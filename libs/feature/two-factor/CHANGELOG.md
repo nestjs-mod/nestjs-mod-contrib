@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.1...two-factor-v1.1.2) (2025-06-16)
+
+
+### Bug Fixes
+
+* change dependencies to peerDependencies ([8d41ade](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/8d41ade00c9383a44bc76e2e5b37128b9ee72284))
+* format code ([b8143a1](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/b8143a12fab1e4e0d31129ce087bc245ebeab435))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.0...two-factor-v1.1.1) (2025-06-08)
 
 
