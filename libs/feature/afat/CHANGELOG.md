@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/afat-v1.2.1...afat-v1.2.2) (2025-06-18)
+
+
+### Bug Fixes
+
+* append reset server errors after update form values ([67939de](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/67939de48ee3252395bdabb770d402602cbe7070))
+
 ## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/afat-v1.2.0...afat-v1.2.1) (2025-06-16)
 
 
