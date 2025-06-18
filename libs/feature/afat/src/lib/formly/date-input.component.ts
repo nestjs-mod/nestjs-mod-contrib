@@ -20,22 +20,21 @@ import { ActiveLangService } from '../services/active-lang.service';
       [nzFormat]="(format$ | async)!"
     ></nz-date-picker>
   `,
+  standalone: true,
 })
 export class DateInputComponent extends FieldType<FieldTypeConfig> {
   format$: Observable<string>;
 
   constructor(
     private readonly translocoService: TranslocoService,
-    private readonly activeLangService: ActiveLangService
+    private readonly activeLangService: ActiveLangService,
   ) {
     super();
     this.format$ = translocoService.langChanges$.pipe(
       map((lang) => {
         const { locale } = this.activeLangService.normalizeLangKey(lang);
-        return DATE_INPUT_FORMATS[locale]
-          ? DATE_INPUT_FORMATS[locale]
-          : DATE_INPUT_FORMATS['en-US'];
-      })
+        return DATE_INPUT_FORMATS[locale] ? DATE_INPUT_FORMATS[locale] : DATE_INPUT_FORMATS['en-US'];
+      }),
     );
   }
 }

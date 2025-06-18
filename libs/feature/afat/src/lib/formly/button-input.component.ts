@@ -7,22 +7,13 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 @Component({
   selector: 'button-input',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    ReactiveFormsModule,
-    FormlyModule,
-    NzDatePickerModule,
-    NzButtonModule,
-  ],
+  imports: [ReactiveFormsModule, FormlyModule, NzDatePickerModule, NzButtonModule],
   template: `
-    <button
-      nz-button
-      [type]="props['type']"
-      [nzType]="props['btnType']"
-      (click)="onClick($event)"
-    >
+    <button nz-button [type]="props['type']" [nzType]="props['btnType']" (click)="onClick($event)">
       {{ props['text'] }}
     </button>
   `,
+  standalone: true,
 })
 export class ButtonInputComponent extends FieldType<FieldTypeConfig> {
   onClick($event: Event) {

@@ -41,11 +41,9 @@ import { TranslocoPipe } from '@jsverse/transloco';
       </button>
     </nz-upload>
   `,
+  standalone: true,
 })
-export class ImageFileComponent
-  extends FieldType<FieldTypeConfig>
-  implements OnInit
-{
+export class ImageFileComponent extends FieldType<FieldTypeConfig> implements OnInit {
   fileList$ = new BehaviorSubject<NzUploadFile[]>([]);
   title$ = new BehaviorSubject<string>('');
   icon$ = new BehaviorSubject<string>('');
@@ -66,9 +64,8 @@ export class ImageFileComponent
           name: this.formControl.value.split('/').at(-1),
           status: 'done',
           url:
-            (!this.formControl.value.toLowerCase().startsWith('http')
-              ? this.filesService.getMinioURL()
-              : '') + this.formControl.value,
+            (!this.formControl.value.toLowerCase().startsWith('http') ? this.filesService.getMinioURL() : '') +
+            this.formControl.value,
         },
       ]);
     } else {

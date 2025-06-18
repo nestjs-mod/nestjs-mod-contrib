@@ -52,6 +52,7 @@ import { WebhookService } from '../../services/webhook.service';
   selector: 'webhook-grid',
   templateUrl: './webhook-grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class WebhookGridComponent implements OnInit {
   @Input()
@@ -89,17 +90,17 @@ export class WebhookGridComponent implements OnInit {
     private readonly viewContainerRef: ViewContainerRef,
     private readonly translocoService: TranslocoService,
     private readonly webhookMapperService: WebhookMapperService,
-    private readonly validationService: ValidationService
+    private readonly validationService: ValidationService,
   ) {}
 
   ngOnInit(): void {
     merge(
       this.searchField.valueChanges.pipe(debounceTime(700), distinctUntilChanged()),
-      ...(this.forceLoadStream ? this.forceLoadStream : [])
+      ...(this.forceLoadStream ? this.forceLoadStream : []),
     )
       .pipe(
         tap(() => this.loadMany({ force: true })),
-        untilDestroyed(this)
+        untilDestroyed(this),
       )
       .subscribe();
     this.loadMany();
@@ -131,7 +132,7 @@ export class WebhookGridComponent implements OnInit {
         omit(['totalResults'], {
           ...this.meta$.value,
           ...this.filters,
-        })
+        }),
       )
     ) {
       return;
@@ -146,7 +147,7 @@ export class WebhookGridComponent implements OnInit {
           this.filters = filters;
           this.selectedIds$.next([]);
         }),
-        untilDestroyed(this)
+        untilDestroyed(this),
       )
       .subscribe();
   }
@@ -195,8 +196,8 @@ export class WebhookGridComponent implements OnInit {
         tap(() => webhookFormComponent.setFormlyFields({ errors: [] })),
         catchError((err) =>
           this.validationService.catchAndProcessServerError(err, (options) =>
-            webhookFormComponent.setFormlyFields(options)
-          )
+            webhookFormComponent.setFormlyFields(options),
+          ),
         ),
         tap((result) => {
           if (result) {
@@ -204,7 +205,7 @@ export class WebhookGridComponent implements OnInit {
           }
         }),
 
-        untilDestroyed(this)
+        untilDestroyed(this),
       )
       .subscribe();
   }
@@ -246,7 +247,7 @@ export class WebhookGridComponent implements OnInit {
                   modal.close();
                   this.loadMany({ force: true });
                 }),
-                untilDestroyed(modal.componentInstance)
+                untilDestroyed(modal.componentInstance),
               )
               .subscribe();
 
@@ -256,7 +257,7 @@ export class WebhookGridComponent implements OnInit {
                   modal.close();
                   this.loadMany({ force: true });
                 }),
-                untilDestroyed(modal.componentInstance)
+                untilDestroyed(modal.componentInstance),
               )
               .subscribe();
 
@@ -285,7 +286,7 @@ export class WebhookGridComponent implements OnInit {
             tap(() => {
               this.loadMany({ force: true });
             }),
-            untilDestroyed(this)
+            untilDestroyed(this),
           )
           .subscribe();
       },

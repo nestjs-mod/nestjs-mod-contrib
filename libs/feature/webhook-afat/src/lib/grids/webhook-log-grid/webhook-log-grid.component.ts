@@ -18,7 +18,6 @@ import { BehaviorSubject, Observable, debounceTime, distinctUntilChanged, merge,
 
 import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { marker } from '@jsverse/transloco-keys-manager/marker';
-import { TranslocoDatePipe } from '@jsverse/transloco-locale';
 import { NgChanges, NzTableSortOrderDetectorPipe, getQueryMetaByParams } from '@nestjs-mod/afat';
 import { RequestMeta, getQueryMeta } from '@nestjs-mod/misc';
 import { WebhookLogFormComponent } from '../../forms/webhook-log-form/webhook-log-form.component';
@@ -44,11 +43,11 @@ import { WebhookLogService } from '../../services/webhook-log.service';
     NzTableSortOrderDetectorPipe,
     TranslocoDirective,
     TranslocoPipe,
-    TranslocoDatePipe,
   ],
   selector: 'webhook-log-grid',
   templateUrl: './webhook-log-grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class WebhookLogGridComponent implements OnInit, OnChanges {
   @Input({ required: true })
@@ -82,7 +81,7 @@ export class WebhookLogGridComponent implements OnInit, OnChanges {
     private readonly webhookLogService: WebhookLogService,
     private readonly nzModalService: NzModalService,
     private readonly viewContainerRef: ViewContainerRef,
-    private readonly translocoService: TranslocoService
+    private readonly translocoService: TranslocoService,
   ) {}
 
   ngOnChanges(changes: NgChanges<WebhookLogGridComponent>): void {
@@ -97,11 +96,11 @@ export class WebhookLogGridComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     merge(
       this.searchField.valueChanges.pipe(debounceTime(700), distinctUntilChanged()),
-      ...(this.forceLoadStream ? this.forceLoadStream : [])
+      ...(this.forceLoadStream ? this.forceLoadStream : []),
     )
       .pipe(
         tap(() => this.loadMany({ force: true })),
-        untilDestroyed(this)
+        untilDestroyed(this),
       )
       .subscribe();
     this.loadMany();
@@ -137,7 +136,7 @@ export class WebhookLogGridComponent implements OnInit, OnChanges {
         omit(['totalResults'], {
           ...this.meta$.value,
           ...this.filters,
-        })
+        }),
       )
     ) {
       return;
@@ -158,13 +157,13 @@ export class WebhookLogGridComponent implements OnInit, OnChanges {
                 request: JSON.stringify(item.request) as any,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 response: JSON.stringify(item.response) as any,
-              }))
+              })),
             );
             this.meta$.next({ ...result.meta, ...meta });
             this.filters = filters;
             this.selectedIds$.next([]);
           }),
-          untilDestroyed(this)
+          untilDestroyed(this),
         )
         .subscribe();
     }
@@ -210,7 +209,7 @@ export class WebhookLogGridComponent implements OnInit, OnChanges {
             tap(() => {
               this.loadMany({ force: true });
             }),
-            untilDestroyed(this)
+            untilDestroyed(this),
           )
           .subscribe();
       },

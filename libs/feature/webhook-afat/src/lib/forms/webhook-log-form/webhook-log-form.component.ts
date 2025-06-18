@@ -18,10 +18,11 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
-import { BehaviorSubject, mergeMap, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, distinctUntilChanged, mergeMap, of, tap, throwError } from 'rxjs';
 import { WebhookLogFormService } from '../../services/webhook-log-form.service';
 import { WebhookLogMapperService, WebhookLogModel } from '../../services/webhook-log-mapper.service';
 import { WebhookLogService } from '../../services/webhook-log.service';
+import { compare } from '@nestjs-mod/misc';
 
 @UntilDestroy()
 @Component({
@@ -38,6 +39,7 @@ import { WebhookLogService } from '../../services/webhook-log.service';
   selector: 'webhook-log-form',
   templateUrl: './webhook-log-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class WebhookLogFormComponent implements OnInit {
   @Input()
@@ -55,6 +57,7 @@ export class WebhookLogFormComponent implements OnInit {
   form = new UntypedFormGroup({});
   formlyModel$ = new BehaviorSubject<object | null>(null);
   formlyFields$ = new BehaviorSubject<FormlyFieldConfig[] | null>(null);
+  errors?: ValidationErrorMetadataInterface[];
 
   constructor(
     @Optional()
@@ -63,7 +66,7 @@ export class WebhookLogFormComponent implements OnInit {
     private readonly webhookLogService: WebhookLogService,
     private readonly translocoService: TranslocoService,
     private readonly webhookLogFormService: WebhookLogFormService,
-    private readonly webhookLogMapperService: WebhookLogMapperService
+    private readonly webhookLogMapperService: WebhookLogMapperService,
   ) {}
 
   ngOnInit(): void {
@@ -81,23 +84,35 @@ export class WebhookLogFormComponent implements OnInit {
                 tap((result) =>
                   this.afterFind.next({
                     ...result,
-                  })
-                )
+                  }),
+                ),
               );
             }
             return this.findOne().pipe(
               tap((result) =>
                 this.afterFind.next({
                   ...result,
-                })
-              )
+                }),
+              ),
             );
           } else {
             this.setFieldsAndModel();
           }
           return of(true);
         }),
-        untilDestroyed(this)
+        untilDestroyed(this),
+      )
+      .subscribe();
+
+    this.form.valueChanges
+      .pipe(
+        distinctUntilChanged((prev, cur) => compare(prev, cur).different.length === 0),
+        tap(() => {
+          if (this.errors?.length) {
+            this.setFormlyFields({ errors: [] });
+          }
+        }),
+        untilDestroyed(this),
       )
       .subscribe();
   }
@@ -114,11 +129,12 @@ export class WebhookLogFormComponent implements OnInit {
     return this.webhookLogService.findOne(this.id).pipe(
       tap((result) => {
         this.setFieldsAndModel(this.webhookLogMapperService.toForm(result));
-      })
+      }),
     );
   }
 
   private setFormlyFields(options?: { errors?: ValidationErrorMetadataInterface[] }) {
     this.formlyFields$.next(this.webhookLogFormService.getFormlyFields(options));
+    this.errors = options?.errors || [];
   }
 }

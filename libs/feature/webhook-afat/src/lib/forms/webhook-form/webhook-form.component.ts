@@ -21,10 +21,11 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
-import { BehaviorSubject, catchError, mergeMap, of, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, distinctUntilChanged, mergeMap, of, tap, throwError } from 'rxjs';
 import { WebhookFormService } from '../../services/webhook-form.service';
 import { WebhookMapperService, WebhookModel } from '../../services/webhook-mapper.service';
 import { WebhookService } from '../../services/webhook.service';
+import { compare } from '@nestjs-mod/misc';
 
 @UntilDestroy()
 @Component({
@@ -41,6 +42,7 @@ import { WebhookService } from '../../services/webhook.service';
   selector: 'webhook-form',
   templateUrl: './webhook-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class WebhookFormComponent implements OnInit {
   @Input()
@@ -61,6 +63,7 @@ export class WebhookFormComponent implements OnInit {
   form = new UntypedFormGroup({});
   formlyModel$ = new BehaviorSubject<object | null>(null);
   formlyFields$ = new BehaviorSubject<FormlyFieldConfig[] | null>(null);
+  errors?: ValidationErrorMetadataInterface[];
 
   constructor(
     @Optional()
@@ -71,7 +74,7 @@ export class WebhookFormComponent implements OnInit {
     private readonly translocoService: TranslocoService,
     private readonly webhookFormService: WebhookFormService,
     private readonly webhookMapperService: WebhookMapperService,
-    private readonly validationService: ValidationService
+    private readonly validationService: ValidationService,
   ) {}
 
   ngOnInit(): void {
@@ -85,15 +88,27 @@ export class WebhookFormComponent implements OnInit {
               tap((result) =>
                 this.afterFind.next({
                   ...result,
-                })
-              )
+                }),
+              ),
             );
           } else {
             this.setFieldsAndModel();
           }
           return of(true);
         }),
-        untilDestroyed(this)
+        untilDestroyed(this),
+      )
+      .subscribe();
+
+    this.form.valueChanges
+      .pipe(
+        distinctUntilChanged((prev, cur) => compare(prev, cur).different.length === 0),
+        tap(() => {
+          if (this.errors?.length) {
+            this.setFormlyFields({ errors: [] });
+          }
+        }),
+        untilDestroyed(this),
       )
       .subscribe();
   }
@@ -115,7 +130,7 @@ export class WebhookFormComponent implements OnInit {
               });
             }
           }),
-          untilDestroyed(this)
+          untilDestroyed(this),
         )
         .subscribe();
     } else {
@@ -131,7 +146,7 @@ export class WebhookFormComponent implements OnInit {
             }
           }),
 
-          untilDestroyed(this)
+          untilDestroyed(this),
         )
         .subscribe();
     }
@@ -142,8 +157,8 @@ export class WebhookFormComponent implements OnInit {
       .createOne(this.webhookMapperService.toJson(this.form.value))
       .pipe(
         catchError((err) =>
-          this.validationService.catchAndProcessServerError(err, (options) => this.setFormlyFields(options))
-        )
+          this.validationService.catchAndProcessServerError(err, (options) => this.setFormlyFields(options)),
+        ),
       );
   }
 
@@ -155,8 +170,8 @@ export class WebhookFormComponent implements OnInit {
       .updateOne(this.id, this.webhookMapperService.toJson(this.form.value))
       .pipe(
         catchError((err) =>
-          this.validationService.catchAndProcessServerError(err, (options) => this.setFormlyFields(options))
-        )
+          this.validationService.catchAndProcessServerError(err, (options) => this.setFormlyFields(options)),
+        ),
       );
   }
 
@@ -167,11 +182,12 @@ export class WebhookFormComponent implements OnInit {
     return this.webhookService.findOne(this.id).pipe(
       tap((result) => {
         this.setFieldsAndModel(this.webhookMapperService.toForm(result));
-      })
+      }),
     );
   }
 
   setFormlyFields(options?: { errors?: ValidationErrorMetadataInterface[] }) {
     this.formlyFields$.next(this.webhookFormService.getFormlyFields(options));
+    this.errors = options?.errors || [];
   }
 }

@@ -5,13 +5,14 @@ import { Subject, tap } from 'rxjs';
 import { FilesClientService, PresignedUrls } from './files-client.service';
 
 @Component({
-    imports: [CommonModule, RouterModule],
-    providers: [FilesClientService],
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.less',
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [CommonModule, RouterModule],
+  providers: [FilesClientService],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.less',
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class AppComponent {
   fileName$ = new Subject<string>();
