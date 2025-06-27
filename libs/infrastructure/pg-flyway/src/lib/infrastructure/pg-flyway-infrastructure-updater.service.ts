@@ -12,7 +12,7 @@ export class PgFlywayInfrastructureUpdaterService implements OnModuleInit {
     private readonly packageJsonService: PackageJsonService,
     private readonly nxProjectJsonService: NxProjectJsonService,
     private readonly pgFlywayConfiguration: PgFlywayConfiguration,
-    private readonly wrapApplicationOptionsService: WrapApplicationOptionsService
+    private readonly wrapApplicationOptionsService: WrapApplicationOptionsService,
   ) {}
 
   onModuleInit() {
@@ -49,7 +49,7 @@ export class PgFlywayInfrastructureUpdaterService implements OnModuleInit {
               comments: ['Applying migrations of all applications and modules'],
             },
           },
-          packageJson
+          packageJson,
         );
 
         this.packageJsonService.write(packageJson);
@@ -65,75 +65,75 @@ export class PgFlywayInfrastructureUpdaterService implements OnModuleInit {
     if (projectJson && packageJsonFilePath && nxProjectJsonFilePath) {
       const pgFlywayMigrationsPath = this.pgFlywayConfiguration.migrationsFolder.replace(
         dirname(packageJsonFilePath),
-        ''
+        '',
       );
+      const pgFlywayHistoryTable =
+        this.pgFlywayConfiguration.pgFlywayHistoryTable || `__migrations_${snakeCase(projectJson.name || '')}`;
 
       const { databaseName } = this.getDbConnectionEnvKeys();
       // new migration
       this.nxProjectJsonService.addRunCommands(
         [
-          `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=__migrations_${snakeCase(
-            projectJson.name || ''
-          )} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway create --name=\${npm_config_args:-NewMigration}`,
+          `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=${pgFlywayHistoryTable} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway create --name=\${npm_config_args:-NewMigration}`,
         ],
         'pg-flyway-create-migration',
         undefined,
-        this.pgFlywayConfiguration.nxProjectJsonFile
+        this.pgFlywayConfiguration.nxProjectJsonFile,
       );
       // migrate
       this.nxProjectJsonService.addRunCommands(
         [
           `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=__migrations_${snakeCase(
-            projectJson.name || ''
+            projectJson.name || '',
           )} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway migrate`,
         ],
         'pg-flyway-migrate',
         undefined,
-        this.pgFlywayConfiguration.nxProjectJsonFile
+        this.pgFlywayConfiguration.nxProjectJsonFile,
       );
       // info
       this.nxProjectJsonService.addRunCommands(
         [
           `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=__migrations_${snakeCase(
-            projectJson.name || ''
+            projectJson.name || '',
           )} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway info`,
         ],
         'pg-flyway-info',
         undefined,
-        this.pgFlywayConfiguration.nxProjectJsonFile
+        this.pgFlywayConfiguration.nxProjectJsonFile,
       );
       // baseline
       this.nxProjectJsonService.addRunCommands(
         [
           `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=__migrations_${snakeCase(
-            projectJson.name || ''
+            projectJson.name || '',
           )} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway baseline`,
         ],
         'pg-flyway-baseline',
         undefined,
-        this.pgFlywayConfiguration.nxProjectJsonFile
+        this.pgFlywayConfiguration.nxProjectJsonFile,
       );
       // validate
       this.nxProjectJsonService.addRunCommands(
         [
           `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=__migrations_${snakeCase(
-            projectJson.name || ''
+            projectJson.name || '',
           )} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway validate`,
         ],
         'pg-flyway-validate',
         undefined,
-        this.pgFlywayConfiguration.nxProjectJsonFile
+        this.pgFlywayConfiguration.nxProjectJsonFile,
       );
       // repair
       this.nxProjectJsonService.addRunCommands(
         [
           `export PG_FLYWAY_DATABASE_URL=\${${databaseName}} && export PG_FLYWAY_HISTORY_TABLE=__migrations_${snakeCase(
-            projectJson.name || ''
+            projectJson.name || '',
           )} && export PG_FLYWAY_LOCATIONS=.${pgFlywayMigrationsPath} && ./node_modules/.bin/pg-flyway repair`,
         ],
         'pg-flyway-repair',
         undefined,
-        this.pgFlywayConfiguration.nxProjectJsonFile
+        this.pgFlywayConfiguration.nxProjectJsonFile,
       );
     }
   }

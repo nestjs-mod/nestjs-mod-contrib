@@ -15,6 +15,11 @@ export class PgFlywayConfiguration {
   migrationsFolder!: string;
 
   @ConfigModelProperty({
+    description: 'Table with history of migrations',
+  })
+  pgFlywayHistoryTable?: string;
+
+  @ConfigModelProperty({
     description: 'Application or library project.json-file (nx)',
   })
   nxProjectJsonFile?: string;
