@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pg-flyway-v1.1.1...pg-flyway-v1.2.0) (2025-06-27)
+
+
+### Features
+
+* add "pgFlywayHistoryTable" for change table with history of migrations ([6d0734c](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/6d0734cf44565328e0a9f2a647d801a48ae0a451))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/pg-flyway-v1.1.0...pg-flyway-v1.1.1) (2025-06-16)
 
 
