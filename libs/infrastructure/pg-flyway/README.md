@@ -182,6 +182,7 @@ Additional commands in the nx application `project.json`
 | ------ | ----------- | ----------- | ------- | ----- |
 |`featureName`|PgFlyway feature name for generate prefix to environments keys|**optional**|-|-|
 |`migrationsFolder`|Folder with migrations|**isNotEmpty** (migrationsFolder should not be empty)|-|-|
+|`pgFlywayHistoryTable`|Table with history of migrations|**optional**|-|-|
 |`nxProjectJsonFile`|Application or library project.json-file (nx)|**optional**|-|-|
 
 [Back to Top](#modules)
