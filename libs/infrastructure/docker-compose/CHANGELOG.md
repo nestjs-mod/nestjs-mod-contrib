@@ -1,3 +1,10 @@
+# [1.21.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.20.2...docker-compose-v1.21.0) (2025-06-30)
+
+
+### Features
+
+* add create example env file for docker compose ([6cbd162](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/6cbd162e72d99b8cae68486037fce98c288dc933))
+
 ## [1.20.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/docker-compose-v1.20.1...docker-compose-v1.20.2) (2025-06-16)
 
 
