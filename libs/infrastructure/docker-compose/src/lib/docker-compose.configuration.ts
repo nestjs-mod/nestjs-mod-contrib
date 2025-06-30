@@ -29,6 +29,11 @@ export class DockerComposeConfiguration {
   prodDockerComposeEnvFile?: string;
 
   @ConfigModelProperty({
+    description: 'Dotenv example file for prod docker-compose-example file',
+  })
+  prodDockerComposeExampleEnvFile?: string;
+
+  @ConfigModelProperty({
     description: 'Docker-compose file version. @see https://docs.docker.com/compose/compose-file/compose-versioning',
     default: '3',
   })

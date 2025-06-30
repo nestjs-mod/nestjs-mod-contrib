@@ -33,8 +33,8 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     private readonly packageJsonService: PackageJsonService,
     private readonly applicationPackageJsonService: ApplicationPackageJsonService,
     private readonly gitignoreService: GitignoreService,
-    private readonly dotEnvService: DotEnvService
-  ) { }
+    private readonly dotEnvService: DotEnvService,
+  ) {}
 
   async onApplicationBootstrap() {
     await this.createDockerComposeFile();
@@ -53,7 +53,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       .map(([, services]) => services)
       .reduce(
         (all, cur) => ({ ...all, ...cur.reduce((curAll, curCur) => merge(curAll, curCur.featureConfiguration), {}) }),
-        {}
+        {},
       );
     // todo: add support featureModuleName
     const manualServices: DockerComposeFeatureConfiguration = this.manualDockerComposeFeatures
@@ -61,11 +61,15 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       .reduce((all, cur) => merge(all, cur), {});
     const bothServices: DockerComposeFeatureConfiguration = merge(
       { version: this.dockerComposeConfiguration.dockerComposeFileVersion },
-      merge(featureServices, manualServices)
+      merge(featureServices, manualServices),
     );
 
-    const { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath } =
-      this.getFilesPathes();
+    const {
+      dockerComposeExampleFilePath,
+      dockerComposeProdFilePath,
+      dockerComposeProdEnvFilePath,
+      dockerComposeProdExampleEnvFilePath,
+    } = this.getFilesPathes();
 
     const bothServicesWithEnvs: DockerComposeFeatureConfiguration = { ...bothServices };
     const envFilePath = this.dotEnvService.getEnvFilePath();
@@ -76,10 +80,12 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       let writeTitle = true;
       for (const eachEnvKey of Object.keys(bothServicesWithEnvs.services?.[serviceName].environment || {})) {
         const envKey = constantCase(eachEnvKey);
-        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName ? envKey : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
-          .filter(Boolean)
-          .map((v) => constantCase(v || envKey))
-          .join('_');
+        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName
+          ? envKey
+          : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
+              .filter(Boolean)
+              .map((v) => constantCase(v || envKey))
+              .join('_');
         let value =
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (bothServicesWithEnvs?.services?.[serviceName]?.environment as any)?.[envKey] ||
@@ -101,7 +107,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
         if (
           !bothServicesWithEnvs.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
-            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k),
           )
         ) {
           if (writeTitle) {
@@ -137,11 +143,11 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     const mainData = this.dockerComposeConfiguration.beforeSaveDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveDockerComposeFile({
-        data: bothServicesWithEnvs,
-      })
+          data: bothServicesWithEnvs,
+        })
       : {
-        data: bothServicesWithEnvs,
-      };
+          data: bothServicesWithEnvs,
+        };
     this.dockerComposeFileService.write(mainData.data);
 
     if (envFilePath) {
@@ -149,7 +155,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         envFilePath,
         this.dockerComposeConfiguration.beforeSaveDockerComposeEnvFile
           ? await this.dockerComposeConfiguration.beforeSaveDockerComposeEnvFile(lines)
-          : lines
+          : lines,
       );
     }
 
@@ -163,10 +169,12 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     for (const serviceName of Object.keys(sampleBothServices.services || {})) {
       for (const eachEnvKey of Object.keys(sampleBothServices.services?.[serviceName].environment || {})) {
         const envKey = constantCase(eachEnvKey);
-        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName ? envKey : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
-          .filter(Boolean)
-          .map((v) => constantCase(v || envKey))
-          .join('_');
+        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName
+          ? envKey
+          : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
+              .filter(Boolean)
+              .map((v) => constantCase(v || envKey))
+              .join('_');
         if (!sampleBothServices.services![serviceName].environment) {
           sampleBothServices.services![serviceName].environment = {};
         }
@@ -175,7 +183,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
         if (
           bothServicesWithEnvs.services?.[serviceName].keysOfEnvironmentsWithStaticValue?.some(
-            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k),
           )
         ) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -200,13 +208,13 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       '# Do not modify this file, it is generated using the DockerCompose module included with NestJS-mod.';
     const sampleData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
-        data: sampleBothServices,
-        header,
-      })
+          data: sampleBothServices,
+          header,
+        })
       : {
-        data: sampleBothServices,
-        header,
-      };
+          data: sampleBothServices,
+          header,
+        };
     this.dockerComposeFileService.writeFile(dockerComposeExampleFilePath, sampleData.data, sampleData.header);
 
     // prod
@@ -219,17 +227,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
       let writeTitle = true;
       for (const eachEnvKey of Object.keys(sampleBothProdServices.services?.[serviceName].environment || {})) {
         const envKey = constantCase(eachEnvKey);
-        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName ? envKey : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
-          .filter(Boolean)
-          .map((v) => constantCase(v || envKey))
-          .join('_');
+        const fullEnvKey = bothServicesWithEnvs.services?.[serviceName].excludeContainerNameFromEnvironmentName
+          ? envKey
+          : [bothServicesWithEnvs.services?.[serviceName].container_name, envKey]
+              .filter(Boolean)
+              .map((v) => constantCase(v || envKey))
+              .join('_');
         if (!sampleBothProdServices.services![serviceName].environment) {
           sampleBothProdServices.services![serviceName].environment = {};
         }
 
         if (
           !sampleBothProdServices.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
-            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k)
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(envKey) === constantCase(k),
           )
         ) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -241,7 +251,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
         if (
           !sampleBothProdServices.services![serviceName].keysOfEnvironmentsWithStaticValue?.some(
-            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(fullEnvKey) === constantCase(k)
+            (k) => constantCase(envKey).endsWith(constantCase(k)) || constantCase(fullEnvKey) === constantCase(k),
           )
         ) {
           if (writeTitle) {
@@ -277,20 +287,30 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
 
     const prodData = this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile
       ? await this.dockerComposeConfiguration.beforeSaveExampleDockerComposeFile({
-        data: sampleBothProdServices,
-        header,
-      })
+          data: sampleBothProdServices,
+          header,
+        })
       : {
-        data: sampleBothProdServices,
-        header,
-      };
+          data: sampleBothProdServices,
+          header,
+        };
     this.dockerComposeFileService.writeFile(dockerComposeProdFilePath, prodData.data, prodData.header);
 
     await this.dotEnvService.writeFile(
       dockerComposeProdEnvFilePath,
       this.dockerComposeConfiguration.beforeSaveProdDockerComposeEnvFile
         ? await this.dockerComposeConfiguration.beforeSaveProdDockerComposeEnvFile(prodLines)
-        : prodLines
+        : prodLines,
+    );
+    await this.dotEnvService.writeFile(
+      dockerComposeProdExampleEnvFilePath,
+      Object.fromEntries(
+        Object.entries(
+          this.dockerComposeConfiguration.beforeSaveProdDockerComposeEnvFile
+            ? await this.dockerComposeConfiguration.beforeSaveProdDockerComposeEnvFile(prodLines)
+            : prodLines,
+        ).map(([key]) => [key, '']),
+      ),
     );
   }
 
@@ -316,7 +336,19 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
         .replace('.yml', '-prod.env')
         .replace('/-prod.env', '/prod.env');
 
-    return { dockerComposeExampleFilePath, dockerComposeProdFilePath, dockerComposeProdEnvFilePath };
+    const dockerComposeProdExampleEnvFilePath =
+      this.dockerComposeConfiguration.prodDockerComposeExampleEnvFile ||
+      this.dockerComposeFileService
+        .getDockerComposeFilePath()
+        .replace('.yml', '-prod-example.env')
+        .replace('/-prod-example.env', '/prod-example.env');
+
+    return {
+      dockerComposeExampleFilePath,
+      dockerComposeProdFilePath,
+      dockerComposeProdEnvFilePath,
+      dockerComposeProdExampleEnvFilePath,
+    };
   }
 
   private updatePackageJson() {
@@ -326,7 +358,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
     if (packageJson && packageJsonFilePath) {
       const dockerComposeFilePath = this.dockerComposeConfiguration.dockerComposeFile.replace(
         dirname(packageJsonFilePath),
-        ''
+        '',
       );
       let { dockerComposeProdFilePath, dockerComposeProdEnvFilePath } = this.getFilesPathes();
 
@@ -349,7 +381,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
                 comments: ['Stopping the main docker-compose infrastructure'],
               },
             },
-            packageJson
+            packageJson,
           );
           this.packageJsonService.addScripts(
             DOCKER_COMPOSE_PROD_INFRA_CATEGORY_NAME,
@@ -367,7 +399,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
                 comments: ['Stopping the main docker-compose prod infrastructure'],
               },
             },
-            packageJson
+            packageJson,
           );
         } else {
           this.packageJsonService.addScripts(
@@ -385,7 +417,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
                 comments: [`Stopping the docker-compose infrastructure for ${applicationPackageJson?.name}`],
               },
             },
-            packageJson
+            packageJson,
           );
           this.packageJsonService.addScripts(
             DOCKER_COMPOSE_PROD_INFRA_CATEGORY_NAME,
@@ -403,7 +435,7 @@ export class DockerComposeBootstrapService implements OnApplicationBootstrap {
                 comments: [`Stopping the main docker-compose prod infrastructure for ${applicationPackageJson?.name}`],
               },
             },
-            packageJson
+            packageJson,
           );
         }
       }
