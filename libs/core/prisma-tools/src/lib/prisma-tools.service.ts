@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FindManyArgs } from '@nestjs-mod/swagger';
 import { ConfigModel } from '@nestjs-mod/common';
+import { FindManyArgs } from '@nestjs-mod/swagger';
 import { Logger } from '@nestjs/common';
 import { basename } from 'path';
 import { PrismaToolsStaticEnvironments } from './prisma-tools.environments';
@@ -91,7 +91,7 @@ export class PrismaToolsService {
     defaultOptions?: {
       defaultCurPage: number;
       defaultPerPage: number;
-    }
+    },
   ): {
     take: number;
     skip: number;
@@ -134,7 +134,7 @@ export class PrismaToolsService {
     prismaError: { code: string; meta: { target: string[] } } | { code: string; meta: { cause: { fields: string[] } } },
     field: keyof T,
     error: any,
-    defaultError: any = null
+    defaultError: any = null,
   ) {
     return prismaError.code === ERROR_CODE_P2002 && this.getErrorFields(prismaError).includes(field as string)
       ? error
@@ -142,13 +142,23 @@ export class PrismaToolsService {
   }
 
   private getErrorFields(
-    prismaError: { code: string; meta: { target: string[] } } | { code: string; meta: { cause: { fields: string[] } } }
+    prismaError:
+      | { code: string; meta: { target: string[] } }
+      | { code: string; meta: { cause: { fields: string[] } } }
+      | { code: string; meta: { driverAdapterError: { cause: { fields: string[] } } } },
   ) {
     // default behavior
     if ('target' in prismaError.meta) {
       return prismaError.meta?.target.map((field) => field.replace(new RegExp('"', 'ig'), '')) || [];
     }
+
     // previewFeatures: ['queryCompiler', 'driverAdapters']
+    if ('driverAdapterError' in prismaError.meta) {
+      return (
+        prismaError.meta?.driverAdapterError?.cause?.fields.map((field) => field.replace(new RegExp('"', 'ig'), '')) ||
+        []
+      );
+    }
     return prismaError.meta?.cause?.fields.map((field) => field.replace(new RegExp('"', 'ig'), '')) || [];
   }
 
@@ -156,7 +166,7 @@ export class PrismaToolsService {
     prismaError: { code: string; meta: { target: string[] } },
     fields: (keyof T)[],
     error: any,
-    defaultError: any = null
+    defaultError: any = null,
   ) {
     return prismaError.code === ERROR_CODE_P2002 &&
       fields.filter((field) => this.getErrorFields(prismaError).includes(field as string)).length === fields.length
@@ -169,7 +179,7 @@ export class PrismaToolsService {
     errors: {
       field: keyof T;
       error: any;
-    }[]
+    }[],
   ) {
     const firstError = errors.find((error) => this.isErrorOfUniqueField<T>(prismaError, error.field, true));
 
