@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.1.1...prisma-tools-v1.1.2) (2025-07-05)
+
+
+### Bug Fixes
+
+* add support parse driverAdapterError ([37a72b4](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/37a72b405bf0cae45af04ddafba73f998c2de08f))
+
 ## [1.1.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.1.0...prisma-tools-v1.1.1) (2025-06-16)
 
 
