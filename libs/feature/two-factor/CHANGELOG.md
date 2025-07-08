@@ -1,3 +1,10 @@
+## [1.1.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.6...two-factor-v1.1.7) (2025-07-08)
+
+
+### Bug Fixes
+
+* change logic for calc timeout in totp generator ([049521e](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/049521ed74a1439555294fc72a8774c51f4b5270))
+
 ## [1.1.6](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.5...two-factor-v1.1.6) (2025-07-08)
 
 
