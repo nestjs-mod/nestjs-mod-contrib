@@ -1,7 +1,7 @@
 {
     "name": "@nestjs-mod/prisma-tools",
     "description": "Functions and helpers for work with prisma used in NestJS-mod modules",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "keywords": [
         "nestjs",
         "nestjs-mod",
