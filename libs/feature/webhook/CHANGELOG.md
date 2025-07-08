@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-v1.2.4...webhook-v1.2.5) (2025-07-08)
+
+
+### Bug Fixes
+
+* change error formats to one style ([08caa03](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/08caa03ddebedd3f9acaccad99f9752169ed7e00))
+
 ## [1.2.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-v1.2.3...webhook-v1.2.4) (2025-07-08)
 
 
