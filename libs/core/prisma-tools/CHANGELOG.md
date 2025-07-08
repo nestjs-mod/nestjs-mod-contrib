@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.1.2...prisma-tools-v1.1.3) (2025-07-08)
+
+
+### Bug Fixes
+
+* change error formats to one style ([5d223ae](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5d223ae7e9e1fc9cc3986dedda5c92764b0f4034))
+
 ## [1.1.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/prisma-tools-v1.1.1...prisma-tools-v1.1.2) (2025-07-05)
 
 
