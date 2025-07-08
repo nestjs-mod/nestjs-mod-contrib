@@ -35,7 +35,7 @@ export class TwoFactorService {
       // Length of the generated tokens.
       digits: 6,
       // Interval of time for which a token is valid, in seconds.
-      ...(options.timeout ? { period: options.timeout } : {}),
+      ...(options.timeout ? { period: options.timeout / 1000 } : {}),
       // Arbitrary key encoded in base32 or `OTPAuth.Secret` instance
       // (if omitted, a cryptographically secure random secret is generated).
       secret: OTPAuth.Secret.fromBase32(options.secret),
