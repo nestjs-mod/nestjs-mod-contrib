@@ -9,7 +9,7 @@ import { TwoFactorConfiguration } from './two-factor.configuration';
 import { TWO_FACTOR_FEATURE } from './two-factor.constants';
 import { TwoFactorError, TwoFactorErrorEnum } from './two-factor.errors';
 
-const TOTP_PERIOD = 30;
+// const TOTP_PERIOD = 30;
 
 @Injectable()
 export class TwoFactorService {
@@ -19,10 +19,10 @@ export class TwoFactorService {
     @InjectPrismaClient(TWO_FACTOR_FEATURE)
     private readonly prismaClient: PrismaClient,
     private readonly twoFactorConfiguration: TwoFactorConfiguration,
-    private readonly twoFactorEventsService: TwoFactorEventsService
+    private readonly twoFactorEventsService: TwoFactorEventsService,
   ) {}
 
-  async getTotp(options: { username?: string; secret: string }) {
+  async getTotp(options: { username?: string; secret: string; timeout: number }) {
     return new OTPAuth.TOTP({
       // Provider or service the account is associated with.
       issuer: 'SSO',
@@ -35,7 +35,7 @@ export class TwoFactorService {
       // Length of the generated tokens.
       digits: 6,
       // Interval of time for which a token is valid, in seconds.
-      period: TOTP_PERIOD,
+      ...(options.timeout ? { period: options.timeout } : {}),
       // Arbitrary key encoded in base32 or `OTPAuth.Secret` instance
       // (if omitted, a cryptographically secure random secret is generated).
       secret: OTPAuth.Secret.fromBase32(options.secret),
@@ -58,14 +58,22 @@ export class TwoFactorService {
     });
 
     await this.removeOutdateTwoFactorCode(options);
+    let timeout = 0;
+
+    if (this.twoFactorConfiguration.getTimeoutValue) {
+      timeout = await this.twoFactorConfiguration.getTimeoutValue({
+        twoFactorUser,
+      });
+    }
 
     const code = String(
       (
         await this.getTotp({
           username: twoFactorUser.username || undefined,
           secret: twoFactorUser.secret,
+          timeout,
         })
-      ).generate()
+      ).generate(),
     );
 
     const existsUsedCode = await this.prismaClient.twoFactorCode.findFirst({
@@ -81,9 +89,7 @@ export class TwoFactorService {
     });
 
     if (existsUsedCode?.used) {
-      throw new TwoFactorError(
-        TwoFactorErrorEnum.TwoFactorCodePleaseWait30Seconds
-      );
+      throw new TwoFactorError(TwoFactorErrorEnum.TwoFactorCodePleaseWaitXXSeconds, undefined, { timeout });
     }
 
     const existsOutdatedCode = await this.prismaClient.twoFactorCode.findFirst({
@@ -116,9 +122,7 @@ export class TwoFactorService {
           outdated: true,
         },
       });
-      throw new TwoFactorError(
-        TwoFactorErrorEnum.TwoFactorCodePleaseWait30Seconds
-      );
+      throw new TwoFactorError(TwoFactorErrorEnum.TwoFactorCodePleaseWaitXXSeconds, undefined, { timeout });
     }
 
     // disable old codes
@@ -169,21 +173,15 @@ export class TwoFactorService {
         type: options.type,
       });
 
-      return { twoFactorUser, twoFactorCode, code };
+      return { twoFactorUser, twoFactorCode, twoFactorTimeout: timeout };
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       this.logger.error(err, err.stack);
-      throw new TwoFactorError(
-        TwoFactorErrorEnum.TwoFactorCodePleaseWait30Seconds
-      );
+      throw new TwoFactorError(TwoFactorErrorEnum.TwoFactorCodePleaseWaitXXSeconds, undefined, { timeout });
     }
   }
 
-  async validateCode(options: {
-    operationName: string;
-    code: string;
-    externalTenantId: string;
-  }) {
+  async validateCode(options: { operationName: string; code: string; externalTenantId: string }) {
     let twoFactorCode = await this.prismaClient.twoFactorCode.findFirst({
       include: { TwoFactorUser: true },
       where: {
@@ -204,8 +202,9 @@ export class TwoFactorService {
       throw new TwoFactorError(TwoFactorErrorEnum.TwoFactorCodeIsUsed);
     }
 
+    let timeout = 0;
     if (this.twoFactorConfiguration.getTimeoutValue) {
-      const timeout = await this.twoFactorConfiguration.getTimeoutValue({
+      timeout = await this.twoFactorConfiguration.getTimeoutValue({
         twoFactorCode,
         twoFactorUser: twoFactorCode.TwoFactorUser,
       });
@@ -213,12 +212,13 @@ export class TwoFactorService {
       const totp = await this.getTotp({
         secret: twoFactorCode.TwoFactorUser.secret,
         username: twoFactorCode.TwoFactorUser.username || undefined,
+        timeout,
       });
 
       const tokenIsValid =
         totp.validate({
           token: options.code,
-          window: timeout / 1000 / TOTP_PERIOD,
+          window: timeout / 1000 / 30,
         }) !== null;
 
       if (!tokenIsValid) {
@@ -236,7 +236,8 @@ export class TwoFactorService {
         externalTenantId: options.externalTenantId,
       },
     });
-    return { twoFactorUser: twoFactorCode.TwoFactorUser, twoFactorCode };
+
+    return { twoFactorUser: twoFactorCode.TwoFactorUser, twoFactorCode, twoFactorTimeout: timeout };
   }
 
   private async getOrCreateUser(options: {
@@ -262,10 +263,7 @@ export class TwoFactorService {
     });
   }
 
-  private async removeOutdateTwoFactorCode(options: {
-    externalUserId: string;
-    externalTenantId: string;
-  }) {
+  private async removeOutdateTwoFactorCode(options: { externalUserId: string; externalTenantId: string }) {
     const twoFactorCodes = await this.prismaClient.twoFactorCode.findMany({
       include: { TwoFactorUser: true },
       where: {
@@ -288,8 +286,8 @@ export class TwoFactorService {
               twoFactorUser: twoFactorCode.TwoFactorUser,
             }))
             ? twoFactorCode
-            : undefined
-        )
+            : undefined,
+        ),
       )
     )
       .filter(Boolean)

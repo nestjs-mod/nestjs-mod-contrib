@@ -4,7 +4,7 @@ import { TwoFactorCodeDto } from './generated/rest-dto/two-factor-code.dto';
 import { TwoFactorUserDto } from './generated/rest-dto/two-factor-user.dto';
 
 type GetTimeoutValueOptions = {
-  twoFactorCode: TwoFactorCodeDto;
+  twoFactorCode?: TwoFactorCodeDto;
   twoFactorUser: TwoFactorUserDto;
 };
 
