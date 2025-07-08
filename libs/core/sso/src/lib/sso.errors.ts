@@ -33,21 +33,20 @@ export class SsoError<T = unknown> extends Error {
   @ApiPropertyOptional({ type: Object })
   metadata?: T;
 
-  constructor(message?: string | SsoErrorEnum, code?: SsoErrorEnum, metadata?: T) {
-    const codeAsMetadata = Boolean(
-      code && !Object.values(SsoErrorEnum).includes(String(code) as SsoErrorEnum),
-    );
+  constructor(message?: string | SsoErrorEnum, code?: SsoErrorEnum | T, metadata?: T) {
+    const codeAsMetadata = Boolean(code && !Object.values(SsoErrorEnum).includes(String(code) as SsoErrorEnum));
     const messageAsCode = Boolean(message && Object.values(SsoErrorEnum).includes(message as SsoErrorEnum));
     const preparedCode = messageAsCode ? (message as SsoErrorEnum) : code;
-    const preparedMessage = messageAsCode && preparedCode ? SSO_ERROR_ENUM_TITLES[preparedCode] : message;
+    const preparedMessage =
+      messageAsCode && preparedCode ? SSO_ERROR_ENUM_TITLES[preparedCode as SsoErrorEnum] : message;
 
     metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || SsoErrorEnum.COMMON;
-    message = preparedMessage || SSO_ERROR_ENUM_TITLES[code];
+    message = preparedMessage || SSO_ERROR_ENUM_TITLES[code as SsoErrorEnum];
 
     super(message);
 
-    this.code = code;
+    this.code = code as SsoErrorEnum;
     this.message = message;
     this.metadata = metadata;
   }

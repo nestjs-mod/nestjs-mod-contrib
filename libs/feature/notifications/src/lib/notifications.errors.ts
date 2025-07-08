@@ -36,23 +36,24 @@ export class NotificationsError<T = unknown> extends Error {
   @ApiPropertyOptional({ type: Object })
   metadata?: T;
 
-  constructor(message?: string | NotificationsErrorEnum, code?: NotificationsErrorEnum, metadata?: T) {
-      const codeAsMetadata = Boolean(
-        code && !Object.values(NotificationsErrorEnum).includes(String(code) as NotificationsErrorEnum),
-      );
+  constructor(message?: string | NotificationsErrorEnum, code?: NotificationsErrorEnum | T, metadata?: T) {
+    const codeAsMetadata = Boolean(
+      code && !Object.values(NotificationsErrorEnum).includes(String(code) as NotificationsErrorEnum),
+    );
     const messageAsCode = Boolean(
       message && Object.values(NotificationsErrorEnum).includes(message as NotificationsErrorEnum),
     );
     const preparedCode = messageAsCode ? (message as NotificationsErrorEnum) : code;
-    const preparedMessage = messageAsCode && preparedCode ? NOTIFICATIONS_ERROR_ENUM_TITLES[preparedCode] : message;
+    const preparedMessage =
+      messageAsCode && preparedCode ? NOTIFICATIONS_ERROR_ENUM_TITLES[preparedCode as NotificationsErrorEnum] : message;
 
     metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || NotificationsErrorEnum.COMMON;
-    message = preparedMessage || NOTIFICATIONS_ERROR_ENUM_TITLES[code];
+    message = preparedMessage || NOTIFICATIONS_ERROR_ENUM_TITLES[code as NotificationsErrorEnum];
 
     super(message);
 
-    this.code = code;
+    this.code = code as NotificationsErrorEnum;
     this.message = message;
     this.metadata = metadata;
   }

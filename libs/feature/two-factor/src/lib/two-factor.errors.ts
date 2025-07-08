@@ -1,5 +1,4 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { ValidationError as CvTwoFactorError } from 'class-validator';
 import { getText } from 'nestjs-translates';
 
 export enum TwoFactorErrorEnum {
@@ -40,21 +39,22 @@ export class TwoFactorError<T = unknown> extends Error {
   @ApiPropertyOptional({ type: Object })
   metadata?: T;
 
-  constructor(message?: string | TwoFactorErrorEnum, code?: TwoFactorErrorEnum, metadata?: T) {
-      const codeAsMetadata = Boolean(
-        code && !Object.values(TwoFactorErrorEnum).includes(String(code) as TwoFactorErrorEnum),
-      );
+  constructor(message?: string | TwoFactorErrorEnum, code?: TwoFactorErrorEnum | T, metadata?: T) {
+    const codeAsMetadata = Boolean(
+      code && !Object.values(TwoFactorErrorEnum).includes(String(code) as TwoFactorErrorEnum),
+    );
     const messageAsCode = Boolean(message && Object.values(TwoFactorErrorEnum).includes(message as TwoFactorErrorEnum));
     const preparedCode = messageAsCode ? (message as TwoFactorErrorEnum) : code;
-    const preparedMessage = messageAsCode && preparedCode ? TWO_FACTOR_ERROR_ENUM_TITLES[preparedCode] : message;
+    const preparedMessage =
+      messageAsCode && preparedCode ? TWO_FACTOR_ERROR_ENUM_TITLES[preparedCode as TwoFactorErrorEnum] : message;
 
     metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || TwoFactorErrorEnum.COMMON;
-    message = preparedMessage || TWO_FACTOR_ERROR_ENUM_TITLES[code];
+    message = preparedMessage || TWO_FACTOR_ERROR_ENUM_TITLES[code as TwoFactorErrorEnum];
 
     super(message);
 
-    this.code = code;
+    this.code = code as TwoFactorErrorEnum;
     this.message = message;
     this.metadata = metadata;
   }
