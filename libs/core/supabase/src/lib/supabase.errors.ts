@@ -34,10 +34,14 @@ export class SupabaseError<T = unknown> extends Error {
   metadata?: T;
 
   constructor(message?: string | SupabaseErrorEnum, code?: SupabaseErrorEnum, metadata?: T) {
+    const codeAsMetadata = Boolean(
+      code && !Object.values(SupabaseErrorEnum).includes(String(code) as SupabaseErrorEnum),
+    );
     const messageAsCode = Boolean(message && Object.values(SupabaseErrorEnum).includes(message as SupabaseErrorEnum));
     const preparedCode = messageAsCode ? (message as SupabaseErrorEnum) : code;
     const preparedMessage = messageAsCode && preparedCode ? SUPABASE_ERROR_ENUM_TITLES[preparedCode] : message;
 
+    metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || SupabaseErrorEnum.COMMON;
     message = preparedMessage || SUPABASE_ERROR_ENUM_TITLES[code];
 

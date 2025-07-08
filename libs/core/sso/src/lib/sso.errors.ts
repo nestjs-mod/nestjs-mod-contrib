@@ -34,10 +34,14 @@ export class SsoError<T = unknown> extends Error {
   metadata?: T;
 
   constructor(message?: string | SsoErrorEnum, code?: SsoErrorEnum, metadata?: T) {
+    const codeAsMetadata = Boolean(
+      code && !Object.values(SsoErrorEnum).includes(String(code) as SsoErrorEnum),
+    );
     const messageAsCode = Boolean(message && Object.values(SsoErrorEnum).includes(message as SsoErrorEnum));
     const preparedCode = messageAsCode ? (message as SsoErrorEnum) : code;
     const preparedMessage = messageAsCode && preparedCode ? SSO_ERROR_ENUM_TITLES[preparedCode] : message;
 
+    metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || SsoErrorEnum.COMMON;
     message = preparedMessage || SSO_ERROR_ENUM_TITLES[code];
 

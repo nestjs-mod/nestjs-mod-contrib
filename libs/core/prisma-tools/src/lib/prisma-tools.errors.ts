@@ -25,10 +25,14 @@ export class DatabaseError<T = unknown> extends Error {
   metadata?: T;
 
   constructor(message?: string | DatabaseErrorEnum, code?: DatabaseErrorEnum, metadata?: T) {
+    const codeAsMetadata = Boolean(
+      code && !Object.values(DatabaseErrorEnum).includes(String(code) as DatabaseErrorEnum),
+    );
     const messageAsCode = Boolean(message && Object.values(DatabaseErrorEnum).includes(message as DatabaseErrorEnum));
     const preparedCode = messageAsCode ? (message as DatabaseErrorEnum) : code;
     const preparedMessage = messageAsCode && preparedCode ? DATABASE_ERROR_ENUM_TITLES[preparedCode] : message;
 
+    metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || DatabaseErrorEnum.COMMON;
     message = preparedMessage || DATABASE_ERROR_ENUM_TITLES[code];
 

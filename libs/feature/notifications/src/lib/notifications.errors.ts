@@ -9,82 +9,14 @@ export enum NotificationsErrorEnum {
   FORBIDDEN = 'NOTIFICATIONS-003',
 }
 
-export const NOTIFICATIONS_ERROR_ENUM_TITLES: Record<
-  NotificationsErrorEnum,
-  string
-> = {
+export const NOTIFICATIONS_ERROR_ENUM_TITLES: Record<NotificationsErrorEnum, string> = {
   [NotificationsErrorEnum.COMMON]: getText('Notifications error'),
-  [NotificationsErrorEnum.EXTERNAL_TENANT_ID_NOT_SET]:
-    getText('Tenant ID not set'),
+  [NotificationsErrorEnum.EXTERNAL_TENANT_ID_NOT_SET]: getText('Tenant ID not set'),
   [NotificationsErrorEnum.EXTERNAL_USER_ID_NOT_SET]: getText('User ID not set'),
   [NotificationsErrorEnum.FORBIDDEN]: getText('Forbidden'),
 };
 
-export class NotificationsErrorMetadataConstraint {
-  @ApiProperty({
-    type: String,
-  })
-  name!: string;
-
-  @ApiProperty({
-    type: String,
-  })
-  description!: string;
-
-  constructor(options?: NotificationsErrorMetadataConstraint) {
-    Object.assign(this, options);
-  }
-}
-
-export class NotificationsErrorMetadata {
-  @ApiProperty({
-    type: String,
-  })
-  property!: string;
-
-  @ApiProperty({
-    type: () => NotificationsErrorMetadataConstraint,
-    isArray: true,
-  })
-  constraints!: NotificationsErrorMetadataConstraint[];
-
-  @ApiPropertyOptional({
-    type: () => NotificationsErrorMetadata,
-    isArray: true,
-  })
-  children?: NotificationsErrorMetadata[];
-
-  constructor(options?: NotificationsErrorMetadata) {
-    Object.assign(this, options);
-  }
-
-  static fromClassValidatorNotificationsErrors(
-    errors?: CvNotificationsError[]
-  ): NotificationsErrorMetadata[] | undefined {
-    return errors?.map(
-      (error) =>
-        new NotificationsErrorMetadata({
-          property: error.property,
-          constraints: Object.entries(error.constraints || {}).map(
-            ([key, value]) =>
-              new NotificationsErrorMetadataConstraint({
-                name: key,
-                description: value,
-              })
-          ),
-          ...(error.children?.length
-            ? {
-                children: this.fromClassValidatorNotificationsErrors(
-                  error.children
-                ),
-              }
-            : {}),
-        })
-    );
-  }
-}
-
-export class NotificationsError extends Error {
+export class NotificationsError<T = unknown> extends Error {
   @ApiProperty({
     type: String,
     description: Object.entries(NOTIFICATIONS_ERROR_ENUM_TITLES)
@@ -101,28 +33,20 @@ export class NotificationsError extends Error {
   })
   code = NotificationsErrorEnum.COMMON;
 
-  @ApiPropertyOptional({ type: NotificationsErrorMetadata, isArray: true })
-  metadata?: NotificationsErrorMetadata[];
+  @ApiPropertyOptional({ type: Object })
+  metadata?: T;
 
-  constructor(
-    message?: string | NotificationsErrorEnum,
-    code?: NotificationsErrorEnum,
-    metadata?: CvNotificationsError[]
-  ) {
+  constructor(message?: string | NotificationsErrorEnum, code?: NotificationsErrorEnum, metadata?: T) {
+      const codeAsMetadata = Boolean(
+        code && !Object.values(NotificationsErrorEnum).includes(String(code) as NotificationsErrorEnum),
+      );
     const messageAsCode = Boolean(
-      message &&
-        Object.values(NotificationsErrorEnum).includes(
-          message as NotificationsErrorEnum
-        )
+      message && Object.values(NotificationsErrorEnum).includes(message as NotificationsErrorEnum),
     );
-    const preparedCode = messageAsCode
-      ? (message as NotificationsErrorEnum)
-      : code;
-    const preparedMessage =
-      messageAsCode && preparedCode
-        ? NOTIFICATIONS_ERROR_ENUM_TITLES[preparedCode]
-        : message;
+    const preparedCode = messageAsCode ? (message as NotificationsErrorEnum) : code;
+    const preparedMessage = messageAsCode && preparedCode ? NOTIFICATIONS_ERROR_ENUM_TITLES[preparedCode] : message;
 
+    metadata = codeAsMetadata ? (code as T) : metadata;
     code = preparedCode || NotificationsErrorEnum.COMMON;
     message = preparedMessage || NOTIFICATIONS_ERROR_ENUM_TITLES[code];
 
@@ -130,9 +54,6 @@ export class NotificationsError extends Error {
 
     this.code = code;
     this.message = message;
-    this.metadata =
-      NotificationsErrorMetadata.fromClassValidatorNotificationsErrors(
-        metadata
-      );
+    this.metadata = metadata;
   }
 }
