@@ -1,3 +1,11 @@
+## [1.1.4](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.3...two-factor-v1.1.4) (2025-07-08)
+
+
+### Bug Fixes
+
+* append timeout value to output of validateCode and generateCode methods ([7e75fa2](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/7e75fa2a80f001ed0378b4040dd2cdbdee1adc3f))
+* change error formats to one style ([5d223ae](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/5d223ae7e9e1fc9cc3986dedda5c92764b0f4034))
+
 ## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.2...two-factor-v1.1.3) (2025-07-05)
 
 
