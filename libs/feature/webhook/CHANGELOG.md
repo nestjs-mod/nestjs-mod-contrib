@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-v1.3.0...webhook-v1.3.1) (2025-07-16)
+
+
+### Bug Fixes
+
+* remove IsNumberString validation ([59e3fc8](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/59e3fc8012c7e3fe04bea8b72dd78270e14957ba))
+
 # [1.3.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-v1.2.5...webhook-v1.3.0) (2025-07-16)
 
 
