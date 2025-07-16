@@ -56,7 +56,7 @@ import { WebhookService } from '../../services/webhook.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class SsoUserGridComponent implements OnInit, OnChanges {
+export class WebhookGridComponent implements OnInit, OnChanges {
   @Input()
   tenantId?: string;
   @Input()
@@ -112,7 +112,7 @@ export class SsoUserGridComponent implements OnInit, OnChanges {
     this.loadManyTenants(searchText);
   }
 
-  ngOnChanges(changes: NgChanges<SsoUserGridComponent>): void {
+  ngOnChanges(changes: NgChanges<WebhookGridComponent>): void {
     // need for ignore dbl load
     if (!changes.tenantId?.firstChange) {
       this.loadMany({ force: true });
