@@ -29,3 +29,6 @@ msgstr "Please wait 30 seconds"
 
 msgid "Two-factor code has already been used"
 msgstr "Two-factor code has already been used"
+
+msgid "Please wait {{{timeout}}} seconds"
+msgstr "Please wait {{{timeout}}} seconds"

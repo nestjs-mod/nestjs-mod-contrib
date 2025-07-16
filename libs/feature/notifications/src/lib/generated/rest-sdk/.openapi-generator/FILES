@@ -15,8 +15,6 @@ docs/NotificationsControllerFindMany400Response.md
 docs/NotificationsEntities.md
 docs/NotificationsError.md
 docs/NotificationsErrorEnum.md
-docs/NotificationsErrorMetadata.md
-docs/NotificationsErrorMetadataConstraint.md
 docs/NotificationsEvent.md
 docs/NotificationsEventDto.md
 docs/NotificationsEventScalarFieldEnum.md

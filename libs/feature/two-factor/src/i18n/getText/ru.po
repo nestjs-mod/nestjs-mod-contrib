@@ -30,3 +30,6 @@ msgstr "Пожалуйста, подождите 30 секунд"
 
 msgid "Two-factor code has already been used"
 msgstr "Код двухфакторной аутентификации уже использован"
+
+msgid "Please wait {{{timeout}}} seconds"
+msgstr "Пожалуйста, подождите {{{timeout}}} сек."
