@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-afat-v1.2.0...webhook-afat-v1.2.1) (2025-07-16)
+
+
+### Bug Fixes
+
+* revert grid component name ([598204c](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/598204ce6f9cf2405a52ac251b968577f94f8470))
+
 # [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-afat-v1.1.3...webhook-afat-v1.2.0) (2025-07-16)
 
 
