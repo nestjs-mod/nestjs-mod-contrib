@@ -22,6 +22,12 @@ msgstr "Информация"
 msgid "Delete"
 msgstr "Удалить"
 
+msgid "select tenant"
+msgstr "выберите тенант"
+
+msgid "Loading..."
+msgstr "Загрузка..."
+
 msgid "Create new"
 msgstr "Создать"
 

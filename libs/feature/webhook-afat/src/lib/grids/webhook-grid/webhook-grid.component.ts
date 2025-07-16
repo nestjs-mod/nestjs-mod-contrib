@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, OnInit, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -19,8 +19,9 @@ import { BehaviorSubject, Observable, catchError, debounceTime, distinctUntilCha
 import { TranslocoDirective, TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { marker } from '@jsverse/transloco-keys-manager/marker';
 import { TranslocoDatePipe } from '@jsverse/transloco-locale';
-import { NzTableSortOrderDetectorPipe, ValidationService, getQueryMetaByParams } from '@nestjs-mod/afat';
+import { NgChanges, NzTableSortOrderDetectorPipe, ValidationService, getQueryMetaByParams } from '@nestjs-mod/afat';
 import { RequestMeta, getQueryMeta } from '@nestjs-mod/misc';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { WebhookFormComponent } from '../../forms/webhook-form/webhook-form.component';
 import { WebhookLogFormComponent } from '../../forms/webhook-log-form/webhook-log-form.component';
 import { WebhookScalarFieldEnumInterface } from '../../generated/rest-sdk';
@@ -48,15 +49,29 @@ import { WebhookService } from '../../services/webhook.service';
     TranslocoDirective,
     TranslocoPipe,
     TranslocoDatePipe,
+    NzSelectModule,
   ],
   selector: 'webhook-grid',
   templateUrl: './webhook-grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class WebhookGridComponent implements OnInit {
+export class SsoUserGridComponent implements OnInit, OnChanges {
+  @Input()
+  tenantId?: string;
   @Input()
   forceLoadStream?: Observable<unknown>[];
+  @Input()
+  loadManyTenantsHandler?: (searchText?: string) => Observable<
+    {
+      label: string;
+      value: string;
+    }[]
+  >;
+
+  tenantSearchField = new FormControl('');
+  tenantSearchLoading$ = new BehaviorSubject(false);
+  tenantSearchResult$ = new BehaviorSubject<{ label: string; value: string }[]>([{ label: 'ss', value: 'ss' }]);
 
   items$ = new BehaviorSubject<WebhookModel[]>([]);
   meta$ = new BehaviorSubject<RequestMeta | undefined>(undefined);
@@ -93,6 +108,19 @@ export class WebhookGridComponent implements OnInit {
     private readonly validationService: ValidationService,
   ) {}
 
+  onTenantSearch(searchText: string) {
+    this.loadManyTenants(searchText);
+  }
+
+  ngOnChanges(changes: NgChanges<SsoUserGridComponent>): void {
+    // need for ignore dbl load
+    if (!changes.tenantId?.firstChange) {
+      this.loadMany({ force: true });
+    } else {
+      this.loadMany();
+    }
+  }
+
   ngOnInit(): void {
     merge(
       this.searchField.valueChanges.pipe(debounceTime(700), distinctUntilChanged()),
@@ -103,7 +131,32 @@ export class WebhookGridComponent implements OnInit {
         untilDestroyed(this),
       )
       .subscribe();
+
+    merge(
+      this.tenantSearchField.valueChanges.pipe(debounceTime(700), distinctUntilChanged()),
+      ...(this.forceLoadStream ? this.forceLoadStream : []),
+    )
+      .pipe(
+        tap(() => this.loadMany({ force: true })),
+        untilDestroyed(this),
+      )
+      .subscribe();
+
     this.loadMany();
+    this.loadManyTenants();
+  }
+
+  private loadManyTenants(searchText = '') {
+    if (this.loadManyTenantsHandler) {
+      this.loadManyTenantsHandler(searchText)
+        .pipe(
+          tap((tenants) => {
+            this.tenantSearchResult$.next(tenants);
+          }),
+          untilDestroyed(this),
+        )
+        .subscribe();
+    }
   }
 
   loadMany(args?: {
@@ -123,6 +176,13 @@ export class WebhookGridComponent implements OnInit {
 
     if (!filters['search'] && this.searchField.value) {
       filters['search'] = this.searchField.value;
+    }
+
+    if (!filters['tenantId'] && this.tenantId) {
+      filters['tenantId'] = this.tenantId;
+    }
+    if (this.tenantSearchField.value) {
+      filters['tenantId'] = this.tenantSearchField.value;
     }
 
     if (

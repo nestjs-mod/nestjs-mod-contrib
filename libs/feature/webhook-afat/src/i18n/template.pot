@@ -21,6 +21,12 @@ msgstr "View"
 msgid "Delete"
 msgstr "Delete"
 
+msgid "select tenant"
+msgstr "select tenant"
+
+msgid "Loading..."
+msgstr "Loading..."
+
 msgid "Create new"
 msgstr "Create new"
 

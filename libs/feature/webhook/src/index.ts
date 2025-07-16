@@ -36,6 +36,7 @@ export * from './lib/services/webhook-cache.service';
 export * from './lib/services/webhook-tools.service';
 export * from './lib/services/webhook-users.service';
 export * from './lib/services/webhook.service';
+export * from './lib/types/find-many-webhook-args';
 export * from './lib/types/find-many-webhook-log-args';
 export * from './lib/types/find-many-webhook-log-response';
 export * from './lib/types/find-many-webhook-response';

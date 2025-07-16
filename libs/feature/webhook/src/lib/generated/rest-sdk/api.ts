@@ -769,10 +769,11 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
          * @param {number} [perPage] 
          * @param {string} [searchText] 
          * @param {string} [sort] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookControllerFindMany: async (curPage?: number, perPage?: number, searchText?: string, sort?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        webhookControllerFindMany: async (curPage?: number, perPage?: number, searchText?: string, sort?: string, tenantId?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/webhook`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -799,6 +800,10 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
 
             if (sort !== undefined) {
                 localVarQueryParameter['sort'] = sort;
+            }
+
+            if (tenantId !== undefined) {
+                localVarQueryParameter['tenantId'] = tenantId;
             }
 
 
@@ -1121,11 +1126,12 @@ export const WebhookApiFp = function(configuration?: Configuration) {
          * @param {number} [perPage] 
          * @param {string} [searchText] 
          * @param {string} [sort] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindManyWebhookResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookControllerFindMany(curPage, perPage, searchText, sort, options);
+        async webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, tenantId?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FindManyWebhookResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.webhookControllerFindMany(curPage, perPage, searchText, sort, tenantId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WebhookApi.webhookControllerFindMany']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1260,11 +1266,12 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
          * @param {number} [perPage] 
          * @param {string} [searchText] 
          * @param {string} [sort] 
+         * @param {string} [tenantId] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, options?: RawAxiosRequestConfig): AxiosPromise<FindManyWebhookResponse> {
-            return localVarFp.webhookControllerFindMany(curPage, perPage, searchText, sort, options).then((request) => request(axios, basePath));
+        webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, tenantId?: string, options?: RawAxiosRequestConfig): AxiosPromise<FindManyWebhookResponse> {
+            return localVarFp.webhookControllerFindMany(curPage, perPage, searchText, sort, tenantId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1381,12 +1388,13 @@ export class WebhookApi extends BaseAPI {
      * @param {number} [perPage] 
      * @param {string} [searchText] 
      * @param {string} [sort] 
+     * @param {string} [tenantId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WebhookApi
      */
-    public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, options?: RawAxiosRequestConfig) {
-        return WebhookApiFp(this.configuration).webhookControllerFindMany(curPage, perPage, searchText, sort, options).then((request) => request(this.axios, this.basePath));
+    public webhookControllerFindMany(curPage?: number, perPage?: number, searchText?: string, sort?: string, tenantId?: string, options?: RawAxiosRequestConfig) {
+        return WebhookApiFp(this.configuration).webhookControllerFindMany(curPage, perPage, searchText, sort, tenantId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
