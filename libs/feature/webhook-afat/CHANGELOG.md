@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-afat-v1.1.3...webhook-afat-v1.2.0) (2025-07-16)
+
+
+### Features
+
+* add support filter data by tenantId ([f0f1863](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/f0f18638b2428280b06474a964134e373ab3332e))
+
 ## [1.1.3](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/webhook-afat-v1.1.2...webhook-afat-v1.1.3) (2025-06-18)
 
 
