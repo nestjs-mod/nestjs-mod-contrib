@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/files-v1.3.1...files-v1.3.2) (2025-07-29)
+
+
+### Bug Fixes
+
+* remove WebhookToolsService ([cd16cbc](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/cd16cbcc4ae070b17f43a18ebce39ae2f4de7ee0))
+
 ## [1.3.1](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/files-v1.3.0...files-v1.3.1) (2025-07-16)
 
 
