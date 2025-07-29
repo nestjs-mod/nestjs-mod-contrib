@@ -1,11 +1,10 @@
-import { PrismaToolsModule } from '@nestjs-mod/prisma-tools';
 import { createNestModule, getFeatureDotEnvPropertyNameFormatter, NestModuleCategory } from '@nestjs-mod/common';
 import { PrismaModule } from '@nestjs-mod/prisma';
+import { PrismaToolsModule } from '@nestjs-mod/prisma-tools';
 import { HttpModule } from '@nestjs/axios';
 import { UseGuards } from '@nestjs/common';
 import { WebhookController } from './controllers/webhook.controller';
 import { WebhookServiceBootstrap } from './services/webhook-bootstrap.service';
-import { WebhookToolsService } from './services/webhook-tools.service';
 import { WebhookUsersService } from './services/webhook-users.service';
 import { WebhookService } from './services/webhook.service';
 import { WebhookConfiguration, WebhookFeatureConfiguration, WebhookStaticConfiguration } from './webhook.configuration';
@@ -16,11 +15,11 @@ import { WebhookGuard } from './webhook.guard';
 
 import { KeyvModule } from '@nestjs-mod/keyv';
 import { APP_FILTER } from '@nestjs/core';
+import { PrismaPg } from '@prisma/adapter-pg';
 import { TranslatesModule } from 'nestjs-translates';
 import { WebhookLogsController } from './controllers/webhook-logs.controller';
 import { WebhookCacheService } from './services/webhook-cache.service';
 import { WebhookPrismaSdk } from './webhook.prisma-sdk';
-import { PrismaPg } from '@prisma/adapter-pg';
 
 // fake update
 
@@ -70,7 +69,6 @@ export const { WebhookModule } = createNestModule({
     }),
   ],
   providers: (asyncModuleOptions) => [
-    WebhookToolsService,
     WebhookServiceBootstrap,
     WebhookCacheService,
     ...(asyncModuleOptions.staticEnvironments.useFilters

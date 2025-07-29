@@ -3,34 +3,17 @@ import { StatusResponse } from '@nestjs-mod/swagger';
 import { InjectPrismaClient } from '@nestjs-mod/prisma';
 import { PrismaToolsService } from '@nestjs-mod/prisma-tools';
 import { ValidationError } from '@nestjs-mod/validation';
-import {
-  Controller,
-  Delete,
-  Get,
-  Param,
-  ParseUUIDPipe,
-  Query,
-} from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiOkResponse,
-  ApiTags,
-  refs,
-} from '@nestjs/swagger';
+import { Controller, Delete, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiOkResponse, ApiTags, refs } from '@nestjs/swagger';
 import { isUUID } from 'class-validator';
 import { CurrentLocale, TranslatesService } from 'nestjs-translates';
+import { Prisma, PrismaClient, WebhookRole } from '../generated/prisma-client';
 import { WebhookLog } from '../generated/rest-dto/webhook-log.entity';
 import { WebhookUser } from '../generated/rest-dto/webhook-user.entity';
-import { Prisma, PrismaClient, WebhookRole } from '../generated/prisma-client';
-import { WebhookToolsService } from '../services/webhook-tools.service';
 import { FindManyWebhookLogArgs } from '../types/find-many-webhook-log-args';
 import { FindManyWebhookLogResponse } from '../types/find-many-webhook-log-response';
 import { WEBHOOK_FEATURE } from '../webhook.constants';
-import {
-  CheckWebhookRole,
-  CurrentWebhookExternalTenantId,
-  CurrentWebhookUser,
-} from '../webhook.decorators';
+import { CheckWebhookRole, CurrentWebhookExternalTenantId, CurrentWebhookUser } from '../webhook.decorators';
 import { WebhookError } from '../webhook.errors';
 
 @ApiBadRequestResponse({
@@ -44,8 +27,7 @@ export class WebhookLogsController {
     @InjectPrismaClient(WEBHOOK_FEATURE)
     private readonly prismaClient: PrismaClient,
     private readonly prismaToolsService: PrismaToolsService,
-    private readonly webhookToolsService: WebhookToolsService,
-    private readonly translatesService: TranslatesService
+    private readonly translatesService: TranslatesService,
   ) {}
 
   @Get()
@@ -53,13 +35,12 @@ export class WebhookLogsController {
   async findManyLogs(
     @CurrentWebhookExternalTenantId() externalTenantId: string,
     @CurrentWebhookUser() webhookUser: WebhookUser,
-    @Query() args: FindManyWebhookLogArgs
+    @Query() args: FindManyWebhookLogArgs,
   ) {
-    const { take, skip, curPage, perPage } =
-      this.prismaToolsService.getFirstSkipFromCurPerPage({
-        curPage: args.curPage,
-        perPage: args.perPage,
-      });
+    const { take, skip, curPage, perPage } = this.prismaToolsService.getFirstSkipFromCurPerPage({
+      curPage: args.curPage,
+      perPage: args.perPage,
+    });
     const searchText = args.searchText;
 
     const orderBy = (args.sort || 'createdAt:desc')
@@ -74,7 +55,7 @@ export class WebhookLogsController {
               }
             : {}),
         }),
-        {}
+        {},
       );
 
     const result = await this.prismaClient.$transaction(async (prisma) => {
@@ -102,12 +83,12 @@ export class WebhookLogsController {
                   ],
                 }
               : {}),
-            ...this.webhookToolsService.externalTenantIdQuery(
-              webhookUser,
-              webhookUser.userRole === WebhookRole.Admin
-                ? undefined
-                : externalTenantId
-            ),
+            ...(webhookUser.userRole === WebhookRole.Admin
+              ? {}
+              : {
+                  externalTenantId:
+                    webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+                }),
             webhookId: args.webhookId,
           },
           take,
@@ -137,12 +118,12 @@ export class WebhookLogsController {
                   ],
                 }
               : {}),
-            ...this.webhookToolsService.externalTenantIdQuery(
-              webhookUser,
-              webhookUser.userRole === WebhookRole.Admin
-                ? undefined
-                : externalTenantId
-            ),
+            ...(webhookUser.userRole === WebhookRole.Admin
+              ? {}
+              : {
+                  externalTenantId:
+                    webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+                }),
             webhookId: args.webhookId,
           },
         }),
@@ -165,17 +146,17 @@ export class WebhookLogsController {
     @CurrentWebhookUser() webhookUser: WebhookUser,
     @Param('id', new ParseUUIDPipe()) id: string,
     // todo: change to InjectTranslateFunction, after write all posts
-    @CurrentLocale() locale: string
+    @CurrentLocale() locale: string,
   ) {
     await this.prismaClient.webhookLog.delete({
       where: {
         id,
-        ...this.webhookToolsService.externalTenantIdQuery(
-          webhookUser,
-          webhookUser.userRole === WebhookRole.Admin
-            ? undefined
-            : externalTenantId
-        ),
+        ...(webhookUser.userRole === WebhookRole.Admin
+          ? {}
+          : {
+              externalTenantId:
+                webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+            }),
       },
     });
     return { message: this.translatesService.translate('ok', locale) };
@@ -186,17 +167,17 @@ export class WebhookLogsController {
   async findOne(
     @CurrentWebhookExternalTenantId() externalTenantId: string,
     @CurrentWebhookUser() webhookUser: WebhookUser,
-    @Param('id', new ParseUUIDPipe()) id: string
+    @Param('id', new ParseUUIDPipe()) id: string,
   ) {
     return await this.prismaClient.webhookLog.findFirstOrThrow({
       where: {
         id,
-        ...this.webhookToolsService.externalTenantIdQuery(
-          webhookUser,
-          webhookUser.userRole === WebhookRole.Admin
-            ? undefined
-            : externalTenantId
-        ),
+        ...(webhookUser.userRole === WebhookRole.Admin
+          ? {}
+          : {
+              externalTenantId:
+                webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+            }),
       },
     });
   }

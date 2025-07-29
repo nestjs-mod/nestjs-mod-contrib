@@ -12,18 +12,13 @@ import { CreateWebhookDto } from '../generated/rest-dto/create-webhook.dto';
 import { UpdateWebhookDto } from '../generated/rest-dto/update-webhook.dto';
 import { WebhookUser } from '../generated/rest-dto/webhook-user.entity';
 import { Webhook } from '../generated/rest-dto/webhook.entity';
-import { WebhookToolsService } from '../services/webhook-tools.service';
 import { WebhookService } from '../services/webhook.service';
 import { FindManyWebhookArgs } from '../types/find-many-webhook-args';
 import { FindManyWebhookResponse } from '../types/find-many-webhook-response';
 import { WebhookEvent } from '../types/webhook-event';
 import { WebhookTestRequestResponse } from '../types/webhook-test-request-response';
 import { WEBHOOK_FEATURE } from '../webhook.constants';
-import {
-  CheckWebhookRole,
-  CurrentWebhookExternalTenantId,
-  CurrentWebhookUser
-} from '../webhook.decorators';
+import { CheckWebhookRole, CurrentWebhookExternalTenantId, CurrentWebhookUser } from '../webhook.decorators';
 import { WebhookError } from '../webhook.errors';
 
 @ApiBadRequestResponse({
@@ -37,7 +32,6 @@ export class WebhookController {
     @InjectPrismaClient(WEBHOOK_FEATURE)
     private readonly prismaClient: PrismaClient,
     private readonly prismaToolsService: PrismaToolsService,
-    private readonly webhookToolsService: WebhookToolsService,
     private readonly webhookService: WebhookService,
     private readonly translatesService: TranslatesService,
     private readonly translatesStorage: TranslatesStorage,
@@ -110,10 +104,12 @@ export class WebhookController {
                   ],
                 }
               : {}),
-            ...this.webhookToolsService.externalTenantIdQuery(
-              webhookUser,
-              webhookUser.userRole === WebhookRole.Admin ? args.tenantId : externalTenantId,
-            ),
+            ...(webhookUser.userRole === WebhookRole.Admin
+              ? { externalTenantId: args.tenantId }
+              : {
+                  externalTenantId:
+                    webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : args.tenantId,
+                }),
           },
           take,
           skip,
@@ -134,10 +130,12 @@ export class WebhookController {
                   ],
                 }
               : {}),
-            ...this.webhookToolsService.externalTenantIdQuery(
-              webhookUser,
-              webhookUser.userRole === WebhookRole.Admin ? args.tenantId : externalTenantId,
-            ),
+            ...(webhookUser.userRole === WebhookRole.Admin
+              ? { externalTenantId: args.tenantId }
+              : {
+                  externalTenantId:
+                    webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : args.tenantId,
+                }),
           },
         }),
       };
@@ -188,7 +186,11 @@ export class WebhookController {
         WebhookUser_Webhook_updatedByToWebhookUser: {
           connect: { id: webhookUser.id },
         },
-        ...this.webhookToolsService.externalTenantIdQuery(webhookUser, externalTenantId),
+        ...(webhookUser.userRole === WebhookRole.Admin
+          ? { externalTenantId }
+          : {
+              externalTenantId: webhookUser.externalTenantId,
+            }),
       },
     });
   }
@@ -205,10 +207,12 @@ export class WebhookController {
       data: { ...args, updatedAt: new Date() },
       where: {
         id,
-        ...this.webhookToolsService.externalTenantIdQuery(
-          webhookUser,
-          webhookUser.userRole === WebhookRole.Admin ? undefined : externalTenantId,
-        ),
+        ...(webhookUser.userRole === WebhookRole.Admin
+          ? {}
+          : {
+              externalTenantId:
+                webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+            }),
       },
     });
   }
@@ -225,10 +229,12 @@ export class WebhookController {
     await this.prismaClient.webhook.delete({
       where: {
         id,
-        ...this.webhookToolsService.externalTenantIdQuery(
-          webhookUser,
-          webhookUser.userRole === WebhookRole.Admin ? undefined : externalTenantId,
-        ),
+        ...(webhookUser.userRole === WebhookRole.Admin
+          ? {}
+          : {
+              externalTenantId:
+                webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+            }),
       },
     });
     return { message: this.translatesService.translate('ok', locale) };
@@ -244,10 +250,12 @@ export class WebhookController {
     return await this.prismaClient.webhook.findFirstOrThrow({
       where: {
         id,
-        ...this.webhookToolsService.externalTenantIdQuery(
-          webhookUser,
-          webhookUser.userRole === WebhookRole.Admin ? undefined : externalTenantId,
-        ),
+        ...(webhookUser.userRole === WebhookRole.Admin
+          ? {}
+          : {
+              externalTenantId:
+                webhookUser?.userRole === WebhookRole.User ? webhookUser.externalTenantId : externalTenantId,
+            }),
       },
     });
   }
