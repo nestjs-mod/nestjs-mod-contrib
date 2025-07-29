@@ -5,6 +5,8 @@
 ```
 ./node_modules/.bin/nx g @nestjs-mod/schematics:library --buildable --publishable --directory=libs/infrastructure/docker-compose --simpleName=true --strict=true
 
+./node_modules/.bin/nx g @nestjs-mod/schematics:library --name=feature-name --buildable --publishable --directory=libs/feature-name --simpleName=true --strict=true --linter=eslint --unitTestRunner=jest
+
 ./node_modules/.bin/nx g @nestjs-mod/schematics:library --buildable --publishable --directory=libs/core/keyv --simpleName=true --strict=true
 
 ./node_modules/.bin/nx g @nx/angular:library --directory=libs/core/sso-angular
