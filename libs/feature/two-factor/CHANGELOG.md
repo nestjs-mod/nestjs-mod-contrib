@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.7...two-factor-v1.1.8) (2025-08-30)
+
+
+### Bug Fixes
+
+* update code for detect stacktrace ([d204e79](https://github.com/nestjs-mod/nestjs-mod-contrib/commit/d204e794d3f0c9550a65c36b8ef5ec66216ad7d1))
+
 ## [1.1.7](https://github.com/nestjs-mod/nestjs-mod-contrib/compare/two-factor-v1.1.6...two-factor-v1.1.7) (2025-07-08)
 
 
