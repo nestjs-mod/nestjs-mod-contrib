@@ -21,9 +21,9 @@ export class PrismaToolsService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   convertPrismaErrorToDbError(exception: any) {
     try {
-      const stacktrace = String(exception?.stack)
-        .split(`${__dirname}/webpack:/${basename(__dirname)}/`)
-        .join('');
+      const stacktrace = String(exception?.stack || exception)
+        ?.split(`${__dirname}/webpack:/${basename(__dirname)}/`)
+        ?.join('');
       const originalError = Object.assign(new Error(), { stack: stacktrace });
 
       if (String(exception?.name).startsWith('PrismaClient') || String(exception?.code).startsWith('P')) {
@@ -47,7 +47,7 @@ export class PrismaToolsService {
               originalError,
             };
           }
-          const relatedTable = exception.meta?.['cause'].split(`'`)[1];
+          const relatedTable = exception.meta?.['cause']?.split(`'`)?.[1];
           if (relatedTable && exception.meta?.['modelName']) {
             this.logger.debug({
               modelName: exception.meta?.['modelName'],
